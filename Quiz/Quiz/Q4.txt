@@ -1,0 +1,8 @@
+ACT scores in a year is nearly normal with the mean of 21 and the standard deviation of 5. Jim's score is the 80th percentile. What is the Jim's score?
+
+Answer:
+
+> qnorm(0.8)
+[1] 0.8416212
+
+0.84 * 5 + 21 = 25.2

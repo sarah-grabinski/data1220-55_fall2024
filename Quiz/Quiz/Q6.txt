@@ -1,0 +1,7 @@
+Smoking rate in a town was 21% ten years ago. 100 residents are randomly picked this year and 14 are smokers. Has smoking habit changes?
+
+Write down Ho and Ha.
+
+Answer:
+Ho: p=0.21
+Ha: p!=0.21

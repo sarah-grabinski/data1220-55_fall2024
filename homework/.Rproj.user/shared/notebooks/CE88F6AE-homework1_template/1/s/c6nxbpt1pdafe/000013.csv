@@ -1,0 +1,9 @@
+"0","df |>
+  ggplot(aes(x = case, 
+              y = age)) +
+  geom_point()
+"
+"2","Warning:"
+"2"," [38;5;252mRemoved 2 rows containing missing values or values outside the scale
+range (`geom_point()`).[39m
+"

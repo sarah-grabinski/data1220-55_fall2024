@@ -1,0 +1,9 @@
+A student surveyed 150 students from a college. 58% of them have an iPhone. 
+
+1. Is the number 58% a value of a statistic or a parameter?
+
+2. What is a 90% confidence interval for the percentage of students who have an iPhone at this college?
+
+Answer:
+1. A statistic.
+2. (0.514, 0.646)

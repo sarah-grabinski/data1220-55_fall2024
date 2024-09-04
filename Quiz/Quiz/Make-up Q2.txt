@@ -1,0 +1,16 @@
+A sample of test scores was provided below. Please answer the following questions.
+79,80,85,93,74,80,95,79,64,78,72,78,74,60,81,48,80,82,82,90.
+Five-number summary of this dataset is 58.0, 74.0, 79.5, 82.0, and 95.0.
+
+(a) What is the median score?
+(b) What is the mean score?
+(c) Is the distribution of this sample right-skewed, left-skewed, or about symmetric?
+(d) What is the value of IQR?
+(e) List all the outliers if any.
+
+Solution:
+(a) 79.5
+(b) 77.7
+(c) left skewed
+(d) IQR = 82 - 74 = 8
+(e) 48, 60, and 95

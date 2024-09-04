@@ -1,0 +1,12 @@
+In a multiple choice exam, there are 5 questions and 4 choices for each question. A student has not studied for the exam at all and decides to randomly guess the answers.
+What is the probability that:
+
+(a) the student only gets the first two questions right?
+(b) the student gets the last question wrong?
+(c) the student gets at least one question wrong?
+
+Answers:
+(a) 0.25 * 0.25 * 0.75 * 0.75 * 0.75 = 0.0264
+(b) (0.25)^4 * 0.75 = 0.0029
+(c) 1 - (0.25)^5 = 0.999
+

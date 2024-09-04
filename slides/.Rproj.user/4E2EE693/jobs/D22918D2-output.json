@@ -1,0 +1,2 @@
+[1,"==> quarto preview class02.qmd --to beamer --no-watch-inputs --no-browse\n\n"]
+[1,"ERROR: YAMLException: duplicated mapping key (class02.qmd, 21:5)\n20:     footnotes-hover: true\n21:     echo: true\n       ~~\n22:     preview-links: auto\n"]

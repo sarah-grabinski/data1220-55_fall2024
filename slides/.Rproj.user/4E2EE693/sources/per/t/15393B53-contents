@@ -1,0 +1,391 @@
+---
+title: "431 Class 01"
+author: Thomas E. Love, Ph.D.
+date: "2022-08-30"
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    preview-links: auto
+    logo: 431-class-foot2.png
+    footer: "431 Class 01 | 2022-08-30 | https://thomaselove.github.io/431-2022/"
+---
+
+## Getting To These Slides
+
+Our web site: <https://thomaselove.github.io/431-2022/>
+
+Visit the [Course Calendar](https://thomaselove.github.io/431-2022/calendar.html) at the top of the page, which will take you to the Class 01 README page.
+
+- These Slides for Class 01 linked at the Class 01 README. 
+  - We'll look at the **HTML slides** during class.
+  - We also provide the Quarto code I used to build the slides.
+
+::: aside
+Version `r Sys.time()`
+:::
+
+## This is PQHS / CRSP / MPHP 431
+
+![Correlation](https://imgs.xkcd.com/comics/correlation.png)
+
+- Source: [XKCD](https://xkcd.com/552)
+
+## First Activity
+
+::: columns
+
+::: {.column width="70%"}
+#### First Thing
+
+Write down your guess of Dr. Love's age in years in the appropriate spot on the **convenient piece of paper** we've provided. Hang on to the paper, as you'll need it again later. 
+
+Here's a picture, in case that's helpful.
+:::
+
+::: {.column width="30%"}
+![Dr. Love](c01/images/Thomas_Love.png)
+:::
+
+:::
+
+
+## Course Details
+
+Instructor: Thomas E. Love, Ph.D.
+
+Email: `Thomas dot Love at case dot edu` 
+
+  - (best way to reach me, although you won't use it much)
+
+Our web site: <https://thomaselove.github.io/431-2022/>
+
+- The [Contact Us page](https://thomaselove.github.io/431-2022/contact.html) on our web site provides details on how to get help.
+- If you’ve spent 15 minutes working on something and are stuck, don’t keep working on it. **ASK FOR HELP**. 
+
+## What does [our web site](https://thomaselove.github.io/431-2022/) link to?
+
+- Course [Syllabus](https://thomaselove.github.io/431-syllabus-2022/)
+- Course [Calendar](https://thomaselove.github.io/431-2022/calendar.html), which is the final word for all deadlines, and also links to each day's **class page**.
+- Course [Notes](https://thomaselove.github.io/431-notes/) (essentially a textbook)
+- [Software](https://thomaselove.github.io/431-2022/software.html) Details (R and R Studio, installation, data and code downloads)
+- [Assignments](https://thomaselove.github.io/431-2022/assignments.html): 7 Labs, 9 Minute Papers, 2 Quizzes and 2 Projects
+
+## Teaching Assistants (Fall 2022)
+
+![](c01/images/TAs-2022.png)
+
+- TA Office Hours will begin Tuesday 2022-09-06.
+
+## Structure of the 431 Course
+
+::: columns
+
+::: {.column width="70%"}
+![](c01/images/describing-431-gears.png)
+:::
+
+::: {.column width="30%"}
+
+- Exploratory Data Analysis, Visualization
+- Statistical Inference, Making Comparisons
+- Linear Regression and related Models
+:::
+:::
+
+## Course Philosophy (in one slide)
+
+The course is about biostatistics, replicable research, using state-of-the-art tools (R, R Studio, R Markdown), and thinking about how science is most effectively done.
+
+- It is more a course in **how** to do things (highly applied) rather than a theoretical/mathematical justification for **why** we do them. We focus here on practical work.
+- It's mostly about getting you doing data science projects for biological, medical and health applications.
+
+More on all of this in the [Course Syllabus](https://thomaselove.github.io/431-syllabus-2022/), of course.
+
+## What is Data Science about?
+
+![](c01/images/data-science.png)
+
+Source: Figure 1.1 in <https://r4ds.hadley.nz/intro.html>
+
+
+## What will we be reading?
+
+![](c01/images/books2022.png)
+
+- Readings section of our [Course Calendar](https://thomaselove.github.io/431-2022/calendar.html) for more.
+
+## Tools We Use in 431
+
+- [Main Website](https://thomaselove.github.io/431-2022/) links to everything you'll need
+- [Calendar](https://thomaselove.github.io/431-2022/calendar.html) (for deadlines and what's next)
+- Campuswire (for discussion / Q and A outside of class)
+- [Canvas](https://canvas.case.edu/) (for submission of work)
+- Zoom (for TA office hours and class recordings)
+- Shared Google Drive (mostly for answers / feedback)
+
+## Attendance
+
+- If you have to miss a class, catch up before the next one.
+- We'll try to record the classes and make them available afterwards.
+- Our assignments have deadlines, which we expect you to meet.
+
+If you will need to miss **more than two** classes in a row, or if you cannot keep up with assignments, that's when Dr. Love needs to talk with you. The [Syllabus](https://thomaselove.github.io/431-syllabus-2022/) has the details, and the [Calendar](https://thomaselove.github.io/431-2022/calendar.html) has the deadlines.
+
+## Great Statisticians in History
+
+![](c01/images/tukey2.jpg) 
+
+John **Tukey** (1915-2000)^[Image Source: <http://www.azquotes.com/author/14847-John_Tukey>]
+
+## Ten Things To Do After Class 01 {.smaller}
+
+1. Review the [main course website](https://thomaselove.github.io/431-2022/), being sure to visit the [Course Calendar](https://thomaselove.github.io/431-2022/calendar.html).
+2. Read through the [Course Syllabus](https://thomaselove.github.io/431-syllabus-2022/).
+3. Obtain David Spiegelhalter's *The Art of Statistics: How to Learn from Data* (~$20).
+4. Complete the [Welcome to 431 survey](https://bit.ly/431-2022-welcome-survey).
+5. [Install the software](https://thomaselove.github.io/431-2022/software.html) you'll need.
+6. Sign up for [Campuswire](https://thomaselove.github.io/431-2022/campuswire.html).
+7. Look at the [Course Notes](https://thomaselove.github.io/431-notes/)
+8. Bookmark two books, plus the RStudio Cheatsheets (see README).
+9. Ask us questions! Campuswire is available now. TA hours start 2022-09-06.
+10. Take a look at Lab 01 due 2022-09-12, our first substantial assignment.
+
+See the [Class 01 README](https://github.com/THOMASELOVE/431-classes-2022/tree/main/class01) for more details.
+
+## We'll form groups in a moment
+
+- Shortly, we will be asking you each to join a group, containing five or six people. Join a group where you will meet at least one new person.
+- Also, one member of each group will serve as recorder and will need to open a Google Form on their laptop in a moment.
+  - Everyone else needs nothing except their convenient piece of paper and a pen/pencil.
+- Your first task is to settle on a name for your group. Try to be a little creative.
+
+## We'll be guessing some ages
+
+- I will display a series of 10 photographs, each of a person.
+- For each photo your group will ...
+    + estimate the age of the person in the photo (in years)
+    + have the recorder type your (group) guess into the form (so if you guess age 35, you will just type 35.)
+- When you've produced guesses for each of the 10 photos, submit the form. The recorder will get an email confirmation.
+- Later, we'll reveal the true ages and compute errors.
+
+## OK. Let's form the groups.
+
+- Remember, your group should have FIVE OR SIX people, with at least one person you don't already know.
+
+1. Select a group name.
+2. Select a recorder, who should visit the link below after logging into Google via CWRU.
+
+<https://bit.ly/431-2022-class01-breakout> 
+
+3. Make sure everyone knows everyone else's name, as well as your group's name.
+
+## Here come the photos
+
+- We'll give you a little more time for the first two photos than the other eight.
+
+Remember to have the recorder fill out the form at <https://bit.ly/431-2022-class01-breakout> although it may help all of you to keep track on paper, as well.
+
+## Photo 1 
+
+![](c01/images/ageguess01.jpg)
+
+## Photo 2
+
+![](c01/images/ageguess02.jpg)
+
+## Making Progress
+
+- Your group's guess for each photo should be in the form at <https://bit.ly/431-2022-class01-breakout>. 
+  - You might also want to keep track on your convenient piece of paper, so that when I tell you the ages later, you'll be in a position to see how your group did.
+- In spare time between photos, please make the effort to learn **something** about each of the other people in your group beyond their name: perhaps what field they are in, or where they come from.
+
+## Photo 3
+
+![](c01/images/ageguess03.jpg)
+
+## Photo 4
+
+![](c01/images/ageguess04.jpg)
+
+
+## Photo 5
+
+![](c01/images/ageguess05.jpg)
+
+
+## Photo 6
+
+![](c01/images/ageguess06.jpg)
+
+## Photo 7
+
+![](c01/images/ageguess07.jpg)
+
+## Photo 8
+
+![](c01/images/ageguess08.jpg)
+
+## Photo 9
+
+![](c01/images/ageguess09.jpg)
+
+## Photo 10
+
+![](c01/images/ageguess10.jpg)
+
+## Now, guess My Age again
+
+1. You should have an initial guess of my age written down from the start of the session.
+2. Now, make a second guess of my age based on what you know about me now, and write that down next to the initial guess.
+
+So if you guessed 18 initially, but now think I'm 19, you should write 18/19. If you still think I'm 18, write 18/18. Make it easy for us to understand your guesses of my age on the **convenient piece of paper**. Don't guess my age as a group - just write down your own guess.
+
+## Age Guessing Robots?
+
+Well, Microsoft used to have a tool online at `how-old.net` to do this. There are some related robots that still do the job online, although most people are unwilling to use them.
+
+![](c01/images/tel-howold.png)
+
+Do you think you did that well?
+
+# OK. Back to the photos!
+
+## Card 1 
+
+![](c01/images/age01.png)
+
+
+## Card 2
+
+![](c01/images/age02.png)
+
+## Card 3
+
+![](c01/images/age03.png)
+
+## Card 4
+
+![](c01/images/age04.png)
+
+## No, not THAT Kevin Love
+
+![](c01/images/kevin-love.jpg)
+
+## THIS Kevin Love, on the right (January 2019)
+
+![](c01/images/love-family-2019.jpg)
+
+## Card 5
+
+![](c01/images/age05.png)
+
+## Card 6
+
+![](c01/images/age06.png)
+
+## Card 7
+
+![](c01/images/age07.png)
+
+## Card 8
+
+![](c01/images/age08.png)
+
+## Card 9
+
+![](c01/images/age09.png)
+
+## Card 10
+
+![](c01/images/age10.png)
+
+## How did the AI do in August 2016?
+
+![](c01/images/agesandphotoswithai.png)
+
+## Some Data from Prior Years
+
+```{r read_data_phptos, message=FALSE, echo=FALSE}
+
+library(kableExtra)
+library(tidyverse)
+ageguess <- read_csv("c01/data/photo-age-history-2021.csv")
+```
+
+```{r age_guesses, echo=FALSE}
+kbl(ageguess[c(1:4,11,21,31), c(2, 6, 3, 7, 8)]) |>
+  kable_styling(full_width = FALSE)
+```
+
+## Scatterplot of Prior Results, 1
+
+```{r guess_vs_true_age_by_year_1, echo=FALSE}
+ggplot(ageguess, aes(x = age, y = mean_guess, col = year)) +
+  geom_point(size = 3) +
+  geom_line(data = ageguess %>% filter(year == "robot"), aes(x = age, y = mean_guess), col = "black") +
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14, face = "bold"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 12, face = "bold"))
+```
+
+## Scatterplot of Prior Results, 2
+
+```{r guess_vs_true_age_by_year_2, echo=FALSE}
+ggplot(ageguess, aes(x = age, y = mean_guess, col = year)) +
+  geom_point(position = "jitter", size = 3) +
+  geom_abline(intercept = 0, slope = 1) + 
+  scale_color_viridis_d(end = 0.75) +
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14, face = "bold"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 12, face = "bold")) +
+  labs(title = "Age Guessing in Previous Years",
+       x = "True Age", y = "Mean Class-Wide Estimate")
+```
+
+## Mean Class-Wide Guesses (2014-21)
+
+![](c01/images/ages-and-photos-with-2014-2021-mean-guesses.png)
+
+
+## Mean Class-Wide Errors (2014-21)
+
+![](c01/images/ages-and-photos-with-2014-2021-mean-errors.png)
+
+## 2021 Results: Labeled Scatterplot
+
+```{r, echo = FALSE}
+ggplot(filter(ageguess, year == 2021), aes(x = age, y = error, fill = sex)) +
+  geom_label(aes(label = label)) +
+  geom_hline(yintercept = 0) + 
+    guides(fill = "none") +
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14, face = "bold"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 12, face = "bold")) +
+  labs(title = "Errors in 2021 Age Guessing, by Subject's Sex",
+       x = "True Age", y = "Error in Class-Wide Estimate") + 
+    theme_bw() + 
+    facet_wrap(~ sex)
+```
+
+## Hans Rosling "The Joy of Stats"
+
+[200 countries over 200 years](https://www.youtube.com/watch?v=jbkSRLYSojo) using 120,000 numbers, in less than 5 minutes.
+
+### And if you liked that ...
+
+- The 20 minute version (from 2007): <https://www.youtube.com/watch?v=RUwS1uAdUcI>
+
+- The full documentary from the BBC: <https://www.gapminder.org/videos/the-joy-of-stats/>
+
+- Video playlist from Gapminder: <https://www.gapminder.org/videos/>
+
+## Thanks for coming!
+
+See you Thursday at 1 PM right here.
+

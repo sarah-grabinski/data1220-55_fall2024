@@ -1,0 +1,107 @@
+---
+title: "Homework 1"
+author: "YOUR NAME HERE"
+date: "`r Sys.Date()`"
+format: html
+editor: visual
+---
+
+# Load packages {.unlisted}
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Please put the date and time you completed the survey here.
+
+## Campuswire
+
+Insert the image you uploaded to Campuswire here.
+
+![How to insert an image into a Quarto document](https://drive.google.com/file/d/1S1yyVUzSp-xjVz5bHm3rvolyYlO982t_/view?usp=sharing){fig-alt="This image shows top portion of the editor pane in RStudio with the image icon circled in red" fig-align="center"}
+
+# Problem 2
+
+## Question 1
+
+Type your answer here.
+
+## Question 2
+
+Type your answer here.
+
+## Question 3
+
+Type your answer here.
+
+## Question 4
+
+Type your answer here.
+
+## Question 5
+
+Type your answer here.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type |
+|---------------|-------------------------------------------|---------------|
+| `case`        | id number                                                    |               |
+| `bwt`         | birthweight, in ounces                                       |               |
+| `gestation`   | length of gestation, in days                                 |               |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) |               |
+| `age`         | mother's age in years                                        |               |
+| `height`      | mother's height in inches                                    |               |
+| `weight`      | mother's weight in pounds                                    |               |
+| `smoke`       | binary indicator for whether the mother smokes               |               |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = case, # please change these
+              y = age)) + 
+  geom_point()
+```
+
+Describe what you see in your plot here.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

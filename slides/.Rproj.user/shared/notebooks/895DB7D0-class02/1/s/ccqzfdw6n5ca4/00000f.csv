@@ -1,0 +1,17 @@
+"0","penguins |>
+  ggplot(aes(x = bill_depth_mm, 
+             y = bill_length_mm, 
+             aes(col = species, group = species))) +
+  geom_point() +
+  geom_smooth(method = 'lm', col = 'red')
+"
+"1","[38;5;252m`geom_smooth()` using formula = 'y ~ x'[39m
+"
+"2","Warning:"
+"2"," [38;5;252mRemoved 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).[39m
+"
+"2","Warning:"
+"2"," [38;5;252mRemoved 2 rows containing missing values or values outside the scale
+range (`geom_point()`).[39m
+"

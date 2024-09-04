@@ -1,0 +1,15 @@
+You would like to know what percentage of out-of-state students at a college. You collected a random sample of 100 students in a college and 31 of them come from out of state. 
+
+1. What is the sample percentage of out-of-state students?
+
+2. What is the standard error of the sample percentage of out-of-state students?
+
+3. What is the z* value at the 95% confidence level?
+
+4. What is a 95% confidence interval for the percentage of out-of-state students at this college?
+
+Answer:
+1. 0.31
+2. 0.046
+3. 1.96
+4. (0.21984, 0.40016)

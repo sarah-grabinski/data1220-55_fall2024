@@ -1,0 +1,482 @@
+---
+title: "Class 02"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-08-21'
+format:
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: true
+    preview-links: auto
+    footer: "https://canvas.jcu.edu/courses/36290 | DATA1220 Class 02 | 2024-08-21 | https://campuswire.com/c/G6427C531/feed"
+---
+
+## *Load Packages*
+
+```{r}
+library(Hmisc)
+library(GGally)
+library(palmerpenguins)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+## *Welcome Back*
+
+![*Correlation*](https://imgs.xkcd.com/comics/correlation.png)
+
+-   *Source: [XKCD](https://xkcd.com/552)*
+
+## *What is data science?*
+
+![](class02/data-science.png){fig-align="center"}
+
+*Source: Figure 1.1 in <https://r4ds.hadley.nz/intro.html>*
+
+## *Chatfield's Six Rules for Data Analysis*
+
+1.  *Do not attempt to analyze the data until you understand what is being measured and why.*
+2.  *Find out how the data were collected.*
+3.  *Look at the structure of the data.*
+4.  *Carefully examine the data in an exploratory way, before attempting a more sophisticated analysis.*
+5.  *Use your common sense at all times.*
+6.  *Report the results in a clear, self-explanatory way.*
+
+*Chatfield, Chris (1996) Problem Solving: A Statistician's Guide, 2nd ed.*
+
+## *Introduction to R*
+
+-   *R is an open source statistical programming language managed by a core team of 15 people and thousands of code writers/statisticians who contribute their work*
+-   *Most of R is written in R*
+-   *Community available for fixing bugs/software*
+-   *Promotes reproducible research through open and accessible tools*
+
+## *R vs RStudio*
+
+-   *R is the programming language itself*
+-   *RStudio is an interface for working with R*
+
+## *RStudio*
+
+![*RStudio Default Screen*](class02/rstudio_main_screen.png){fig-align="center"}
+
+## *Projects*
+
+*Projects are a convenient way to keep all your files for an analysis in one place.*
+
+*Go to File \> New Project to begin one now. Call the project "homework1" and save it to your computer in a folder for this class.*
+
+## *Types of Document*
+
+-   *R script*
+
+    -   *End with .R and are pure code. If you run them, output will appear in the bottom left corner called the console.*
+
+-   *Quarto documents*
+
+    -   *End in .qmd and use markdown language to turn characters into formatted text.*
+
+    -   *Processes code in code chunks, and output appears directly in the document*
+
+-   *Begin a new markdown script now*
+
+## *Environment*
+
+*Your project now has it's own "environment" in which you can store your data, variables and results.*
+
+*Add a code chunk to your document, copy the code below, and run it.*
+
+*Example:*
+
+```{r}
+x <- c(1, 2, 3, 4, 5)
+```
+
+## *Environment (cont.)*
+
+![*Stored variable now appears in the environment*](class02/variable_in_environment.png){fig-align="center"}
+
+## *Packages*
+
+*Packages are collections of functions to use for statistical analyses. Some are loaded automatically, and some need to be separately installed. Let's install the `tidyverse` package.*
+
+![*Package Install & Update Panel*](class02/package_view.png){fig-align="center"}
+
+## *Install Packages*
+
+*Either...*
+
+![](class02/install_tidyverse.png){fig-align="center"}
+
+## *Install packages*
+
+*or...*
+
+```{r, eval = F}
+install.packages('tidyverse',
+                 dependencies = T)
+install.packages('openintro',
+                 dependencies = T)
+```
+
+## *Getting Help*
+
+*Search for functions, packages, vignettes, and more directly in RStudio in the "Help" panel.*
+
+![*Help Panel*](class02/help_view.png){fig-align="center"}
+
+## *Exercise: Palmer Penguins*
+
+![*The Palmer Penguins*](class02/palmer_penguins1.png){fig-align="center"}
+
+*Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi: 10.5281/zenodo.3960218.*
+
+## *Install the package and load the library*
+
+```{r, eval = F}
+library(palmerpenguins)
+library(tidyverse)
+```
+
+## *Find the data*
+
+```{r}
+data(package = 'palmerpenguins')
+
+# Add the data to your environment
+penguins <- penguins
+```
+
+## *Inspect the data*
+
+```{r}
+head(penguins)
+```
+
+## *Dataframes*
+
+-   *Data structure in rows and columns like a spreadsheet*
+
+-   *Rows: (ideally) uniquely identified observations*
+
+-   *Columns: parameters which describe the observations*
+
+## *How many rows does `penguins` have?*
+
+```{r}
+nrow(penguins)
+```
+
+## *How many variables does `penguins` have?*
+
+```{r}
+ncol(penguins)
+colnames(penguins)
+```
+
+## *Can I find this out more quickly?*
+
+```{r}
+glimpse(penguins)
+```
+
+## *How else can I get a description of the data?*
+
+*Use the `Hmisc::describe()` function to quickly summarize data.*
+
+```{r, eval = F}
+Hmisc::describe(penguins)
+```
+
+## *How else can I get a description of the data?*
+
+```{r, echo = F}
+Hmisc::describe(penguins)
+```
+
+## *Meet the penguins!*
+
+![*Meet the Palmer Penguins*](class02/lter_penguins.png){fig-align="center"}
+
+## *Types of data*
+
+*The key distinction we'll make is between*
+
+-   ***quantitative** (numerical) and*
+-   ***categorical** (qualitative) information.*
+
+*Information that is quantitative describes a **quantity**.*
+
+-   *All quantitative variables have units of measurement.*
+-   *Quantitative variables are recorded in numbers, and we use them as numbers (for instance, taking a mean of the variable makes some sense.)*
+
+## *Continuous vs. Discrete Quantities*
+
+***Continuous** variables (can take any value in a range) vs. **Discrete** variables (limited set of potential values)*
+
+-   *Is time a continuous or a discrete variable?*
+
+::: incremental
+-   *Time is certainly continuous as a concept, but how precise is our unit (e.g. hour, year, decade)?*
+:::
+
+## *Qualitative (Categorical) Data*
+
+*Qualitative variables consist of names of categories.*
+
+-   *Each possible value is a code for a category (could use numerical or non-numerical codes.)*
+    -   ***Binary** categorical variables (two categories, often labeled 1 or 0)*
+    -   ***Multi-categorical** variables (three or more categories)*
+-   *Can distinguish nominal (no underlying order) vs. ordinal (categories are ordered.)*
+
+## *Some Categorical Variables*
+
+-   *How is your overall health?* <br/> *(Excellent, Very Good, Good, Fair, Poor)*
+-   *Which candidate would you vote for if the election were held today?*
+-   *Did this patient receive this procedure?*
+-   *If you needed to analyze a small data set right away, which of the following software tools would you be comfortable using to accomplish that task?*
+
+## *Are these quantitative or categorical?*
+
+1.  *Do you **smoke**? (1 = Non-, 2 = Former, 3 = Smoker)*
+2.  *How much did you pay for your most recent **haircut**? (in \$)*
+3.  *What is your favorite **color**?*
+4.  *How many hours did you **sleep** last night?*
+5.  *Statistical thinking in your future **career**? (1 = Not at all important to 7 = Extremely important)*
+
+-   *If quantitative, are they discrete or continuous? Do they have a meaningful zero point?*
+-   *If categorical, how many categories? Nominal or ordinal?*
+
+## *Data Dictionary*
+
+| *name*             | *description*                               |
+|--------------------|---------------------------------------------|
+| *`species`*        | *Penguin species: chinstrap, gentoo, adelie* |
+| *`island`*         | *Island where penguin was observed*         |
+| *`bill_length_mm`* | *how long is the bill from base to tip*     |
+| *`bill_depth_mm`*  | *how wide is the bill from bottom to top*   |
+| *`flipper_length_mm`* | *length of flipper* |
+| *`body_mass_g`*       | *body mass*         |
+| *`sex`*               | *male or female*    |
+| *`year`*              | *2007, 2008, 2009*  |
+
+## *How do you visualize variables?*
+
+-   *Histogram (bar plot)*
+
+-   *Density, violin plot*
+
+-   *Boxplot*
+
+## *Histogram*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram(binwidth = 2,
+                 fill = 'steelblue',
+                 col = 'white') +
+  labs(title = 'Distribution of Bill Lengths',
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',
+       x = 'Bill Length (mm)',
+       y = '# of Individuals')
+```
+
+## *Histogram*
+
+```{r, message = F, warning = F, echo = F}
+penguins |>
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram(binwidth = 2,
+                 fill = 'steelblue',
+                 col = 'white') +
+  labs(title = 'Distribution of Bill Lengths',
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',
+       x = 'Bill Length (mm)',
+       y = '# of Individuals')
+```
+
+## *Density Plot*
+
+```{r eval = F}
+penguins |>
+  ggplot(aes(x = bill_length_mm)) +
+  geom_density(fill = 'steelblue', alpha = 0.5) +
+  labs(title = 'Distribution of Bill Lengths',
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',
+       x = 'Bill Length (mm)',
+       y = '# of Individuals')
+```
+
+## *Density Plot*
+
+```{r echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = bill_length_mm)) +
+  geom_density(fill = 'steelblue', alpha = 0.5) +
+  labs(title = 'Distribution of Bill Lengths',
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',
+       x = 'Bill Length (mm)',
+       y = '# of Individuals')
+```
+
+## *Boxplot + Violin*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = species, y = bill_length_mm)) +
+  geom_violin(aes(fill = species)) +
+  geom_boxplot(width = 0.3)
+```
+
+## *Boxplot + Violin*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = species, y = bill_length_mm)) +
+  geom_violin(aes(fill = species)) +
+  geom_boxplot(width = 0.3)
+```
+
+## *How do you find relationships between variables?*
+
+-   *Develop a research question*
+
+-   *Examine summary statistics*
+
+-   *Data exploration*
+
+## *Visualizing the Data - Scatterplot Matrices*
+
+```{r, eval = F}
+penguins |>
+  select(species, island, bill_length_mm,
+         bill_depth_mm) |>
+  ggpairs()
+```
+
+## *Visualizing the Data - Scatterplot Matrices*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  select(species, island, bill_length_mm,
+         bill_depth_mm) |>
+  ggpairs()
+```
+
+## *Visualizing the Data - Scatterplot Matrices*
+
+```{r, eval = F}
+penguins |>
+  select(flipper_length_mm, body_mass_g,
+         sex, year) |>
+  ggpairs()
+```
+
+## *Visualizing the Data - Scatterplot Matrices*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  select(flipper_length_mm, body_mass_g,
+         sex, year) |>
+  ggpairs()
+```
+
+## *Plotting Relationships*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point()
+```
+
+## *Plotting Relationships*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point()
+```
+
+## *Adding Regression Lines - LM*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = 'lm', col = 'red')
+```
+
+## *Adding Regression Lines - LM*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = 'lm', col = 'red')
+```
+
+## *Plotting Regression Lines - LOESS*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = 'loess', col = 'blue')
+```
+
+## *Plotting Regression Lines - LOESS*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = 'loess', col = 'blue')
+```
+
+## *Plotting Regression Lines - By Group*
+
+```{r, eval = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm,
+             col = species, group = species)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+```
+
+## *Plotting Regression Lines - By Group*
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm,
+             col = species, group = species)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+```
+
+## Quarto Resources
+
+-   How to use Quarto in RStudio: <https://quarto.org/docs/get-started/hello/rstudio.html>
+
+-   Markdown language basics: <https://quarto.org/docs/authoring/markdown-basics.html>
+
+-   Themes for projects: <https://quarto.org/docs/output-formats/html-themes.html>
