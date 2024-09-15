@@ -50,16 +50,25 @@ I will use the following data source for problems 1, 2, and 4.
 
 Below are descriptions of the variables used in this homework.
 
++----------------+-------------------------------------------------------------------------------+-------------+
 | Variable       | Description                                                                   | Type        |
-|----------------|-------------------------------------------------------------------------------|-------------|
++================+===============================================================================+=============+
 | `Weight`       | the subject's weight in pounds                                                | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `Height`       | the subject's height in inches                                                | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `Pulse`        | the subject's pulse in beats per minute                                       | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `BPDiaAve`     | the subject's average diastolic blood pressure in mmHg                        | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `AgeMonths`    | the subject's age in months                                                   | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `DiabetesAge`  | the subject's age in years at which they were diagnosed with Diabetes         | numerical   |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `Gender`       | the subject's gender (levels: male, female)                                   | categorical |
++----------------+-------------------------------------------------------------------------------+-------------+
 | `SleepTrouble` | whether or not the subject feels they have trouble sleeping (levels: yes, no) | categorical |
++----------------+-------------------------------------------------------------------------------+-------------+
 
 ## Loading the Data
 
@@ -89,7 +98,7 @@ nhanes_df |>
 
 For plots A-F below, I will name the type of plot used to show the distribution and describe its shape.
 
-![](images/distribution_plots.png){fig-align="center"}
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/homework/homework2/images/distribution_plots.png?raw=true){fig-align="center"}
 
 ## Plot A
 
@@ -127,7 +136,7 @@ Type your answer here if you are attempting the bonus point. Otherwise, delete t
 
 For plots C and D below, I will state the appropriate summary statistics for the distribution shape and justify my answer.
 
-![](images/summary_statistic_plots.png){fig-align="center"}
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/homework/homework2/images/summary_statistic_plots.png?raw=true){fig-align="center"}
 
 ## Plot C
 
@@ -141,7 +150,7 @@ Type your answer here.
 
 Below are boxplots G-L and in the table below are their 5-number summaries. In the table, I will match each 5-number summary to one boxplots G-L and state whether I expect the mean of the distribution to be greater than, less than, or about equal to the median.
 
-![](images/boxplots.png){fig-align="center"}
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/homework/homework2/images/boxplots.png?raw=true){fig-align="center"}
 
 +-----------+----------+----------+----------+----------+---------+----------------+
 | Minimum   | Q1       | Median   | Q3       | Maximum  | Boxplot | Mean vs Median |
