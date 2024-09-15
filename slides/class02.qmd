@@ -11,6 +11,7 @@ format:
     slide-number: true
     navigation: horizontal
     theme: default
+    self-contained: true
   revealjs: 
     theme: default
     self-contained: true
@@ -18,7 +19,7 @@ format:
     footnotes-hover: true
     echo: true
     preview-links: auto
-    footer: "https://canvas.jcu.edu/courses/36290 | DATA1220 Class 02 | 2024-08-21 | https://campuswire.com/c/G6427C531/feed"
+    footer: "DATA1220-55 Fall 2024, Class 02 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
 ## *Load Packages*
@@ -260,16 +261,16 @@ Hmisc::describe(penguins)
 
 ## *Data Dictionary*
 
-| *name*             | *description*                               |
-|--------------------|---------------------------------------------|
-| *`species`*        | *Penguin species: chinstrap, gentoo, adelie* |
-| *`island`*         | *Island where penguin was observed*         |
-| *`bill_length_mm`* | *how long is the bill from base to tip*     |
-| *`bill_depth_mm`*  | *how wide is the bill from bottom to top*   |
-| *`flipper_length_mm`* | *length of flipper* |
-| *`body_mass_g`*       | *body mass*         |
-| *`sex`*               | *male or female*    |
-| *`year`*              | *2007, 2008, 2009*  |
+| *name*                | *description*                                |
+|-----------------------|----------------------------------------------|
+| *`species`*           | *Penguin species: chinstrap, gentoo, adelie* |
+| *`island`*            | *Island where penguin was observed*          |
+| *`bill_length_mm`*    | *how long is the bill from base to tip*      |
+| *`bill_depth_mm`*     | *how wide is the bill from bottom to top*    |
+| *`flipper_length_mm`* | *length of flipper*                          |
+| *`body_mass_g`*       | *body mass*                                  |
+| *`sex`*               | *male or female*                             |
+| *`year`*              | *2007, 2008, 2009*                           |
 
 ## *How do you visualize variables?*
 

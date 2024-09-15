@@ -1,0 +1,118 @@
+---
+title: "Homework 1"
+author: "Yasmine Samara"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Time completed survey: Thursday August 29th, 9:21 pm.
+
+## Campuswire
+
+Insert the image you uploaded to Campuswire here.
+
+![Picture added to campus wire](images/Screenshot%202024-08-29%20at%209.24.27%20PM.png){fig-alt="This image shows top portion of the editor pane in RStudio with the image icon circled in red" fig-align="center"}
+
+![How to insert an image into a Quarto document](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/main/homework/images/How%20to%20insert%20an%20image%20into%20a%20Quarto%20document.png){fig-alt="This image shows top portion of the editor pane in RStudio with the image icon circled in red" fig-align="center"}
+
+# Problem 2
+
+## Question 1
+
+The study population for both Data Set one and Data set two is all people with experiences with crime in Britian.
+
+## Question 2
+
+The sampling strategy of data set one is a voluntary response, the sampling strategy of the data set two is a retrospective study.
+
+## Question 3
+
+The sampled population of data set one is 38,000 people who are living in England and Wales, 16 years and older not living in communal living.
+
+The sample for data set 2 criminal records held by UK police of crimes that have been investigated.
+
+## Question 4
+
+The target population are those 16 and up not living in communal living. The target population of the data set two is people who are in UK police records.
+
+## Question 5
+
+In the first data set there there is self-reported data that is used, this is not reliable because when data is self reported there is bias that goes into those who are taking the samples. The data of the first data set is not valid to the entire population because it starts at 16 years of age so it is not representative to the whole British population along with not being representative of people who live in communal living. The goal was to be representative of the British population, it is not exactly representative of the whole population because it included 16 and up not living in communal style living.
+
+This data is reliable because it come from the criminal records from the UK police, it is accurate but it is not representative to the UK population. Which makes the study not valid. The sample population does not represent the study population because it only takes data from the UK's police criminal records not the whole population. The conclusions from this study can not apply to the target population because it only represents records of crimes not the population as a whole.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type          |
+|----------------|----------------------------------------|----------------|
+| `case`        | id number                                                    | numerical, discrete    |
+| `bwt`         | birthweight, in ounces                                       | numerical, continuous  |
+| `gestation`   | length of gestation, in days                                 | numerical, discrete    |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | numerical, nominal     |
+| `age`         | mother's age in years                                        | numerical, discrete    |
+| `height`      | mother's height in inches                                    | numerical, continuous  |
+| `weight`      | mother's weight in pounds                                    | numerical, continuous  |
+| `smoke`       | binary indicator for whether the mother smokes               | numerical, nominal     |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_weight`, and the dependent, response variable I chose is `variable_gestation`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = weight,
+              y = gestation)) + 
+  geom_point() +
+  
+ ggtitle('The Effect of Weight on Length of Gestation') 
+ 
+```
+
+There is not much of a correrlation between the variables gestation vs weight. Much of the data is clumped together in the begining of the graph. One can suggest that as weight increased there are fewer days of gestation, but the lower the weight of the mothers the longer days of gestation, but the correlation is not very strong nor very evident through the graph.
+
+Session Info
+
+```{r session_info}
+xfun::session_info()
+```

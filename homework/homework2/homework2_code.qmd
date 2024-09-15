@@ -1,0 +1,194 @@
+---
+title: "Homework 2 Code"
+author: "Sarah E. Grabinski"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Setup
+
+```{r}
+library(NHANES)
+library(Hmisc)
+library(ggdist)
+library(patchwork)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+# Load Data
+
+```{r}
+nhanes_df <- NHANES
+```
+
+# View numerical summary
+
+```{r}
+nhanes_df |>
+  Hmisc::describe() |>
+  html()
+```
+
+
+# Create Distribution Plots
+
+```{r generate_plots, warning = F}
+# Looking for variables that are unimodal or bimodal, 
+# symmetric or skewed, with or without outliers
+
+# Bimodal, asymmetric, right-skewed, outliers
+p1 <- nhanes_df |>
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 10) +
+  labs(y = '', 
+        title = 'Plot A')
+
+# Asymmetric, left-skewed, unimodal, outliers
+p2 <- nhanes_df |>
+  ggplot(aes(x = Height)) +
+  geom_density() +
+  labs(y = '', 
+title = 'Plot B')
+
+# Asymmetric, right-skewed, unimodal, outliers
+p3 <- nhanes_df |>
+  ggplot(aes(x = Pulse, y = '')) +
+  geom_violin() +
+  labs(y = '', title = 'Plot C')
+
+# Normal, symmetric, outliers
+p4 <- nhanes_df |>
+  ggplot(aes(x = BPDiaAve)) +
+  geom_density() +
+  labs(y = '', title = 'Plot D')
+
+# Uniform and/or right-skewed
+p5 <- nhanes_df |>
+  ggplot(aes(x = AgeMonths)) +
+  geom_histogram(binwidth = 50) +
+  labs(y = '', title = 'Plot E')
+
+# A weird one for fun
+# OK if they say unimodal, bonus point if they say multimodal
+# Also symmetric with outliers
+p6 <- nhanes_df |>
+  ggplot(aes(x = DiabetesAge)) +
+  ggdist::stat_halfeye() +
+  ggdist::stat_dots(side = 'left', 
+                    alpha = 0.75) +
+  theme(axis.ticks.y = element_blank(), 
+        axis.text.y = element_blank()) +
+  labs(y = '', title = 'Plot F')
+
+patchwork::wrap_plots(list(p1, p2, p3, p4, p5, p6), 
+                      nrow = 2)
+```
+
+# Selecting Summary Statistics
+
+```{r}
+patchwork::wrap_plots(list(p3, p4), nrow = 1)
+```
+
+# Matching Distributions
+
+```{r}
+set.seed(123); dist_df <- data.frame(
+  id = seq(1, 100),
+  uniform = c(unlist(lapply(0:10, function(x) rep(x, 8))), 
+              sample(0:10, 12, replace = T)), 
+  left_skew = sapply(seq(1, 100), 
+                     function(x) x^(1/3) * 2),
+  right_skew = sapply(seq(1, 100), 
+                      function(x) x^2/1000),
+  normal = abs(rnorm(100, mean = 5, sd = 2)),
+  bimodal = c(abs(rnorm(70, mean = 3, sd = 1)), 
+              abs(rnorm(30, mean = 7, sd = 1))),
+  outlier = c(rpois(95, 3), sample(11:13, 5, replace = T))
+)
+
+dist_df |>
+  select(bimodal, left_skew, normal,
+         outlier, right_skew, uniform) |>
+  Hmisc::describe()
+```
+
+```{r, warning = F}
+p1 <- dist_df |>
+  ggplot(aes(x = bimodal, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot G')
+
+p2 <- dist_df |>
+  ggplot(aes(x = left_skew, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot H')
+
+p3 <- dist_df |>
+  ggplot(aes(x = normal, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot I')
+
+p4 <- dist_df |>
+  ggplot(aes(x = outlier, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot J')
+
+p5 <- dist_df |>
+  ggplot(aes(x = right_skew, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot K')
+
+p6 <- dist_df |>
+  ggplot(aes(x = uniform, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot L')
+
+patchwork::wrap_plots(list(p1, p2, p3, p4, p5, p6))
+```
+
+# Contingency Tables
+
+```{r}
+nhanes_df |>
+  filter(!is.na(Gender), !(is.na(SleepTrouble))) |>
+  janitor::tabyl(Gender, SleepTrouble) |>
+  janitor::adorn_totals(where = c('row', 'col'))
+```
+
+```{r}
+nhanes_df |>
+  filter(!is.na(Gender), !(is.na(SleepTrouble))) |>
+  janitor::tabyl(Gender, SleepTrouble) |>
+  janitor::adorn_totals(where = c('row', 'col')) |>
+  janitor::adorn_percentages(denominator = 'row')
+```
+
+```{r}
+nhanes_df |>
+  filter(!is.na(Gender), !(is.na(SleepTrouble))) |>
+  janitor::tabyl(Gender, SleepTrouble) |>
+  janitor::adorn_totals(where = c('row', 'col')) |>
+  janitor::adorn_percentages(denominator = 'col')
+```
+
+

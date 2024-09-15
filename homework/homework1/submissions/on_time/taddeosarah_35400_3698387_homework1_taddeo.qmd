@@ -1,0 +1,110 @@
+---
+title: "Homework 1"
+author: "Sarah Taddeo"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+August 29, 2024 - night
+
+## Campuswire
+
+![](images/goat%20image.jpeg)ere.
+
+![How to insert an image into a Quarto document](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/main/homework/images/How%20to%20insert%20an%20image%20into%20a%20Quarto%20document.png){fig-alt="This image shows top portion of the editor pane in RStudio with the image icon circled in red" fig-align="center"}
+
+# Problem 2
+
+## Question 1
+
+In data set 1, the study population is people living in the UK and Wales who have experiences with crime. The study population in data set 2 is reported crimes in the UK.
+
+## Question 2
+
+The sampling strategy in data set 1 is voluntary sampling since the data is self reported. The sampling strategy in data set 2 is convenience sampling since the data has already been collected by the UK police.
+
+## Question 3
+
+In data set 1, the sample population is represented by people 16 years and older and people that do not live in communal residences. The data collected in data set 2 is records of crimes that have been reported from the UK police.
+
+## Question 4
+
+The target population is crime rates in Britain.
+
+## Question 5
+
+Data set one is not totally reliable because all of the data is self reported therefore bias or inaccuracy may be present. The data in data set 1 is not valid either because it does not represent the whole population of the UK. For this reason, the conclusions based on this data can not be generalized because the sample population does not accuratly represent the target population. It only represents those living is non-communal residences. Data set 2 however is more reliable because the data is from legal documentation. The data has been recorded by professional which is why it is also valid. The conclusions based on the data in data set 2 can be generalize because it is both reliable and valid.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type          |
+|---------------|--------------------------------------------------------------|------------------------|
+| `case`        | id number                                                    | Numerical - Discrete   |
+| `bwt`         | birthweight, in ounces                                       | Numerical - Continuous |
+| `gestation`   | length of gestation, in days                                 | Numerical - Continuous |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Categorical - Binary   |
+| `age`         | mother's age in years                                        | Numerical - Continuous |
+| `height`      | mother's height in inches                                    | Numerical - Continuous |
+| `weight`      | mother's weight in pounds                                    | Numerical - Continuous |
+| `smoke`       | binary indicator for whether the mother smokes               | Categorical - Binary   |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes( x = gestation,y = bwt )) + 
+  geom_point()
+```
+
+Most of the gestation points are between 250 and 300 days however the birth weight varies. Therefore the birth weight and gestation period don't have a direct relationship.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

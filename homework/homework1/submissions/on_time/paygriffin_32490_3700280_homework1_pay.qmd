@@ -1,0 +1,135 @@
+---
+title: "Homework 1"
+author: "Griffin Pay"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Please put the date and time you completed the survey here.
+
+2024/09/04 2:00 P.M.
+
+## Campuswire
+
+Insert the image you uploaded to Campuswire here.
+
+![How to insert an image into a Quarto document](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/main/homework/images/How%20to%20insert%20an%20image%20into%20a%20Quarto%20document.png){fig-alt="This image shows top portion of the editor pane in RStudio with the image icon circled in red" fig-align="center"}
+
+![](emmett.jpg)
+
+# Problem 2
+
+## Question 1
+
+Type your answer here.
+
+The study population in data set 1 is the specific people that are 16 years or older that do not live in a communal residence and also filled out the survey.
+
+The study population in data set 2 is the crimes that UK police keep administrative record of.
+
+## Question 2
+
+Type your answer here.
+
+The sampling strategy in data set 1 is having only people that are 16 and older fill out the survey and having the survey be self reported.
+
+The sampling strategy of data set 2 is whether or not a crime should be kept on record based on the internal definition of the police officers.
+
+## Question 3
+
+Type your answer here.
+
+In data set 1, the sampled population is the 38,000 people that were questioned.
+
+In data set 2, the sampled population is the amount of crimes kept on record.
+
+## Question 4
+
+Type your answer here.
+
+The target population in data set 1 is anybody 16 years or older that do not live in communal residences that have experiences with crime.
+
+The target population in data set 2 is the crimes kept on record.
+
+## Question 5
+
+Type your answer here.
+
+The reliability of data set 1 is strong because it comes directly from people that have experiences with crime and they fill out the survey themselves. The reliability of data set 2 is not as strong because it is based off of what an officer thinks is a crime or not based off their own definition. The validity of data set 1 is less than data set 2 because data set 1 has a survey that is filled out by random people and they could be lying, exaggerating, or telling the truth. However, in data set 2, the crimes reported are accurate and valid because police officers have to be professional and follow the law.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type         |
+|---------------|--------------------------------------------------------------|-----------------------|
+| `case`        | id number                                                    | Categorical, nominal  |
+| `bwt`         | birthweight, in ounces                                       | Numerical, continuous |
+| `gestation`   | length of gestation, in days                                 | Numerical, discrete   |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Categorical, ordinal  |
+| `age`         | mother's age in years                                        | Numerical, continuous |
+| `height`      | mother's height in inches                                    | Numerical, continuous |
+| `weight`      | mother's weight in pounds                                    | Numerical, continuous |
+| `smoke`       | binary indicator for whether the mother smokes               | Categorical, nominal  |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = weight, # please change these
+              y = height)) + 
+  geom_point()
+```
+
+Describe what you see in your plot here.
+
+Height and weight correlate to each other because most of the time, the taller someone is, the more they weigh.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

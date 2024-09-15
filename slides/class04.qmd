@@ -1,0 +1,657 @@
+---
+title: "Class 04"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-06'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 04 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 04 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Load Packages for Today's Slides
+
+```{r}
+# Contains the describe() function for comprehensive data summaries
+library(Hmisc)
+# Contains the palmer penguins_df dataset
+library(palmerpenguins)
+# For scatterplot matrices
+library(GGally)
+# Always load the tidyverse last
+library(tidyverse)
+
+# Set favorite ggplot2 theme for visualizations
+theme_set(theme_bw())
+```
+
+## Types of Data
+
+![The two primary types of data we'll analyze are numerical and categorical variables.](class03/types_of_data.png){fig-alt="Flow chart with all variables being split into numerical and categorical variables. Numerical is further subdivided into continuous and discrete. Categorical is subdivided into nominal or ordinal." fig-align="center"}
+
+## How can I tell what kind of variable I have?
+
+-   Inspect the data in the global environment
+
+-   Print the data to the console or in a code chunk
+
+-   Use the `glimpse()` function for a quick summary
+
+-   Use the `describe()` function from the `Hmisc` package for a detailed summary
+
+## Let's work with `palmerpenguins`!
+
+![Meet the Palmer Penguins](class02/lter_penguins.png){fig-align="center"}
+
+## Load the `palmerpenguins::penguins_df`data set
+
+```{r}
+penguins_df <- palmerpenguins::penguins
+
+head(penguins_df)
+```
+
+## Data Dictionary
+
+| name             | description                                | variable type         |
+|------------------|----------------------------------|-------------------|
+| `species`        | Penguin species: chinstrap, gentoo, adelie | categorical           |
+| `bill_length_mm` | how long is the bill from base to tip      | numerical, continuous |
+| `bill_depth_mm`  | how wide is the bill from bottom to top    | numerical             |
+
+## Use `Hmisc::describe()` for a detailed summary
+
+```{r, eval = F}
+# describe is a common function name, so 
+# it is a good habit to call this version
+# directly from the package using package_name::
+# to prevent conflicts and errors
+penguins_df |>
+  select(species, bill_length_mm, bill_depth_mm) |>
+  Hmisc::describe()
+```
+
+## Use `Hmisc::describe()` for a detailed summary
+
+```{r, echo = F}
+penguins_df |>   
+  select(species, bill_length_mm, bill_depth_mm) |>   
+  Hmisc::describe()
+```
+
+## Visualizing Data
+
+-   Distributions and numerical summaries of both explanatory and response variables
+
+    -   Histogram, bar plot
+
+    -   Density or violin plots
+
+    -   Boxplots
+
+-   Associations, relationships, correlations between explanatory and response variables
+
+    -   Scatter plots, regression
+
+    -   Scatterplot matrices
+
+## Histogram - How common are certain ranges of values? (Discrete)
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) + # ggplot2 only uses +! no pipes!
+  # add a histogram to the plot
+  geom_histogram(binwidth = 2, # each bin spans 2 mm                 
+                 fill = 'steelblue', # some color for fun 
+                 color = 'white') +  
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Histogram - How common are certain ranges of values? (Discrete)
+
+```{r, message = F, warning = F, echo = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) + # ggplot2 only uses +! no pipes!
+  # add a histogram to the plot
+  geom_histogram(binwidth = 2, # each bin spans 2 mm                 
+                 fill = 'steelblue', # some color for fun 
+                 color = 'white') +  
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Density Plot - How common are certain ranges of values? (Continuous)
+
+```{r eval = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) +   
+  # add a density curve to the plot
+  geom_density(fill = 'steelblue', # add some color and make it transparent
+               alpha = 0.5) +   
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Density Plot - How common are certain ranges of values? (Continuous)
+
+```{r echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) +   
+  # add a density curve to the plot
+  geom_density(fill = 'steelblue', # add some color and make it transparent
+               alpha = 0.5) +   
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Boxplot + Violin - Numerical summary + density curves
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = species, y = bill_length_mm)) +   
+  # Add a violin plot as the base layer
+  geom_violin(aes(fill = species)) +   
+  # Add a boxplot on top of the violin plot
+  geom_boxplot(width = 0.3)
+```
+
+## Boxplot + Violin - Numerical summary + density curves
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins_df |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = species, y = bill_length_mm)) +   
+  # Add a violin plot as the base layer
+  geom_violin(aes(fill = species)) +   
+  # Add a boxplot on top of the violin plot
+  geom_boxplot(width = 0.3)
+```
+
+## Variable Terms
+
+-   ***Independent*** or ***explanatory*** variable
+
+    -   Typically on the x-axis
+
+    -   "Cause" variable
+
+-   ***Dependent*** or ***response*** variable
+
+    -   Typically on the y-axis
+
+    -   "Effect" variable
+
+## Association vs. Independence
+
+-   When two variables show some connection with one another, they are called ***associated*** variables.
+
+-   If two variables are not associated, i.e. there is no evident connection between the two, then they are said to be ***independent***.
+
+## Scatterplot Matrices - Quick Look at Many Relationships
+
+This code will sometimes run slowly and generate lots of warning messages.
+
+```{r, eval = F}
+penguins_df |>
+# Select variables of interest
+  select(species, bill_length_mm,
+         bill_depth_mm) |>
+  # send to ggpairs to create the matrix
+  ggpairs()
+```
+
+## Scatterplot Matrices - Quick Look at Many Relationships
+
+```{r, echo = F, message = F, warning = F}
+penguins_df |>
+# Select variables of interest
+  select(species, bill_length_mm,
+         bill_depth_mm) |>
+  # send to ggpairs to create the matrix
+  ggpairs()
+```
+
+## Scatter plot + Linear Regression - Detailed Look at 1 Relationship
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Scatter plot + Linear Regression - Detailed Look at 1 Relationship
+
+Does this look like this regression line accurately describes the relationship between bill depth and bill length? Do you see any patterns in the points?
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Negatively Correlated Variables {.smaller}
+
+The regression line slopes downwards from the upper left-hand corner towards the lower right-hand corner.
+
+::: columns
+::: column
+```{r, echo = F}
+# pipe data into ggplot2 
+penguins_df |>
+  # Define ggplot parameters for the plot
+  ggplot(aes(x = bill_depth_mm, 
+             y = bill_length_mm)) +    
+  # add scatter plot   
+  geom_point(alpha = 0.5, 
+             # make transparent              
+             # change point size
+             size = 3) +   
+  # add linear regression line   
+  geom_smooth(method = 'lm',                
+              col = 'red', se = T) +    
+  # add plot labels   
+  labs(title = 'Scatter Plot + Regression Lines',        
+       subtitle = 'These variables are negatively associated.', 
+       x = 'Bill Depth', 
+       y = 'Bill Length', 
+       caption = 'Red = Linear Regression Line')
+```
+:::
+
+::: column
+-   Bill length is negatively associated with bill depth for all penguins_df sampled.
+
+-   Bill length is negatively correlated to bill depth.
+
+-   As bill depth increases, bill length decreases.
+:::
+:::
+
+## Scatter plot + LOESS Regression - Detailed Look at 1 Relationship
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a LOESS regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to loess
+              method = 'loess', 
+              # change the color
+              color = 'red',
+              # remove standard error shading
+              se = F)
+```
+
+## Scatter plot + LOESS Regression - Detailed Look at 1 Relationship
+
+Using the localized regression technique LOESS can help you identify trends in your data that traditional linear models can miss. What do you see here?
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a LOESS regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to loess
+              method = 'loess', 
+              # change the color
+              color = 'red',
+              # remove standard error shading
+              se = F)
+```
+
+## What happens when we consider penguin species?
+
+How does this plot differ from the first linear regression analysis on data from `penguins_df` not grouped by species?
+
+```{r, echo = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## What happens when we consider penguin species?
+
+```{r, eval = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Positively Correlated Variables {.smaller}
+
+The regression line slopes upwards from the bottom left-hand corner towards the upper right-hand corner.
+
+::: columns
+::: column
+```{r, echo = F}
+# Pipe data into ggplot2
+penguins_df |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T) +
+  labs(title = 'Scatterplot + Regression Lines by Species', 
+       subtitle = 'These variables are positively associated.', 
+       x = 'Bill Depth', 
+       y = 'Bill Length')
+```
+:::
+
+::: column
+-   Bill length is positively associated with bill depth within each of the 3 penguin species.
+
+-   Bill length is negatively correlated to bill depth
+
+-   As bill depth increases, bill length decreases.
+:::
+:::
+
+## Take-Home Lessons
+
+-   Conclusions are shaped by the assumptions we make during the analysis
+
+-   Context is important!
+
+-   A picture is worth a thousand words
+
+## Study Approaches {.small}
+
+-   **Case Study (anecdotal evidence)**: very few observations, often $n = 1$
+
+-   **Sampling**: a subset of all possible observations
+
+    -   **Random**: a sampling technique used to obtain data from the subset that is representative of all possible observations
+
+    -   **Voluntary response**: data is volunteered by study subjects
+
+    -   **Convenience**: data is obtained from the subset of all possible observations that is most easily accessible
+
+-   **Census**: all possible observations
+
+## Study Methods {.smaller}
+
+-   **Observational Study**: researchers do not affect the data that is collected from subjects (ex: a political poll)
+
+-   **Interventional Study**: researchers do *something* which modifies the data collected from subjects (ex: a clinical trial that assigns subjects to control and treatment groups)
+
+-   **Prospective Study**: subjects are recruited into a study prior to future data collections (ex: a 5-year study of crime rates in juveniles following expulsion from school)
+
+-   **Retrospective Study**: data is collected from subjects on events that have already taken place (ex: a study of the past medical records of hospital patients who were diagnosed with a disease)
+
+## Study Population Definitions
+
+-   **Study Population**: all possible subjects who could have been observed in the study
+
+-   **Sample Population**: the subjects who were actually observed in the study
+
+-   **Target Population**: the subjects who the research conclusions should be applied to
+
+## Evaluating a Study's Data
+
+-   **Reliability**: how much can we trust the data? is it accurate?
+
+-   **Validity**: how well does the sample population represent the study population?
+
+-   **Generalizability**: would the conclusions from the study population be applicable to the target population?
+
+## Populations & Sampling: Example 1
+
+-   *Grambeau, K., Osborne, B. Weight, E.A. (2020). Student-Athlete Perceptions of Name, Image, and Likeness Compensation. Chapel Hill, NC: Center for Research in Intercollegiate Athletics.*
+
+-   **Who:** [The Center for Research in Intercollegiate Athletics](https://www.cria-unc.com/) at the University of North Carolina at Chapel Hill
+
+-   **Research Question**: In light of impending NCAA rule changes, are NCAA student-athletes in the Power Four conferences in favor of receiving compensation in exchange for the use of their name, image, and likeness (NIL)?
+
+## Populations & Sampling: Example 1 {.smaller}
+
+::: columns
+::: column
+-   **Research Question**: In light of impending NCAA rule changes, are NCAA Division I student-athletes in favor of receiving compensation in exchange for the use of their name, image, and likeness (NIL)?
+
+-   **Methods**: Surveys from $n = 1201$ current student-athletes at an NCAA Division I Power Four conference school were analyzed.
+:::
+
+::: column
+1.  What is the target population?\
+    *all NCAA Division I student-athletes*
+
+2.  What is the study population?\
+    *Current student-athletes at an NCAA Division I Power Four conference school*
+
+3.  What is the sample population?\
+    *1,201 current student-athletes at an NCAA Division I Power Four conference school who responded to the survey*
+:::
+:::
+
+## Populations & Sampling: Example 1 {.smaller}
+
+::: columns
+::: column
+-   **Research Question**: In light of impending NCAA rule changes, are NCAA Division I student-athletes in favor of receiving compensation in exchange for the use of their name, image, and likeness (NIL)?
+
+-   **Methods**: Surveys from $n = 1201$ current student-athletes at an NCAA Division I Power Four conference school were analyzed.
+:::
+
+::: column
+1.  Is the data reliable?\
+    *self-reported data may not be honest*
+
+2.  Is the data valid?\
+    *sampling technique not reported (random? convenience?)*\
+    *response rate not reported (non-responders excluded)*
+
+3.  Is the data generalizable?\
+    *are Power Four student-athletes representative of all Division I student-athletes?*
+:::
+:::
+
+## Populations and Sampling: Example 2 {.smaller}
+
+-   *Harvey, S. B., Øverland, S., Hatch, S. L., Wessely, S., Mykletun, A., & Hotopf, M. (2018). Exercise and the Prevention of Depression: Results of the HUNT Cohort Study. American Journal of Psychiatry, 175(1), 28–36. https://doi.org/10.1176/appi.ajp.2017.16111223*
+
+-   **Research Question**: Does exercise provide protection against new-onset depression and anxiety?
+
+-   **Methods**: Baseline and follow-up surveys about lifestyle and medical history were sent to all inhabitants aged 20+ years of Nord-Trondelag County in Norway ($n = 85100$) in 1984-1986 (baseline) and 1995-1997 (follow-up). 60,980 subjects responded, from which 33,908 subjects were selected due to having no pre-existing physical or mental health conditions.
+
+## Populations and Sampling: Example 2 {.smaller}
+
+::: columns
+::: column
+-   **Research Question**: Does exercise provide protection against new-onset depression and anxiety?
+
+-   **Methods**: Baseline and follow-up surveys about lifestyle and medical history were sent to all inhabitants aged 20+ years in rural Nord-Trondelag County in Norway ($n = 85100$) in 1984-1986 (baseline) and 1995-1997 (follow-up). 60,980 subjects responded, from which 33,908 subjects were selected due to having no pre-existing physical or mental health conditions.
+:::
+
+::: column
+1.  What is the target population?\
+    *all Norwegian adults? all white adults? all adults?*
+
+2.  What is the study population?\
+    *Norwegian adults aged 20+ years from Nord-Trondelag County from 1984-1997*
+
+3.  What is the sample population?\
+    *33,908 "healthy" Norwegian adults aged 20+ years from Nord-Trondelag County who responded to both surveys*
+:::
+:::
+
+## Populations & Sampling: Example 2 {.smaller}
+
+::: columns
+::: column
+-   **Research Question**: Does exercise provide protection against new-onset depression and anxiety?
+
+-   **Methods**: Baseline and follow-up surveys about lifestyle and medical history were sent to all inhabitants aged 20+ years in rural Nord-Trondelag County in Norway ($n = 85100$) in 1984-1986 (baseline) and 1995-1997 (follow-up). 60,980 subjects (`r round(60980/85100 * 100)`%) responded, from which 33,908 subjects were selected due to having no pre-existing physical or mental health conditions.
+:::
+
+::: column
+1.  Is the data reliable?\
+    *self-reported data may not be honest*
+
+2.  Is the data valid?\
+    *high response rate*\
+    *"unhealthy" subjects excluded*
+
+3.  Is the data generalizable?\
+    *Are residents of rural Nord-Trondelag county representative of all Norwegians? adults who live in the US? adults who live in China?*
+:::
+:::
+
+## Sampling with Skittles {.smaller}
+
+::: columns
+::: column
+![](class04/skittles.jpg){fig-alt="A picture of Skittles candy." fig-align="center"}
+:::
+
+::: column
+You're a researcher with the FDA investigating the safety of food additives. Some skittles are made with Red 40, a food dye. This additive can harm the body in large doses, so you want to make sure people who eat Skittles don't get too much. You need to know on average how many red skittles come in a package to determine if levels are below the legal limit.
+:::
+:::
+
+## Research Question
+
+On average, how many red Skittles are in the a package?
+
+## What is being measured?
+
+Count of red skittles in a package
+
+## Sampling Strategy
+
+-   Where will we get Skittles to study from?
+
+-   How many packages should we count?
+
+## Target Population
+
+-   To what or whom will the conclusions of our study apply?
+
+-   How does that affect data collection?
+
+## Population Definitions
+
+-   What is the study population?
+
+-   What is the sample population?
+
+## Evaluating Inferences
+
+-   How reliable would data collected this way be?
+
+-   How valid would data collected this way be?
+
+-   To whom/what is the data generalizable?
+
+## Session Info
+
+```{r}
+xfun::session_info()
+```

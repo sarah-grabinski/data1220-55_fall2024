@@ -1,0 +1,119 @@
+---
+title: "Homework 1"
+author: "Luis Aguilar"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+08/30/2024.
+
+## Campuswire
+
+![](images/WhatsApp%20Image%202024-08-30%20at%2010.11.44_bc0b7fa2.jpg){width="189"}
+
+# Problem 1
+
+## Question 1
+
+***Data set 1:*** People who are 16 years of age or older who reside in private households in England and Wales make up the study population.
+
+***Data set 2:*** All crimes reported and those investigated by UK police are included in the study population.
+
+## Question 2
+
+***Data set 1:*** A survey is used to target a larger number of people using a random sample approach.
+
+***Data set 2:*** Every crime that is reported to the police and looked by them is recorded as part of the sampling method.
+
+## Question 3
+
+***Data set 1:*** Those who took part in the crime survey for England and Wales are included in the sampled population.
+
+***Data set 2:*** The crimes that the UK police have officially recorded make up the sampled population.
+
+## Question 4
+
+All people living in England and Wales who are 16 years old or older, including those who live in shared housing are the study's target demographic.
+
+## Question 5
+
+-   ***Reliability:*** Although self-reported data may have biases, the crime survey for England and Wales is generally credible because of its high sample size and rigorous procedure. Since the police records adhere to stablished protocols for reporting crimes.
+
+-   ***Validity***: Data set 2 may be lacking because it only contains crimes that are known to the police, possibly leaving out unreported instances. In contrast, data set 1 has strong validity because it collects unreported crimes, providing a larger picture.
+
+-   Since Data Set 1 Takes into account crimes that go unreported, its conclusion are more applicable to the intended audience, in data set 2's conclusion might not be entirely applicable because of under reporting or inconsistent police recording procedure.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type      |
+|---------------|--------------------------------------------------------------|--------------------|
+| `case`        | id number                                                    | Numeric            |
+| `bwt`         | birthweight, in ounces                                       | Continuous Numeric |
+| `gestation`   | length of gestation, in days                                 | Continuous Numeric |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Binary             |
+| `age`         | mother's age in years                                        | Continuous Numeric |
+| `height`      | mother's height in inches                                    | Continuous Numeric |
+| `weight`      | mother's weight in pounds                                    | Continuous Numeric |
+| `smoke`       | binary indicator for whether the mother smokes               | Binary             |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = case, # please change these
+              y = age)) + 
+  geom_point()
+```
+
+Describe what you see in your plot here.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

@@ -1,0 +1,109 @@
+---
+title: "Homework 1"
+author: "Caroline"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+September 4th, 2024 at 12:27 p.m.![](images/data survey photo .PNG){width="200"}
+
+## Campuswire
+
+![](images/IMG_5925.jpg){width="229"}
+
+# Problem 2
+
+## Question 1
+
+The study population of data set 1 is a population of 38,000 people. These people are above the age of 16 and all live in non-communal areas.
+
+## Question 2
+
+The sampling strategies were two different approaches researchers in the UK used to gather data about people and the crime they have witnessed.
+
+## Question 3
+
+The sampled population of the data set are people in the UK and Wales above the age of 16 who did a survey and the total amount of people was about 38,000.
+
+## Question 4
+
+The target population were people who lived in the UK above the age of 16 who lived in non-communal areas.
+
+## Question 5
+
+The data collected was not really reliable because it was a survey done on the person completing the tasks own time. The data was generalized which is not the best option because it was research that reached over 30,000 people. Validity was different in these data researches because what they were researching was logical because it was based on crime.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type           |
+|-----------------|--------------------------------------|-----------------|
+| `case`        | id number                                                    | categorical             |
+| `bwt`         | birthweight, in ounces                                       | quantitative            |
+| `gestation`   | length of gestation, in days                                 | continuous              |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | categorical             |
+| `age`         | mother's age in years                                        | quantitative            |
+| `height`      | mother's height in inches                                    | continuous quantitative |
+| `weight`      | mother's weight in pounds                                    | continuous quantitative |
+| `smoke`       | binary indicator for whether the mother smokes               | categorical             |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = age, # please change these
+              y = height)) + 
+  geom_point()
+```
+
+Linear straight consecutive data.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

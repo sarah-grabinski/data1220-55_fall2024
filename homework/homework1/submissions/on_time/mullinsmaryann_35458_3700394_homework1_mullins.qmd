@@ -1,0 +1,109 @@
+---
+title: "Homework 1"
+author: "Maryann Mullins"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Tuesday, September 3, 2024 at 4:33 PM.
+
+## Campuswire
+
+![](images/IMG_5685_(1).jpg)
+
+## Problem 2
+
+## Question 1
+
+The study population of the data sets is the individuals in the UK who are being tested on.
+
+## Question 2
+
+The sampling strategy used was by selecting individual who are 16 years old or older.
+
+## Question 3
+
+The sample population is individuals who are 16 years old or older.
+
+## Question 4
+
+The target population is also the individuals who are 16 years old or older.
+
+## Question 5
+
+The research is very reliable because they are choosing to use individuals who are mostly adults. However, this may not be very accurate because all the adults being tested might be too similar. If the data is generalized, it could cause the data to not be very accurate.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type |
+|---------------|--------------------------------------------------------------|---------------|
+| `case`        | id number                                                    | numerical     |
+| `bwt`         | birthweight, in ounces                                       | numerical     |
+| `gestation`   | length of gestation, in days                                 | numerical     |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | categorical   |
+| `age`         | mother's age in years                                        | numerical     |
+| `height`      | mother's height in inches                                    | numerical     |
+| `weight`      | mother's weight in pounds                                    | numerical     |
+| `smoke`       | binary indicator for whether the mother smokes               | categorical   |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = height, # please change these
+              y = weight)) + 
+  geom_point()
+```
+
+Describe what you see in your plot here.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

@@ -4,13 +4,6 @@ subtitle: "DATA1220-55, Fall 2024"
 author: "Sarah E. Grabinski"
 date: '2024-09-04'
 format:
-  beamer:
-    header-includes: 
-      - \newcommand{\theHtable}{\thetable}
-    echo: true
-    slide-number: true
-    navigation: horizontal
-    theme: default
   revealjs: 
     theme: default
     self-contained: true
@@ -18,8 +11,62 @@ format:
     footnotes-hover: true
     echo: true
     preview-links: auto
-    footer: "https://canvas.jcu.edu/courses/36290 | DATA1220 Class 02 | `r Sys.Date()` | https://campuswire.com/c/G6427C531/feed"
+    footer: "DATA1220-55 Fall 2024, Class 03 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 03 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
+
+## Load Packages for Today's Slides
+
+```{r}
+# Contains the describe() function for comprehensive data summaries
+library(Hmisc)
+# Contains data sources used in our text book
+library(openintro)
+# Contains the palmer penguins dataset
+library(palmerpenguins)
+# For scatterplot matrices
+library(GGally)
+# Always load the tidyverse last
+library(tidyverse)
+
+# Set favorite ggplot2 theme for visualizations
+theme_set(theme_bw())
+```
+
+## Homework is now due Monday
+
+-   Please take advantage of the extra time to attend office hours and/or post on Campuswire for help with remaining homework questions
+
+-   Late policy: "This homework is due by 6:00pm on Monday, 9/9/24. No credit will be lost for assignments received by 7:00pm to account for issues with uploading. 10% of the points will be deducted from assignments received by 9:00am on Tuesday, 9/10/24. Assignments turned in after this point are only eligible for 50% credit, so it benefits you to turn in whatever you have completed by the due date."
+
+## Let's talk about coding anxiety
+
+-   It's natural to be anxious about learning to code, but it has a bad reputation
+
+-   Older coding languages are less "readable" and required a lot of memorization
+
+-   Modern languages are more interpretable (i.e. function is named for what it does)
+
+-   Someone has probably answered the question you have somewhere on the internet
+
+## What are your thoughts on ChatGPT?
+
+It's a lying liar that lies. It will make up functions that don't exist, and troubleshooting its bugs has wasted countless of my hours. Using ChatGPT to write new code is risky at best. I do not recommend it.
+
+That said, I have found ChatGPT occasionally useful for debugging code when I don't understand the error that is being generated. It is also useful for generating custom markdown templates. That has stll led to dead ends and lost time though, so use at your own risk.
+
+## My Approach to Coding
+
+Don't waste time memorizing functions, package names, parameters, etc. Everything is just a quick Google search away. You should honestly be able to copy-paste a lot of your homework code from somewhere in the slides on that chapter. What you should focus on learning is how to recognize different types of data and which tools are best for analyzing that data. You won't need every tool in your toolkit all the time, but you should know how to find them when you need them.
 
 ## What is data science?
 
@@ -27,7 +74,7 @@ format:
 
 *Source: Figure 1.1 in <https://r4ds.hadley.nz/intro.html>*
 
-## Chatfield's Six Rules for Data Analysis
+## Chatfield's Six Rules for Data Analysis {.smaller}
 
 1.  *Do not attempt to analyze the data until you understand what is being measured and why.*
 2.  *Find out how the data were collected.*
@@ -36,7 +83,11 @@ format:
 5.  *Use your common sense at all times.*
 6.  *Report the results in a clear, self-explanatory way.*
 
-*Chatfield, Chris (1996) Problem Solving: A Statistician's Guide, 2nd ed.*
+*Chatfield,* *Chris (1996) Problem Solving: A Statistician's Guide, 2nd ed.*
+
+## Chapter 1 Pipeline
+
+![Data science pipeline priorities for Chapter 1](class03/data-science_annotated.png){fig-alt="Red boxes around the \"Import\", \"Visualize\" and \"Communicate\" components of the data science pipeline" fig-align="center"}
 
 ## Chapter 1 Objectives
 
@@ -46,6 +97,10 @@ format:
 
 -   Describe how data was collected
 
+    -   Study, sample, and target populations
+
+    -   Sampling procedures and principles
+
 -   Identify what types of variables were measured
 
 -   Import and summarize raw data
@@ -54,42 +109,840 @@ format:
 
 -   Communicate findings using a Quarto markdown document
 
+## What we'll tackle today...
+
+-   Get to know you better
+
+-   Set up R, RStudio, and Campuswire
+
+-   Identify what types of variables were measured
+
+-   Import and summarize raw data
+
+-   Create an exploratory visualization
+
+-   Communicate findings using a Quarto markdown document
+
+## What we'll tackle on Friday...
+
+-   Describe how data was collected
+
+    -   Study, sample, and target populations
+
+    -   Sampling procedures and principles
+
+-   Communicate findings using a Quarto markdown document (cont.)
+
 ## Introductory Survey
 
--   [DATA1220-55 Fall 2024 Intro Survey](https://docs.google.com/forms/d/e/1FAIpQLSesGt6PcXlULSxbDEcWfsBb8Dk_C0AbxKZOqzW2jOOpWKyQcA/viewform?usp=sharing)
+-   [DATA1220-55 Fall 2024 Intro Survey](https://docs.google.com/forms/d/e/1FAIpQLSesGt6PcXlULSxbDEcWfsBb8Dk_C0AbxKZOqzW2jOOpWKyQcA/viewform?usp=sharing) (link)
 
--   A "getting to know you" survey that will help me serve you better
+-   "Getting to know you" exercise to help me serve you better
 
 -   Should take fewer than 10 minutes to complete
 
--   16 people have already responded – THANK YOU!
+-   21 people have already responded – THANK YOU!
 
 -   Worth FIVE FREE POINTS on Homework 1
 
 ## Campuswire Forum
 
--   [Class Feed](https://campuswire.com/c/G6427C531/feed) (bookmark this page!)
+-   [Class Feed](https://campuswire.com/c/G6427C531/feed) (link, bookmark this page!)
 
--   Forum for homework issues, earning participation credit
+-   Forum for homework issues, discussions, earning participation credit
 
 -   Point-based system for asking questions, crowdsourcing answers
 
--   21 people have completed registration – THANK YOU!
+-   22 people have completed registration – THANK YOU!
 
 -   Worth FIVE FREE POINTS on Homework 1
 
 ## Navigating Campuswire
 
-[![Campuswire Class Feed](class03/campuswire_main_page.png){fig-alt="Campuswire class feed with options to answer questions and make new posts" fig-align="center"}](https://campuswire.com/c/G6427C531/feed)
+[![The Campuswire main page, also called the Class Feed](class03/campuswire_main_page.png){fig-alt="Campuswire main page, called the class feed, with options to answer questions and make new posts" fig-align="center"}](https://campuswire.com/c/G6427C531/feed)
 
-## Making A New Post 
+## Making A New Post
 
-![How to make a new post on Campuswire](class03/campuswire_new_post.png){fig-alt="Make a new post on Campuswire by selecting new post, labeling it as a question, giving it a topic, and posting to everyone" fig-align="center"}
+![Post a question on Campuswire by selecting the blue "+ New post" button, creating a new ***\*\*question\*\**** using the drop-down menu, tagging the question topic, giving it a title and description, and posting. Be sure to post a new ***\*\*question\*\**** and not a note (default option) for full credit!](class03/campuswire_new_post.png){fig-alt="Make a new post on Campuswire by selecting new post, labeling it as a question, giving it a topic, and posting to everyone" fig-align="center"}
 
-## Load Packages
+## Example Question
+
+[![A magnificent example of a brave student using Campuswire to crowdsource help on their homework](class03/campuswire_asking_questions.png){fig-alt="A student post asking for help on Homework 1 in the class feed on Campuswire" fig-align="center"}](https://campuswire.com/c/G6427C531/feed/7)
+
+## Interacting With Questions
+
+![Interact with student-posed questions and discussion posts by liking the post, answering the question, or up-voting the answer(s) you think are best.](class03/campuswire_answering_questions.png){fig-alt="A question post on Campuswire with a blue thumbs-up icon (\"Like\"), blue \"Answer this question\" button, and blue up-facing arrow with the number 1 circled in red, showing ways to interact with question posts" fig-align="center"}
+
+## Participation Points on Campuswire
+
+![Participation scores will appear directly to the right of names with a bird icon indicating their level/status. Click on the icon to pull up how to earn participation points, the interactions needed to reach different ranks/levels, and your current participation status.](class03/campuswire_scoring_icon.png){fig-alt="A student answer to a question with their participation score and level icon circled in red." fig-align="center"}
+
+## Earning Participation Points
+
+![The number of participation points (called "reputation points" on Campuswire) received for each type of interaction on the class feed.](class03/campuswire_participation_points.png){fig-alt="Students will receive +2 points for each like their questions receive, +2 points for asking a question on the feed, +5 points for answering a question on the feed, and +10 points for having their answer upvoted by another student" fig-align="center"}
+
+## Participation Levels
+
+![The first 3 participation levels, their corresponding icons, the interactions needed to reach each level, and your current progress.](class03/campuswire_participation_levels.png){fig-alt="A screenshot of the reputation levels showing levels 0-2, their corresponding icons, the interactions needed to reach each level, and your current progress." fig-align="center"}
+
+## What's the difference between R and RStudio?
+
+-   R is an open source statistical programming language.
+
+-   R comes with it's own user interface called R Gui, but its functionality is limited.
+
+::: callout-warning
+## We do ***NOT*** want to use R Gui.
+:::
+
+## What's the difference between R and RStudio?
+
+RStudio is an integrated development environment (IDE) with a variety of tools for working with coding languages like R and Python.
+
+-   Smart code-highlighting for easy reading
+
+-   Direct and "chunkable" code execution
+
+-   Visualization capabilities
+
+-   Environment, workspace, and file management
+
+## Downloading R v4.4.1
+
+-   [Windows Installation of R-4.4.1](https://cran.rstudio.com/bin/windows/base/)
+
+-   [macOS Installations](https://cran.rstudio.com/bin/macosx/)
+
+    -   [macOS 11 (**Big Sur**) and higher](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg)
+
+    -   [Older, Intel Macs](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg)
+
+::: callout-caution
+## This must be done before you can use RStudio.
+:::
+
+## Installing RStudio Desktop
+
+-   [Windows 10/11](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
+
+-   [macOS 12+](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg)
+
+::: callout-note
+## You may have to manually add an RStudio shortcut to your desktop.
+:::
+
+## How can I tell the difference?
+
+![We want to work in RStudio.](class03/r_vs_rstudio.png){fig-alt="A green smiley face over the RStudio desktop icon, which we want to be using, and a red cross-out symbol over the R 4.4.1 desktop, which we do not want to use." fig-align="center"}
+
+## RStudio Files {.smaller}
+
+We will work with 4 types of file in RStudio:
+
+1.  R scripts, ending in `.R`: text files containing only R code with no output
+
+2.  Quarto markdown documents, ending in `.qmd`: rich text files that combine R code with [markdown language](https://quarto.org/docs/authoring/markdown-basics.html) and YAML headers to format the document
+
+3.  HTML files, ending in `.html`: the rendered output of a Quarto markdown document that can be viewed in any standard web browser
+
+4.  PDF files, ending in `.pdf`: the rendered output of a Quarto markdown document that can be viewed in any standard PDF viewer
+
+## Creating Raw Files in RStudio
+
+Create raw text files by going to "File \> New File" in RStudio and selecting...
+
+-   R Script for `.R` files
+
+-   Quarto Document for `.qmd` article-like documents
+
+-   Quarto Presentation for `.qmd` powerpoint-like presentations
+
+## What does a raw `.qmd` file look like?
+
+You can access the raw text, including the markdown language, by using the "Source" editor option.
+
+![The "Source" editor shows the raw code and markup language without any preprocessing by RStudio. The file type is set as "PDF" in the YAML header at the top.](class03/rstudio_source_editor.png){fig-alt="Screenshot of the \"Source\" editor in RStudio with the option circled in red in the editor pane toolbar. The document type, \"PDF\" is also indicated in red in the YAML code." fig-align="center"}
+
+## Visual Editor for Raw Files
+
+![How to toggle between the "Source" and "Visual" editors in RStudio using the editor pane toolbar, along with how to set the default editor to "Visual" in the YAML header. The document type ("HTML") is also specified in the YAML header.](class03/rstudio_visual_html.png){fig-alt="The \"visual\" editor option is selected in the toolbar for the editor pane and the editor is set as \"visual\" in the YAML code." fig-align="center"}
+
+::: callout-important
+## We want to live in the visual editor for now!
+:::
+
+## Advantages of the Visual Editor
+
+-   Format text, insert links/images, create tables, and more from the toolbar ([***no coding necessary!***]{.underline})
+
+-   Preview document formatting without waiting for it to render over and over
+
+-   Insert executable cells ("code chunks") and other special features directly into the document
+
+## Creating Rendered Files in RStudio
+
+Create rendered output files by (1) defining the document type in the YAML header and (2) running the "Render" process with the blue arrow icon at the top of the editor pane.
+
+![Run the "Render" process with the blue arrow icon to generate HTML and PDF files from Quarto markdown documents.](class03/rstudio_render_icon.png){fig-alt="The \"Render\" process and its icon in the editor pane of RStudio circled in red." fig-align="center"}
+
+## WTH is a YAML?
+
+-   A text header bound by 3 dashes (`---`) at the top and bottom of a `.qmd` file
+
+-   Composed of key-value pairs, using the syntax `key: value` to define parameters
+
+-   Defines the document type, formatting, default options, and other *metadata* for your project
+
+::: callout-note
+## I will write most of these for you in your homework templates.
+:::
+
+## Example YAML Header from Homework 1
+
+![The YAML header from the homework1_template.qmd file in the Chapter 1 module on Canvas. It establishes the document metadata (title, author, date, etc.), defines the document type (HTML), and sets the default editor to "Visual".](class03/homework_yaml_header.png){fig-alt="Screenshot of the YAML header from the homework1_template.qmd file in the Chapter 1 module on Canvas." fig-align="center"}
+
+## Using Projects in RStudio
+
+"Projects" in RStudio, files ending in `.Rproj`, allow you to divide your work into discrete containers for each project, keeping them separated with their own unique...
+
+-   Folder containing associated files (called the "working directory")
+
+-   Data environment storing loaded packages, variables, and calculations (`.RData` files)
+
+-   Work history containing executed code (`.Rhistory` files)
+
+## And the best parts?
+
+-   Projects will autosave your open documents so you have less to recover in the event of a crash
+
+-   Projects will store data and results objects in its "Global Environment" between sessions, so you don't have to run the same calculations over and over each time
+
+-   Projects allow you to work on 2+ projects simultaneously across multiple RStudio sessions
+
+## Creating a Project in RStudio
+
+-   File \> New Project \> New or Existing Directory
+
+-   [RStudio Projects Tutorial](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)
+
+[![The pop-up prompt when creating a new project in RStudio. We will use new or existing directories.](http://www.rstudio.com/images/docs/projects_new.png){fig-alt="Screenshot of the pop-up prompt when creating a new project in RStudio, with options to start project in a new, existing, or version control directory." fig-align="center"}](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)
+
+## Installing Code Packages
+
+-   Packages are collections of custom functions to use for statistical analyses
+
+-   Some are installed with base `R`, and some need to be installed manually
+
+    -   Install and update using the "Packages" tab in RStudio
+
+    -   Install in the console using the `install.packages('package_name')` function
+
+-   Packages are loaded into documents before any other code is written, using the `library('package_name'`) function
+
+## Coding Notes - Assignment Operator
+
+You can declare a variable in R one of two ways: using an `=` or using the assignment operator `<-`. I prefer the latter, and that's what you'll see most often in my code. Both are acceptable.
 
 ```{r}
-library(tidyverse)
+# Example: defining a variable with =
+x = 5
+# Display the variable by declaring it
+x
+```
 
-theme_set(theme_bw())
+```{r}
+# Example: defining a variable with <-
+y <- 27
+# Display the variable with the print() function
+print(y)
+```
+
+## Coding Notes - Pipe Operator
+
+Create long chains of functions using the pipe operator `|>` to pass the results of one function as new input for the next function. We won't do much with this until you begin writing more complex code.
+
+```{r, eval = F}
+# Load the palmer penguins dataset and pipe on
+penguins |>
+  # Calculate a new variable and pipe on
+  mutate(bill_length_cm = bill_length_mm / 10) |>
+  # Rename a variable and pipe on
+  rename(gender = sex) |>
+  # Display specific variables from final result
+  select(species, bill_length_cm, gender)
+```
+
+## Coding Notes - Pipe Operator
+
+```{r, echo = F}
+# Load the palmer penguins dataset and pipe on
+penguins |>
+  # Calculate a new variable and pipe on
+  mutate(bill_length_cm = bill_length_mm / 10) |>
+  # Rename a variable and pipe on
+  rename(gender = sex) |>
+  # Display specific variables from final result
+  select(species, bill_length_cm, gender)
+```
+
+## Common Raw Data Formats
+
+-   Preformatted data sets in packages (e.g. `openintro` package from our textbook)
+
+-   R data files: `.rds` or `.rda` for single data objects, `.RData` for multiple data objects
+
+-   Delimited files: text files with character separators
+
+    -   Comma separated values (`.csv`)
+
+    -   Tab-separated values (`.tsv`)
+
+-   Excel spreadsheets (e.g. `.xls`, `.xlsx`)
+
+## How do I get data files into R?
+
+I will demonstrate the code for how to import common raw data formats as we work through examples in the course, rather than show them to you all at once.
+
+-   See Class 02, slides 17-19 for an example loading the `palmerpenguins` package data
+
+-   The Homework 1 template includes code to import a comma-separated values file (`.csv`)
+
+## Once I import data, where does it go?
+
+![Imported data, user-defined variables, and calculated results will be stored in your project's "***Global Environment***".](class03/rstudio_environment_with_data.png){fig-align="center"}
+
+## What does data look like: Lists
+
+```{r}
+# cbind-type list
+c('object1', 'object2', 'object3')
+# list-type list
+list(1, 2, 3, 4, 5)
+```
+
+## What does data look like: Named lists
+
+```{r}
+# named list
+list(name = 'Sabrina', age = 25, 
+     major = 'Data Science', grad_year = 2026)
+```
+
+## What does data look like: Matrices
+
+```{r}
+# Input = a list of items
+# Parameters = # of rows and/or columns
+# Initialize cells by row = TRUE
+matrix(data = seq(1:25), nrow = 5, 
+       ncol = 5, byrow = T)
+# Initialize cells by row = TRUE
+matrix(data = seq(1:25), nrow = 5, 
+       ncol = 5, byrow = F)
+```
+
+## What does data look like: Dataframes
+
+```{r}
+# seq creates a list of numbers from low:high
+# as.character changes variable type from numeric
+data.frame(id = as.character(seq(1:5)), 
+           month = c('June', 'June', 'June', 
+                     'July', 'August'), 
+           # in rep, the 2nd parameter is the number of 
+           # times the 1st parameter is repeated in a list
+           year = rep(2024, 5), 
+           state = c('OH', 'OH', 'IN', 'IN', 'CA'), 
+           # converts string variables to factors
+           stringsAsFactors = T)
+```
+
+## What is a dataframe?
+
+-   Data arranged in rows and columns like a typical spreadsheet
+
+-   Each row (ideally) contains 1 unique observation of the data for each of the measured variables
+
+-   Each column (ideally) contains all the observations for 1 unique variable that was measured
+
+## What does a dataframe look like?
+
+![The compact view shows the name (dataframe), the number of rows (obs.), and the number of columns (variables). A preview of the variable names and data types can be accessed with the blue drop-down.](class03/rstudio_environment_with_data.png){fig-alt="Screenshot of the information available in the environment about dataframes, including the name, number of rows and columns, variable names, and data types." fig-align="center"}
+
+## What's a data dictionary?
+
+A formatted document, often a table, which provides information about the variables such as...
+
+-   The variable names as seen in the raw data
+
+-   Description of the variable measured
+
+-   Units in which the variable was measured
+
+-   Number of observations
+
+-   Number of missing values
+
+## Types of Data
+
+![The two primary types of data we'll analyze are numerical and categorical variables.](class03/types_of_data.png){fig-alt="Flow chart with all variables being split into numerical and categorical variables. Numerical is further subdivided into continuous and discrete. Categorical is subdivided into nominal or ordinal." fig-align="center"}
+
+## Numerical vs Categorical Data
+
+-   ***Numerical*** data is quantitative (measured) data.
+
+-   ***Categorical*** data is qualitative (descriptive) data.
+
+    -   ***Binary*** categorical variables only have 2 categories (e.g. 1 or 0)
+
+    -   ***Multi-categorical*** variables have 3+ categories (e.g.
+
+## Numerical Variables: Continuous vs Discrete
+
+-   ***Continuous*** numeric variables can take any value imaginable within a given range
+
+    -   Examples: degrees Celsius, weight in grams, time elapsed in milliseconds
+
+-   ***Discrete*** numeric variables have a limited set of potential values
+
+    -   Examples: counts, time in months
+
+## Categorical Variables: Nominal vs Ordinal
+
+-   ***Nominal*** categorical variables have no order
+
+    -   Rearranging the categories makes no difference
+
+-   ***Ordinal*** categorical variables have a direction
+
+    -   The order of the categories has meaning
+
+    -   Example: On a scale from 1-5..., Strongly Agree to Strongly Disagree
+
+## How can I tell what kind of variable I have?
+
+-   Inspect the data in the global environment
+
+-   Print the data to the console or in a code chunk
+
+-   Use the `glimpse()` function for a quick summary
+
+-   Use the `describe()` function from the `Hmisc` package for a detailed summary
+
+## Inspect the data in the global environment
+
+![Inspecting the object in the environment can provide details about what data types you have.](class03/rstudio_environment_with_data_types_labeled.png){fig-alt="Screenshot of a dataframe in the global environment with variable types underlined in red." fig-align="center"}
+
+## Print the data in a code chunk
+
+```{r}
+# the head command will print the first 5 
+# items in a list or rows in a dataframe
+head(penguins_raw)
+```
+
+## Use `glimpse()` for a quick summary
+
+```{r}
+glimpse(penguins_raw)
+```
+
+## Use `Hmisc::describe()` for a detailed summary
+
+```{r}
+# describe is a common function name, so 
+# it is a good habit to call this version
+# directly from the package using package_name::
+# to prevent conflicts and errors
+Hmisc::describe(penguins)
+```
+
+## Variable Terms
+
+-   ***Independent*** or ***explanatory*** variable
+
+    -   Typically on the x-axis
+
+    -   "Cause" variable
+
+-   ***Dependent*** or ***response*** variable
+
+    -   Typically on the y-axis
+
+    -   "Effect" variable
+
+## Visualizing Data
+
+-   Distributions and numerical summaries of both explanatory and response variables
+
+    -   Histogram, bar plot
+
+    -   Density or violin plots
+
+    -   Boxplots
+
+-   Associations, relationships, correlations between explanatory and response variables
+
+    -   Scatter plots, regression
+
+    -   Scatterplot matrices
+
+## Histogram - How common are certain ranges of values? (Discrete)
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) + # ggplot2 only uses +! no pipes!
+  # add a histogram to the plot
+  geom_histogram(binwidth = 2, # each bin spans 2 mm                 
+                 fill = 'steelblue', # some color for fun 
+                 color = 'white') +  
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Histogram - How common are certain ranges of values? (Discrete)
+
+```{r, message = F, warning = F, echo = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) + # ggplot2 only uses +! no pipes!
+  # add a histogram to the plot
+  geom_histogram(binwidth = 2, # each bin spans 2 mm                 
+                 fill = 'steelblue', # some color for fun 
+                 color = 'white') +  
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Density Plot - How common are certain ranges of values? (Continuous)
+
+```{r eval = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) +   
+  # add a density curve to the plot
+  geom_density(fill = 'steelblue', # add some color and make it transparent
+               alpha = 0.5) +   
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Density Plot - How common are certain ranges of values? (Continuous)
+
+```{r echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = bill_length_mm)) +   
+  # add a density curve to the plot
+  geom_density(fill = 'steelblue', # add some color and make it transparent
+               alpha = 0.5) +   
+  # Add titles and axis labels
+  labs(title = 'Distribution of Bill Lengths',        
+       subtitle = 'In Adelie, Chinstrap, and Gentoo Penguins',        
+       x = 'Bill Length (mm)',        
+       y = '# of Individuals')
+```
+
+## Boxplot + Violin - Numerical summary + density curves
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = species, y = bill_length_mm)) +   
+  # Add a violin plot as the base layer
+  geom_violin(aes(fill = species)) +   
+  # Add a boxplot on top of the violin plot
+  geom_boxplot(width = 0.3)
+```
+
+## Boxplot + Violin - Numerical summary + density curves
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins |>   
+  # Initialize the plot parameters with aes
+  ggplot(aes(x = species, y = bill_length_mm)) +   
+  # Add a violin plot as the base layer
+  geom_violin(aes(fill = species)) +   
+  # Add a boxplot on top of the violin plot
+  geom_boxplot(width = 0.3)
+```
+
+## Association vs. Independence
+
+-   When two variables show some connection with one another, they are called ***associated*** variables.
+
+-   If two variables are not associated, i.e. there is no evident connection between the two, then they are said to be ***independent***.
+
+## Scatterplot Matrices - Quick Look at Many Relationships
+
+This code will sometimes run slowly and generate lots of warning messages.
+
+```{r, eval = F}
+penguins |>
+# Select variables of interest
+  select(species, island, bill_length_mm,
+         bill_depth_mm) |>
+  # send to ggpairs to create the matrix
+  ggpairs()
+```
+
+## Scatterplot Matrices - Quick Look at Many Relationships
+
+```{r, echo = F, message = F, warning = F}
+penguins |>
+# Select variables of interest
+  select(species, island, bill_length_mm,
+         bill_depth_mm) |>
+  # send to ggpairs to create the matrix
+  ggpairs()
+```
+
+## Scatter plot + Linear Regression - Detailed Look at 1 Relationship
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Scatter plot + Linear Regression - Detailed Look at 1 Relationship
+
+Does this look like this regression line accurately describes the relationship between bill depth and bill length? Do you see any patterns in the points?
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Negatively Correlated Variables {.smaller}
+
+The regression line slopes downwards from the upper left-hand corner towards the lower right-hand corner.
+
+::: columns
+::: column
+```{r, echo = F}
+# pipe data into ggplot2 
+penguins |>
+  # Define ggplot parameters for the plot
+  ggplot(aes(x = bill_depth_mm, 
+             y = bill_length_mm)) +    
+  # add scatter plot   
+  geom_point(alpha = 0.5, 
+             # make transparent              
+             # change point size
+             size = 3) +   
+  # add linear regression line   
+  geom_smooth(method = 'lm',                
+              col = 'red', se = T) +    
+  # add plot labels   
+  labs(title = 'Scatter Plot + Regression Lines',        
+       subtitle = 'These variables are negatively associated.', 
+       x = 'Bill Depth', 
+       y = 'Bill Length', 
+       caption = 'Red = Linear Regression Line')
+```
+:::
+
+::: column
+-   Bill length is negatively associated with bill depth for all penguins sampled.
+
+-   Bill length is negatively correlated to bill depth.
+
+-   As bill depth increases, bill length decreases.
+:::
+:::
+
+## Scatter plot + LOESS Regression - Detailed Look at 1 Relationship
+
+Using the localized regression technique LOESS can help you identify trends in your data that traditional linear models can miss. What do you see here?
+
+```{r, eval = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a LOESS regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to loess
+              method = 'loess', 
+              # change the color
+              color = 'red',
+              # remove standard error shading
+              se = F)
+```
+
+## Scatter plot + LOESS Regression - Detailed Look at 1 Relationship
+
+```{r, echo = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm)) +
+  # add a scatterplot
+  geom_point() +
+  # add a LOESS regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to loess
+              method = 'loess', 
+              # change the color
+              color = 'red',
+              # remove standard error shading
+              se = F)
+```
+
+## What happens when consider additional variables in the data?
+
+How does this plot differ from the first linear regression analysis on data from penguins not grouped by species?
+
+```{r, echo = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## What happens when consider additional variables in the data?
+
+```{r, eval = F, message = F, warning = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T)
+```
+
+## Positively Correlated Variables {.smaller}
+
+The regression line slopes upwards from the bottom left-hand corner towards the upper right-hand corner.
+
+::: columns
+::: column
+```{r, echo = F}
+# Pipe data into ggplot2
+penguins |>
+  # Set x and y variables with aes
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm, 
+             # group the data by species
+             group = species, 
+             # color the points/lines by species
+             color = species)) +
+  # add a scatterplot
+  geom_point(alpha = 0.5) +
+  # add a linear model regression line
+  geom_smooth(formula = y ~ x, 
+              # set method to lm
+              method = 'lm', 
+              # keep standard error shading
+              se = T) +
+  labs(title = 'Scatterplot + Regression Lines by Species', 
+       subtitle = 'These variables are positively associated.', 
+       x = 'Bill Depth', 
+       y = 'Bill Length')
+```
+:::
+
+::: column
+-   Bill length is positively associated with bill depth within each of the 3 penguin species.
+
+-   Bill length is negatively correlated to bill depth
+
+-   As bill depth increases, bill length decreases.
+:::
+:::
+
+## Take-Home Lessons
+
+-   Conclusions are shaped by the assumptions we make during the analysis
+
+-   Context is important!
+
+-   A picture is worth a thousand words
+
+## Next time...
+
+-   Please complete your Google surveys
+
+-   Please register for Campuswire
+
+-   Where does your data come from? (defining populations)
+
+-   Principles of sampling (Skittles activity??)
+
+-   DATA1220 pre-survey (FREE 2.5% of final grade)
+
+    -   Please contact me if you will not be in class Friday
+
+## Session Info
+
+At the end of every project, you should include your session info. This function prints out your computer's operating system, the installation of R you are using, and all of your installed packages plus version numbers. This is a good habit for producing reproducible research.
+
+```{r}
+xfun::session_info()
 ```

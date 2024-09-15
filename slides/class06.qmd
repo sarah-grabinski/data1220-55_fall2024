@@ -1,0 +1,263 @@
+---
+title: "Class 06"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-11'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 06 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 06 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Packages Used Today
+
+NONE!
+
+## Numerical Variables
+
+![Numerical variables can be continuous or discrete.](class03/types_of_data.png){fig-alt="Flow chart with all variables being split into numerical and categorical variables. Numerical is further subdivided into continuous and discrete. Categorical is subdivided into nominal or ordinal." fig-align="center"}
+
+## Describing numerical distributions
+
+The "shape" of numerical data is called its **distribution**.
+
+-   **Location:** the "center" of the data
+
+    -   The value(s) around which most observations are clustered
+
+-   **Scale:** the "spread" of the data
+
+    -   How variable the observations are around that "center"
+
+## Describing distribution shapes
+
+![Commonly observed patterns in numerical distributions](class05/distribution_shapes.png){fig-align="center"}
+
+## Describing a distribution's **location**
+
+The **location** of a numerical variable's distribution can be thought of as the "center" of the data, around which the bulk of the observations cluster.
+
+-   **Mean:** the sum of a values divided by the number of observations (i.e. "average")
+
+-   **Median:** the value in the exact middle of the data
+
+-   **Mode:** the most common value in the data (for discrete variables)
+
+## Describing a distribution's **scale**
+
+How far is each data value from the mean?
+
+-   **Variance:** $s^2$, the sum of the squared differences between each observation's value and the sample mean $\bar{x}$ divided by $n-1$
+
+-   **Standard deviation:** $s$, the square root of the variance
+
+-   **Range:** minimum to maximum
+
+-   **Interquartile Range (IQR):** 25th percentile to 75th percentile, the middle 50% of the data
+
+## Robust statistics
+
+The **median** and **interquartile range** are considered to be **robust statistics** for the numerical summary of data because they are less sensitive to **skew** and **outliers** than the **mean**, **variance**, and **standard deviation**.
+
+![The presence of outliers and/or skew in a numerical variable's distribution affects how well summary statistics describe a distribution's location.](class05/outlier_statistics.png)
+
+## 5-Number Summary of Numerical Data
+
+1.  Minimum value or Q1 - 1.5 x Interquartile Region
+
+2.  1st quartile (Q1, 25th percentile)
+
+3.  Median (Q2, 50th percentile)
+
+4.  3rd quartile (Q3, 75th percentile)
+
+5.  Maximum value or Q3 + 1.5 x Interquartile Region
+
+## Choosing Summary Statistics for Numerical Data
+
+-   The **mean** and **standard deviation** are really only appropriate for a certain type of unimodal, symmetric distribution called the **normal distribution** and often misused
+
+-   Most real world data will be best described by the **median** and **interquartile region** as part of a 5-number summary
+
+## The Normal Distribution
+
+::: columns
+::: {.column width="50%"}
+![The percentage of the observations which fall within +/- 1, 2, and 3 standard deviations from the mean when data is normally distributed.](class06/standard-normal-distribution-example.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+-   **Normal distributions** are unimodal and symmetric
+
+-   The **mean** and the **median** of normally distributed data will be approximately equal
+
+-   **Normally distributed** variables are desirable in statistics but rare in practice
+:::
+:::
+
+## Using the mean +/- standard deviation to describe non-normal distributions
+
+![All of these distributions have a mean of 0 and a standard deviation of 1, but those metrics are only appropriate for describing the middle distribution.](class06/mean_and_sd_non_normal.png){fig-align="center"}
+
+## Visualizing Numerical Data
+
+-   Dot plot
+
+-   Histogram
+
+-   Density Curve
+
+-   Boxplot
+
+-   Violin plot
+
+## How to Read a Dot Plot
+
+![There is a single axis (x) along with a dot marking each data point. The points are usually slightly transparent, so you can see when points are overlapping.](class06/dot_plot.png)
+
+## How to read a stacked dot plot
+
+![In a stacked dot plot, multiple observations at a single value are stacked on top of each other.](class06/stacked_dot.png){fig-align="center"}
+
+## How to Read a Histogram
+
+![](class06/histogram_example.png){fig-align="center"}
+
+## Histograms for different distributions
+
+![Examples of the different distribution shapes as histograms](class06/histogram_distributions.png)
+
+## Histograms and skew
+
+![When histograms are skewed, the mean and the median may occur in 2 different bins.](class06/histogram_summary_statistics.png)
+
+## Histograms and outliers
+
+![Outliers are easy to spot on a histogram](class06/histogram_outliers.png)
+
+## Histograms and modality
+
+![Modality is easy to spot on a histogram.](class06/histogram_modality.png)
+
+## Choosing a bin width for your histogram
+
+![Bins that are too narrow may produce gaps. Bins that are too wide can hide the "shape" of the distribution.](class06/histogram_binwidth.png)
+
+## Histograms –\> Density Plots
+
+![Density plots produce a smooth curve of the distribution across all values of the numerical variable. While a histogram represents the count of observations that fall within a particular range, density represents the % of observations that occur at that specific value of the variable.](class06/histogram_density.png)
+
+## Histograms –\> Density Plots
+
+![It is easy to spot modality, skew, and outliers on a density plot.](class06/histogram_density2.png)
+
+## Density Plots –\> Violin Plots
+
+::: columns
+::: {.column width="50%"}
+![A violin plot of a variable is a mirrored image of its density curve.](class06/violin_rotated.png)
+:::
+
+::: {.column width="50%"}
+![A violin plot of a variable is a mirrored image of its density curve. It is often plotted vertically, whereas density curves are usually plotted horizontally.](class06/violin_example.png)
+:::
+:::
+
+## All together now
+
+![A histogram with a density curve overlaid, a violin plot, and a boxplot for the same distribution](class06/density_violin_boxplot.png)
+
+## Anatomy of a Boxplot
+
+![A boxplot is a visual representation of a 5-number summary. The "box" represents the middle 50% of the data, or the interquartile range. The line inside the box indicates the median or 50th percentile. The whiskers, the lines coming out from the box, extend 1.5 x IQR beyond Q1 and Q3. Values larger or smaller than that range are classified as outliers and appear as points.](class06/boxplot_anatomy.png)
+
+## Boxplot whiskers and outliers
+
+-   The ***whiskers*** of a boxplot (the lines extending out from the box) are 1.5 times the ***interquartile region*** long
+
+    -   Min whisker: Q1 - 1.5 x IQR
+
+    -   Max whisker: Q3 + 1.5 x IQR
+
+-   If a point is outside this range, it is considered to be a potential ***outlier***
+
+## Combining strategies: density + numerical summary
+
+![Because it's hard to spot modality in a box plot, they are often combined with density curves or violin plots.](class06/violin_boxplot.png)
+
+## Combining strategies: violin + boxplot
+
+![Some visualizations add a point to the boxplot indicating the location of the mean. If the mean is meaningfully different than the median, you have outliers and/or a skewed distribution.](class06/violin_boxplot_example.png)
+
+## Combining strategies: raincloud plots
+
+![Raincloud plots combine density curves, boxplots, and stacked dot plots. Can you see why having all 3 improves your understanding of the data?](class06/raincloud-slab-1.png)
+
+## Distribution Checklist {.smaller}
+
+-   What is the **modality** of the distribution?
+
+    -   How many "peaks" are there?
+
+-   Is the distribution **skewed** or **symmetric**?
+
+    -   Is there a longer "tail" on the left or right side?
+
+-   Are there any **outliers**?
+
+    -   How extreme are the most extreme values?
+
+-   What are the appropriate **summary statistics** for a distribution with this shape?
+
+    -   Would the mean+standard deviation or the median+IQR more accurately describe this data?
+
+## Example: The Penguins!
+
+![What is the modality of each distribution? Are they skewed? Would the mean be greater than, lesser than, or about equal to the median? Are there any outliers?](class06/polished-penguins-1.png)
+
+## Example: `datasets::iris` data set
+
+![Describe the shape of these different distributions. Do any of them look normally distributed?](class06/iris_example1.png)
+
+## Example: `datasets::iris` data set
+
+![When a distribution has multiple modes or is unusually distributed, it may be better to visualize the data separated by a categorical variable.](class06/iris_example2.png)
+
+## Example: `datasets::iris` data set
+
+![What type of special distribution is this? What summary statistics best describe this type of distribution?](class06/iris_example3.png)
+
+## Next time: Categorical Data
+
+-   Analyze contingency (e.g. 2x2) tables
+
+-   Summarizing categorical variables with proportions
+
+-   Comparison of numerical data between categorical groups
+
+## Next time: Visualizing Data
+
+-   Recognize common visualization techniques / plots
+
+    -   Numerical: Dot plots, histograms, density plots, QQ plots, box plots, violin plots
+
+    -   Categorical: bar plots, mosaic plots, tree map
+
+-   Build basic visualizations in `R` using `ggplot2`
+
+-   Data visualization do's and dont's

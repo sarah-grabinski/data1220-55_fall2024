@@ -1,0 +1,109 @@
+---
+title: "Homework 1"
+author: "Jack Stephens"
+date: "September 4, 2024"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+September 4, 2024 - 1:51PM
+
+## Campuswire
+
+![](IMG_7213.JPEG)
+
+# Problem 2
+
+## Question 1
+
+Common people in England and Wales.
+
+## Question 2
+
+The sampling strategy of this study is random sampling because the survey ensures that every household within the target population has an equal chance of being selected.
+
+## Question 3
+
+The 38,000 people surveyed and the residents of the neighborhoods on the record at the police station
+
+## Question 4
+
+The target population of these data sets are the police departments in England and Wales to see which areas in their country has the most experience with crime.
+
+## Question 5
+
+The reliability of this data set is not great solely because there are enough variables taken into account. When only surveying 38,000 of about 66.97 million people, many accounts can be different or non-reliable. In data set 2 it could be better because the stations can see where they have been the most and plan accordingly. This would cause the validity of set 2 to also be better than set 1. Finally, I would say that set 2 is a more effective method, but set 1 is more generalizable to the target population.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type           |
+|--------------|-------------------------------------------|--------------------------------------------|
+| `case`        | id number                                                    | Categorical - Ordinal   |
+| `bwt`         | birthweight, in ounces                                       | Numerical - Continiuous |
+| `gestation`   | length of gestation, in days                                 | Numerical- Discrete     |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Categorical - Nominal   |
+| `age`         | mother's age in years                                        | Numerical - Continuous  |
+| `height`      | mother's height in inches                                    | Numerical - Discrete    |
+| `weight`      | mother's weight in pounds                                    | Numerical - Continuous  |
+| `smoke`       | binary indicator for whether the mother smokes               | numerical               |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = weight, # please change these
+              y = age)) + 
+  geom_point()
+```
+
+The weight stays pretty consistent throughout the ages. The mothers weight for the most part stays within 100-150 pounds all the way from 15, 16 years old to 44, 45.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

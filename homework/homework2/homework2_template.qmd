@@ -1,0 +1,225 @@
+---
+title: "Homework 2"
+author: "YOURNAMEHERE"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+The following packages were used in this homework.
+
+```{r, load_packages, message = F}
+library(Hmisc)
+library(NHANES)
+library(janitor)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Introduction
+
+In this homework, I will...
+
+-   Describe numerical distributions
+
+-   Select the appropriate summary statistics based on distribution shape
+
+-   Match numerical distributions to their summary statistics
+
+-   Calculate proportions from a contingency table
+
+# The Data
+
+I will use the following data source for problems 1, 2, and 4.
+
+## Source
+
+-   [National Health and Nutrition Examination Survey](https://www.cdc.gov/nchs/nhanes/index.htm) (NHANES), a program of studies designed to assess the health and nutritional status of adults and children in the United States
+
+-   Survey combines data from interviews (demographic, socioeconomic, dietary, and health-related questions), physical examinations, and laboratory tests.
+
+-   This data set contains 5000 observations from the 2009-2010 survey and 5000 observations from the 2011-2012 survey.
+
+## Codebook
+
+Below are descriptions of the variables used in this homework.
+
+| Variable       | Description                                                                   | Type        |
+|----------------|-------------------------------------------------------------------------------|-------------|
+| `Weight`       | the subject's weight in pounds                                                | numerical   |
+| `Height`       | the subject's height in inches                                                | numerical   |
+| `Pulse`        | the subject's pulse in beats per minute                                       | numerical   |
+| `BPDiaAve`     | the subject's average diastolic blood pressure in mmHg                        | numerical   |
+| `AgeMonths`    | the subject's age in months                                                   | numerical   |
+| `DiabetesAge`  | the subject's age in years at which they were diagnosed with Diabetes         | numerical   |
+| `Gender`       | the subject's gender (levels: male, female)                                   | categorical |
+| `SleepTrouble` | whether or not the subject feels they have trouble sleeping (levels: yes, no) | categorical |
+
+## Loading the Data
+
+I loaded the data into RStudio and selected the variables I would be analyzing.
+
+```{r}
+## Load the NHANES data set from the package
+nhanes_df <- NHANES |>
+  select(Weight, Height, Pulse,
+         BPDiaAve, AgeMonths, DiabetesAge, 
+         Gender, SleepTrouble)
+
+head(nhanes_df)
+```
+
+# Numerical Summary
+
+Before performing any analysis, I looked summary statistics for my variables.
+
+```{r}
+nhanes_df |>
+  Hmisc::describe() |>
+  html()
+```
+
+# Problem 1 - Describing Numerical Distributions
+
+For plots A-F below, I will name the type of plot used to show the distribution and describe its shape.
+
+![](images/distribution_plots.png){fig-align="center"}
+
+## Plot A
+
+Type your answer here.
+
+## Plot B
+
+Type your answer here.
+
+## Plot C
+
+Type your answer here.
+
+## Plot D
+
+Type your answer here.
+
+## Plot E
+
+Type your answer here.
+
+## Plot F
+
+Type your answer here.
+
+## Bonus Point 1
+
+Type your answer here if you are attempting the bonus point. Otherwise, delete this section.
+
+## Bonus Point 2
+
+Type your answer here if you are attempting the bonus point. Otherwise, delete this section.
+
+# Problem 2 - Selecting Summary Statistics
+
+For plots C and D below, I will state the appropriate summary statistics for the distribution shape and justify my answer.
+
+![](images/summary_statistic_plots.png){fig-align="center"}
+
+## Plot C
+
+Type your answer here.
+
+## Plot D
+
+Type your answer here.
+
+# Problem 3 - Matching Distributions to Statistics
+
+Below are boxplots G-L and in the table below are their 5-number summaries. In the table, I will match each 5-number summary to one boxplots G-L and state whether I expect the mean of the distribution to be greater than, less than, or about equal to the median.
+
+![](images/boxplots.png){fig-align="center"}
+
++-----------+----------+----------+----------+----------+---------+----------------+
+| Minimum   | Q1       | Median   | Q3       | Maximum  | Boxplot | Mean vs Median |
++===========+==========+==========+==========+==========+=========+================+
+| **0.95**  | **2.58** | **3.48** | **6.15** | **9.20** | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+| **0.001** | **2**    | **5**    | **8**    | **10**   | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+| **0.001** | **0.66** | **2.55** | **5.66** | **10**   | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+| **0**     | **2**    | **3**    | **4**    | **13**   | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+| **0.38**  | **3.86** | **4.91** | **6.20** | **9.37** | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+| **2**     | **5.91** | **7.39** | **8.44** | **9.28** | Plot ?? | Higher /\      |
+|           |          |          |          |          |         | Lower /\       |
+|           |          |          |          |          |         | Same           |
++-----------+----------+----------+----------+----------+---------+----------------+
+
+# Problem 4 - Calculating Proportions for Contingency Tables
+
+I used the `tabyl()` function from the `janitor` package to create a 2 x 2 contingency table of counts from the variables `Gender` and `SleepTrouble` in my data set `nhanes_df`. I excluded subjects with missing data for either variable with the `filter()` function and `is.na()` function. I used the `adorn_totals()` function from the `janitor` package to add totals to both my rows `row` and columns `col`. I then used the functions `kbl()` and `kable_classic()` from the `kableExtra` package to make my table attractive to display.
+
+```{r}
+nhanes_df |>
+  filter(!is.na(Gender), !(is.na(SleepTrouble))) |>
+  janitor::tabyl(Gender, SleepTrouble) |>
+  janitor::adorn_totals(where = c('row', 'col')) |>
+  kableExtra::kbl(caption = 'Self-Reported Trouble Sleeping by Gender in the NHANES study for years 2009-2012 (n = 7,772)') |>
+  kableExtra::kable_classic(full_width = F)
+```
+
+In the tables below, I will calculate proportions for my contingency table by row and by column.
+
+## Row Proportions
+
+|            |        |         |           |
+|------------|--------|---------|-----------|
+|            | **No** | **Yes** | **Total** |
+| **Female** |        |         |           |
+| **Male**   |        |         |           |
+| **Total**  |        |         |           |
+
+: Proportions of those who do or do not have trouble sleeping by gender in NHANES subjects from the years 2009-2012 (n = 10,000)
+
+## Column Proportions
+
+|            |        |         |           |
+|------------|--------|---------|-----------|
+|            | **No** | **Yes** | **Total** |
+| **Female** |        |         |           |
+| **Male**   |        |         |           |
+| **Total**  |        |         |           |
+
+: Proportions of men and women by whether they have trouble sleeping or not in NHANES subjects from the years 2009-2012 (n = 10,000)
+
+## Bonus Point 3
+
+Type your answer here if you are attempting the bonus point. Otherwise, delete this section.
+
+## Bonus Point 4
+
+Type your answer here if you are attempting the bonus point. Otherwise, delete this section.
+
+# Session Info
+
+My homework was completed under the conditions below.
+
+```{r session_info}
+sessionInfo()
+```

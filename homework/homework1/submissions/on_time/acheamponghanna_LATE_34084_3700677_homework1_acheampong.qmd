@@ -1,0 +1,122 @@
+---
+title: "Homework 1"
+author: "Hanna Acheampong"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Entry Date & Time:
+
+Friday, August 30th, 2024 / at 8:22pm
+
+## Campuswire
+
+![](images/CampusWire%20Image.png){width="357"}
+
+# Problem 2
+
+## Question 1
+
+For Data Set 1, the study population of the data set consist of approximately 38,000 indivduals, who are people 16 year of age or older, and were not living in communal residences. For Data Set 2, the study population of the data set are the records of crimes they have investigated.
+
+## Question 2
+
+For Data Set 1, the sampling strategy of the data set is Random Sampling.
+
+For Data Set 2, the sampling strategy of the data set is Convenience sampling.
+
+## Question 3
+
+For Data Set 1, the sample population of the data set consists of 38,000 individuals ages 16 years or older who were not living in communal residences who responded to the study.
+
+For Data Set 2, the sample population of the data set consists of a population of individuals who were victims of crimes that were reported and investigated by the police; based on official police records.
+
+## Question 4
+
+The target population of Data Set 1, which would be primarily focusing on the crimes within England and Wales, consisted of all residents ages 16 or older living in private homes in both England and Wales.
+
+The target population of Data Set 2, which focuses on the administrative records of the police, would include all reported criminal incidents and their victims in England and Wales.
+
+## Question 5
+
+For Data set 1, the reliability would be high. The reason why is because there was a larger sampling size. However, within this set, the sample was self-reported - which can't always be reliable. For example, there may be individuals who aren't comfortable in stating the truth. The validity of this set was good because of the large range of people that were surveyed. As stated before, the issue is that there may be individuals who aren't willing in disclosing such sensitiveness infomation about their experiences. The study population would be generalizable to the target population.
+
+For Data set 2, the reliability would also be higher. This would be because we can assume that within the police records, there is a systemic data collection taking placed to document reported crimes. However, the validity could be affected. For example, there could have been a possible human error when documenting these records. The study population would not be generalizable.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type        |
+|----------------|---------------------------------------|----------------|
+| `case`        | id number                                                    | categorical          |
+| `bwt`         | birthweight, in ounces                                       | numerical/continuous |
+| `gestation`   | length of gestation, in days                                 | numerical/discrete   |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | categorical          |
+| `age`         | mother's age in years                                        | numerical/discrete   |
+| `height`      | mother's height in inches                                    | numerical/continuous |
+| `weight`      | mother's weight in pounds                                    | numerical/continuous |
+| `smoke`       | binary indicator for whether the mother smokes               | categorical          |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r}
+df |>
+  ggplot(aes(x = age, # please change these
+              y = weight)) + 
+  geom_point() +
+  geom_smooth() +
+  labs(title = 'My Graph',
+       x = 'Age')
+```
+
+This would be a Scatter plot + Linear Regression. Within this plot, the line within the plot is the called Regression line. The regression line slope upwards from the bottom left-hand corner towards the upper right-hand corner. This tells me that Weight is positively associated with Age. That also means that Weight is negatively correlated to Age. This tells me that as the age increases, the weight also increases as well.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

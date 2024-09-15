@@ -1,0 +1,118 @@
+---
+title: "Homework 1"
+author: Dominic Romano
+date: 9/4/2024
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+9/4/2024
+
+## Campuswire
+
+![](IMG_1411%20(1).jpeg)
+
+# Problem 2
+
+## Question 1
+
+Data Set 1: The study population consists of people 16 years or older in England and Wales not living in communal residence.
+
+Data Set 2 : The study population consists of crimes recorded and investigated by the UK police.
+
+## Question 2
+
+Data Set 1: The sampling strategy is surveying a random sample of people 16 or older not living in communal residence
+
+Data Set 2: The sampling strategy includes records collected from police reports and investigations.
+
+## Question 3
+
+Data Set 1: The sampled population is the 38,000 individuals aged 16 or older who responded to the survey
+
+Data set 2: The sampled population is the set of incidents that were reported and investigated by the police.
+
+## Question 4
+
+The target population is is all individuals who live in England and Wales
+
+## Question 5
+
+Data set 1 may be less reliable because it is based on peoples memories and can have mistakes, yet it does capture unreported crimes which makes it helpful for understanding all crime. Data set 2 is more reliable since its based on actual police records. Overall data set 1 applies to a wider range of people since it includes a lot of different experiences, while data set 2 only includes crimes that were reported to the police.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type         |
+|---------------|--------------------------------------------------------------|-----------------------|
+| `case`        | id number                                                    | Categorical, nominal  |
+|               |                                                              |                       |
+| `bwt`         | birthweight, in ounces                                       | Numerical, continuous |
+| `gestation`   | length of gestation, in days                                 | Numerical, discrete   |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Categorical, ordinal  |
+| `age`         | mother's age in years                                        | Numerical, continuous |
+| `height`      | mother's height in inches                                    | Numerical, continuous |
+| `weight`      | mother's weight in pounds                                    | Numerical, continuous |
+| `smoke`       | binary indicator for whether the mother smokes               | Categorical, nominal  |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = weight, # please change these
+              y = height)) + 
+  geom_point() +
+geom_smooth(method = 'lm', col = 'red')
+
+```
+
+The Plot shows that generally speaking the taller you are, the more that you weigh.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

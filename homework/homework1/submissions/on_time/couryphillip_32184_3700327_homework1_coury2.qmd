@@ -1,0 +1,117 @@
+---
+title: "Homework 1"
+author: "YOUR NAME HERE"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load packages {.unlisted}
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+This survery was completed on September 3rd, 2024 at 3:36 p.m.
+
+## Campuswire
+
+Insert the image you uploaded to Campuswire here.
+
+![](images/IMG_8705-01.JPG)
+
+# Problem 2
+
+## Question 1
+
+Data Set 1: The study population are people 16 years of age and older from England and Wales and were not living in communal residences.
+
+Data Set 2: The study population is all of the administrative records of crimes the UK police has investigated.
+
+## Question 2
+
+Data Set 1: The sampling strategy is a stratified sample because the population is not randomized due to being 16 years of age or older and not living in communal residences.
+
+Data Set 2: There is no sampling strategy for data set 2 because the police are using their own discretion when creating the records.
+
+## Question 3
+
+Data Set 1: The sampled population is approximately 38,000 people.
+
+Data Set 2: The sampled population is the administrative records of crimes.
+
+## Question 4
+
+The target population of the study is the people of England and Wales.
+
+## Question 5
+
+Data Set 1 is reliable overall because 38,000 people are being questioned however there could be human error/not telling the truth. Data Set 2 is very reliable because it deals with all of the administrative records of crimes they have investigated. Each data also holds validity because of these reasons. Conclusions based on each data set from the study population are generalizable to the target populaton because the sample sizes were very large.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type |
+|-----------------|--------------------------------------|-----------------|
+| `case`        | id number                                                    | discrete      |
+| `bwt`         | birthweight, in ounces                                       | continuous    |
+| `gestation`   | length of gestation, in days                                 | discrete      |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | categorical   |
+| `age`         | mother's age in years                                        | discrete      |
+| `height`      | mother's height in inches                                    | continuous    |
+| `weight`      | mother's weight in pounds                                    | continuous    |
+| `smoke`       | binary indicator for whether the mother smokes               | categorical   |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+df |>
+  ggplot(aes(x = bwt, # please change these
+              y = height)) + 
+  geom_point()
+```
+
+As the height increases, the body weight also increases with the exception of a couple outliers near 150 pounds body weight and less than 55 inches.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

@@ -1,0 +1,128 @@
+---
+title: "Homework 1"
+author: "Will Gray"
+date: "2024-09-08"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Load Packages
+
+```{r, load_packages, message=F}
+library(Hmisc)
+library(tidyverse)
+```
+
+# Problem 1
+
+## Survey
+
+Please put the date and time you completed the survey here.
+
+9/3/2024 at 10:58 pm.
+
+## Campuswire
+
+Insert the image you uploaded to Campuswire here.
+
+![](images/Screenshot_9-9-2024_02151_campuswire.com-01.jpeg)
+
+# Problem 2
+
+## Question 1
+
+The study population for Data Set 1 is people who are 16 or older living in England and Wales, not including people currently living in communal residences. The study population for Data Set 2 is crimes recorded by the UK police based on their investigations.
+
+## Question 2
+
+The strategy for Data Set 1 is a survey given to a random sample of around 38,000 people from the general population. The strategy for Data Set 2 relies on administrative records of crimes that have been documented by police.
+
+## Question 3
+
+The sampled population for Data Set 1 are people who self-report their experiences with crime, while the sampled population for Data Set 2 consists of crimes that have officially been recorded by the police.
+
+## Question 4
+
+The target population of the study is the entire population of England and Wales who are older than 16.
+
+## Question 5
+
+Data Set 1 might be less reliable since it relies on the information given by the individuals, meaning that they could leave details out of the story or even over-exaggerate their story. Data Set 2 is more reliable in terms of documenting official records but could miss crimes that go under the radar from the police. I think both sets of data are valid and are useful but, the survey might lack accuracy in crime reports. However, the police may use the survey to see if any of the surveys match up with missing crime reports or information that they are not aware of.
+
+# Problem 3
+
+## Question 1
+
+The `<-` notation is equivalent to an `=` sign in R and is often used to declare variables. After running this code chunk, the named dataframe `df` appears in the environment on the right-hand side of RStudio.
+
+```{r, read_csv}
+df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+```
+
+## Question 2
+
+The notation `Hmisc::` directly calls this function from the `Hmisc` package. `describe()` is a common function name, and sometimes this is needed to indicate to R which function from which package you want to use. The pipe feature `|>` sends the results of the first line directly into the function on the 2nd line and is a convenient way to chain functions together.
+
+This code prints a useful and attractive summary of the data set we are using.
+
+```{r, describe_data}
+Hmisc::describe(df) |> 
+  html()
+```
+
+## Question 3
+
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies between 1960 and 1967 among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The variables in this data set are as follows.
+
+| Variable Name | Variable Description                                         | Variable Type          |
+|---------------|--------------------------------------------------------------|------------------------|
+| `case`        | id number                                                    | Categorical (nominal)  |
+| `bwt`         | birthweight, in ounces                                       | Numerical (continuous) |
+| `gestation`   | length of gestation, in days                                 | Numerical (continuous) |
+| `parity`      | binary indicator for a first pregnancy (0 = first pregnancy) | Categorical (nominal)  |
+| `age`         | mother's age in years                                        | Numerical (continuous) |
+| `height`      | mother's height in inches                                    | Numerical (continuous) |
+| `weight`      | mother's weight in pounds                                    | Numerical (continuous) |
+| `smoke`       | binary indicator for whether the mother smokes               | Categorical (nominal)  |
+
+: Data Dictionary
+
+## Question 4
+
+Below, 2 numeric variables were investigated for potential relationships. The independent, explanatory variable I chose is `variable_name`, and the dependent, response variable I chose is `variable_name`.
+
+```{r plot_data}
+  df |>
+  ggplot(aes(x = weight, 
+             y = bwt)) + 
+
+  geom_point() +
+    
+
+  #Add linear regression
+  geom_smooth(formula = y ~ x,
+    method = 'loess',
+    color = "red",
+    se = F) +
+    
+  labs(x = "Mother's Weight", 
+       y = "Birth Weight", 
+       title = "Relationship Between Mother's Weight and Birth Weight")
+
+
+
+```
+
+From this scatter plot chart, it compares the difference between the mother's weight (lbs) to her newborn's birth weight (oz). There is a steeper corelation in weights for women weighing 100 - 125 lbs. For women 125+ lbs, the newborns weigh more when their mothers weigh more aswell, but not as muc.
+
+# Session Info
+
+This portion of the document describes the conditions in RStudio under which this report was created. This is important to include so that work is reproducible by others.
+
+```{r session_info}
+xfun::session_info()
+```

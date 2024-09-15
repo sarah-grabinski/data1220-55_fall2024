@@ -1,0 +1,475 @@
+---
+title: "Class 07"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-13'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 07 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 07 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(datasets)
+library(patchwork)
+library(GGally)
+library(mosaic)
+library(kableExtra)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+## Last time...
+
+-   The ***normal distribution*** and when to use the ***mean + standard deviation***
+
+-   ***Robust statistics*** and when to use the ***median + interquartile range***
+
+-   The ***5-number summary*** and ***how to read a boxplot***
+
+-   Other distribution plots: ***dot plot***, ***histogram***, ***density plot***, ***violin plot***
+
+## Distribution Checklist {.smaller}
+
+-   What is the **modality** of the distribution?
+
+-   How many "peaks" are there?
+
+-   Is the distribution **skewed** or **symmetric**?
+
+-   Is there a longer "tail" on the left or right side?
+
+-   Are there any **outliers**?
+
+-   How extreme are the most extreme values?
+
+-   What are the appropriate **summary statistics** for a distribution with this shape?
+
+-   Would the mean+standard deviation or the median+IQR more accurately describe this data?
+
+## Practice: Visualizing Distributions
+
+```{r}
+set.seed(123); dist_df <- data.frame(
+  id = seq(1, 100),
+  uniform = c(unlist(lapply(0:10, function(x) rep(x, 8))), 
+              sample(0:10, 12, replace = T)), 
+  left_skew = round(sapply(seq(1, 100), 
+                     function(x) x^(1/3) * 2)),
+  right_skew = round(sapply(seq(1, 100), 
+                      function(x) x^2/1000)),
+  normal = round(abs(rnorm(100, mean = 5, sd = 2))),
+  bimodal = c(round(abs(rnorm(70, mean = 3, sd = 1))), 
+              round(abs(rnorm(30, mean = 7, sd = 1)))),
+  outlier = c(rpois(95, 3), sample(11:13, 5, replace = T))
+)
+
+dist_df |>
+  pivot_longer(-id, names_to = 'distribution', 
+               values_to = 'x') |>
+  ggplot(aes(x = x)) +
+  geom_histogram(fill = 'steelblue', 
+                 col = 'white',
+                 binwidth = 1) +
+  facet_wrap(~ distribution, nrow = 2, 
+    labeller = labeller(
+      distribution = c('bimodal' = 'Plot A', 
+                       'left_skew' = 'Plot B', 
+                       'normal' = 'Plot C', 
+                       'outlier' = 'Plot D', 
+                       'right_skew' = 'Plot E', 
+                       'uniform' = 'Plot F'))) +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  theme(axis.text.x = element_text(size = 6))
+```
+
+## Practice: Visualizing Distributions
+
+```{r}
+dist_df |>
+  pivot_longer(-id, names_to = 'distribution', 
+               values_to = 'x') |>
+  ggplot(aes(x = x)) +
+  geom_histogram(fill = 'steelblue', 
+                 col = 'white',
+                 binwidth = 1) +
+  facet_wrap(~ distribution, nrow = 2, 
+    labeller = labeller(
+      distribution = c('bimodal' = 'Bimodal, Asymmetric', 
+                       'left_skew' = 'Left-skewed', 
+                       'normal' = 'Normal', 
+                       'outlier' = 'Outliers', 
+                       'right_skew' = 'Right-skewed', 
+                       'uniform' = 'Uniform'))) +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  theme(axis.text.x = element_text(size = 6))
+```
+
+## Practice: Summary Statistics
+
+Is the mean greater than, lesser than, or about equal to the mean? What does that mean for the shape of the distribution?
+
+```{r}
+mosaic::favstats(dist_df$bimodal) |>
+  kbl() |>
+  kable_classic(full_width = F)
+```
+
+## Practice: Summary Statistics
+
+::: callout-tip
+###### The mean is greater than the median indicating this is an asymmetrical distribution that is skewed. Because the mean is greater than the median, this distribution is right-skewed towards numbers on the high end of the range.
+:::
+
+```{r}
+mosaic::favstats(dist_df$bimodal) |>
+  kbl() |>
+  kable_classic(full_width = F)
+```
+
+## Today
+
+-   Analyze contingency (e.g. 2x2) tables
+
+-   Summarizing categorical variables with proportions
+
+-   Visualizing data using categories
+
+-   Comparing data from 2+ variables
+
+## What is a contingency table?
+
+A ***contingency table*** is a cross-tabulation of the ***frequency*** of observations across 2 categorical variables
+
+![In this table, the values are the count of observations that belong both the corresponding row and column categories.](class07/contingency-table-counts.png){fig-align="center"}
+
+## What is frequency?
+
+When someone describes a category's ***frequency***, they may be referring to...
+
+-   ***Count***: the total number of times the category appears in the data
+
+-   ***Proportion***: the total number of times the category appears in the data divided by the number of observations
+
+## Calculating a proportion
+
+Only a subset of observations belong to each level of a categorical variable. A proportion describes the count of the observations belonging to that category divided by the total number of observations ($n$).
+
+$$
+\operatorname{Proportion} = \frac{\operatorname{count}(\operatorname{category})}{n}
+$$
+
+Proportions can be any real number between a minimum of 0 ($\frac{0}{n}$) and maximum of 1 ($\frac{n}{n}$).
+
+## Calculating Proportions by row
+
+![The row totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the row total for each cell.](class07/contingency-table-row-proportions.png){fig-align="center"}
+
+## Calculating Proportions by Column
+
+![The column totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the column total for each cell.](class07/contingency-table-col-proportions.png){fig-align="center"}
+
+## Example: Field Goals
+
+In the NFL, kickers can play a pivotal role in determining the outcome of a game. Much time and money has been devoted to determining the factors which lead to a successful kick. Past performance is one factor which could affect whether a kick is good or not. Are kickers more or less likely to make the extra point kick if they missed their last kick?
+
+```{r}
+set.seed(123); kicks <- data.frame(
+  kick_id = seq(1, 200), 
+  last_kick = rbinom(200, 1, 0.64)
+) |>
+  mutate(this_kick = sapply(last_kick, function(x) {
+    this_kick <- ifelse(x == 0, 
+                        rbinom(1, 1, 0.4), 
+                        rbinom(1, 1, 0.9))
+  }))
+```
+
+## Contingency Table: Counts
+
+```{r}
+kicks |> 
+  mutate(last_kick = ifelse(last_kick == 1, 'Made Last Kick', 
+                            "Didn't Make Last Kick"), 
+         this_kick = ifelse(this_kick == 1, 'Made Current Kick', 
+                            "Didn't Make Current Kick")) |>
+  tabyl(last_kick, this_kick) |>
+  adorn_totals(where = c('row', 'col'))  |>
+  kbl() |>
+  kable_classic(full_width = F)
+```
+
+## Contingency Table: Proportions by Row
+
+```{r}
+kicks |> 
+  mutate(last_kick = ifelse(last_kick == 1, 'Made Last Kick', 
+                            "Didn't Make Last Kick"), 
+         this_kick = ifelse(this_kick == 1, 'Made Current Kick', 
+                            "Didn't Make Current Kick")) |>
+  tabyl(last_kick, this_kick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'row') |>
+  kbl() |>
+  kable_classic(full_width = F)
+```
+
+## Contingency Table: Proportions by Column
+
+```{r}
+kicks |> 
+  mutate(last_kick = ifelse(last_kick == 1, 'Made Last Kick', 
+                            "Didn't Make Last Kick"), 
+         this_kick = ifelse(this_kick == 1, 'Made Current Kick', 
+                            "Didn't Make Current Kick")) |>
+  tabyl(last_kick, this_kick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'col') |>
+  kbl() |>
+  kable_classic(full_width = F)
+```
+
+## Visualizing Frequencies: Bar Plot (Counts)
+
+```{r}
+kicks |>
+  pivot_longer(-kick_id, names_to = 'kick', values_to = 'status') |>
+  mutate(status = ifelse(status == 1, 'Made Kick', "Didn't Make Kick"), 
+         kick = ifelse(kick == 'last_kick', 'Last Kick', 'Current Kick')) |>
+  ggplot(aes(x = kick)) +
+  geom_bar() +
+  facet_grid(cols = vars(status))
+```
+
+## Visualizing Frequencies: Bar Plot (Proportions)
+
+```{r}
+kicks |>
+  pivot_longer(-kick_id, names_to = 'kick', values_to = 'status') |>
+  mutate(status = ifelse(status == 1, 'Made Kick', "Didn't Make Kick"), 
+         kick = ifelse(kick == 'last_kick', 'Last Kick', 'Current Kick')) |>
+  ggplot(aes(x = kick, y = after_stat(prop))) +
+  geom_bar(stat = 'prop') +
+  facet_grid(cols = vars(status))
+```
+
+## Comparing 2 (Categorical) Variables: Side-By-Side Bar Plot
+
+```{r}
+kicks |>
+  pivot_longer(-kick_id, names_to = 'kick', values_to = 'status') |>
+  mutate(status = ifelse(status == 1, 'Made Kick', "Didn't Make Kick"), 
+         kick = ifelse(kick == 'last_kick', 'Last Kick', 'Current Kick')) |>
+  ggplot(aes(x = kick, y = after_stat(prop), 
+             group = status, fill = status)) +
+  geom_bar(stat = 'prop', position = position_dodge2())
+```
+
+## Comparing 2 (Categorical) Variables: Stacked Bar Plot (counts)
+
+```{r}
+kicks |>
+  pivot_longer(-kick_id, names_to = 'kick', values_to = 'status') |>
+  mutate(status = ifelse(status == 1, 'Made Kick', "Didn't Make Kick"), 
+         kick = ifelse(kick == 'last_kick', 'Last Kick', 'Current Kick')) |>
+  ggplot(aes(x = kick, fill = status)) +
+  geom_bar()
+```
+
+## Comparing 2 (Categorical) Variables: Stacked Bar Plot (proportions)
+
+```{r}
+kicks |>
+  pivot_longer(-kick_id, names_to = 'kick', values_to = 'status') |>
+  summarize(`Made Kick` = sum(status) / n(),
+            `Didn't Make Kick` = 1 - sum(status) / n(),
+            .by = 'kick') |>
+  pivot_longer(-kick, names_to = 'Status', values_to = 'Proportion') |>
+  mutate(kick = ifelse(kick == 'last_kick', 'Last Kick', 'Current Kick')) |>
+  ggplot(aes(x = kick, y = Proportion, fill = Status)) +
+  geom_col()
+```
+
+## Bar plots in the news this week...
+
+![](class07/bar_plot_example.JPG){fig-align="center"}
+
+## Comparing 2 (Categorical) Variables: Mosaic Plot (2 Variables)
+
+![](class07/mosaic-plot.png){fig-align="center"}
+
+## Comparing a categorical variable and a numeric variable
+
+-   Histograms + density curves
+
+-   Boxplot + violin plot
+
+-   Rain cloud plot
+
+## Which type of plot(s) are shown in these figures?
+
+::: columns
+::: {.column width="33.33%"}
+![Figure A](class07/rain_cloud_plot.png){fig-align="center"}
+:::
+
+::: {.column width="33.33%"}
+![Figure B](class07/ggplot-histogram-with-density-curve-in-r-logo-1.png){fig-align="center"}
+:::
+
+::: {.column width="33.33%"}
+![Figure C](class07/boxplot_and_violin.png){fig-align="center"}
+:::
+:::
+
+## Which type of plot(s) are shown in these figures?
+
+::: columns
+::: {.column width="33.33%"}
+![Figure A](class07/rain_cloud_plot.png){fig-align="center"} **Answer:** Rain Cloud Plot (Density plot + Boxplot + Dot plot)
+:::
+
+::: {.column width="33.33%"}
+![Figure B](class07/ggplot-histogram-with-density-curve-in-r-logo-1.png){fig-align="center"} **Answer:** Histogram + Density Curve (+ Rug Plot, at bottom)
+:::
+
+::: {.column width="33.33%"}
+![Figure C](class07/boxplot_and_violin.png){fig-align="center"} **Answer**: Boxplot + Violin plot
+:::
+:::
+
+## Distributions in the news this week...
+
+![](class07/taylor_swift_histogram.JPG){fig-align="center"}
+
+## Comparing 2 Numerical Variables: Scatter plot
+
+![](class07/scatter_plot_example.png){fig-align="center"}
+
+## More ways to describe the relationship between 2 numerical variables
+
+-   Is the relationship between the 2 variables ***linear*** or ***nonlinear ?***
+
+-   Is the relationship ***strong*** or ***weak***?
+
+## Example: describing numerical variable relationships
+
+![](class07/scatter-plot-example-2.png){fig-align="center"}
+
+## Visualizing the relationship between 2 numerical variables: add a regression line!
+
+```{r}
+#| fig-align: center
+
+
+mtcars <- mtcars
+
+mtcars |>
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point(alpha = 0.5, size = 5, 
+             color = 'steelblue') +
+  geom_smooth(formula = y ~ x, method = 'lm')
+```
+
+## Does this line better "fit" the data?
+
+```{r}
+mtcars |>
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point(alpha = 0.5, size = 5, 
+             color = 'steelblue') +
+  geom_smooth(formula = y ~ x, method = 'lm', se = F) +
+  geom_smooth(formula = y ~ x, method = 'loess', 
+              color = 'red', se = F)
+```
+
+## Linear vs Nonlinear Relationships
+
+![](class07/curve-fitting-trim.jpg){fig-align="center"}
+
+## Can I compare 3 or more variables in a single plot?
+
+::: columns
+::: {.column width="50%"}
+![](class07/adding-variables-scatter-by-group.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+![](class07/adding-variables-scatter-by-color.png){fig-align="center"}
+:::
+:::
+
+## Changing shapes and sizes of points
+
+::: columns
+::: {.column width="50%"}
+![](class07/adding-variables-scatter-with-size.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+![](class07/adding-variables-scatter-with-shapes.png){fig-align="center"}
+:::
+:::
+
+## Split into separate plots with faceting
+
+![](class07/adding-variables-with-faceting.png){fig-align="center"}
+
+## Homework 2
+
+-   Describing numerical distributions: modality, skew, outliers
+
+-   Describing numerical distributions: appropriate summary statistics
+
+-   Matching numerical distributions to their summary statistics, reading a boxplot
+
+-   Calculating proportions from a contingency table
+
+## Homework 2  {.smaller}
+
+-   Will be posted Friday 9/13/2024 after class
+
+-   Will be due Friday 9/20/2024 by 6:00pm
+
+-   I will post another instructional video for this homework, in addition to the one I did last time. If you're having trouble getting started, try watching both.
+
+-   Late policy: "This homework is due by 6:00pm on Monday, 9/9/24. No credit will be lost for assignments received by 7:00pm to account for issues with uploading. 10% of the points will be deducted from assignments received by 9:00am on Tuesday, 9/10/24. Assignments turned in after this point are only eligible for 50% credit, so it benefits you to turn in whatever you have completed by the due date."
+
+## How can I get help with homework?  {.smaller}
+
+-   ***Read the textbook.*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+
+-   ***Look at the homework early***. I can see in Canvas that many students didn't download the documents until 1-2 days before it was due. That's not a lot of time to get help.
+
+-   ***Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).*** I'm only one person, and I may not be able to give you a prompt answer. However, the 28 other people in the class might be able to.
+
+-   ***Come to office hours.*** I will be available after class Monday 9/23/2024 and Wednesday 9/25/2024 from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
+
+## Next Week: Chapter 3, Probability
+
+-   What is probability?
+
+-   Disjoint vs not disjoint sets
+
+-   Probability distributions
+
+-   Complements and independence

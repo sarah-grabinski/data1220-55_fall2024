@@ -1,0 +1,322 @@
+---
+title: "Class 05"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-09'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 05 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    footer: "DATA1220-55 Fall 2024, Class 05 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Request
+
+Could you put "DATA1220: " at the beginning of the subject line of your emails?
+
+I have 3 emails, and this will help me spot and respond to yours more quickly.
+
+## Reminder: Homework
+
+Late policy: "This homework is due by 6:00pm on Monday, 9/9/24. No credit will be lost for assignments received by 7:00pm to account for issues with uploading. 10% of the points will be deducted from assignments received by 9:00am on Tuesday, 9/10/24. Assignments turned in after this point are only eligible for 50% credit, so it benefits you to turn in whatever you have completed by the due date."
+
+## Chapter 2 Pipeline
+
+![Data science pipeline priorities for Chapter 1](class03/data-science_annotated.png){fig-alt="Red boxes around the \"Import\", \"Visualize\" and \"Communicate\" components of the data science pipeline" fig-align="center"}
+
+## Chapter 2 Objectives: Numerical Data
+
+-   Describe the "shape" (i.e. distribution) of numerical variables
+
+-   Calculate means, medians, modes, variances, standard deviations, IQRs
+
+-   Learn the appropriate use of summary statistics (i.e. mean vs. median)
+
+-   Characterize the relationship between 2 numerical variables
+
+## Chapter 2 Objectives: Categorical Data
+
+-   Analyze contingency (e.g. 2x2) tables
+
+-   Summarizing categorical variables with proportions
+
+-   Comparison of numerical data between categorical groups
+
+## Chapter 2 Objectives: Visualizing Data
+
+-   Recognize common visualization techniques / plots
+
+    -   Numerical: Dot plots, histograms, density plots, box plots, violin plots
+
+    -   Categorical: bar plots, mosaic plots, tree map
+
+-   Build basic visualizations in `R` using `ggplot2`
+
+-   Data visualization do's and dont's
+
+## Load Packages for Today's Slides
+
+```{r}
+# Contains the describe() function for comprehensive data summaries 
+library(Hmisc)  
+# For another describe() function with comprehensive data summaries
+library(mosaic)
+# Always load the tidyverse last 
+library(tidyverse)  
+
+# Set favorite ggplot2 theme for visualizations 
+theme_set(theme_bw())
+```
+
+## Numerical Variables
+
+![Numerical variables can be continuous or discrete.](class03/types_of_data.png){fig-alt="Flow chart with all variables being split into numerical and categorical variables. Numerical is further subdivided into continuous and discrete. Categorical is subdivided into nominal or ordinal." fig-align="center"}
+
+## Describing numerical distributions
+
+The "shape" of numerical data is called its ***distribution***.
+
+-   ***Location:*** the "center" of the data
+
+-   ***Scale:*** the "spread" of the data
+
+## Describing distribution shapes
+
+![Commonly observed patterns in numerical distributions](class05/distribution_shapes.png){fig-align="center"}
+
+## Unimodal Distributions
+
+![Unimodal distributions have one peak around which observations cluster](class05/unimodal_dist.png){fig-align="center"}
+
+## Bimodal Distributions
+
+![Bimodal distributions have 2 peaks around which observations cluster.](class05/bimodal_dist.png)
+
+## Trimodal Distributions
+
+![Trimodal distributions have 3 peaks around which observations cluster.](class05/trimodal_dist.png)
+
+## Uniform Distributions
+
+```{r echo=F}
+data.frame(x = c(rep('1', 22),
+           rep('2', 24), 
+           rep('3', 24), 
+           rep('4', 22),
+           rep('5', 23),
+           rep('6', 21))) |>
+  ggplot(aes(x = x)) +
+  geom_bar() +
+  scale_y_continuous(lim = c(NA, 40)) +
+  labs(caption = 'Uniform distributions have no peaks around which observations are clustered')
+```
+
+## Symmetric Distributions
+
+![Symmetric distributions are unimodal observations that don't have "tails" of extreme negative or positive values](class05/normal_distribution.png){fig-align="center"}
+
+## Left-Skewed Distributions
+
+![Left-skewed distributions have an excess of observations at the low end of the data range.](class05/left_skewed_dist.png)
+
+## Right-Skewed Distributions
+
+![Right-skewed distributions have an excess of observations at the high end of the data range.](class05/right_skewed_dist.png){fig-align="center"}
+
+## Describing a distribution's ***location***
+
+The ***location*** of a numerical variable's distribution can be thought of as the "center" of the data, around which the bulk of the observations cluster.
+
+-   ***Mean:*** the sum of a values divided by the number of observations (i.e. "average")
+
+-   ***Median:*** the value in the exact middle of the data
+
+-   ***Mode:*** the most common value in the data (for discrete variables)
+
+## The Mean (Average)
+
+*Where are the bulk of observations concentrated?*
+
+The sample mean $\bar{x}$ is computed as the sum of all observed values $\sum_{i=1}^n{x_i}$, where $i$ is the observation number, divided by the total number of observations $n$.
+
+$$
+\bar{x}=\frac{\sum_{i=1}^n x_i}{n}
+$$
+
+or
+
+$$
+\bar{x}=\frac{\operatorname{sum}(x_1, x_2, ..., x_n)}{n}=\frac{x_1+x_2+...+x_n}{n}
+$$
+
+## Calculating the mean in R
+
+```{r echo = F}
+set.seed(123); x <- round(rnorm(10, mean = 5, sd = 2))
+```
+
+Consider the numerical variable `x`.
+
+```{r}
+x
+
+length(x)
+```
+
+## Calculating the mean in R
+
+You can calculate the mean manually...
+
+```{r}
+(4 + 5 + 8 + 5 + 5 + 8 + 6 + 2 + 4 + 4) / length(x)
+```
+
+Or you can use the `mean()` function.
+
+```{r}
+mean(x, 
+     na.rm = T) # this parameter ignores missing values
+```
+
+## Sample vs Population Mean
+
+The ***sample mean*** is denoted as $\bar{x}$. The population mean is denoted $\mu$. They are calculated the same way.
+
+The ***sample mean*** is considered to be a good ***point estimate*** of the ***population mean*** if the sample population is *representative* of the study/target population.
+
+*What makes for a good sample?*
+
+## The Median
+
+The ***median*** is the middle value when the data are sorted in order.
+
+-   When the number of observations $n$ is odd, this works as stated.
+
+-   When the number of observations $n$ is even, the median is calculated as the mean of the 2 middle values.
+
+## Calculating the median in R
+
+```{r}
+# Sort the data in order from least to most
+sort(x)
+```
+
+```{r}
+(5 + 5) / 2
+```
+
+```{r}
+median(x)
+```
+
+## Describing a distribution's ***scale***
+
+*How far is each data value from the mean?*
+
+-   ***Variance:*** $s^2$, the sum of the squared differences between each observation's value and the sample mean $\bar{x}$ divided by $n-1$
+
+-   ***Standard deviation:*** $s$, the square root of the variance
+
+-   ***Range:*** minimum to maximum
+
+-   ***Interquartile Range (IQR):*** 25th percentile to 75th percentile
+
+## The Variance
+
+The ***deviance*** is how far each data value is from the mean. The ***variance***, denoted as $s^2$, is the squared sum of all observation ***deviations*** $\sum_{i=1}^n (y_i-\bar{y})^2$ where $i$ is the observation number, divided by $n-1$.
+
+$$
+\operatorname{Variance}=s^2=\frac{\sum_{i=1}^n (y_i-\bar{y})^2}{n-1}
+$$
+
+## Calculating the variance in R
+
+```{r}
+var(x)
+```
+
+## The Standard Deviation
+
+The ***standard deviation*** is the square root of the variance, and is interpreted in the original unit of measurement for that variable.
+
+$$
+\operatorname{Standard Deviation}=s=\sqrt{\frac{\sum_{i=1}^n (y_i-\bar{y})^2}{n-1}}
+$$
+
+## Calculating the standard deviation in R
+
+```{r}
+sd(x, na.rm = T)
+```
+
+## The Range
+
+The ***range*** of the data is the difference between the maximum value and the minimum value.
+
+$$
+\operatorname{Range}=\operatorname{max}(x)-\operatorname{min}(x)
+$$
+
+## Calculating the range in R
+
+```{r}
+max(x) - min(x)
+```
+
+```{r}
+range(x)
+```
+
+## The Interquartile Range (IQR)
+
+-   The 25th percentile of the data is called the ***first quartile*** or ***Q1***
+
+-   The 50th percentile of the data is called the ***median***
+
+-   The 75th percentile of the data is called the ***third quartile*** or ***Q3***
+
+-   The range between ***Q3*** and ***Q1*** is called the ***interquartile range*** or ***IQR***.
+
+$$
+\operatorname{IQR}=\operatorname{Q3}-\operatorname{Q1}
+$$
+
+## Calculating the interquartile range in R
+
+```{r}
+c(quantile(x, 0.25), quantile(x, 0.75))
+```
+
+```{r}
+quantile(x, 0.75) - quantile(x, 0.25)
+```
+
+```{r}
+IQR(x)
+```
+
+## Outliers
+
+![](class05/outlier.png){fig-align="center"}
+
+## How do skew and outliers affect numerical summary statistics?
+
+![The presence of outliers and/or skew in a numerical variable's distribution affects how well summary statistics describe a distribution's location.](class05/outlier_statistics.png)
+
+## Robust statistics
+
+The ***median*** and ***interquartile range*** are considered to be ***robust statistics*** for the numerical summary of data because they are less sensitive to ***skew*** and ***outliers*** than the ***mean***, ***variance***, and ***standard deviation***.

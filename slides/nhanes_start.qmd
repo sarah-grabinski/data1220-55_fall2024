@@ -1,0 +1,70 @@
+---
+title: "Untitled"
+format: revealjs
+editor: visual
+---
+
+## Data for Today
+
+-   Source: [National Health and Nutrition Examination Survey](https://www.cdc.gov/nchs/nhanes/index.htm) (NHANES), a program of studies designed to assess the health and nutritional status of adults and children in the United States
+
+-   Survey combines data from interviews (demographic, socioeconomic, dietary, and health-related questions), physical examinations, and laboratory tests.
+
+-   This data set contains 5000 observations from the 2009-2010 survey and 5000 observations from the 2011-2012 survey.
+
+## Load NHANES data from `NHANES` package
+
+```{r}
+# this data comes from the NHANES package
+# which you'll need to install before using
+library(NHANES)
+# this function pushes the data out of the package
+# and into your global environment
+force(NHANES)
+
+NHANES
+```
+
+## Data Dictionary
+
+| Variable Name  | Description                                                                 | Variable Type         |
+|----------------|-----------------------------------------------------------------------------|-----------------------|
+| `ID`           | a unique identifier for each of the obserations                             | categorical           |
+| `Age`          | age of subject in years                                                     | numerical, discrete   |
+| `AgeDecade`    | age range subject falls in                                                  | categorical, ordinal  |
+| `BMI`          | body mass index                                                             | numerical, continuous |
+| `Height`       | subject's height, in cm                                                     | numerical, continuous |
+| `Testosterone` | testosterone levels from blood test                                         | numerical, continuous |
+| `AlcoholDay`   | average number of alcoholic drinks consumed per day over the past 12 months | numerical, discrete   |
+
+## Generating numerical summaries in R: `summary()` function from `base` R
+
+```{r}
+# pipe your data into your workflow
+NHANES |>
+  # select your variable(s) of interest
+  select(Age) |>
+  # run the summary function
+  summary()
+```
+
+## Generating numerical summaries in R: `Hmisc::describe()`
+
+```{r}
+# pipe your data into your workflow
+NHANES |>
+  # select your variable(s) of interest
+  select(Age) |>
+  # run the describe() function from the Hmisc package
+  Hmisc::describe()
+```
+
+```{r}
+NHANES |>
+  ggplot(aes(x = Weight)) +
+  geom_density()
+
+NHANES |>
+  ggplot(aes(x = Height)) +
+  geom_density()
+```
