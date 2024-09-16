@@ -112,4 +112,16 @@ What does the word ***probability*** mean to you?
 
 ## People interpret probability differently 
 
-![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/perceptions-of-probability.png?raw=true)
+![Did your estimate fall within these ranges? Are these ranges reasonable?](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/perceptions-of-probability.PNG?raw=true){fig-align="center"}
+
+## So what is probability?
+
+::: callout-note
+## Frequentist Definition
+
+The proportion of times that a particular outcome would occur if we observed a random process an infinite number of times.
+:::
+
+-   A ***random process*** is one where you know which outcomes are possible (i.e. the ***sample space***) but you don't know which outcome comes next
+
+-   Examples of a ***random process***: coin toss, die roll, stock market
