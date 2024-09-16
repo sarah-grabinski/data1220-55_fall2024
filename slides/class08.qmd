@@ -1,0 +1,115 @@
+---
+title: "Class 08"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-16'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 08 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 08 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(datasets)
+library(patchwork)
+library(GGally)
+library(mosaic)
+library(kableExtra)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+## Homework 2
+
+-   Describing numerical distributions: modality, skew, outliers
+
+-   Describing numerical distributions: appropriate summary statistics
+
+-   Matching numerical distributions to their summary statistics, reading a boxplot
+
+-   Calculating proportions from a contingency table
+
+## Homework 2 {.smaller}
+
+-   [Instructions](https://canvas.jcu.edu/files/3708401/download?download_frd=1) (`homework2_instructions.pdf`), a [Quarto markdown template](https://canvas.jcu.edu/files/3708307/download?download_frd=1) (`homework2_template.qmd`), and an [example HTML output](https://canvas.jcu.edu/files/3708306/download?download_frd=1) (`homework2_example.html`) are available for download under Chapter 2 on the [Modules](https://canvas.jcu.edu/courses/36290/modules) page in Canvas.
+
+-   Upload ***TWO*** (2) documents to [Homework 2](https://canvas.jcu.edu/courses/36290/assignments/451733) on the [Assignments](https://canvas.jcu.edu/courses/36290/assignments) page in Canvas by ***Friday 9/20/2024*** by ***6:00pm***: `homework2_yourlastname.qmd` and `homework2_yourlastname.html`
+
+-   [Video walk-through](https://canvas.jcu.edu/files/3708369/download?download_frd=1) of Homework 2 under Tutorials on the [Modules](https://canvas.jcu.edu/courses/36290/modules) page in Canvas. Make sure you're caught up on the [video walk-through of homework 1](https://canvas.jcu.edu/files/3695568/download?download_frd=1).
+
+## Late Policy
+
+"This homework is due by 6:00pm on Friday, 9/20/24. No credit will be lost for assignments received by 7:00pm to account for issues with uploading. 10% of the points will be deducted from assignments received by 9:00am on Saturday, 9/21/24. Assignments turned in after this point are only eligible for 50% credit, so it benefits you to turn in whatever you have completed by the due date."
+
+## How can I get help with homework? {.smaller}
+
+-   ***Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+
+-   ***Look at the [homework](https://canvas.jcu.edu/courses/36290/assignments/451733) early***. I can see in Canvas that many students didn't download the documents until 1-2 days before it was due. That's not a lot of time to get help.
+
+-   ***Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).*** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
+
+-   ***Come to office hours.*** I will be available after class today (Monday 9/23/2024) and Wednesday 9/25/2024 from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
+
+## Last Time...
+
+-   Contingency tables: counts and proportions (frequencies)
+
+-   Visualizing frequencies: bar plots, mosaic plots
+
+-   Describing numerical relationships: linear vs nonlinear, strong vs weak
+
+-   Visualizing 3+ variables
+
+## Chapter 3 Objectives
+
+-   Define probability, random processes, and the law of large numbers
+
+-   Describe the sample space for disjoint and non-disjoint outcomes
+
+-   Calculate probabilities using the General Addition and Multiplication Rules
+
+-   Create a probability distribution for disjoint outcomes
+
+## Defining Probability
+
+What does the word ***probability*** mean to you?
+
+. . .
+
+*"Highly likely"*
+
+. . .
+
+*"Probably"*
+
+. . .
+
+*"About even"*
+
+. . .
+
+*"Almost no chance"*
+
+## People interpret probability differently 
+
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/perceptions-of-probability.png?raw=true)

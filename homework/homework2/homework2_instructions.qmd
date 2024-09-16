@@ -131,11 +131,11 @@ You are to calculate the proportion of observations which fall into each combina
 
 # Additional Help
 
--   ***Watch this short video*** in the Tutorials section under Modules on Canvas that walks through the instructions for this homework.
+-   ***Watch this short [video](https://canvas.jcu.edu/courses/36290/modules/items/1307425)*** in the Tutorials section under Modules on Canvas that walks through the instructions for this homework. It will help if you also watched this [video](https://canvas.jcu.edu/courses/36290/modules/items/1305103) for homework 1 first.
 
--   ***Read the textbook.*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+-   ***Read the [textbook](https://canvas.jcu.edu/courses/36290/modules/items/1303973).*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
 
--   ***Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).*** I'm only one person, and I may not be able to give you a prompt answer. However, the 28 other people in the class might be able to.
+-   ***Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).*** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
 
 -   ***Come to office hours.*** I will be available after class Monday 9/23/2024 and Wednesday 9/25/2024 from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
 

@@ -444,7 +444,7 @@ mtcars |>
 
 -   Calculating proportions from a contingency table
 
-## Homework 2  {.smaller}
+## Homework 2 {.smaller}
 
 -   Will be posted Friday 9/13/2024 after class
 
@@ -454,7 +454,7 @@ mtcars |>
 
 -   Late policy: "This homework is due by 6:00pm on Monday, 9/9/24. No credit will be lost for assignments received by 7:00pm to account for issues with uploading. 10% of the points will be deducted from assignments received by 9:00am on Tuesday, 9/10/24. Assignments turned in after this point are only eligible for 50% credit, so it benefits you to turn in whatever you have completed by the due date."
 
-## How can I get help with homework?  {.smaller}
+## How can I get help with homework? {.smaller}
 
 -   ***Read the textbook.*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
 
