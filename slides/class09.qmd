@@ -68,8 +68,6 @@ songs_summary <- data.frame(artists = unlist(songs$artists_split)) |>
 
 -   **Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
 
--   **Look at the [homework](https://canvas.jcu.edu/courses/36290/assignments/451733) early**. Only 1 person has looked at the homework since I posted it. Make sure you leave enough time to get help if you need it.
-
 -   **Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
 
 -   **Come to office hours.** I will be available after class today Wednesday 9/25/2024 from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
@@ -124,15 +122,15 @@ The proportion of times that a particular outcome would occur if we observed a r
 
 ![Both Apple and Spotify took steps to make their "shuffle" features less random after complaints from users.](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/shuffle.png?raw=true){fig-align="center"}
 
-## A brief history of "Shuffle"
+## A brief history of "Shuffle" {.smaller}
 
 -   January 11, 2005 – Apple releases the iPod Shuffle, a small device capable only of playing music randomly ("true" shuffle)
 
--   September 7, 2005 – Apple offers "Smart Shuffle" in response to complaints, which controlled how likely songs from the same album or artist would play close together
+    -   September 7, 2005 – Apple offers "Smart Shuffle" in response to complaints, which controlled how likely songs from the same album or artist would play close together
 
 -   July 2011 – Spotify launches in the United States using the [Fisher-Yates Algorithm](https://engineering.atspotify.com/2014/02/28/how-to-shuffle-songs/), which is like picking tickets out of a hat until no more remain
 
--   February 2014 – Spotify modifies their sampling algorithm to ensure an even distribution across albums/artists
+    -   February 2014 – Spotify modifies their sampling algorithm to ensure an even distribution across albums/artists
 
 ## What went wrong?
 
@@ -142,7 +140,7 @@ The proportion of times that a particular outcome would occur if we observed a r
 
 -   We perceive a "random" distribution as also being "uniform" and "fair"
 
-## So why didn't we like a "true" random shuffle?
+## So why didn't we like a "true" random shuffle? {.smaller}
 
 -   Songs not evenly distributed across albums and artists on a playlist
 
@@ -180,9 +178,10 @@ songs |>
              y = n, fill = artists)) +
   geom_col() +
   guides(fill = 'none') +
-  labs(title = "Number of Songs on the 'Taylor Swift Radio' playlist on Spotify by Artist(s)",
+  labs(title = "Number of Songs on the 'Taylor Swift Radio' playlist\non Spotify by Artist(s)",
        subtitle = 'Total artists = 26', 
-       x = 'Artist(s)', y = 'Count of Songs on Playlist')
+       x = 'Artist(s)', y = 'Count of Songs on Playlist') +
+  theme(axis.text.x = element_text(size = 10))
 ```
 
 ## What if shuffle was truly random?
@@ -201,7 +200,7 @@ We call this ***sampling with replacement***.
 
 ## Sampling With Replacement
 
-![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/Sampling With Replacement.png?raw=true){fig-align="center"}
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/Sampling%20With%20Replacement.png?raw=true){fig-align="center"}
 
 ## How often were artists repeated during Spotify's original shuffle?
 
@@ -234,20 +233,41 @@ repeat_df |>
   facet_grid(cols = vars(artist)) +
   scale_y_continuous(breaks = seq(0, 10)) +
   coord_cartesian(ylim = c(0, NA)) +
-  labs(x = 'Count of Samples', y = 'Number of Times Played', 
-       title = 'Number of Times Artist is Played in 10 Songs', 
+  labs(x = 'Count of 10-Song Samples', y = 'Number of Times Played', 
+       title = 'Distribution of the Number of Times an Artist is Played in 10 Songs', 
        subtitle = 'n = 50')
+```
+
+## How often were artists repeated during Spotify's original shuffle?
+
+```{r}
+repeat_df |>
+  summarize(proportion = n() / 50, 
+            .by = c('artist', 'n')) |>
+  mutate(artist = str_replace_all(artist, ' ', '\n')) |>
+  ggplot(aes(x = proportion, y = factor(n), fill = artist)) +
+  geom_hline(yintercept = 0) +
+  geom_col(col = 'white') +
+  geom_vline(xintercept = 0) +
+  guides(fill = 'none') +
+  facet_grid(cols = vars(artist)) +
+  # scale_y_continuous(breaks = seq(0, 10)) +
+  coord_cartesian(ylim = c(0, NA)) +
+  labs(x = 'Proportion of 10-Song Samples', y = 'Number of Times Played', 
+       title = 'Distribution of the Number of Times an Artist is Played in 10 Songs', 
+       subtitle = 'n = 50') +
+  theme(axis.text.x = element_text(size = 5))
 ```
 
 ## What is the probability of hearing a song by Chappell Roan?
 
 -   There is our "observed" probability that the next song is by Chappell Roan
 
--   Sample proportion ($\hat{p}_n$)
+    -   Sample proportion ($\hat{p}_n$)
 
 -   There is some "true" real-world probability that the next song is by Chappell Roan
 
--   Population proportion ($p$)
+    -   Population proportion ($p$)
 
 ## Defining the sample space
 
@@ -259,15 +279,23 @@ The **sample space** $s$ or $S$ is the total collection of possible outcomes for
 
 -   Stock market: up, down, no change
 
-Here, the **sample space** could be all the songs on the playlist (n = 50) or all the artists who perform them (n = 26).
+For this example, the **sample space** could be all the songs on the playlist (n = 50) or all the artists who perform them (n = 26).
 
-## Defining the Sample Space
+## Example sample spaces
 
 ![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/sample-space-examples.png?raw=true){fig-align="center"}
 
 ## Another sample space
 
-![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/card_ss.png?raw=true){fig-align="center"}
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/cards_ss.png?raw=true){fig-align="center"}
+
+## Representing the sample space
+
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/sample-space-1-outcome.png?raw=true){fig-align="center"}
+
+## Defining 2 outcomes in the sample space
+
+![The beaverduck from [Tenso Graphics](https://cargocollective.com/tensographics)](https://bookdown.org/daniel_flores_agreda/Prob1-GSEM-UNIGE/img/fun/R9mJR.jpeg)
 
 ## Disjoint Outcomes
 
@@ -275,15 +303,17 @@ Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen a
 
 -   Taylor Swift and Adele did not collaborate on any songs on this playlist
 
--   The next song played cannot be by both Taylor Swift and Chappell Roan
+-   The next song played can either be by Taylor Swift OR by Chappell Roan but not by Taylor Swift AND Chappell Roan
 
--   These are 
+-   The events "The next song is by Taylor Swift" and "The next song is by Chappell Roan" are ***disjoint***/***mutually exclusive***
 
 ## Non-Disjoint Outcomes
 
 **Non-disjoint** outcomes can occur at the same time.
 
--   The next song played could be by Charlie xcx OR Billie Eilish, because they collaborated on a song
+-   Charli xcx and Billie Eilish collaborated on a song on this playlist
+-   The next song played could be by Charli xcx or by Billie Eilish OR by BOTH Charli xcx and Billie Eilish.
+-   The events "The next song is by Charli xcx" and "The next song is by Billie Eilish" are ***non-disjoint***
 
 ## Calculating probabilities
 
@@ -525,4 +555,3 @@ p3 <- sample_df |>
   plot_annotation(title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard', 
                   caption = 'Dashed line = True proportion of Chappell Roan songs')
 ```
-
