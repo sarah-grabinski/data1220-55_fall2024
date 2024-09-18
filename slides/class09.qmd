@@ -271,7 +271,7 @@ repeat_df |>
 
 ## Defining the sample space
 
-The **sample space** $s$ or $S$ is the total collection of possible outcomes for a **random process**.
+The **sample space** $s$ or $S$ is the total collection of possible outcomes or events for a **random process**.
 
 -   Die rolls: 1, 2, 3, 4, 5, 6
 
@@ -289,15 +289,17 @@ For this example, the **sample space** could be all the songs on the playlist (n
 
 ![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/cards_ss.png?raw=true){fig-align="center"}
 
-## Representing the sample space
+## Representing the sample space - 1 event
 
 ![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/sample-space-1-outcome.png?raw=true){fig-align="center"}
 
-## Defining 2 outcomes in the sample space
+## Representing the sample space - complements
 
-![The beaverduck from [Tenso Graphics](https://cargocollective.com/tensographics)](https://bookdown.org/daniel_flores_agreda/Prob1-GSEM-UNIGE/img/fun/R9mJR.jpeg)
+In the sample space $S$, the complement of event A occurring is event A *not* occurring. This is written as A^C or A'.
 
-## Disjoint Outcomes
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/complement.png?raw=true){fig-align="center"}
+
+## 2 Events - Disjoint Outcomes
 
 Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen at the same time
 
@@ -307,7 +309,11 @@ Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen a
 
 -   The events "The next song is by Taylor Swift" and "The next song is by Chappell Roan" are ***disjoint***/***mutually exclusive***
 
-## Non-Disjoint Outcomes
+## Defining 2 disjoint events in the sample space
+
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/disjoint1.png?raw=true){fig-align="center"}
+
+## 2 Events - Non-Disjoint Outcomes
 
 **Non-disjoint** outcomes can occur at the same time.
 
@@ -315,19 +321,51 @@ Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen a
 -   The next song played could be by Charli xcx or by Billie Eilish OR by BOTH Charli xcx and Billie Eilish.
 -   The events "The next song is by Charli xcx" and "The next song is by Billie Eilish" are ***non-disjoint***
 
+## Defining 2 non-disjoint events in the sample space
+
+![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/sample-space-2-outcome-venn.png?raw=true){fig-align="center"}
+
+## Example: Non-Disjoint Outcomes
+
+![The beaverduck from [Tenso Graphics](https://cargocollective.com/tensographics)](https://bookdown.org/daniel_flores_agreda/Prob1-GSEM-UNIGE/img/fun/R9mJR.jpeg)
+
 ## Calculating probabilities
 
 -   Probabilities are proportions, or the number of observations with a particular value divided by...
 
--   the total number of observations in a sample ($n$)
+    -   the total number of observations in a sample ($n$) for the sample proportion ($\hat{p}_n$)
 
--   the total number of outcomes in the sample space ($s$)
+    -   the total number of outcomes in the sample space ($s$) for the population proportion ($p$)
 
--   Proportions range from 0 (no observations in data) to 1 (all observations in data)
+-   Proportions range from 0 (no observations/outcomes) to 1 (all observations/outcomes)
 
 -   Also may be a percentage, ranging from 0% to 100% (multiply proportion by 100)
 
-## Proportion of Songs by Artist
+## Probability notation and calculation
+
+$$
+\operatorname{Probability}(\operatorname{Event A})=\operatorname{P}(\operatorname{A})
+$$
+$$
+\operatorname{Sample P}(\operatorname{A})=\hat{p}_n=\frac{\operatorname{count}(\operatorname{observation = A})}{\operatorname{count}(\operatorname{observations in sample})}
+$$
+
+$$
+\operatorname{Population P}(\operatorname{A})=p=\frac{\operatorname{count}(\operatorname{event = A})}{\operatorname{count}(\operatorname{events in sample space})}
+$$
+
+## Calculating Probabilities with Complements
+
+$$
+\begin{aligned}
+\operatorname{P}(\operatorname{S})&=1 \\
+&= \operatorname{P}(\operatorname{A})+\operatorname{P}(\operatorname{A}^{\operatorname{C}}) \\
+&= \operatorname{P}(\operatorname{A})+\operatorname{P}(\operatorname{A}^{\operatorname{'}})
+\end{aligned}
+$$
+
+
+## Proportion of Songs by Artist (Population Probability)
 
 ```{r}
 songs_summary |>
@@ -346,6 +384,18 @@ songs_summary |>
        subtitle = 'n = 50')
 ```
 
+## Calculating the Population Probability for a Single Event $p$
+
+The sample space for the population probability that the next song is by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is all songs on the playlist ($n=50$).
+
+Chappell Roan has 7 songs on the playlist, so the event "The next song is by Chappell Roan" occurs 7 times within the sample space.
+
+The population probability $p$ of the next song being by Chappell Roan is...
+
+$$
+p=\operatorname{P}(\operatorname{Next Song by Chappell Roan})=\frac{\operatorname{count}(\operatorname{Songs By Chappell Roan})}{\operatorname{count}(\operatorname{Total Possible Songs})}=\frac{7}{50}=0.14
+$$
+
 ## Proportion of Chappell Roan songs
 
 ```{r}
@@ -361,8 +411,21 @@ songs_summary |>
   guides(fill = 'none') +
   scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
   labs(x = 'Song by Chappell Roan?', y = 'Proportion of Songs on Playlist', 
-       title = 'Proportion of Songs by Chappell Roan on the\nTaylor Swift Radio Spotify Playlist')
+       title = 'Proportion of Songs by Chappell Roan on the\nTaylor Swift Radio Spotify Playlist', 
+       caption = 'Calculated probability = 0.14')
 ```
+
+## Calculating the Sample Probability $\hat{p}_n$ for a Single Event
+
+The sample space for the sample probability of the next song being by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is the number of songs listened to ($n>= 1$).
+
+Each time a Chappell Roan song is played, an event is counted / recorded. 
+
+The population probability of the next song being by Chappell Roan is...
+
+$$
+\hat{p}_n=\operatorname{P}(\operatorname{Next Song by Chappell Roan})=\frac{\operatorname{count}(\operatorname{Songs Heard By Chappell Roan})}{\operatorname{count}(\operatorname{Total Songs Heard})}=\frac{x}{n}
+$$
 
 ## How well does a sample proportion represent the population proportion?
 
@@ -486,6 +549,8 @@ data.frame(artists = songs[sample(1:nrow(songs),
 
 ## Law of Large Numbers
 
+***How well the sample proportion $\hat{p}_n$ represents the population proportion $p$ depends on the size of the denominator.***
+
 As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
 
 ```{r}
@@ -553,5 +618,7 @@ p3 <- sample_df |>
 
 (p1 + (p2 / p3)) +
   plot_annotation(title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard', 
-                  caption = 'Dashed line = True proportion of Chappell Roan songs')
+                  caption = 'Dashed line = Population proportion of Chappell Roan songs')
 ```
+
+
