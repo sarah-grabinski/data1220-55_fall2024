@@ -30,25 +30,27 @@ format:
 library(janitor)
 library(datasets)
 library(patchwork)
-library(GGally)
+library(readxl)
 library(mosaic)
 library(kableExtra)
 library(tidyverse)
 
 theme_set(theme_bw())
+
+songs <- read_xlsx('./class08/Taylor Swift Radio.xlsx') |>
+  mutate(artists_split = str_split(artists, ', '))
+
+songs_summary <- data.frame(artists = unlist(songs$artists_split)) |>
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor', 
+                                         'Charli xcx'), 
+                          artists, 'Other')) |>
+  summarize(n = n(), proportion = n() / nrow(songs), .by = 'artists')
 ```
-
-## Last time...
-
-## Homework 2
-
--   Describing numerical distributions: modality, skew, outliers
-
--   Describing numerical distributions: appropriate summary statistics
-
--   Matching numerical distributions to their summary statistics, reading a boxplot
-
--   Calculating proportions from a contingency table
 
 ## Homework 2 {.smaller}
 
@@ -64,12 +66,390 @@ theme_set(theme_bw())
 
 ## How can I get help with homework? {.smaller}
 
--   ***Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).*** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+-   **Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
 
--   ***Look at the [homework](https://canvas.jcu.edu/courses/36290/assignments/451733) early***. I can see in Canvas that many students didn't download the documents until 1-2 days before it was due. That's not a lot of time to get help.
+-   **Look at the [homework](https://canvas.jcu.edu/courses/36290/assignments/451733) early**. Only 1 person has looked at the homework since I posted it. Make sure you leave enough time to get help if you need it.
 
--   ***Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).*** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
+-   **Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
 
--   ***Come to office hours.*** I will be available after class today (Wednesday 9/25/2024) from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
+-   **Come to office hours.** I will be available after class today Wednesday 9/25/2024 from 2:30pm - 4:00pm. If you cannot make it, reach out to me to try and schedule an appointment.
 
-## 
+## Chapter 3 Objectives
+
+-   Define probability, random processes, and the law of large numbers
+
+-   Describe the sample space for disjoint and non-disjoint outcomes
+
+-   Calculate probabilities using the General Addition and Multiplication Rules
+
+-   Create a probability distribution for disjoint outcomes
+
+## Defining Probability
+
+What does the word **probability** mean to you?
+
+. . .
+
+"Highly likely"
+
+. . .
+
+"Probably"
+
+. . .
+
+"About even"
+
+. . .
+
+"Almost no chance"
+
+## People interpret probability differently
+
+![Did your estimate fall within these ranges? Are these ranges reasonable?](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/perceptions-of-probability.PNG?raw=true){fig-align="center"}
+
+## So what is probability?
+
+::: callout-note
+## Frequentist Definition
+
+The proportion of times that a particular outcome would occur if we observed a random process an infinite number of times.
+:::
+
+-   A **random process** is one where you know which outcomes are possible (i.e. the **sample space**) but you don't know which outcome comes next
+
+-   Examples of a **random process**: coin toss, die roll, stock market
+
+## How do you know a process is random?
+
+![Both Apple and Spotify took steps to make their "shuffle" features less random after complaints from users.](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class08/shuffle.png?raw=true){fig-align="center"}
+
+## A brief history of "Shuffle"
+
+-   January 11, 2005 – Apple releases the iPod Shuffle, a small device capable only of playing music randomly ("true" shuffle)
+
+    -   September 7, 2005 – Apple offers "Smart Shuffle" in response to complaints, which controlled how likely songs from the same album or artist would play close together
+
+-   July 2011 – Spotify launches in the United States using the [Fisher-Yates Algorithm](https://engineering.atspotify.com/2014/02/28/how-to-shuffle-songs/), which is like picking tickets out of a hat until no more remain
+
+    -   February 2014 – Spotify modifies their sampling algorithm to ensure an even distribution across albums/artists
+
+## What went wrong?
+
+-   The human brain is good at finding patterns in noise, even when there are none
+
+-   If an artist is repeated "too soon", the listener doesn't feel the order is random
+
+-   We perceive a "random" distribution as also being "uniform" and "fair"
+
+## So why didn't we like a "true" random shuffle?
+
+-   Songs not evenly distributed across albums and artists on a playlist
+
+    -   Some albums/artists may play more frequently than others simply because they have more songs in the library/on the playlist
+    
+    -   Each song is equally likely to play next, but not each artist
+
+    -   Artists/albums with more songs also more likely to play in a row
+
+-   A true random shuffle might play the same artist multiple times in a row
+
+    -   It's unusual but not impossible to roll a 1 on a die 3 times in a row
+    
+    -   It's also possible for the same song to play twice in a row
+
+## Example: Spotify Playlists
+
+```{r}
+songs |> 
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor') |
+                            str_detect(artists, 'Charli'), 
+                          artists, 'Other'),
+         artists = str_replace_all(artists, 
+                                   c(', ' = ',\n', 
+                                     'Del Rey' = '\nDel Rey',
+                                     'Chappell Roan' = 'Chappell\nRoan', 
+                                     'Meghan Trainor' = 'Meghan\nTrainor'))) |>
+  summarize(n = n(), .by = artists) |>
+  ggplot(aes(x = reorder(artists, n), 
+             y = n, fill = artists)) +
+  geom_col() +
+  guides(fill = 'none') +
+  labs(title = "Number of Songs on the 'Taylor Swift Radio' playlist on Spotify by Artist(s)",
+       subtitle = 'Total artists = 26', 
+       x = 'Artist(s)', y = 'Count of Songs on Playlist')
+```
+
+## What if shuffle was truly random?
+
+Each time the song changes, every song on the playlist is eligible to be played next
+
+-   Does not matter if the song was just played
+
+-   Does not matter who the artist is
+
+We call this ***sampling with replacement***.
+
+-   Like drawing a playing card, looking at it, then putting it back in the deck before the next draw.
+
+-   Repetition of outcomes is possible.
+
+## How often were artists repeated during Spotify's original shuffle?
+
+```{r}
+set.seed(123)
+
+repeat_df <- lapply(rep(10, 6), function(x) {
+  df <- data.frame(artists = songs[sample(1:nrow(songs), 
+                                  x, replace = T), ][['artists']], 
+                   song = seq(1, 10))
+}) |>
+  bind_rows(.id = 'sample') |>
+  mutate(col = ifelse(artists %in% songs_summary$artists, 
+                      artists, 'Other')) |>
+  summarize(n = n(), 
+            .by = c('sample', 'col'))
+
+repeat_df |>
+  ggplot(aes(x = n, y = col, fill = col)) +
+  geom_col() +
+  facet_grid(rows = vars(sample), scales = 'free', space = 'free') +
+  labs(x = 'Number of Songs', y = 'Artist', 
+       title = 'Number of Songs by Artist in 10 Plays', 
+       subtitle = 'n = 6')
+```
+
+## What is the probability of hearing a song by Chappell Roan?
+
+-   There is our "observed" probability that the next song is by Chappell Roan
+
+    -   Sample proportion ($\hat{p}_n$)
+
+-   There is some "true" real-world probability that the next song is by Chappell Roan
+
+    -   Population proportion ($p$)
+
+## Defining the sample space
+
+The **sample space** is the total collection of possible outcomes for a **random process**.
+
+-   Die rolls: 1, 2, 3, 4, 5, 6
+
+-   Coin flips: heads, tails
+
+-   Stock market: up, down, no change
+
+Here, the **sample space** is the songs on the playlist (n = 50) and the artists who perform them (n = 26).
+
+## Calculating probabilities
+
+-   Probabilities are proportions, or the number of observations with a particular value divided by the total number of observations ($n$).
+
+-   Proportions range from 0 (no observations in data) to 1 (all observations in data)
+
+-   Also may be a percentage, ranging from 0% to 100% (multiply proportion by 100)
+
+## Proportion of Songs by Artist
+
+```{r}
+songs_summary |>
+  mutate(artists = str_replace_all(artists, 
+                                   c(', ' = ',\n', 
+                                     'Del Rey' = '\nDel Rey',
+                                     'Chappell Roan' = 'Chappell\nRoan', 
+                                     'Meghan Trainor' = 'Meghan\nTrainor'))) |>
+  mutate(prop = n / 50) |>
+  ggplot(aes(x = reorder(artists, prop), 
+             y = prop, fill = artists)) +
+  geom_col() +
+  guides(fill = 'none') +
+  labs(x = 'Artist', y = 'Proportion', 
+       title = 'Proportion of Songs by Artist on Taylor Swift Radio',
+       subtitle = 'n = 50')
+```
+
+## Proportion of Chappell Roan songs
+
+```{r}
+songs_summary |>
+  mutate(proportion = n / 50, 
+         chappell_roan = ifelse(artists == 'Chappell Roan', 
+                                T, F)) |>
+  summarize(proportion = sum(proportion), 
+            .by = 'chappell_roan') |>
+  ggplot(aes(x = reorder(chappell_roan, proportion), 
+             y = proportion, fill = chappell_roan)) +
+  geom_col() +
+  guides(fill = 'none') +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Song by Chappell Roan?', y = 'Proportion of Songs on Playlist', 
+       title = 'Proportion of Songs by Chappell Roan on the\nTaylor Swift Radio Spotify Playlist')
+```
+
+## How well does the sample proportion represent the population proportion?
+
+Should we listen to 1 song?
+
+```{r}
+set.seed(123)
+
+n_samples <- 1
+
+data.frame(artists = songs[sample(1:nrow(songs), 
+                                  n_samples, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(n = n(), 
+            proportion = n() / n_samples,
+            .by = 'by_chappell') |>
+  ggplot(aes(x = proportion, y = by_chappell)) +
+  geom_col(fill = 'steelblue', col = 'black') +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Proportion of Heard Songs by Chappell Roan', 
+       y = 'Was the song by Chappell Roan?', 
+       title = 'Proportion of Songs by Chappell Roan on the\n"Taylor Swift Radio" Spotify Playlist', 
+       subtitle = paste('Number of songs listened to: n =', n_samples))
+```
+
+## How well does the sample proportion represent the population proportion?
+
+Should we listen to 5 songs?
+
+```{r}
+set.seed(456)
+
+n_samples <- 5
+
+data.frame(artists = songs[sample(1:nrow(songs), 
+                                  n_samples, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(n = n(), 
+            proportion = n() / n_samples, 
+            .by = 'by_chappell') |>
+  ggplot(aes(x = proportion, y = by_chappell)) +
+  geom_col(fill = 'steelblue', col = 'black') +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Proportion of Heard Songs by Chappell Roan', 
+       y = 'Was the song by Chappell Roan?', 
+       title = 'Proportion of Songs by Chappell Roan on the\n"Taylor Swift Radio" Spotify Playlist', 
+       subtitle = paste('Number of songs listened to: n =', n_samples))
+```
+
+## How well does the sample proportion represent the population proportion?
+
+Should we listen to 10 songs?
+
+```{r}
+set.seed(789)
+
+n_samples <- 10
+
+data.frame(artists = songs[sample(1:nrow(songs), 
+                                  n_samples, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(n = n(), 
+            proportion = n() / n_samples,
+            .by = 'by_chappell') |>
+  ggplot(aes(x = proportion, y = by_chappell)) +
+  geom_col(fill = 'steelblue', col = 'black') +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Proportion of Heard Songs by Chappell Roan', 
+       y = 'Was the song by Chappell Roan?', 
+       title = 'Proportion of Songs by Chappell Roan on the\n"Taylor Swift Radio" Spotify Playlist', 
+       subtitle = paste('Number of songs listened to: n =', n_samples))
+```
+
+## How well does the sample proportion represent the population proportion?
+
+Should we listen to 100 songs?
+
+```{r}
+set.seed(123)
+
+n_samples <- 100
+
+data.frame(artists = songs[sample(1:nrow(songs), 
+                                  n_samples, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(n = n(), 
+            proportion = n() / n_samples,  
+            .by = 'by_chappell') |>
+  ggplot(aes(x = proportion, y = by_chappell)) +
+  geom_col(fill = 'steelblue', col = 'black') +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Proportion of Heard Songs by Chappell Roan', 
+       y = 'Was the song by Chappell Roan?', 
+       title = 'Proportion of Songs by Chappell Roan on the\n"Taylor Swift Radio" Spotify Playlist', 
+       subtitle = paste('Number of songs listened to: n =', n_samples))
+```
+
+## How well does the sample proportion represent the population proportion?
+
+Should we listen to 200 songs?
+
+```{r}
+set.seed(123)
+
+n_samples <- 200
+
+data.frame(artists = songs[sample(1:nrow(songs), 
+                                  n_samples, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(n = n(), 
+            proportion = n() / n_samples,  
+            .by = 'by_chappell') |>
+  ggplot(aes(x = proportion, y = by_chappell)) +
+  geom_col(fill = 'steelblue', col = 'black') +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  labs(x = 'Proportion of Heard Songs by Chappell Roan', 
+       y = 'Was the song by Chappell Roan?', 
+       title = 'Proportion of Songs by Chappell Roan on the\n"Taylor Swift Radio" Spotify Playlist', 
+       subtitle = paste('Number of songs listened to: n =', n_samples))
+```
+
+## Law of Large Numbers
+
+As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
+
+```{r}
+set.seed(123)
+
+sample_sizes <- seq(1, 200, by = 1)
+
+sample_df <- lapply(sample_sizes, function(x) {
+  df <- data.frame(artists = songs[sample(1:nrow(songs), 
+                                  x, replace = T), ][['artists']]) |>
+  mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+  summarize(count = n(), 
+            proportion = n() / x,  
+            .by = 'by_chappell') |>
+  pivot_wider(names_from = 'by_chappell', 
+              values_from = c('count', 'proportion'))
+}) |>
+  bind_rows(.id = 'sample') |>
+  mutate(across(where(is.numeric), \(x) ifelse(is.na(x), 0, x)), 
+         sample_size = as.numeric(sample))
+
+sample_df |>
+  ggplot(aes(x = sample_size, y = proportion_TRUE)) +
+  geom_point(size = 3, alpha = 0.5, col = 'steelblue') +
+  geom_line(linewidth = 1, col = 'steelblue') +
+  labs(x = '# of Songs Listened To', 
+       y = 'Proportion of Songs by Chappell Roan', 
+       title = 'Proportion of Songs by Chappell Roan by Number of Songs Heard')
+```
+
+## Disjoint Outcomes
+
+Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen at the same time
+
+-   The next song played cannot be by both Taylor Swift and Chappell Roan
+
+**Non-disjoint** outcomes can occur at the same time.
+
+-   The next song played could be by Charlie xcx OR Billie Eilish, because they collaborated on a song
+
