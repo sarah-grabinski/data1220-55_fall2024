@@ -1,0 +1,463 @@
+---
+title: "Class 10"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-20'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 10 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 10 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(patchwork)
+library(readxl)
+library(kableExtra)
+library(tidyverse)
+
+theme_set(theme_bw())
+
+songs <- read_xlsx('./class08/Taylor Swift Radio.xlsx') |>
+  mutate(artists_split = str_split(artists, ', '))
+
+songs_summary <- data.frame(artists = unlist(songs$artists_split)) |>
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor', 
+                                         'Charli xcx'), 
+                          artists, 'Other')) |>
+  summarize(n = n(), proportion = n() / nrow(songs), .by = 'artists')
+```
+
+## Homework 2 {.smaller}
+
+-   [Instructions](https://canvas.jcu.edu/files/3708401/download?download_frd=1) (`homework2_instructions.pdf`), a [Quarto markdown template](https://canvas.jcu.edu/files/3708307/download?download_frd=1) (`homework2_template.qmd`), and an [example HTML output](https://canvas.jcu.edu/files/3708306/download?download_frd=1) (`homework2_example.html`) are available for download under Chapter 2 on the [Modules](https://canvas.jcu.edu/courses/36290/modules) page in Canvas.
+
+-   [Video walk-through](https://canvas.jcu.edu/files/3708369/download?download_frd=1) of Homework 2 under Tutorials on the Modules page in Canvas. Make sure you're caught up on the [video walk-through of homework 1](https://canvas.jcu.edu/files/3695568/download?download_frd=1).
+
+-   Upload ***TWO*** (2) documents to [Homework 2](https://canvas.jcu.edu/courses/36290/assignments/451733) on the [Assignments](https://canvas.jcu.edu/courses/36290/assignments) page in Canvas by Friday 9/20/2024 by 6:00pm: `homework2_yourlastname.qmd` and `homework2_yourlastname.html`
+
+## Homework Hints
+
+-   *Read the instructions!* Some of the issues you're having are because you did not follow them correctly.
+
+-   *Please answer in complete sentences where possible!* I want you to practice effectively communicating data, and life is not a multiple choice question. I will be more clear about indicating this on future homework.
+
+-   Real world distributions are harder to describe than idealized theoretical distributions. *Combining visual and numeric summaries is more powerful than using either alone.*
+
+## Campuswire Hints
+
+-   *Turn on notifications.* Your question may have already been asked and answered. Campuswire can email you when there are new posts, so you can keep up with the discussion.
+
+-   *Be specific!* A detailed question is more likely to get a (useful) answer than a general question.
+
+-   *Include code & error messages.* It is much easier to troubleshoot "My document won't render. I've copy-pasted the error message and the lines of code where it breaks." than "My document won't render." *Click [here](https://stackoverflow.com/help/minimal-reproducible-example) for more info on how to ask good debugging questions.*
+
+## How can I get help with homework?
+
+-   **Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+
+-   **Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
+
+*I will try to keep an eye on Campuswire posts between 4-6pm before the homework is due, but I have other things going on and might miss something.*
+
+## Last time... defining probability
+
+-   ***Probability:*** The proportion of times that a particular outcome would occur if we observed a random process an infinite number of times ($\operatorname{P}(\operatorname{Event = A})$.
+
+    -   Ranges from 0 to 1 or 0% to 100%
+
+    -   $0 \le \operatorname{probability} \le 1$
+
+    -   Probability = Proportion
+
+-   ***Random process:*** you know which outcomes are possible (i.e. the **sample space**) but you don't know which outcome comes next
+
+## Last time... representing probability
+
+-   ***Sample space:*** all possible outcomes of a random process ($S$)
+
+-   ***Disjoint events:*** events that CANNOT occur at the same time (***mutually exclusive***)
+
+-   ***Complement:*** the complement of any event $A$ which exists in sample space $S$ is any outcome also in sample space $S$ which is NOT $A$ ($A^C$ or $A'$)
+
+    -   Complements are always disjoint
+
+    -   The probability of event A occuring OR the complement of event A occuring is always 1
+
+-   ***Non-disjoint events:*** events that CAN occur at the same time
+
+## Last time... calculating probabilities
+
+Remember...
+
+-   $\operatorname{P}(S)=1$
+
+-   $\operatorname{P}(S)=\operatorname{P}(A)+\operatorname{P}(A')$
+
+-   $\operatorname{P}(A)+\operatorname{P}(A')=1$
+
+-   $\operatorname{P}(A')=1-\operatorname{P}(A)$
+
+## Last time... population probability
+
+-   ***Population Probability:*** the theoretical "true" probability of an outcome in the population of interest, the "ground truth" ($p$)
+
+$$
+p=\frac{\operatorname{count}(\operatorname{events = A})}{\operatorname{count}(\operatorname{all events in sample space})}
+$$
+
+## Last time... sample probability
+
+-   ***Sample Probability:*** the probability of an outcome observed in a sample of size $n$ from a population with probability $p$, an estimate of the population probability ($\hat{p}_n$)
+
+$$
+\hat{p}_n=\frac{\operatorname{count}(\operatorname{observation = A})}{\operatorname{count}(\operatorname{observations in sample})}
+$$
+
+## Last time... Law of Large Numbers {.smaller}
+
+::: columns
+::: column
+-   How well the sample proportion $\hat{p}_n$ represents the population proportion $p$ depends on the size of the denominator.
+
+-   As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
+
+-   $\lim_{n\to\infty} \hat{p}_n = p$ (As $n \to \infty$, $\hat{p}_n \to p$)
+:::
+
+::: column
+```{r}
+set.seed(123)
+
+sample_sizes <- seq(1, 200, by = 1)
+
+sample_df <- lapply(sample_sizes, function(x) {
+  df <- data.frame(artists = songs[sample(1:nrow(songs), 
+                                          x, replace = T), ][['artists']]) |>
+    mutate(by_chappell = ifelse(artists == 'Chappell Roan', T, F)) |>
+    summarize(count = n(), 
+              proportion = n() / x,  
+              .by = 'by_chappell') |>
+    pivot_wider(names_from = 'by_chappell', 
+                values_from = c('count', 'proportion'))
+}) |>
+  bind_rows(.id = 'sample') |>
+  mutate(across(where(is.numeric), \(x) ifelse(is.na(x), 0, x)), 
+         sample_size = as.numeric(sample))
+
+sample_df |>
+  ggplot(aes(x = sample_size, y = proportion_TRUE)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_hline(
+    yintercept = songs_summary[songs_summary$artists == 'Chappell Roan', 
+                               'proportion'], 
+    linewidth = 2, linetype = 'dashed', col = 'black') +
+  geom_point(size = 3, alpha = 0.5, col = 'steelblue') +
+  geom_line(linewidth = 1, col = 'steelblue') +
+  labs(x = '# of Songs Listened To', 
+       y = 'Sample Proportion', 
+       title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard',
+       subtitle = 'Sample Size Ranged from 1 to 200',
+       caption = 'Dashed line = Population proportion of Chappell Roan songs')
+```
+:::
+:::
+
+## Last time... sampling WITH replacement
+
+![***Sampling with replacement*** is like drawing a card from a deck, then shuffling it back in before drawing another card. Repetition is possible.](/class09/Sampling%20With%20Replacement.png)
+
+## This time...
+
+-   Sampling WITHOUT replacement
+
+-   Independent and dependent processes
+
+-   Calculating probabilities for 2 events
+
+    -   (General) Addition Rule
+
+    -   (General) Multiplication Rule
+
+-   Probability distributions
+
+## Returning to the playlist shuffle example...
+
+-   Extracted song names and artists from the "Taylor Swift Radio" playlist on Spotify
+
+-   There are 50 songs on the playlist by 26 different artists.
+
+-   Some artists have more than 1 song on the playlist, and 1 song was a collaboration between 2 artists.
+
+-   The iPod Shuffle originally used random sampling WITH replacement to select the next song to play ("true" shuffle)
+
+-   Spotify originally used random sampling WITHOUT replacement to select the next song to play (Fisher-Yates Algorithm)
+
+## Let's define our sample space $S$ again...
+
+Grid of songs by title
+
+50 unique songs on playlist
+
+Only 1 song can play at a time (disjoint outcomes)
+
+## Population proportions by song for sampling WITH replacement
+
+```{r}
+songs |> 
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor') |
+                            str_detect(artists, 'Charli'), 
+                          artists, 'Other')) |>
+  mutate(probability = 1 / 50, 
+         artists = fct_reorder(artists, desc(artists)), 
+         name = fct_reorder(name, desc(artists))) |>
+  ggplot(aes(x = probability, 
+             y = name, 
+             fill = factor(artists))) +
+  geom_col() +
+  labs(title = "Probability of Play by Song",
+       subtitle = 'Total Songs = 50, Total artists = 26', 
+       x = 'Proportion of Songs', y = 'Song Name') +
+  theme(axis.text.y = element_text(size = 6)) +
+  scale_x_continuous(limits = c(0, 0.05))
+```
+
+## Population proportions by artist for sampling WITH replacement
+
+```{r}
+songs |> 
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor') |
+                            str_detect(artists, 'Charli'), 
+                          artists, 'Other')) |>
+  summarize(n = n(), .by = 'artists') |>
+  mutate(probability = n / 50, 
+         artists = fct_reorder(artists, desc(n))) |>
+  ggplot(aes(x = probability, 
+             y = artists, 
+             fill = factor(artists))) +
+  geom_col() +
+  labs(title = "Probability of Play by Artist",
+       subtitle = 'Total Songs = 50, Total artists = 26', 
+       x = 'Proportion of Songs', y = 'Song Name') +
+  theme(axis.text.y = element_text(size = 10)) +
+  scale_x_continuous(limits = c(0, 0.5))
+```
+
+## Visualizing the sample space: 1 outcome
+
+Grid of songs with Chappell Roan songs highlighted
+
+## Drawing the sample space: 1 outcome
+
+See board...
+
+## Calculating probability for a single event
+
+$$
+\begin{aligned}
+\operatorname{P}(\operatorname{Next Song by Chappell Roan})&=\frac{\operatorname{count}(\operatorname{Songs by Chappell Roan})}{\operatorname{count}(\operatorname{All Possible Songs})} \\
+&= \frac{7}{50} \\
+&= 0.14
+\end{aligned}
+$$
+
+## Visualizing the sample space: 2 disjoint outcomes
+
+Grid of songs with Billie Eilish songs and Taylor Swift songs highlighted
+
+## Describing the sample space: 2 disjoint outcomes
+
+See board...
+
+## Addition Rule for Disjoint Outcomes
+
+Describes the probability of event A or event B occurring ($P(A \cup B)$)
+
+$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$
+
+## Example: Addition Rule for Disjoint Outcomes
+
+See board...
+
+## Visualizing the sample space: 2 non-disjoint outcomes
+
+Grid of songs with Billie Eilish songs and Charli xcx songs highlighted
+
+## Describing the sample space: 2 non-disjoint outcomes
+
+See board...
+
+## Example: Addition Rule for Non-Disjoint Outcomes
+
+See board...
+
+## *General* Addition Rule for *Non-Disjoint* Outcomes
+
+Describes the probability of event A or event B occurring
+
+$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B}) - \operatorname{P}(\operatorname{A and B})$
+
+## Example: General Addition Rule for Non-Disjoint Outcomes
+
+See board...
+
+## Independent Processes
+
+-   Two ***random processes*** are ***independent*** if the outcome of process A provides no information about process B
+
+    -   You roll a die once and get a 3. You still don't know what number you'll roll next.
+
+    -   You aren't more likely to land on heads when flipping a coin just because you also got heads on your last one.
+
+## Example: Independent Processes with "True" Shuffle
+
+What if we listened to 2 songs in a row using "true" shuffle (i.e. sampling with replacement)?
+
+Each song goes back into the "pot" after it is played and can be repeated.
+
+What happens to the sample space after the first song?
+
+::: pause
+:::
+
+The sample space does ***not*** change between events.
+
+## Defining the Sample Space
+
+2 grids of songs with Chappell Roan highlighted
+
+## What is the probability we hear a song by Chappell Roan twice in a row?
+
+-   7 opportunities for song 1 to be by Chappell Roan
+
+-   7 opportunities for song 2 to be by chappell roan
+
+$7 \times 7 = 49 \operatorname{possibilities!}$
+
+50 possible for song 1 50 possible for song 2
+
+50 \* 50 = 2500 possibilities!
+
+$\frac{7 \times 7}{50 \times 50}$
+
+## Multiplication Rule for Independent Processes
+
+Describes the probability of event A and event B occurring
+
+P(A and B) = P(A) x P(B)
+
+## Dependent Processes
+
+-   Two ***random processes*** are ***dependent*** if the probability of process B changes based on the outcome of process A
+
+    -   You're playing poker and cards are about to be dealt. The probability that you will receive an Ace changes as each card is distributed.
+
+    -   The chances that you'll bring an umbrella with you when you leave the house changes depending on whether or not its raining.
+
+## Sampling WITHOUT Replacement
+
+example pic from Biorender
+
+## Example: Dependent Processes with Spotify Shuffle
+
+What if we listened to 2 songs in a row using Spotify's shuffle (i.e. sampling without replacement)
+
+Song does NOT go back into the "pot" after it is played and CANNOT be repeated.
+
+::: pause
+:::
+
+The sample space ***does*** change between events.
+
+## Defining the Sample Space for Independent Processes
+
+1 grid has all 50 squares with Chappell Roan highlighted
+
+2nd grid has 50 squares with Chappell Roan highlighted
+
+## Defining the Sample Space for Dependent Processes
+
+1 grid has all 50 squares with Chappell Roan highlighted
+
+2nd grid has 50 squares with one unhighlighted square crossed out
+
+## Defining the Sample Space for Dependent Processes
+
+1 grid has all 50 squares with Chappell Roan highlighted
+
+2nd grid has 50 squares with one highlighted square crossed out
+
+## What is the probability we hear a song by Chappell Roan twice in a row?
+
+Calculate the probability of song 1 (7/50) and song 2 (6/49)
+
+7 opportunities for song 1 to be by chappell roan
+
+6 opportunities for song 2 to be by chappell roan
+
+7 \* 6 = 42 possibilities!
+
+50 possible for song 1 49 possible for song 2
+
+50 \* 50 = 2450 possibilities!
+
+$\frac{7 \times 6}{50 \times 49}$
+
+## General Multiplication Rule for Dependent Processes
+
+Describes the probability of event B occuring given that event A has already occurred
+
+P(A and B) = P(A) x P(B \| A)
+
+## Distinguishing Independent and Dependent Processes
+
+When processes are independent
+
+## Probability Density Functions
+
+-   ***Probability Mass Function:*** categorical
+
+-   ***Probabiity Density Function:*** numerical
+
+## Homework 1 Answer Key
+
+## Survey 2
+
+-   Go to this link to take the survey: [link](url)
+
+-   You will receive additional participation credit for having been in class to take the survey
+
+-   You will still receive some (but less) additional participation credit for taking it after class

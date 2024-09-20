@@ -144,17 +144,17 @@ The proportion of times that a particular outcome would occur if we observed a r
 
 -   Songs not evenly distributed across albums and artists on a playlist
 
--   Some albums/artists may play more frequently than others simply because they have more songs in the library/on the playlist
+    -   Some albums/artists may play more frequently than others simply because they have more songs in the library/on the playlist
 
--   Each song is equally likely to play next, but not each artist
+    -   Each song is equally likely to play next (uniform), but not each artist (not uniform)
 
--   Artists/albums with more songs also more likely to play in a row
+    -   Artists/albums with more songs also more likely to play in a row
 
 -   A true random shuffle might play the same artist multiple times in a row
 
--   It's unusual but not impossible to roll a 1 on a die 3 times in a row
+    -   It's unusual but not impossible to roll a 1 on a die 3 times in a row
 
--   It's also possible for the same song to play twice in a row
+    -   It's also possible for the same song to play twice in a row
 
 ## Example: Spotify Playlists
 
@@ -225,6 +225,7 @@ repeat_df <- lapply(rep(10, 50), function(x) {
             .by = c('sample', 'artist'))
 
 repeat_df |>
+  mutate(artist = str_replace_all(artist, ' ', '\n')) |>
   ggplot(aes(y = n, fill = artist)) +
   geom_hline(yintercept = 0) +
   geom_histogram(binwidth = 1, col = 'white') +
@@ -246,13 +247,11 @@ repeat_df |>
             .by = c('artist', 'n')) |>
   mutate(artist = str_replace_all(artist, ' ', '\n')) |>
   ggplot(aes(x = proportion, y = factor(n), fill = artist)) +
-  geom_hline(yintercept = 0) +
   geom_col(col = 'white') +
   geom_vline(xintercept = 0) +
   guides(fill = 'none') +
   facet_grid(cols = vars(artist)) +
   # scale_y_continuous(breaks = seq(0, 10)) +
-  coord_cartesian(ylim = c(0, NA)) +
   labs(x = 'Proportion of 10-Song Samples', y = 'Number of Times Played', 
        title = 'Distribution of the Number of Times an Artist is Played in 10 Songs', 
        subtitle = 'n = 50') +
@@ -261,13 +260,13 @@ repeat_df |>
 
 ## What is the probability of hearing a song by Chappell Roan?
 
--   There is our "observed" probability that the next song is by Chappell Roan
-
-    -   Sample proportion ($\hat{p}_n$)
-
 -   There is some "true" real-world probability that the next song is by Chappell Roan
 
     -   Population proportion ($p$)
+
+-   There is our "observed" probability that the next song is by Chappell Roan
+
+    -   Sample proportion ($\hat{p}_n$)
 
 ## Defining the sample space
 
@@ -295,7 +294,7 @@ For this example, the **sample space** could be all the songs on the playlist (n
 
 ## Representing the sample space - complements
 
-In the sample space $S$, the complement of event A occurring is event A *not* occurring. This is written as A^C or A'.
+In the sample space $S$, the complement of event A occurring is event A *not* occurring. This is written as A^C^ or A'.
 
 ![](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/complement.png?raw=true){fig-align="center"}
 
@@ -346,12 +345,25 @@ Outcomes are **disjoint** or **mutually exclusive** if they cannot both happen a
 $$
 \operatorname{Probability}(\operatorname{Event A})=\operatorname{P}(\operatorname{A})
 $$
-$$
-\operatorname{Sample P}(\operatorname{A})=\hat{p}_n=\frac{\operatorname{count}(\operatorname{observation = A})}{\operatorname{count}(\operatorname{observations in sample})}
-$$
+
+::: pause
+:::
 
 $$
-\operatorname{Population P}(\operatorname{A})=p=\frac{\operatorname{count}(\operatorname{event = A})}{\operatorname{count}(\operatorname{events in sample space})}
+\begin{aligned}
+\operatorname{Sample Probability}(\operatorname{A})&=\frac{\operatorname{count}(\operatorname{observation = A})}{\operatorname{count}(\operatorname{observations in sample})} \\
+&=\hat{p}_n
+\end{aligned}
+$$
+
+::: pause
+:::
+
+$$ 
+\begin{aligned}
+\operatorname{Population P}(\operatorname{A})&=\frac{\operatorname{count}(\operatorname{event = A})}{\operatorname{count}(\operatorname{events in sample space})} \\
+&=p
+\end{aligned}
 $$
 
 ## Calculating Probabilities with Complements
@@ -363,7 +375,6 @@ $$
 &= \operatorname{P}(\operatorname{A})+\operatorname{P}(\operatorname{A}^{\operatorname{'}})
 \end{aligned}
 $$
-
 
 ## Proportion of Songs by Artist (Population Probability)
 
@@ -384,16 +395,26 @@ songs_summary |>
        subtitle = 'n = 50')
 ```
 
-## Calculating the Population Probability for a Single Event $p$
+## Calculating the Population Probability ($p$) for a Single Event
 
-The sample space for the population probability that the next song is by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is all songs on the playlist ($n=50$).
+$p=\operatorname{Population Probability}(\operatorname{Next Song by Chappell Roan})$
 
-Chappell Roan has 7 songs on the playlist, so the event "The next song is by Chappell Roan" occurs 7 times within the sample space.
+-   The sample space for the population probability that the next song is by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is all songs on the playlist ($n=50$).
+
+-   Chappell Roan has 7 songs on the playlist, so the event "The next song is by Chappell Roan" occurs 7 times within the sample space.
+
+## Calculating the Population Probability ($p$) for a Single Event
 
 The population probability $p$ of the next song being by Chappell Roan is...
 
 $$
-p=\operatorname{P}(\operatorname{Next Song by Chappell Roan})=\frac{\operatorname{count}(\operatorname{Songs By Chappell Roan})}{\operatorname{count}(\operatorname{Total Possible Songs})}=\frac{7}{50}=0.14
+\begin{aligned}
+p&=\operatorname{P}(\operatorname{Next Song by Chappell Roan}) \\
+&=\frac{\operatorname{count}(\operatorname{Songs By Chappell Roan})}{\operatorname{count}(\operatorname{Total Possible Songs})} \\
+&=\frac{7}{50} \\
+&=0.14 \\
+&= 14\%
+\end{aligned}
 $$
 
 ## Proportion of Chappell Roan songs
@@ -412,19 +433,25 @@ songs_summary |>
   scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
   labs(x = 'Song by Chappell Roan?', y = 'Proportion of Songs on Playlist', 
        title = 'Proportion of Songs by Chappell Roan on the\nTaylor Swift Radio Spotify Playlist', 
-       caption = 'Calculated probability = 0.14')
+       caption = 'Calculated probability = 0.14 (14%)')
 ```
 
-## Calculating the Sample Probability $\hat{p}_n$ for a Single Event
+## Calculating the Sample Probability ($\hat{p}_n$) for a Single Event
 
-The sample space for the sample probability of the next song being by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is the number of songs listened to ($n>= 1$).
+-   The sample space for the sample probability of the next song being by Chappell Roan when there is "true" shuffle or ***sampling with replacement*** is the number of songs listened to so far ($n=1+$).
 
-Each time a Chappell Roan song is played, an event is counted / recorded. 
+-   Each time a Chappell Roan song is played, an event is counted / recorded.
+
+## Calculating the Sample Probability ($\hat{p}_n$) for a Single Event
 
 The population probability of the next song being by Chappell Roan is...
 
 $$
-\hat{p}_n=\operatorname{P}(\operatorname{Next Song by Chappell Roan})=\frac{\operatorname{count}(\operatorname{Songs Heard By Chappell Roan})}{\operatorname{count}(\operatorname{Total Songs Heard})}=\frac{x}{n}
+\begin{aligned}
+\hat{p}_n&=\operatorname{P}(\operatorname{Next Song by Chappell Roan}) \\
+&=\frac{\operatorname{count}(\operatorname{Songs Heard By Chappell Roan})}{\operatorname{count}(\operatorname{Total Songs Heard})} \\
+&=\frac{x}{n}
+\end{aligned}
 $$
 
 ## How well does a sample proportion represent the population proportion?
@@ -549,7 +576,7 @@ data.frame(artists = songs[sample(1:nrow(songs),
 
 ## Law of Large Numbers
 
-***How well the sample proportion $\hat{p}_n$ represents the population proportion $p$ depends on the size of the denominator.***
+***How well the sample proportion*** $\hat{p}_n$ represents the population proportion $p$ depends on the size of the denominator.
 
 As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
 
@@ -572,7 +599,7 @@ sample_df <- lapply(sample_sizes, function(x) {
   mutate(across(where(is.numeric), \(x) ifelse(is.na(x), 0, x)), 
          sample_size = as.numeric(sample))
 
-p1 <- sample_df |>
+sample_df |>
   ggplot(aes(x = sample_size, y = proportion_TRUE)) +
   geom_hline(yintercept = 0) +
   geom_vline(xintercept = 0) +
@@ -584,9 +611,17 @@ p1 <- sample_df |>
   geom_line(linewidth = 1, col = 'steelblue') +
   labs(x = '# of Songs Listened To', 
        y = 'Sample Proportion', 
-       title = 'Total songs = 1 - 200')
+       title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard',
+       subtitle = 'Sample Size Ranged from 1 to 200',
+       caption = 'Dashed line = Population proportion of Chappell Roan songs')
+```
 
-p2 <- sample_df |>
+## Small Sample Size / Small Denominator = Unreliable
+
+The sample proportion is an unreliable estimator of the population proportion when the sample size is small.
+
+```{r}
+sample_df |>
   ggplot(aes(x = sample_size, y = proportion_TRUE)) +
   geom_hline(yintercept = 0) +
   geom_vline(xintercept = 0) +
@@ -599,9 +634,17 @@ p2 <- sample_df |>
   coord_cartesian(ylim = c(0, 0.5), xlim = c(0, 50)) +
   labs(x = '# of Songs Listened To', 
        y = 'Sample Proportion', 
-       title = 'Total songs = 1 - 50')
+       title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard',
+       subtitle = 'Sample Size Ranged from 1 to 200, n = 1-50 shown here',
+       caption = 'Dashed line = Population proportion of Chappell Roan songs')
+```
 
-p3 <- sample_df |>
+## Large Sample Size / Small Denominator = Reliable Sample Proportion
+
+The sample proportion is a reliable estimator of the population proportion when the sample size is large.
+
+```{r}
+sample_df |>
   ggplot(aes(x = sample_size, y = proportion_TRUE)) +
   geom_vline(xintercept = 0) +
   geom_hline(yintercept = 0) +
@@ -614,11 +657,7 @@ p3 <- sample_df |>
   coord_cartesian(ylim = c(0, 0.5), xlim = c(150, 200)) +
   labs(x = '# of Songs Listened To', 
        y = 'Sample Proportion', 
-       title = 'Total songs = 150 - 200')
-
-(p1 + (p2 / p3)) +
-  plot_annotation(title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard', 
-                  caption = 'Dashed line = Population proportion of Chappell Roan songs')
+       title = 'Sample Proportion of Songs by Chappell Roan\nby Total Number of Songs Heard',
+       subtitle = 'Sample Size Ranged from 1 to 200, n = 150-200 shown here',
+       caption = 'Dashed line = Population proportion of Chappell Roan songs')
 ```
-
-
