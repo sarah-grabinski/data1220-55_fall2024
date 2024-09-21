@@ -188,7 +188,7 @@ sample_df |>
 
 ## Last time... sampling WITH replacement
 
-![***Sampling with replacement*** is like drawing a card from a deck, then shuffling it back in before drawing another card. Repetition is possible.](/class09/Sampling%20With%20Replacement.png)
+![***Sampling with replacement*** is like drawing a card from a deck, then shuffling it back in before drawing another card. Repetition is possible.](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/Sampling%20With%20Replacement.png)
 
 ## This time...
 
@@ -218,11 +218,7 @@ sample_df |>
 
 ## Let's define our sample space $S$ again...
 
-Grid of songs by title
-
-50 unique songs on playlist
-
-Only 1 song can play at a time (disjoint outcomes)
+See board...
 
 ## Population proportions by song for sampling WITH replacement
 
@@ -276,10 +272,6 @@ songs |>
   scale_x_continuous(limits = c(0, 0.5))
 ```
 
-## Visualizing the sample space: 1 outcome
-
-Grid of songs with Chappell Roan songs highlighted
-
 ## Drawing the sample space: 1 outcome
 
 See board...
@@ -294,10 +286,6 @@ $$
 \end{aligned}
 $$
 
-## Visualizing the sample space: 2 disjoint outcomes
-
-Grid of songs with Billie Eilish songs and Taylor Swift songs highlighted
-
 ## Describing the sample space: 2 disjoint outcomes
 
 See board...
@@ -306,21 +294,9 @@ See board...
 
 Describes the probability of event A or event B occurring ($P(A \cup B)$)
 
-$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$
+$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$$
 
 ## Example: Addition Rule for Disjoint Outcomes
-
-See board...
-
-## Visualizing the sample space: 2 non-disjoint outcomes
-
-Grid of songs with Billie Eilish songs and Charli xcx songs highlighted
-
-## Describing the sample space: 2 non-disjoint outcomes
-
-See board...
-
-## Example: Addition Rule for Non-Disjoint Outcomes
 
 See board...
 
@@ -328,7 +304,7 @@ See board...
 
 Describes the probability of event A or event B occurring
 
-$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B}) - \operatorname{P}(\operatorname{A and B})$
+$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B}) - \operatorname{P}(\operatorname{A and B})$$
 
 ## Example: General Addition Rule for Non-Disjoint Outcomes
 
@@ -357,7 +333,7 @@ The sample space does ***not*** change between events.
 
 ## Defining the Sample Space
 
-2 grids of songs with Chappell Roan highlighted
+See board...
 
 ## What is the probability we hear a song by Chappell Roan twice in a row?
 
@@ -367,17 +343,21 @@ The sample space does ***not*** change between events.
 
 $7 \times 7 = 49 \operatorname{possibilities!}$
 
-50 possible for song 1 50 possible for song 2
+-   50 possible songs for song 1
 
-50 \* 50 = 2500 possibilities!
+-   50 possible songs for song 2
 
-$\frac{7 \times 7}{50 \times 50}$
+$50 \times 50 = 2500 \operatorname{possibilities!}$
+
+$\operatorname{P}(\operatorname{A and B})=\frac{7 \times 7}{50 \times 50}$
 
 ## Multiplication Rule for Independent Processes
 
 Describes the probability of event A and event B occurring
 
-P(A and B) = P(A) x P(B)
+$$
+\operatorname{P}(\operatorname{A and B})=\operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})
+$$
 
 ## Dependent Processes
 
@@ -389,7 +369,7 @@ P(A and B) = P(A) x P(B)
 
 ## Sampling WITHOUT Replacement
 
-example pic from Biorender
+![***Sampling without replacement*** is like drawing a card from a deck, then drawing another card without putting the first one back. Repetition is NOT possible.](https://github.com/sarah-grabinski/data1220-55_fall2024/blob/main/slides/class09/Sampling%20Without%20Replacement.png)
 
 ## Example: Dependent Processes with Spotify Shuffle
 
@@ -402,62 +382,41 @@ Song does NOT go back into the "pot" after it is played and CANNOT be repeated.
 
 The sample space ***does*** change between events.
 
-## Defining the Sample Space for Independent Processes
-
-1 grid has all 50 squares with Chappell Roan highlighted
-
-2nd grid has 50 squares with Chappell Roan highlighted
-
 ## Defining the Sample Space for Dependent Processes
 
-1 grid has all 50 squares with Chappell Roan highlighted
-
-2nd grid has 50 squares with one unhighlighted square crossed out
-
-## Defining the Sample Space for Dependent Processes
-
-1 grid has all 50 squares with Chappell Roan highlighted
-
-2nd grid has 50 squares with one highlighted square crossed out
+See board...
 
 ## What is the probability we hear a song by Chappell Roan twice in a row?
 
-Calculate the probability of song 1 (7/50) and song 2 (6/49)
+-   7 opportunities for song 1 to be by Chappell Roan
 
-7 opportunities for song 1 to be by chappell roan
+-   6 opportunities for song 2 to be by chappell roan
 
-6 opportunities for song 2 to be by chappell roan
+$7 \times 6 = 42 \operatorname{possibilities!}$
 
-7 \* 6 = 42 possibilities!
+-   50 possible songs for song 1
 
-50 possible for song 1 49 possible for song 2
+-   49 possible songs for song 2
 
-50 \* 50 = 2450 possibilities!
+$50 \times 49 = 2450 \operatorname{possibilities!}$
 
-$\frac{7 \times 6}{50 \times 49}$
+$\operatorname{P}(\operatorname{A and B})=\frac{7 \times 6}{50 \times 49}$
 
 ## General Multiplication Rule for Dependent Processes
 
-Describes the probability of event B occuring given that event A has already occurred
+Describes the probability of event B occurring given that event A has already occurred
 
-P(A and B) = P(A) x P(B \| A)
-
+$$
+\operatorname{P}(\operatorname{A and B})=\operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B given A})
+$$
 ## Distinguishing Independent and Dependent Processes
 
-When processes are independent
+When processes are independent, $\operatorname{P}(\operatorname{A and B})=\operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$.
+
+If $\operatorname{P}(\operatorname{A and B})\ne\operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$, the processes are NOT independent.
 
 ## Probability Density Functions
 
 -   ***Probability Mass Function:*** categorical
 
 -   ***Probabiity Density Function:*** numerical
-
-## Homework 1 Answer Key
-
-## Survey 2
-
--   Go to this link to take the survey: [link](url)
-
--   You will receive additional participation credit for having been in class to take the survey
-
--   You will still receive some (but less) additional participation credit for taking it after class
