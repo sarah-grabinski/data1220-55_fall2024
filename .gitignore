@@ -5,6 +5,7 @@
 zoom/
 old_materials/
 slides/images
+slides/images/*.pptx
 *.pptx
 *.zip
 homework/homework1/submissions/
