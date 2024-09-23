@@ -48,11 +48,11 @@ $$
 
 ## Describing the sample space
 
-![The sample space for Shohei Otani's performance during the next LA Dodger's game](class11/general-addition-sample-space.png){fig-align="center"}
+![The sample space for Shohei Otani's performance during the next LA Dodger's game](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/general-addition-sample-space.png?raw=true){fig-align="center"}
 
 ## Zooming in
 
-![The probability that Shohei Otani hits a home run ***or*** steals a base during the next LA Dodger's game. "Or" is inclusive when used in the context of probability.](class11/general-addition-sample-space-highlight.png){fig-align="center"}
+![The probability that Shohei Otani hits a home run ***or*** steals a base during the next LA Dodger's game. "Or" is inclusive when used in the context of probability.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/general-addition-sample-space-highlight.png?raw=true){fig-align="center"}
 
 ## What's the probability that Shohei Otani hits a home run during the next game? {.smaller}
 
@@ -182,11 +182,11 @@ $$
 
 ## Describing the sample space
 
-![The sample space for Shohei Otani's performance during his next at bat.](class11/addition-sample-space.png){fig-align="center"}
+![The sample space for Shohei Otani's performance during his next at bat.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/addition-sample-space.png?raw=true){fig-align="center"}
 
 ## Zooming in
 
-![The probability that Shohei Otani hits a home run ***or*** steals a base during his next at bat.](class11/addition-sample-space-highlight.png){fig-align="center"}
+![The probability that Shohei Otani hits a home run ***or*** steals a base during his next at bat.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/addition-sample-space-highlight.png?raw=true){fig-align="center"}
 
 ## What's the probability that Shohei Otani hits a home run during his next at bat?  {.smaller}
 
@@ -286,11 +286,11 @@ $$
 
 ## Describing the sample space
 
-![The sample space for Shohei Otani's performance during the next LA Dodger's game](class11/general-multiplication-sample-space.png){fig-align="center"}
+![The sample space for Shohei Otani's performance during the next LA Dodger's game](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/general-multiplication-sample-space.png?raw=true){fig-align="center"}
 
 ## Zooming in
 
-![The probability that Shohei Otani hits a home run ***and*** steals a base during the next LA Dodger's game.](class11/general-multiplication-sample-space-highlight.png){fig-align="center"}
+![The probability that Shohei Otani hits a home run ***and*** steals a base during the next LA Dodger's game.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/general-multiplication-sample-space-highlight.png?raw=true){fig-align="center"}
 
 ## What's the probability that Shohei Otani hits a home run during the next game?  {.smaller}
 
@@ -372,9 +372,9 @@ $$
 
 ## Comparing probability models
 
--   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of independence is $\frac{55}{156}=0.353$.
+-   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of independence is $0.353$.
 
--   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of dependence a home run is $\frac{18}{49}=0.125$
+-   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of dependence a home run is $0.125$
 
 *Is the probability that Shohei Otani steals a base and hits a home run under a model of independence meaningfully different from the model of dependence?*
 
@@ -388,11 +388,11 @@ $$
 
 ## Describing the sample space
 
-![The sample space for Shohei Otani's performance during the next game](class11/independence-sample-space.png){fig-align="center"}
+![The sample space for Shohei Otani's performance during the next game](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/independence-sample-space.png?raw=true){fig-align="center"}
 
 ## Zooming in
 
-![The probability that Shohei Otani makes at least one hit ***and*** pitches at least one strikeout during the next  game.](class11/independence-sample-space-highlight.png){fig-align="center"}
+![The probability that Shohei Otani makes at least one hit ***and*** pitches at least one strikeout during the next  game.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class11/independence-sample-space-highlight.png?raw=true){fig-align="center"}
 
 ## What's the probability that Shohei Otani makes 1+ hits during the next game?  {.smaller}
 
@@ -483,9 +483,12 @@ $$
 
 ## Comparing probability models
 
--   The probability that Shohei Otani pitches a strikeout and makes a hit during the next game under a model of independence is $\frac{55}{156}=0.462$.
+-   The probability that Shohei Otani pitches a strikeout and makes a hit during the next game under a model of independence is $0.462$.
 
--   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of dependence a home run is $\frac{18}{49}=0.481$
+-   The probability that Shohei Otani steals a base and hits a home run during the next Dodgers game under a model of dependence a home run is $0.481$
 
 *Is the probability that Shohei Otani pitches a strikeout and makes a hit during the game under a model of independence meaningfully different from the model of dependence?*
 
+## How do we decide when a difference is meaningful?
+
+That's what statistics is all about!

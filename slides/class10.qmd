@@ -294,7 +294,7 @@ See board...
 
 Describes the probability of event A or event B occurring ($P(A \cup B)$)
 
-$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B})$$
+$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) + \operatorname{P}(\operatorname{B})$$
 
 ## Example: Addition Rule for Disjoint Outcomes
 
@@ -304,7 +304,7 @@ See board...
 
 Describes the probability of event A or event B occurring
 
-$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) \times \operatorname{P}(\operatorname{B}) - \operatorname{P}(\operatorname{A and B})$$
+$$\operatorname{P}(\operatorname{A or B}) = \operatorname{P}(\operatorname{A}) + \operatorname{P}(\operatorname{B}) - \operatorname{P}(\operatorname{A and B})$$
 
 ## Example: General Addition Rule for Non-Disjoint Outcomes
 
