@@ -4,6 +4,7 @@
 .Ruserdata
 zoom/
 old_materials/
+old_materials/*
 slides/images
 slides/images/figures.pptx
 slides/images/figures2.pptx
