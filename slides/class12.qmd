@@ -25,3 +25,235 @@ format:
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 12 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
+
+## Probability Review
+
+-   (General) Addition Rule
+
+-   (General) Multiplication Rule
+
+-   Dependence vs Independence
+
+## The General Addition Rule
+
+The probability of event A ***or*** event B occurring is the sum of the probability that A occurs and the probability that B occurs minus the probability that A *and* B occurs.
+
+$$
+\begin{aligned}
+P(A \operatorname{or} B) &= P(A) + P(B) - P(A \operatorname{and} B) \\
+&= P(A) + P(B) - P(A \cup B) \\
+&= P(A \cap B)
+\end{aligned}
+$$
+
+## The Addition Rule for Disjoint Events
+
+When events A and B are ***disjoint***, the probability of event A ***or*** event B occurring is just the sum of the probability that A occurs and the probability that B occurs, because the probability that event A *and* event B occurs is 0.
+
+$$
+\begin{aligned}
+P(A \operatorname{or} B) &= P(A) + P(B) - P(A \operatorname{and} B) \\
+&= P(A) + P(B) \\
+&= P(A \cap B)
+\end{aligned}
+$$
+
+## The General Multiplication Rule
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the *conditional probability* that B occurs given that A has already occurred.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## Independent Processes
+
+-   If random process B is ***independent*** of random process A, then the probability of random process B does NOT vary based on the outcome of random process A 
+
+-   *i.e. knowing the outcome of A does NOT provide additional information about the probability of B*
+
+-   Example: When listening to a playlist using a "true shuffle", the probability that the next song will be by a particular artist *does not* change based on whether or not the last song played was also by that artist.
+
+## Multiplication Rule for Independent Processes
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the probability that B occurs, because the probability of B does not change based on the outcome of A.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A) \times P(B) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## How do you know if two random processes are independent? {.smaller}
+
+-   Compare the conditional probabilities of B given the different possible outcomes of A. If $P(B|A)\approx P(B)$ for all values of A, then the two random processes are likely independent.
+
+-   Calculate the probability that event A and B occur under both an independence model ($P(A \operatorname{and} B)=P(A)\times P(B)$) and a dependence model ($P(A \operatorname{and} B) = P(A) \times P(B|A)$. 
+    *   If $P(A)\times P(B) \approx P(A) \times P(B|A)$, then A and B are likely ***independent processes***.
+    *   If $P(A)\times P(B) \neq P(A) \times P(B|A)$, then A and B are likely ***dependent*** processes.
+
+
+
+## Practice: Swing Voters
+
+-   Pew Research survey asked 2,373 randomly sampled registered voters about their...
+
+    *   Political affilitation (Democrat, Republican, Independent)
+    
+    *   Whether they consider themselves a swing voter (Yes, No)
+    
+-   35% responded Independent, 23% identified as swing voters, and 11% identified as both
+
+## Pratice: Swing Voters {.smaller}
+
+-   Are these events disjoint or non-disjoint?
+
+-   What does the sample space look like?
+
+-   What do the contingency tables look like?
+
+-   What % of voters identify as an Independent *or* a swing voter?
+
+-   What % of voters identify as *neither* an Independent *nor* a swing voter?
+
+-   Are identifying as an Independent and identifying as a swing voter dependent or independent processes?
+
+## Pratice: Poverty and Language
+
+The American Community Survey (ACS) provides public data each year to give communities demographic information to plan investments and services. The 2010 ACS estimates that...
+
+-   14.6% of Americans live below the poverty line
+
+-   20.7% of Americans speak a language other than English at home
+
+-   31.1% of Americans live below the poverty line *or* speak a language other than English at home
+
+## Pratice: Poverty and Language {.smaller}
+
+-   Are these events disjoint or non-disjoint?
+
+-   What does the sample space look like?
+
+-   What do the contingency tables look like?
+
+-   What % of Americans live below the poverty line *and* speak a language other than English at home?
+
+-   What % of Americans live below the poverty line *and* speak only English at home?
+
+-   Are living below the poverty line and speaking a language other than English at home dependent or independent?
+
+## Chapter 4 - Distributions {.smaller}
+
+-   We will *only* be covering Chapter 4.1 on the normal distribution in your [textbook]()
+
+-   If you have an interest in math or statistics, you may want to read the rest of Chapter 4
+
+    -   4.2 - Geometric distribution
+
+    -   4.3 - Binomial distribution
+
+    -   4.4 - Negative binomial distribution
+
+    -   4.5 - Poisson distribution
+
+## Chapter 4 Objectives
+
+-   Identify and describe the standard normal and normal distributions
+
+-   Standardize normal distributions and calculate Z-scores
+
+-   Calculate percentiles and exact probabilities
+
+-   Apply the 68-95-99.7 Rule
+
+-   Read a QQ-Plot (not in book)
+
+## The Normal Distribution
+
+::: columns
+::: column
+-   Symmetric, unimodal, "bell-shaped"
+
+-   Not as common as people think in real data
+
+-   Strong assumption in small sample sizes (\$\le 20)
+
+-   Powerful statistical tests available when outcome approximates normal distribution
+:::
+
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-distribution.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Notation
+
+-   $\mu$ (Greek letter mu) represents the mean
+
+-   $\sigma$ (Greek letter sigma) represents the standard deviation of the mean
+
+-   $N(\mu, \sigma)$ stands for a normal distribution with mean $\mu$ and standard deviation $\sigma$
+
+## Histograms and Density Curves
+
+![Vocabulary scores for 947 seventh-graders. Both histograms and density curves can be helpful in identifying normal distributions.](class12/height-of-males.png){fig-align="center"}
+
+## Example: OkCupid, Heights of Males
+
+![Dashed line is self-reported heights by females on OkCupid. Dark purple line is the normal distribution with the same mean and standard deviation. Light purple line is the US average.](class12/height-of-females.png){fig-align="center"}
+
+## The shape of a normal distribution varies by location (mean) and scale (standard deviation)
+
+![Changing the mean shifts the "center" of the distribution. Changing the standard deviation alters the "width" of the distribution (i.e. variability).](class12/means-and-sds.png){fig-align="center"}
+
+## Standardizing Normal Distributions with Z-Scores
+    
+-   A ***Z-score*** is the number of standard deviations a value falls above (when positive) or below (when negative) the mean of the data
+
+-   Z-scores standardize a normal distribution by...
+
+    *   Centering the data at 0 by subtracting the mean from each score
+    
+    *   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
+    
+## Calculating the Z-Score
+    
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma}
+\end{aligned}
+$$
+    
+## Example: Test Scores
+
+-   SAT scores are normally distributed with $\mu=1500$ and $\sigma=300$ ($N(\mu=1500, \sigma = 300)$)
+
+-   ACT scores are normally distributed with $\mu=21$ and $\sigma=5$ ($N(21, 5)$)
+
+![How do we compare normal distributions with different locations and scales?](class12/percentiles-example.png){fig-align="center"}
+
+## Visualizing Z-Scores
+    
+![Standardizing the data by converting values to Z-scores puts different distributions on the same scale.](class12/percentiles-example.png){fig-align="center"}
+
+## The Standard Normal Distribution
+
+-   The ***standard normal distribution*** is a normal distribution with $\mu=0$ and $\sigma=1$ (written $N(\mu=0, \sigma=1)$) 
+
+-   Units of the standard normal distribution are standard deviations (Z-scores) (i.e. 1 unit = 1 SD)
+
+-   Observations that are 2+ standard deviations from the mean are considered unusual
+
+## The 68-95-99.7 Rule
+
+When data is (nearly) normally distributed...
+
+-   ~68% of the observations are within 1 standard deviation of the mean ($\mu \pm \sigma)
