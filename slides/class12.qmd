@@ -72,7 +72,7 @@ $$
 
 ## Independent Processes
 
--   If random process B is ***independent*** of random process A, then the probability of random process B does NOT vary based on the outcome of random process A 
+-   If random process B is ***independent*** of random process A, then the probability of random process B does NOT vary based on the outcome of random process A
 
 -   *i.e. knowing the outcome of A does NOT provide additional information about the probability of B*
 
@@ -95,20 +95,19 @@ $$
 
 -   Compare the conditional probabilities of B given the different possible outcomes of A. If $P(B|A)\approx P(B)$ for all values of A, then the two random processes are likely independent.
 
--   Calculate the probability that event A and B occur under both an independence model ($P(A \operatorname{and} B)=P(A)\times P(B)$) and a dependence model ($P(A \operatorname{and} B) = P(A) \times P(B|A)$. 
-    *   If $P(A)\times P(B) \approx P(A) \times P(B|A)$, then A and B are likely ***independent processes***.
-    *   If $P(A)\times P(B) \neq P(A) \times P(B|A)$, then A and B are likely ***dependent*** processes.
+-   Calculate the probability that event A and B occur under both an independence model ($P(A \operatorname{and} B)=P(A)\times P(B)$) and a dependence model ($P(A \operatorname{and} B) = P(A) \times P(B|A)$.
 
-
+    -   If $P(A)\times P(B) \approx P(A) \times P(B|A)$, then A and B are likely ***independent processes***.
+    -   If $P(A)\times P(B) \neq P(A) \times P(B|A)$, then A and B are likely ***dependent*** processes.
 
 ## Practice: Swing Voters
 
 -   Pew Research survey asked 2,373 randomly sampled registered voters about their...
 
-    *   Political affilitation (Democrat, Republican, Independent)
-    
-    *   Whether they consider themselves a swing voter (Yes, No)
-    
+    -   Political affilitation (Democrat, Republican, Independent)
+
+    -   Whether they consider themselves a swing voter (Yes, No)
+
 -   35% responded Independent, 23% identified as swing voters, and 11% identified as both
 
 ## Pratice: Swing Voters {.smaller}
@@ -214,24 +213,24 @@ The American Community Survey (ACS) provides public data each year to give commu
 ![Changing the mean shifts the "center" of the distribution. Changing the standard deviation alters the "width" of the distribution (i.e. variability).](class12/means-and-sds.png){fig-align="center"}
 
 ## Standardizing Normal Distributions with Z-Scores
-    
+
 -   A ***Z-score*** is the number of standard deviations a value falls above (when positive) or below (when negative) the mean of the data
 
 -   Z-scores standardize a normal distribution by...
 
-    *   Centering the data at 0 by subtracting the mean from each score
-    
-    *   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
-    
+    -   Centering the data at 0 by subtracting the mean from each score
+
+    -   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
+
 ## Calculating the Z-Score
-    
+
 $$
 \begin{aligned}
 Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
 &= \frac{x-\mu}{\sigma}
 \end{aligned}
 $$
-    
+
 ## Example: Test Scores
 
 -   SAT scores are normally distributed with $\mu=1500$ and $\sigma=300$ ($N(\mu=1500, \sigma = 300)$)
@@ -241,12 +240,12 @@ $$
 ![How do we compare normal distributions with different locations and scales?](class12/percentiles-example.png){fig-align="center"}
 
 ## Visualizing Z-Scores
-    
+
 ![Standardizing the data by converting values to Z-scores puts different distributions on the same scale.](class12/percentiles-example.png){fig-align="center"}
 
 ## The Standard Normal Distribution
 
--   The ***standard normal distribution*** is a normal distribution with $\mu=0$ and $\sigma=1$ (written $N(\mu=0, \sigma=1)$) 
+-   The ***standard normal distribution*** is a normal distribution with $\mu=0$ and $\sigma=1$ (written $N(\mu=0, \sigma=1)$)
 
 -   Units of the standard normal distribution are standard deviations (Z-scores) (i.e. 1 unit = 1 SD)
 
@@ -256,4 +255,61 @@ $$
 
 When data is (nearly) normally distributed...
 
--   ~68% of the observations are within 1 standard deviation of the mean ($\mu \pm \sigma)
+-   \~68% of the observations are within 1 standard deviation of the mean ($\mu \pm \sigma$)
+
+-   \~95% of the observations are within 2 standard deviations of the mean ($\mu \pm 2\sigma$)
+
+-   99.7% of the observations are within 3 standard deviations of the mean ($\mu \pm 3\sigma$)
+
+## The 68-95-99.7 Rule
+
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](class12/68-95-99.7-rule.png){fig-align="center"}
+
+## Example: Test Scores
+
+::: columns
+::: column
+-   SAT scores have the distribution $N(1500, 300)$
+
+-   \~68% of scores will be 1200-1800
+
+-   95% of scores will be 900-2100
+
+-   99.7% of scores will be 600-2400
+:::
+
+::: column
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](class12/sat-scores.png){fig-align="center"}
+:::
+:::
+
+## Proportions, Probabilities, and Percentiles
+
+![A ***percentile*** is the proportion or percentage of observations that fall *below* a given value in a distribution.](class12/percentile-shaded-left.png){fig-align="center"}
+
+## Probability Density and Cumulative Density Functions
+
+::: columns
+::: column
+![We can calculate the exact probability for a particular value or range of values.](class12/normal-pdf.png){fig-align="center"}
+::: column
+::: column
+![We can calculate the cumulative probability of a variable being less than a given value.](class12/normal-cdf.png){fig-align="center"}
+:::
+:::
+
+## Calculating Percentiles with Z-Score Tables
+
+![You can use a Z-Score Table to look up the percentile that corresponds to a particular Z-Score.](class12/z-score-table.png){fig-align="center"}
+
+## Calculating Probabilities with Z-Score Tables
+
+![You can use a Z-Score Table to look up the probability of a particular Z-Score.](class12/z-score-table-appendix-2.png){fig-align="center"}
+
+## Example: Discrete Numeric Variables
+
+![Sometimes the normal distribution is an acceptable approximation of a discrete numeric variable, but other distributions may be more appropriate.](class12/hours-of-sleep.png){fig-align="center"}
+
+## Example: QQ-Plot
+
+![Quantile-Quantile (QQ) Plots can help easily identify when you can and cannot assume normality.](class12/qq-plots.jpg){fig-align="center"}
