@@ -202,15 +202,15 @@ The American Community Survey (ACS) provides public data each year to give commu
 
 ## Histograms and Density Curves
 
-![Vocabulary scores for 947 seventh-graders. Both histograms and density curves can be helpful in identifying normal distributions.](class12/height-of-males.png){fig-align="center"}
+![Vocabulary scores for 947 seventh-graders. Both histograms and density curves can be helpful in identifying normal distributions.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/height-of-males.png?raw=true){fig-align="center"}
 
 ## Example: OkCupid, Heights of Males
 
-![Dashed line is self-reported heights by females on OkCupid. Dark purple line is the normal distribution with the same mean and standard deviation. Light purple line is the US average.](class12/height-of-females.png){fig-align="center"}
+![Dashed line is self-reported heights by females on OkCupid. Dark purple line is the normal distribution with the same mean and standard deviation. Light purple line is the US average.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/height-of-females.png?raw=true){fig-align="center"}
 
 ## The shape of a normal distribution varies by location (mean) and scale (standard deviation)
 
-![Changing the mean shifts the "center" of the distribution. Changing the standard deviation alters the "width" of the distribution (i.e. variability).](class12/means-and-sds.png){fig-align="center"}
+![Changing the mean shifts the "center" of the distribution. Changing the standard deviation alters the "width" of the distribution (i.e. variability).](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/means-and-sds.png?raw=true){fig-align="center"}
 
 ## Standardizing Normal Distributions with Z-Scores
 
@@ -237,11 +237,11 @@ $$
 
 -   ACT scores are normally distributed with $\mu=21$ and $\sigma=5$ ($N(21, 5)$)
 
-![How do we compare normal distributions with different locations and scales?](class12/percentiles-example.png){fig-align="center"}
+![How do we compare normal distributions with different locations and scales?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentiles-example.png?raw=true){fig-align="center"}
 
 ## Visualizing Z-Scores
 
-![Standardizing the data by converting values to Z-scores puts different distributions on the same scale.](class12/percentiles-example.png){fig-align="center"}
+![Standardizing the data by converting values to Z-scores puts different distributions on the same scale.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentiles-example.png?raw=true){fig-align="center"}
 
 ## The Standard Normal Distribution
 
@@ -263,7 +263,7 @@ When data is (nearly) normally distributed...
 
 ## The 68-95-99.7 Rule
 
-![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](class12/68-95-99.7-rule.png){fig-align="center"}
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/68-95-99.7-rule.png?raw=true){fig-align="center"}
 
 ## Example: Test Scores
 
@@ -279,37 +279,37 @@ When data is (nearly) normally distributed...
 :::
 
 ::: column
-![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](class12/sat-scores.png){fig-align="center"}
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/sat-scores.png?raw=true){fig-align="center"}
 :::
 :::
 
 ## Proportions, Probabilities, and Percentiles
 
-![A ***percentile*** is the proportion or percentage of observations that fall *below* a given value in a distribution.](class12/percentile-shaded-left.png){fig-align="center"}
+![A ***percentile*** is the proportion or percentage of observations that fall *below* a given value in a distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentile-shaded-left.png?raw=true){fig-align="center"}
 
 ## Probability Density and Cumulative Density Functions
 
 ::: columns
 ::: column
-![We can calculate the exact probability for a particular value or range of values.](class12/normal-pdf.png){fig-align="center"}
+![We can calculate the exact probability for a particular value or range of values.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-pdf.png?raw=true){fig-align="center"}
+::: 
 ::: column
-::: column
-![We can calculate the cumulative probability of a variable being less than a given value.](class12/normal-cdf.png){fig-align="center"}
+![We can calculate the cumulative probability of a variable being less than a given value.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-cdf.png?raw=true){fig-align="center"}
 :::
 :::
 
 ## Calculating Percentiles with Z-Score Tables
 
-![You can use a Z-Score Table to look up the percentile that corresponds to a particular Z-Score.](class12/z-score-table.png){fig-align="center"}
+![You can use a Z-Score Table to look up the percentile that corresponds to a particular Z-Score.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/z-score-table.png?raw=true){fig-align="center"}
 
 ## Calculating Probabilities with Z-Score Tables
 
-![You can use a Z-Score Table to look up the probability of a particular Z-Score.](class12/z-score-table-appendix-2.png){fig-align="center"}
+![You can use a Z-Score Table to look up the probability of a particular Z-Score.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/z-score-table-appendix-2.png?raw=true){fig-align="center"}
 
 ## Example: Discrete Numeric Variables
 
-![Sometimes the normal distribution is an acceptable approximation of a discrete numeric variable, but other distributions may be more appropriate.](class12/hours-of-sleep.png){fig-align="center"}
+![Sometimes the normal distribution is an acceptable approximation of a discrete numeric variable, but other distributions may be more appropriate.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/hours-of-sleep.png?raw=true){fig-align="center"}
 
 ## Example: QQ-Plot
 
-![Quantile-Quantile (QQ) Plots can help easily identify when you can and cannot assume normality.](class12/qq-plots.jpg){fig-align="center"}
+![Quantile-Quantile (QQ) Plots can help easily identify when you can and cannot assume normality.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/qq-plots.jpg?raw=true){fig-align="center"}

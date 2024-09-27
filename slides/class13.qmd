@@ -9,14 +9,14 @@ format:
     self-contained: true
     slide-number: true
     footnotes-hover: true
-    echo: false
+    echo: true
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 13 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
-    echo: false
+    echo: true
     slide-number: true
     navigation: horizontal
     theme: default
@@ -25,3 +25,322 @@ format:
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 13 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
+
+## Chapter 4 - Distributions {.smaller}
+
+-   We will *only* be covering Chapter 4.1 on the normal distribution in your [textbook]()
+
+-   If you have an interest in math or statistics, you may want to read the rest of Chapter 4
+
+    -   4.2 - Geometric distribution
+
+    -   4.3 - Binomial distribution
+
+    -   4.4 - Negative binomial distribution
+
+    -   4.5 - Poisson distribution
+
+## Chapter 4 Objectives
+
+-   Identify and describe the standard normal and normal distributions
+
+-   Standardize normal distributions and calculate Z-scores
+
+-   Calculate percentiles and exact probabilities
+
+-   Apply the 68-95-99.7 Rule
+
+-   Read a QQ-Plot (not in book)
+
+## The Normal Distribution
+
+::: columns
+::: column
+-   Symmetric, unimodal, "bell-shaped"
+
+-   Not as common as people think in real data
+
+-   Strong assumption in small sample sizes (\$\le 20)
+
+-   Powerful statistical tests available when outcome approximates normal distribution
+:::
+
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-distribution.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Notation
+
+-   $\mu$ (Greek letter mu) represents the mean
+
+-   $\sigma$ (Greek letter sigma) represents the standard deviation of the mean
+
+-   $N(\mu, \sigma)$ stands for a normal distribution with mean $\mu$ and standard deviation $\sigma$
+
+## Histograms and Density Curves
+
+![Vocabulary scores for 947 seventh-graders. Both histograms and density curves can be helpful in identifying normal distributions.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/histogram-density.png?raw=true){fig-align="center"}
+
+## Example: OkCupid, Heights of Males
+
+![Vocabulary scores for 947 seventh-graders. Both histograms and density curves can be helpful in identifying normal distributions.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/height-of-males.png?raw=true){fig-align="center"}
+
+## Example: OkCupid, Heights of Females
+
+![Dashed line is self-reported heights by females on OkCupid. Dark purple line is the normal distribution with the same mean and standard deviation. Light purple line is the US average.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/height-of-females.png?raw=true){fig-align="center"}
+
+## The shape of a normal distribution varies by location (mean) and scale (standard deviation)
+
+![Changing the mean shifts the "center" of the distribution. Changing the standard deviation alters the "width" of the distribution (i.e. variability).](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/means-and-sds.png?raw=true){fig-align="center"}
+
+## Standardizing Normal Distributions with Z-Scores
+
+-   A ***Z-score*** is the number of standard deviations a value falls above (when positive) or below (when negative) the mean of the data
+
+-   Z-scores standardize a normal distribution by...
+
+    -   Centering the data at 0 by subtracting the mean from each score
+
+    -   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
+
+## Calculating the Z-Score
+
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma}
+\end{aligned}
+$$
+
+## What does "centering" the data mean?
+
+-   The numerator of the Z-Score $x-\mu$ calculates how many units an observed value is from the mean of the normal distribution
+
+-   When $x_i \approx \mu$, $x_{\operatorname{centered}} \approx 0$
+
+-   The units of random variable $X_{\operatorname{centered}}$ are the same as the units for the original variable $X$
+
+## Properties of Centered Normal Distributions
+
+For a given random variable $X$ with a normal distribution, you ***center*** the data by calculating $x_i-\mu$ for each value of $X$ such that...
+
+-   When $x_i > \mu$, $x_{\operatorname{centered}}>0$ and is interpreted "$x_{\operatorname{centered}}$ is $x_i-\mu$ units *greater than* the mean $\mu$"
+-   When $x_i = \mu$, $x_{\operatorname{centered}}=0$
+-   When $x_i < \mu$, $x_{\operatorname{centered}}<0$ and  is interpreted "$x_{\operatorname{centered}}$ is $\mu-x_i$ units *less than* the mean $\mu$"
+
+## What does "scaling" the data mean?
+
+-   Dividing the numerator of the Z-score $x-\mu$ by the denominator $\sigma$ converts the units of the centered data to standard deviations
+
+-   Converts "$x_{\operatorname{centered}}$ is $x_i - \mu$ units greater/lesser than the mean $\mu$" to "$x_{\operatorname{scaled}}$ is $x_i - \mu$ units greater/lesser than the mean
+
+-   When $x_i-\mu \approx \sigma$, $x_{\operatorname{centered}} \approx 1$ 
+
+-   For scaled data, $1 \operatorname{unit} = 1 \operatorname{standard deviation}$
+
+## Example: Test Scores
+
+-   SAT scores are normally distributed with $\mu=1500$ and $\sigma=300$ ($N(\mu=1500, \sigma = 300)$)
+
+-   ACT scores are normally distributed with $\mu=21$ and $\sigma=5$ ($N(21, 5)$)
+
+![How do we compare normal distributions with different locations and scales? Is Pam more above average than Jim? Vice versa?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentiles-example.png?raw=true){fig-align="center"}
+
+## Zooming in
+
+![If both Pam and Jim applied to John Carroll, who would be the better student to admit?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentiles-example.png?raw=true){fig-align="center"}
+
+## Example: Calculating Pam's SAT Z-Score
+
+If SAT scores have the distribution $N(\mu=1500, \sigma=300)$ and Pam's SAT score is 1800, then Pam's Z-score is...
+
+$$
+\begin{aligned}
+\operatorname{Z-Score}&=\frac{x-\mu}{\sigma} \\
+&= \frac{1800-1500}{300} \\
+&= 1
+\end{aligned}
+$$
+
+Pam's SAT Z-score is 1, so Pam's SAT score is ***1 standard deviation greater than the mean***.
+
+## Example: Pam's SAT Z-Score in R
+
+```{r}
+pam_mean <- 1500
+pam_sd <- 300
+
+pam_centered <- 1800 - pam_mean
+
+print(pam_centered)
+```
+
+```{r}
+pam_z <- pam_centered / pam_sd
+
+print(pam_z)
+```
+
+## Example: Pam's SAT Z-Score in R
+
+```{r}
+(1800 - 1500) / 300
+```
+
+## Example: Calculating Jim's ACT Z-Score
+
+If ACT scores have the distribution $N(\mu=21, \sigma=5)$ and Jim's ACT score is 24, then Jim's Z-score is...
+
+$$
+\begin{aligned}
+\operatorname{Z-Score}&=\frac{x-\mu}{\sigma} \\
+&= \frac{24-21}{5} \\
+&= 0.6
+\end{aligned}
+$$
+
+Jim's ACT Z-score is 0.6, so Jim's ACT score is ***0.6 standard deviations greater than the mean***.
+
+## Putting it together...
+
+::: columns
+::: column
+-   Pam's SAT Z-Score is 1
+
+-   Jim's ACT Z-Score is 0.6
+
+-   Pam's SAT score is more above average than Jim's ACT score
+:::
+::: column
+![Pam's SAT score and Jim's ACT score on a standardized scale, with center = 0 and 1 unit = 1 standard deviation.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentiles-example.png?raw=true){fig-align="center"}
+:::
+:::
+
+## The Standard Normal Distribution
+
+-   The ***standard normal distribution*** is a normal distribution with $\mu=0$ (*centered*) and $\sigma=1$ (*scaled*)
+
+-   The standard normal distribution is written $N(\mu=0, \sigma=1)$)
+
+-   Units of the standard normal distribution are standard deviations (Z-scores) (i.e. 1 unit = 1 SD)
+
+-   Observations that are 2+ standard deviations from the mean are considered unusual
+
+## The 68-95-99.7 Rule
+
+When data is (nearly) normally distributed...
+
+-   \~68% of the observations are within 1 standard deviation of the mean ($\mu \pm \sigma$)
+
+-   \~95% of the observations are within 2 standard deviations of the mean ($\mu \pm 2\sigma$)
+
+-   99.7% of the observations are within 3 standard deviations of the mean ($\mu \pm 3\sigma$)
+
+## The 68-95-99.7 Rule
+
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/68-95-99.7-rule.png?raw=true){fig-align="center"}
+
+## Example: Test Scores
+
+::: columns
+::: column
+-   SAT scores have the distribution $N(1500, 300)$
+
+-   \~68% of scores will be 1200-1800
+
+-   95% of scores will be 900-2100
+
+-   99.7% of scores will be 600-2400
+:::
+
+::: column
+![The 68-95-99.7 Rule describes approximately what proportion of the observations should lie within 1, 2, and 3 standard deviations of the mean respectively, if the data is normally distributed](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/sat-scores.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Proportions, Probabilities, and Percentiles
+
+![A ***percentile*** is the proportion or percentage of observations that fall *below* a given threshold in a distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/percentile-shaded-left.png?raw=true){fig-align="center"}
+
+## Proportions, Probabilities, and Percentiles
+
+$$
+\begin{aligned}
+\operatorname{Percentile}(X=x_i) &= \frac{\operatorname{count}(\operatorname{observations} \le x_i)}{\operatorname{count}(\operatorname{total observations})} \\
+&=\operatorname{Proportion}(\operatorname{observations} \le x_i) \\
+&=\operatorname{Probability}(\operatorname{any observation} \le x_i)
+\end{aligned}
+$$
+
+## Probability Density and Cumulative Density Functions
+
+::: columns
+::: column
+![We can calculate the exact probability for a particular value or range of values in a normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-pdf.png?raw=true){fig-align="center"}
+::: 
+::: column
+![We can calculate the cumulative probability (the percentile) of a variable being less than a given value in a normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/normal-cdf.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Calculating Percentiles with Z-Score Tables
+
+![You can use a Z-Score Table to look up the percentile that corresponds to a particular Z-Score for a standard normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/z-score-table.png?raw=true){fig-align="center"}
+
+## Calculating Probabilities with Z-Score Tables
+
+![You can use a Z-Score Table to look up the probability that an observed Z-Score is less than or equal to a given Z-Score (i.e. threshold) for a standard normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/z-score-table-appendix-2.png?raw=true){fig-align="center"}
+
+## Calculating Percentiles in R
+
+```{r}
+# Parameter 1 = value to look up
+# Pam's SAT Z-Score --> Percentile
+pnorm(1, mean = 0, sd = 1)
+```
+
+```{r}
+# Parameter 1 = value to look up
+# Jim's ACT Z-Score --> Percentile
+pnorm(0.6, mean = 0, sd = 1)
+```
+
+## What if we want to know the percent ABOVE a threshold?
+
+::: columns
+::: column
+
+:::
+::: column
+![Pam's SAT score and Jim's ACT score on a standardized scale, with center = 0 and 1 unit = 1 standard deviation.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-above.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Probabilities 
+
+-   The *complement* of the percentile
+
+-   Area under a probability curve = 1 (i.e. ***sample space***)
+
+-   Area *above* a percentile = 1 - area *below* a percentile
+
+-   ***Complements***
+
+## Easy to find the probability of the complement in R
+
+```{r}
+pnorm(1, mean = 0, sd = 1, lower.tail = F)
+```
+
+```{r}
+1 - pnorm(1, mean = 0, sd = 1)
+```
+
+## Example: Discrete Numeric Variables
+
+![Sometimes the normal distribution is an acceptable approximation of a discrete numeric variable, but other distributions may be more appropriate.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/hours-of-sleep.png?raw=true){fig-align="center"}
+
+## Example: QQ-Plot
+
+![Quantile-Quantile (QQ) Plots can help easily identify when you can and cannot assume normality.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/qq-plots.jpg?raw=true){fig-align="center"}

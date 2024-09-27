@@ -1,0 +1,158 @@
+---
+title: "Class 10"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-20'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 10 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 10 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(patchwork)
+library(readxl)
+library(kableExtra)
+library(tidyverse)
+
+theme_set(theme_bw())
+
+songs <- read_xlsx('./class08/Taylor Swift Radio.xlsx') |>
+  mutate(artists_split = str_split(artists, ', '))
+
+songs_summary <- data.frame(artists = unlist(songs$artists_split)) |>
+  mutate(artists = ifelse(artists %in% c('Taylor Swift', 
+                                         'Chappell Roan', 
+                                         'Billie Eilish', 
+                                         'Adele', 
+                                         'Lana Del Rey', 
+                                         'Meghan Trainor', 
+                                         'Charli xcx'), 
+                          artists, 'Other')) |>
+  summarize(n = n(), proportion = n() / nrow(songs), .by = 'artists')
+```
+
+
+## Homework 2 {.smaller}
+
+-   [Instructions](https://canvas.jcu.edu/files/3708401/download?download_frd=1) (`homework2_instructions.pdf`), a [Quarto markdown template](https://canvas.jcu.edu/files/3708307/download?download_frd=1) (`homework2_template.qmd`), and an [example HTML output](https://canvas.jcu.edu/files/3708306/download?download_frd=1) (`homework2_example.html`) are available for download under Chapter 2 on the [Modules](https://canvas.jcu.edu/courses/36290/modules) page in Canvas.
+
+-   [Video walk-through](https://canvas.jcu.edu/files/3708369/download?download_frd=1) of Homework 2 under Tutorials on the Modules page in Canvas. Make sure you're caught up on the [video walk-through of homework 1](https://canvas.jcu.edu/files/3695568/download?download_frd=1).
+
+-   Upload ***TWO*** (2) documents to [Homework 2](https://canvas.jcu.edu/courses/36290/assignments/451733) on the [Assignments](https://canvas.jcu.edu/courses/36290/assignments) page in Canvas by Friday 9/20/2024 by 6:00pm: `homework2_yourlastname.qmd` and `homework2_yourlastname.html`
+
+## Homework Hints
+
+-   *Read the instructions!* Some of the issues you're having are because you did not follow them correctly.
+
+-   *Please answer in complete sentences where possible!* I want you to practice effectively communicating data, and life is not a multiple choice question. I will be more clear about indicating this on future homework.
+
+-   Real world distributions are harder to describe than idealized theoretical distributions. *Combining visual and numeric summaries is more powerful than using either alone.*
+
+## Campuswire Hints
+
+-   *Turn on notifications.* Your question may have already been asked and answered. Campuswire can email you when there are new posts, so you can keep up with the discussion.
+
+-   *Be specific!* A detailed question is more likely to get a (useful) answer than a general question.
+
+-   *Include code & error messages.* It is much easier to troubleshoot "My document won't render. I've copy-pasted the error message and the lines of code where it breaks." than "My document won't render." *Click [here](https://stackoverflow.com/help/minimal-reproducible-example) for more info on how to ask good debugging questions.*
+
+## How can I get help with homework?
+
+-   **Read the [textbook](https://canvas.jcu.edu/files/3669904/download?download_frd=1).** Many of you are asking for additional examples. Luckily, there are tons we didn't go over in the textbook.
+
+-   **Ask a question on our [Campuswire class feed](https://campuswire.com/c/G6427C531/feed).** I'm only one person, and I may not be able to give you a prompt answer. However, the 20+ other people in the class might be able to.
+
+*I will try to keep an eye on Campuswire posts between 4-6pm before the homework is due, but I have other things going on and might miss something.*
+
+## Last time... defining probability
+
+-   ***Probability:*** The proportion of times that a particular outcome would occur if we observed a random process an infinite number of times ($\operatorname{P}(\operatorname{Event = A})$.
+
+    *   Ranges from 0 to 1 or 0% to 100% 
+    
+    *   $0 \le \operatorname{probability} \le 1$
+    
+    *   Probability = Proportion
+
+-   ***Random process:*** you know which outcomes are possible (i.e. the **sample space**) but you don't know which outcome comes next
+
+## Last time... representing probability
+
+-   ***Sample space:*** all possible outcomes of a random process ($S$)
+
+-   ***Complement:*** the complement of any event $A$ which exists in sample space $S$ is any outcome also in sample space $S$ which is NOT $A$ ($A^C$ or $A'$)
+
+-   ***Disjoint events:*** events that CANNOT occur at the same time (***mutually exclusive***)
+
+-   ***Non-disjoint events:*** events that CAN occur at the same time
+
+## Last time... calculating probabilities
+
+Remember...
+
+-   $\operatorname{P}(S)=1$
+
+-   $\operatorname{P}(S)=\operatorname{P}(A)+\operatorname{P}(A')$
+
+-   $\operatorname{P}(A)+\operatorname{P}(A')=1$
+
+-   $\operatorname{P}(A')=1-\operatorname{P}(A)$
+
+## Last time... population probability
+
+-   ***Population Probability:*** the theoretical "true" probability of an outcome in the population of interest, the "ground truth" ($p$)
+
+$$
+p=\frac{\operatorname{count}(\operatorname{events = A})}{\operatorname{count}(\operatorname{all events in sample space})}
+$$
+
+## Last time... sample probability
+
+-   ***Sample Probability:*** the probability of an outcome observed in a sample of size $n$ from a population with probability $p$, an estimate of the population probability ($\hat{p}_n$)
+
+$$
+\hat{p}_n=\frac{\operatorname{count}(\operatorname{observation = A})}{\operatorname{count}(\operatorname{observations in sample})}
+$$
+
+## Last time... Law of Large Numbers {.smaller}
+
+::: columns
+::: column
+-   How well the sample proportion $\hat{p}_n$ represents the population proportion $p$ depends on the size of the denominator.
+
+-   As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
+
+-   $\lim_{n\to\infty} \hat{p}_n = p$
+:::
+::: column
+:::
+:::
+
+
+
+As more observations are collected, the sample proportion $\hat{p}_n$ of a particular outcome approaches the population proportion $p$ of that outcome.
+
+## Last time... sampling WITH replacement
+
+![***Sampling with replacement*** is like drawing a card from a deck, then shuffling it back in before drawing another card. Repetition is possible.](/class09/Sampling%20With%20Replacement.png)
+
+
