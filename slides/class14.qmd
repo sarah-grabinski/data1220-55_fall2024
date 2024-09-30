@@ -1,0 +1,559 @@
+---
+title: "Class 14"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-09-30'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    echo: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 14 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+    echo: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 14 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(kableExtra)
+library(ggmosaic)
+library(janitor)
+library(patchwork)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+
+## Example: Calculating Probabilities with Normal Distributions
+
+-   The average male height is ~70" (5'10") and approximately follows the distribution $N(70, 3)$.
+
+-   The average female height is ~63" (5'3") and approximately follows the distribution $N(63, 3)$.
+
+-   What is the probability that a random male is taller than the average female but still shorter than the average male?
+
+## What's the sample space?
+
+```{r}
+df <- data.frame(x1 = seq(55, 85, by = 0.25),
+                 d = sapply(seq(55, 85, by = 0.25), 
+                            function(x) dnorm(x, mean = 70, sd = 3)), 
+                 p = sapply(seq(55, 85, by = 0.25), 
+                            function(x) pnorm(x, mean = 70, sd = 3)),
+                 min = 0) |>
+  mutate(x2 = ifelse(x1 >= 63 & x1 <= 70, x1, NA), 
+         x3 = ifelse(x1 <= 63, x1, NA), 
+         x4 = ifelse(x1 <= 70, x1, NA)) 
+
+p1 <- df |>
+  ggplot(aes(x = x1, y = d)) +
+  geom_hline(yintercept = 0) +
+  geom_line() +
+  geom_ribbon(aes(ymin = min, ymax = d), 
+              alpha = 0.5, fill = 'steelblue') +
+  labs(x = 'Height (Inches)', 
+       y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(55, 85, by = 3))
+
+p2 <- df |>
+  ggplot(aes(x = x1, y = p)) +
+  geom_hline(yintercept = 0, 
+             linetype = 'dashed') +
+  geom_hline(yintercept = 1, 
+             linetype = 'dashed') +
+  geom_line() +
+  labs(x = 'Height (Inches)', 
+       y = 'Cumulative Probability\n(Percentile)') +
+  scale_x_continuous(breaks = seq(55, 85, by = 3))
+
+p1 + p2
+```
+
+## Visualizing the problem
+
+```{r}
+df |>
+  ggplot(aes(x = x1, y = d)) +
+  geom_hline(yintercept = 0) +
+  geom_line() +
+  geom_ribbon(aes(x = x2,
+                  ymin = min, ymax = d), 
+              alpha = 0.5, fill = 'steelblue') +
+  labs(x = 'Height (Inches)', 
+       y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(55, 85, by = 2))
+```
+
+## Breaking it down...
+
+![You can think of this problem as the difference between two percentiles.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/probability-differences.png?raw=true){fig-align="center"}
+
+## Calculating the difference in R
+
+The probability that a man is below average in height for men but above average in height for women is the difference between the percentile for 70" and the percentile for 63" in the distribution of male heights or 49%.
+
+```{r echo = T}
+pnorm(70, mean = 70, sd = 3) - pnorm(63, mean = 70, sd = 3)
+```
+
+## Chapter 5: Foundations for Inference
+
+-   5.1: Point estimates and sampling variability
+
+-   5.2: Confidence intervals for a proportion
+
+-   5.3: Hypothesis testing for a proportion
+
+## Random Sampling
+
+Why do we sample?
+
+::: pause
+:::
+
+-   Easier, cheaper, convenience, etc.
+
+-   Hard to do a census
+
+
+::: pause
+:::
+
+What are the downsides of sampling?
+
+::: pause
+:::
+
+-   May not represent study/target population
+
+-   Methods might introduce bias
+
+-   Results could be due to chance
+
+::: pause
+:::
+
+How certain are we that our data is representative?
+
+## Example: Estimating Proportions
+
+-   Bureau of Justice Statistics September 2021 Special Report on Recidivism of Prisoners 
+
+-   Sampled 73,600 prisoner records from National Corrections Reporting Program on 409,300 state prisoners released across 24 states in 2008, representing 69% of all persons released from state prisons
+
+-   89% of sampled prisoners were male, and 11% of sampled prisoners were female.
+
+-   42.9% of sampled prisoners were rearrested within 1 year. 43.9% of male sampled prisoners were rearrested within 1 year. 34.4% of female sampled prisoners were rearrested within 1 year.
+
+## Example: Contingency Table with Counts
+
+```{r}
+df <- data.frame(id = sapply(seq(1, 73600), 
+                             function(x) paste('prisoner', 
+                                               str_pad(x, width = 5, 
+                                                       side = 'left', pad = '0'), 
+                                               sep = '')),
+                 sex = c(rep('Male', 65504), 
+                         rep('Female', 8096)), 
+                 reoffend = c(rep('Rearrested', 28756), 
+                              rep('Not Rearrested', 36748), 
+                              rep('Rearrested', 2785), 
+                              rep('Not Rearrested', 5311))) |>
+  mutate(sex = fct_relevel(sex, 'Male'), 
+         reoffend = fct_relevel(reoffend, 'Rearrested'))
+```
+
+```{r echo = T}
+df
+```
+
+## Example: Contingency Table with Counts
+
+```{r echo = T}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(full_width = F, 
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Independence
+
+Is a prisoner being rearrested within 1 year of their release independent of their sex?
+
+*Remember: when 2 events are independent, $P(B) \approx P(B|A) \approx P(B|A')$*
+
+$$
+\begin{aligned}
+P(\operatorname{rearrested and male}) &= P(\operatorname{male}) \times P(\operatorname{rearrested}|\operatorname{male}) \\
+&\approx P(\operatorname{male}) \times P(\operatorname{rearrested})
+\end{aligned}
+$$
+
+## Example: Contingency Table with Proportions by Column
+
+$P(\operatorname{male}) = 0.89$
+
+```{r echo = T}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'col') |>
+  kbl(full_width = F, digits = 3,
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Contingency Table with Proportions by Row
+
+$P(\operatorname{rearrested}) = 0.429$
+
+```{r echo = T}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'row') |>
+  kbl(full_width = F, digits = 3,
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Independence Calculations
+
+Does our observed probability $P(\operatorname{rearrested and male})=0.439$ approximate the probability under an independence model, $P(\operatorname{rearrested}) \times P(\operatorname{male})$?
+
+$$
+\begin{aligned}
+P(\operatorname{rearrested}) \times P(\operatorname{male}) &= 0.429 \times 0.890 \\
+&= 0.382
+\end{aligned}
+$$
+
+Does $0.439 \approx 0.382$?
+
+## Example: Mosaic Plot
+
+```{r}
+df |>
+  ggplot() +
+  geom_mosaic(aes(x = product(sex, reoffend), 
+                  fill = reoffend))
+```
+
+
+## Point Estimation
+
+-   We are interested in population-level parameters
+
+-   Complete populations are difficult (or impossible) to collect data from
+
+-   The ***sample statistic*** can be used as a ***point estimate*** for a population parameter in sufficiently large samples
+
+## Population Parameters versus Sample Statistics
+
+| Measure                   | Parameter     | Statistic             |
+|---------------------------|---------------|-----------------------|
+| Mean                      | $\mu$         | $\bar{x}$             |
+| Proportion                | $p$           | $\hat{p}$             |
+| Difference in Means       | $\mu_1-\mu_2$ | $\bar{x}_1-\bar{x}_2$ |
+| Difference in Proportions | $p_1-p_2$     | $\hat{p}_1-\hat{p}_2$ |
+| Standard Deviation        | $\sigma$      | $s$                   |
+| Correlation               | $\rho$        | $r$                   |
+
+## Sampling Distribution
+
+-   A ***sampling distribution*** is a distribution of sample statistics for different samples of the same size from the same population
+
+-   Not actually observed in the real world, a "hypothetical" population distribution
+
+-   Sampling distributions also have location and scales
+
+## Example: Law of Large Numbers
+
+![The Law of Large Numbers for Binary Outcomes: Coin Tosses](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/coin-toss.png?raw=true){fig-align="center"}
+
+## Distribution of Sample Proportions
+
+![Sampling distribution of sample proportions of coin flips by sample size.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/central-limit-theorem-using-coins.png?raw=true){fig-align="center"}
+
+## Uncertainty & Sampling Error
+
+-   What are sources of error we COULD know?
+
+-   What are sources of error we CAN'T know?
+
+## Central Limit Theorem
+
+-   A distribution of sample means approximates a normal distribution as the sample size gets larger
+
+-   Requires ***independent, identically distributed (I.I.D)*** variables
+
+    *   Each observation is *independent* of the next
+    
+    *   Each observation comes from the same source distribution
+    
+-   Sample size must be sufficient for estimates to be valid
+
+## Standard Error of the Sample Statistic
+
+-   ***Standard error (SE)*** is the *standard deviation* of the sample statistic
+
+-   Describes the scale (i.e. variability, sampling error) of the sampling distribution
+
+-   For a distribution of sample means, $SE=\frac{\sigma}{\sqrt{n}}$
+
+-   For a distribution of sample proportions, $SE=\sqrt{\frac{p(1-p)}{n}}$
+
+::: pause
+:::
+
+As $n$ increases, the standard error $SE$ decreases.
+
+## What do sample means have to do with proportions?
+
+-   For a binary category, if you coded the 2 classes as $0$ and $1$, the sample mean $\bar{x}$ equals the sample proportion $\hat{p}$ of $1$'s.
+
+-   Example: You flip a coin 5 times, and it's tails 3 times.
+
+::: columns
+::: column
+
+$$
+\begin{aligned}
+\hat{p}&= \frac{\operatorname{count}(\operatorname{tails})}{\operatorname{count}(\operatorname{flips})} \\
+&= \frac{3}{5} 
+\end{aligned}
+$$
+:::
+::: column
+
+$$
+\begin{aligned}
+\bar{x}&=\frac{\operatorname{sum}(0, 0, 1, 1, 1)}{n} \\
+&=\frac{3}{5}
+\end{aligned}
+$$
+:::
+:::
+    
+## Central Limit Theorem for Sample Proportions
+
+-   ***Assumption***: Sample proportions will be nearly normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$ (i.e. standard error)
+
+$$
+\hat{p} \sim N\left(p, \sqrt{\frac{p(1-p)}{n}}\right)
+$$
+
+## Requirements for CLT for Proportions
+
+-   Need a sufficiently large sample size!
+
+    *   $np > 10$
+    
+    *   $n(1-p) > 10$
+
+-   Need ***i.i.d.*** samples
+
+## Example: Small Sample Size
+
+In this population, $p=0.05$ and we take random samples of size $n=50$. Will the distribution of sample proportions be nearly normal?
+
+![$np=50 \times 0.05 = 2.5$, so the sample size conditions are not met. This distribution is not nearly normal.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/small-sample.png?raw=true){fig-align="center"}
+
+## Sample Size versus Proportion
+
+![The assumptions of the central limit theorem fail when the proportion of successes and/or sample size are small.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/sample-sizes-proportions.png?raw=true){fig-align="center"}
+
+## Central Limit Theorem for Sample Means
+
+-   ***Assumption***: Sample means will be nearly normally distributed with mean $\mu$ and standard deviation $\frac{\sigma}{\sqrt{n}}$ (standard error)
+
+$$
+\bar{x} \sim N\left(\mu, \frac{\sigma}{\sqrt{n}}\right)
+$$
+
+## Requirements for CLT for Means
+
+-   Need a sufficiently large sample size!
+
+    *   $n>30$ when underlying distribution is normal
+    
+    *   Need larger $n$ when underlying distribution is skewed
+
+-   Need ***i.i.d.*** samples
+
+## Example: Small Sample Size
+
+If our population has the distribution $N(30, 5)$ and we take random samples of size $n=20$. Will the distribution of sample means be nearly normal?
+
+![.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/.png?raw=true){fig-align="center"}
+
+## Statistical Inference and Hypothesis Testing
+
+-   We use sample statistics to describe study populations and estimate parameters using sampling distributions
+
+-   We also describe the variability of our measure and quantify our uncertainty regarding our estimate
+
+-   We use the overlap between theoretical distributions to decide how meaningful the differences between groups are
+
+## Example: COVID-19 Vaccination & Myocarditis
+
+-   Study in Denmark of 4,931,775 individuals ages 12+ or older from 2020-10-01 to 2021-10-05
+
+-   3,482,295 individuals in the study were vaccinated and 269 developed myocarditis. 48 individuals were vaccinated *and* developed myocarditis.
+
+-   Does the probability of developing myocarditis vary by whether or not someone has been vaccinated against COVID-19?
+
+## Example: Estimating the Population Probability of Myocarditis 
+
+If 269 of the 4,931,775 individuals sampled regardless of vaccination status, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our study population?
+
+$$
+\begin{aligned}
+  \hat{p}&=\frac{\operatorname{count}(\operatorname{cases})}{\operatorname{count}(\operatorname{subjects})} \\
+  &= \frac{269}{4,931,775} \\
+  &= 0.00005
+\end{aligned}
+$$
+
+## Example: Standard Error of the Measurement
+
+If 269 of the 4,931,775 individuals sampled regardless of vaccination status, what is the ***standard error*** of our sample statistic $\hat{p}=0.00005$, the probability of developing myocarditis in our study population?
+
+$$
+\begin{aligned}
+  SE_\hat{p} &= \sqrt{\frac{p(1-p)}{n}} \\
+  &= \sqrt{\frac{0.00005(1-0.00005)}{4,931,775}} \\
+  &= 0.000003
+\end{aligned}
+$$
+
+## Example: Myocarditis (All) Sampling Distribution
+
+The proportion of all individuals in the study population who develop myocarditis has a sampling distribution of $N(0.00005, 0.000003)$.
+
+```{r}
+df <- data.frame(x = seq(0.0000075, 0.000075, by = 0.0000001), 
+                 d1 = sapply(seq(0.0000075, 0.000075, by = 0.0000001), 
+                            function(x) dnorm(x, mean = 0.00005, 
+                                              sd = 0.000003)), 
+                 d2 = sapply(seq(0.0000075, 0.000075, by = 0.0000001), 
+                             function(x) dnorm(x, mean = 0.00001,
+                                               sd = 0.000000000003)), 
+                 min = 0)
+
+df |>
+  ggplot(aes(x = x, y = d1)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_line() +
+  geom_ribbon(aes(ymin = min, ymax = d1), 
+              alpha = 0.5, fill = 'steelblue') +
+  labs(x = 'Sample Proportion', 
+       y = 'Probability Density', 
+       title = "Sampling Distribution for the Probability of Developing Myocarditis in\nIndividuals 12+ in Denmark Oct '20-'21")
+```
+
+
+## Example: 68-95-99.7 Rule
+
+If my population has the theoretical sampling distribution $p \sim N(0.00005, 0.000003)$... 
+
+-   What is the proportion of theoretical samples with a sample proportion $0.000047 \le \hat{p} \le 0.000053$?
+
+-   What is the proportion of theoretical samples with a sample proportion $0.000041 \le \hat{p} \le 0.000059$?
+
+-   In what range do 95% of the theoretical sample means occur?
+
+95% Confidence Interval = $(0.000044, 0.000056)$
+
+## Example: Probability of Myocarditis in Vaccinated
+
+If 48 of the 3,482,295 vaccinated individuals developed myocarditis, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our vaccinated population?
+
+$$
+\begin{aligned}
+  \hat{p}&=\frac{\operatorname{count}(\operatorname{vaccinated cases})}{\operatorname{count}(\operatorname{vaccinated subjects})} \\
+  &= \frac{48}{3,482,295} \\
+  &= 0.00001
+\end{aligned}
+$$
+
+## Example: Vaccinated Myocarditis Proportion vs Population Proportion
+
+How unusual is this sample statistic given our population parameter?
+
+```{r}
+df |>
+  ggplot(aes(x = x, y = d1)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_vline(xintercept = 0.00001, col = 'red') +
+  geom_line() +
+  geom_ribbon(aes(ymin = min, ymax = d1), 
+              alpha = 0.5, fill = 'steelblue') +
+  labs(x = 'Sample Proportion', 
+       y = 'Probability Density', 
+       title = "Sampling Distribution for the Probability of Developing Myocarditis in\nIndividuals 12+ in Denmark Oct '20-'21")
+```
+
+## Example: Sample Proportion Percentile
+
+What's the probability of observing a sample proportion as small or smaller than 0.00001?
+
+```{r echo = T}
+pnorm(0.00001, mean = 0.00005, sd = 0.000003)
+```
+
+## Example: Probability of Myocarditis in Unvaccinated
+
+If 221 of the 1,449,480 unvaccinated individuals developed myocarditis, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our unvaccinated population?
+
+$$
+\begin{aligned}
+  \hat{p}&=\frac{\operatorname{count}(\operatorname{unvaccinated cases})}{\operatorname{count}(\operatorname{unvaccinated subjects})} \\
+  &= \frac{221}{1,449,480} \\
+  &= 0.00015
+\end{aligned}
+$$
+
+## Example: Vaccinated Myocarditis Proportion vs Population Proportion
+
+How unusual is this sample statistic given our population parameter?
+
+```{r}
+df |>
+  ggplot(aes(x = x, y = d1)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_vline(xintercept = 0.00015, col = 'red') +
+  geom_line() +
+  geom_ribbon(aes(ymin = min, ymax = d1), 
+              alpha = 0.5, fill = 'steelblue') +
+  labs(x = 'Sample Proportion', 
+       y = 'Probability Density', 
+       title = "Sampling Distribution for the Probability of Developing Myocarditis in\nIndividuals 12+ in Denmark Oct '20-'21")
+```
+
+## Example: Sample Proportion Percentile
+
+What's the probability of observing a sample proportion greater than 0.00015?
+
+```{r echo = T}
+pnorm(0.00015, mean = 0.00005, sd = 0.000003, 
+      lower.tail = F)
+```

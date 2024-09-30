@@ -284,6 +284,14 @@ $$
 :::
 :::
 
+## Probability Density Function for Normal Distributions
+
+You too can calculate probabilities for continuous numeric variables!
+
+$$
+P(X=x_i)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}}
+$$
+
 ## Calculating Percentiles with Z-Score Tables
 
 ![You can use a Z-Score Table to look up the percentile that corresponds to a particular Z-Score for a standard normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/z-score-table.png?raw=true){fig-align="center"}
@@ -310,22 +318,22 @@ pnorm(0.6, mean = 0, sd = 1)
 
 ::: columns
 ::: column
-
+![The shaded area under this normal probability distribution is the proportion of observations which are ***less than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-below.png?raw=true){fig-align="center"}
 :::
 ::: column
-![Pam's SAT score and Jim's ACT score on a standardized scale, with center = 0 and 1 unit = 1 standard deviation.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-above.png?raw=true){fig-align="center"}
+![The shaded area under this normal probability distribution is the proportion of observations which are ***greater than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-above.png?raw=true){fig-align="center"}
 :::
 :::
 
-## Probabilities 
-
--   The *complement* of the percentile
+## Probabilities above a threshold
 
 -   Area under a probability curve = 1 (i.e. ***sample space***)
 
--   Area *above* a percentile = 1 - area *below* a percentile
+-   Probability above a threshold = 1 - percentile of threshold
 
--   ***Complements***
+-   $P(X \le x_i)=1-P(X \not \le x_i)$
+
+-   $P(X > x_i)=1-P(X \le X_i)$
 
 ## Easy to find the probability of the complement in R
 
@@ -337,10 +345,10 @@ pnorm(1, mean = 0, sd = 1, lower.tail = F)
 1 - pnorm(1, mean = 0, sd = 1)
 ```
 
-## Example: Discrete Numeric Variables
+## Other: Discrete Numeric Variables
 
 ![Sometimes the normal distribution is an acceptable approximation of a discrete numeric variable, but other distributions may be more appropriate.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/hours-of-sleep.png?raw=true){fig-align="center"}
 
-## Example: QQ-Plot
+## Other: QQ-Plot
 
 ![Quantile-Quantile (QQ) Plots can help easily identify when you can and cannot assume normality.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/qq-plots.jpg?raw=true){fig-align="center"}
