@@ -18,6 +18,7 @@ format:
   beamer:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
     execute:
       echo: false
       cache: true
@@ -255,11 +256,11 @@ Which of the following Z-scores is the appropriate $Z^*$ for constructing a 98% 
 
 We want to use ***reliable*** data from our sample to produce ***valid*** estimates of our study population distribution to make inferences that are ***generalizable*** to our target population.
 
-## Example: Calculating $SE_\hat{p}$
+## Example: Calculating $SE$ for a Proportion
 
 $$
 \begin{aligned}
-SE_\hat{p} &= \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \\
+SE_p &= \sqrt{\frac{p(1-p)}{n}} \\
 &= \sqrt{\frac{0.67(1-0.67)}{850}} \\
 &= 0.016
 \end{aligned}
@@ -309,5 +310,5 @@ Based on this study, with 95% confidence, we think the average percent of all Fa
 Confidence intervals for means are calculated the same was as for proportions, but with the standard error of a mean calculation.
 
 $$
-SE_\bar{x} = \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}}
+SE_{\mu} = \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}}
 $$
