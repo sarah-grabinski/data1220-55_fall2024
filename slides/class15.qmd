@@ -137,6 +137,10 @@ Choosing a ***confidence*** threshold $\alpha$ (alpha) is a trade-off between ac
 
 -   As confidence increases ($\alpha \to 0$), ***precision*** decreases
 
+## Example: Trade-Offs
+
+![A weather forecast that is *not* precise might accurately describe the weather on any given day, but it's certainly not very informative.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/garfield.jpg?raw=true){fig-align="center"}
+
 ## Practice: Confidence Intervals
 
 Will a 95% confidence interval be wider (i.e. larger range) or narrower than a 90% confidence interval?
@@ -179,4 +183,16 @@ Which is more likely to be an ***accurate*** estimator: a 95% or 99% confidence 
 
 ## How do we construct confidence intervals?
 
-![Properties of known distributions, like the 68-95-99.7 Rule, are used to calculate the bounds of a confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution?raw=true){fig-align="center"}
+![Properties of known distributions, like the 68-95-99.7 Rule, are used to calculate the bounds of a confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution.jpg?raw=true){fig-align="center"}
+
+## Calculating a confidence interval
+
+-   A confidence interval is defined as $\operatorname{point estimate} \pm \operatorname{margin of error}$
+
+-   $\operatorname{margin of error}=Z^* \times SE$
+
+-   $Z^*=\operatorname{Z-Score}_{\alpha / 2}$
+
+## Example: $Z^*$ to $Z_{\alpha / 2}$
+
+![$Z^*$ corresponds to the $\operatorname{Z-Score}$ for the probability $\alpha / 2$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/z-star.jpg?raw=true){fig-align="center"}
