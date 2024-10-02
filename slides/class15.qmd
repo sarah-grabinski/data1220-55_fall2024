@@ -137,44 +137,46 @@ Choosing a ***confidence*** threshold $\alpha$ (alpha) is a trade-off between ac
 
 -   As confidence increases ($\alpha \to 0$), ***precision*** decreases
 
-## Practice: Precision
+## Practice: Confidence Intervals
 
 Will a 95% confidence interval be wider (i.e. larger range) or narrower than a 90% confidence interval?
 
-. .
+. . .
 
 :::larger
 Wider
 :::
 
-. .
+## Practice: Precision
 
 Which is a more ***precise*** estimator: a 95% or 90% confidence interval?
 
-. .
+. . .
 
 ::: larger
 90% CI
 :::
 
-## Practice: Accuracy
+## Practice: Confidence Intervals
 
 Will a 95% confidence interval be wider (i.e. larger range) or narrower than a 99% confidence interval?
 
-. .
+. . .
 
 ::: larger
 Narrower
 :::
 
-. .
+## Practice: Accuracy
 
 Which is more likely to be an ***accurate*** estimator: a 95% or 99% confidence interval?
 
-. .
+. . .
 
 ::: larger
 99% CI, ***if your assumptions hold***
 :::
 
-## 
+## How do we construct confidence intervals?
+
+![Properties of known distributions, like the 68-95-99.7 Rule, are used to calculate the bounds of a confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution?raw=true){fig-align="center"}
