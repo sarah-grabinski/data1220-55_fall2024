@@ -30,35 +30,151 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 15 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
-## Accuracy vs Precision
-
--   Accuracy describes how similar the estimates in a sampling distribution are to the "true" population parameter
-
--   Precision describes how similar the estimates in a sampling distribution are to each other (i.e. the variability of the estimates)
-
-## Accuracy vs Precision
-
-![](class15/accuracy-vs-precision.png)
-
-## Accuracy vs Precision
-
-![](class15/Accuracy-And-Precision-distributions.png)
-
 ## Point Estimates and Population Parameters
 
-Why do we use the ***sample statistic*** (e.g. sample mean $\bar{x}$, standard deviation $s$) as ***point estimates*** for the ***population parameters*** (e.g. population mean $\mu$, population standard deviation $\sigma$)?
+Why can we use the ***sample statistic*** (e.g. sample mean $\bar{x}$, standard deviation $s$) as ***point estimates*** for the ***population parameters*** (e.g. population mean $\mu$, population standard deviation $\sigma$)?
+
+## Building Models
+
+![Statistical analysis requires making assumptions about the world around us which may or may not be true.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/george-box.jpg?raw=true){fig-align="center"}
+
+## What are you assuming? (The Model)
 
 ::: callout-warning
 ## ASSUMPTION
+::: larger
+The probability distribution of a random process follows a known distribution (e.g. a ***normal distribution***), which we can model and from which we can draw inferences about the parameters which govern that process.
+:::
+:::
+
+## What are you assuming? (Reliability)
+
+::: callout-warning
+## ASSUMPTION
+
 We have collected enough data and that data is trustworthy enough that our ***sample statistics*** are ***reliable*** estimators of the "ground truth" in our sample population.
 :::
 
-::: callout-warning
-## ASSUMPTION
-Our sample population is sufficiently representative of our study population such that our ***sample statistics*** are ***valid*** estimators of the ***population parameters*** in our study population.
-:::
+## What are you assuming? (Validity)
 
 ::: callout-warning
 ## ASSUMPTION
+
+Our sample population is sufficiently representative of our study population such that our ***sample statistics*** are ***valid*** estimators of the ***population parameters*** in our study population.
+:::
+
+## What are you assuming? (Generalizability)
+
+::: callout-warning
+## ASSUMPTION
+
 Our study population is sufficiently representative of our target population such that ***inferences*** about the ***population parameters*** of our study population are ***generalizable*** to our target population.
 :::
+
+## Accuracy vs Precision
+
+-   Accuracy describes how similar a sample statistic is to the "true" population parameter
+
+-   Precision describes how similar the sample statistics in a sampling distribution are to each other (i.e. the variability of the estimates)
+
+## Accuracy vs Precision
+
+![Contingency Table for Accurate and/or Precise Outcomes](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/accuracy-vs-precision.png?raw=true){fig-align="center"}
+
+## Why do we talk so much about study/sample/target populations? {.smaller}
+
+-   ***Reliable*** data $\rightarrow$ sample statistics are ***accurate*** estimators of sample population parameters
+
+-   ***Valid*** data $\rightarrow$ sample statistics are ***accurate*** estimators of sampling distribution in study population
+
+-   ***Generalizable*** data $\rightarrow$ sampling distribution of study population is ***accurate*** estimator of sampling distribution in target population
+
+## Why do we talk so much about study design?
+
+-   ***Larger samples*** $\rightarrow$ less variability $\rightarrow$ more ***precise*** estimates
+
+-   More representative samples $\rightarrow$ less biased estimates $\rightarrow$ more ***accurate*** estimates
+
+## Accuracy and Precision of Distributions
+
+![What do we mean when we say that sampling statistics and distributions are accurate and/or precise?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/Accuracy-And-Precision-distributions.png?raw=true){fig-align="center"}
+
+## What is a confidence interval?
+
+A ***confidence interval*** is a numerical range *inside* which a sample statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population 
+
+-   $1-\alpha$ is the ***confidence level*** and is often expressed as a %
+
+-   ***This is only true if your assumptions about the population hold.***
+
+## What is alpha ($\alpha$)?
+
+-   $\alpha$ is called the ***confidence threshold*** 
+
+-   The sample statistic is expected to occur *outside* the ***confidence interval*** with probability $\alpha$
+
+-   A.K.A the ***Type I Error Rate*** or ***False Discovery Rate***
+
+## Point Estimates vs Confidence Intervals
+
+-   Point estimates are more ***precise*** than confidence intervals, but they are less likely to be ***accurate***
+
+-   Confidence intervals are more likely to be ***accurate*** than point estimates, but they are less ***precise***
+
+## Using both is best!
+
+-   A ***point estimate*** describes the ***location*** of an estimate or parameter's distribution
+
+-   A ***confidence interval*** describes the ***scale*** of an estimate or parameter's distribution
+
+-   The ***confidence threshold*** describes our uncertainty regarding these values
+
+## Choosing a Confidence Level
+
+Choosing a ***confidence*** threshold $\alpha$ (alpha) is a trade-off between accuracy and precision.
+
+-   As confidence increases ($\alpha \to 0$), ***accuracy*** increases
+
+-   As confidence increases ($\alpha \to 0$), ***precision*** decreases
+
+## Practice: Precision
+
+Will a 95% confidence interval be wider (i.e. larger range) or narrower than a 90% confidence interval?
+
+. .
+
+:::larger
+Wider
+:::
+
+. .
+
+Which is a more ***precise*** estimator: a 95% or 90% confidence interval?
+
+. .
+
+::: larger
+90% CI
+:::
+
+## Practice: Accuracy
+
+Will a 95% confidence interval be wider (i.e. larger range) or narrower than a 99% confidence interval?
+
+. .
+
+::: larger
+Narrower
+:::
+
+. .
+
+Which is more likely to be an ***accurate*** estimator: a 95% or 99% confidence interval?
+
+. .
+
+::: larger
+99% CI, ***if your assumptions hold***
+:::
+
+## 
