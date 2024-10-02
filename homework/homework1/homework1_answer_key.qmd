@@ -207,6 +207,10 @@ Homework 1 was assigned on date, due on date, and was worth 30 points. The mater
     
     *   Appropriately described the relationship between the two variables as positive, negative, or independent
     
+-   Students lost 0.5 points if they did not change the variables as requested in the instructions
+
+-   Students lost 0.5 points if they accurately described the relationship in their plot but failed to use any of the words "independent", "positive", or "negative" to describe it.
+    
 ***5.  BONUS: Add features such as titles, axis labels, colors, shapes, etc. to enhance your data visualization (Points available: 2)***
 
 -   Students received 0.5 additional points for adding a regression line to help visualize the relationship between the two variables

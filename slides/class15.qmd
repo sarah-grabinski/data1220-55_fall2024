@@ -101,7 +101,7 @@ Our study population is sufficiently representative of our target population suc
 
 ## What is a confidence interval?
 
-A ***confidence interval*** is a numerical range *inside* which a sample statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population 
+A ***confidence interval*** is a numerical range *inside* which a statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population 
 
 -   $1-\alpha$ is the ***confidence level*** and is often expressed as a %
 
@@ -111,7 +111,9 @@ A ***confidence interval*** is a numerical range *inside* which a sample statist
 
 -   $\alpha$ is called the ***confidence threshold*** 
 
--   The sample statistic is expected to occur *outside* the ***confidence interval*** with probability $\alpha$
+-   The statistic is expected to occur *outside* the ***confidence interval*** with probability $\alpha$
+
+-   $(\alpha * 100)$% of confidence intervals for statistics from theoretical samples of this population will *NOT* contain the "true" population parameter
 
 -   A.K.A the ***Type I Error Rate*** or ***False Discovery Rate***
 
@@ -139,7 +141,7 @@ Choosing a ***confidence*** threshold $\alpha$ (alpha) is a trade-off between ac
 
 ## Example: Trade-Offs
 
-![A weather forecast that is *not* precise might accurately describe the weather on any given day, but it's certainly not very informative.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/garfield.jpg?raw=true){fig-align="center"}
+![A weather forecast that is not very precise might accurately describe the weather on any given day, but it's certainly not very informative.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/garfield.png?raw=true){fig-align="center"}
 
 ## Practice: Confidence Intervals
 
@@ -195,4 +197,117 @@ Which is more likely to be an ***accurate*** estimator: a 95% or 99% confidence 
 
 ## Example: $Z^*$ to $Z_{\alpha / 2}$
 
+If our confidence level is $1-\alpha = 0.90$, then $\alpha=0.1$. $Z^*=\operatorname{Z-Score}_{\alpha / 2}$ and $\alpha / 2 = 0.05$, so $Z^*=1.645$.
+
 ![$Z^*$ corresponds to the $\operatorname{Z-Score}$ for the probability $\alpha / 2$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/z-star.jpg?raw=true){fig-align="center"}
+
+## Practice: $Z^*$
+
+::: columns
+::: column
+
+Which of the following Z-scores is the appropriate $Z^*$ for constructing a 98% confidence interval?
+
+1.    $Z=2.05$
+
+2.    $Z = 1.96$
+
+3.    $Z = 2.33$
+
+4.    $Z = 1.64$
+:::
+::: column
+![The 68-95-99.7 Rule for a Normal Distribution](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/68-95-99.7-rule.png?raw=true){fig-align="center"}
+:::
+:::
+
+## Practice: $Z^*$
+
+1.    $Z=2.05$
+
+2.    $Z = 1.96$
+
+\color{red}
+3.    $Z = 2.33$
+\color{black}
+
+4.    $Z = 1.64$
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/z-star-example.png?raw=true){fig-align="center"}
+
+## Example: Facebook Users {.smaller}
+
+-   Facebook is trying to assess the performance of their news feed algorithm based on whether or not users feel they are seeing relevant content.
+
+-   Their objective is to estimate the proportion of Facebook users who feel the algorithm works for them. 
+
+-   They took a random sample of American Facebook users and asked if they think Facebook accurately categorizes their interests. 
+
+-   569 users out of the 850 sampled (67.5%) said they felt the algorithm was accurate.
+
+## Example: Populations
+
+-   What's the sample population?
+
+-   What's the study population?
+
+-   What's the target population?
+
+We want to use ***reliable*** data from our sample to produce ***valid*** estimates of our study population distribution to make inferences that are ***generalizable*** to our target population.
+
+## Example: Calculating $SE_\hat{p}$
+
+$$
+\begin{aligned}
+SE_\hat{p} &= \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \\
+&= \sqrt{\frac{0.67(1-0.67)}{850}} \\
+&= 0.016
+\end{aligned}
+$$
+
+## Example: Calculating $Z^*_{\operatorname{0.95}}$
+
+For a 95% confidence interval, $1 - \alpha = 0.95$ and $\alpha = 0.05$, so $\alpha / 2 = 0.025$. Therefore, $Z^*_{0.95}=Z_{0.025}$.
+
+```{r echo = T}
+round(-qnorm(0.025, mean = 0, sd = 1), 2)
+```
+
+Our 95% confidence interval is defined by $0.67 \pm 1.96 \times 0.016$.
+
+## Example: Putting it Together
+
+A 95% confidence interval for the proportion of all Facebook users who are satisfied with their algorithm is (0.64, 0.70).
+
+```{r}
+n <- 850
+p_hat <- 0.67
+se <- sqrt((p_hat * (1-p_hat)) / 850)
+z_star <- -qnorm(0.025, mean = 0, sd = 1)
+
+lower_bound <- p_hat - (z_star * se)
+upper_bound <- p_hat + (z_star * se)
+
+cat('Lower bound:', lower_bound, '\n')
+cat('Upper bound:', upper_bound, '\n')
+```
+
+## Example: Interpretation
+
+With 95% confidence, 64-70% of American Facebook users think Facebook categorizes their interests accurately...
+
+. . .
+
+Based on this study, with 95% confidence, we think the average percent of all Facebook users who are satisfied with their algorithm follows the distribution $N(0.67, 0.016)$...
+
+. . .
+
+***...IF your assumptions are valid***
+
+## What about confidence intervals for means?
+
+Confidence intervals for means are calculated the same was as for proportions, but with the standard error of a mean calculation.
+
+$$
+SE_\bar{x} = \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}}
+$$
