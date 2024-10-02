@@ -50,25 +50,16 @@ I will use the following data source for problems 1, 2, and 4.
 
 Below are descriptions of the variables used in this homework.
 
-+----------------+-------------------------------------------------------------------------------+-------------+
-| Variable       | Description                                                                   | Type        |
-+================+===============================================================================+=============+
-| `Weight`       | the subject's weight in pounds                                                | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `Height`       | the subject's height in inches                                                | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `Pulse`        | the subject's pulse in beats per minute                                       | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `BPDiaAve`     | the subject's average diastolic blood pressure in mmHg                        | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `AgeMonths`    | the subject's age in months                                                   | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `DiabetesAge`  | the subject's age in years at which they were diagnosed with Diabetes         | numerical   |
-+----------------+-------------------------------------------------------------------------------+-------------+
-| `Gender`       | the subject's gender (levels: male, female)                                   | categorical |
-+----------------+-------------------------------------------------------------------------------+-------------+
+| Variable | Description | Type |
+|----|----|----|
+| `Weight` | the subject's weight in pounds | numerical |
+| `Height` | the subject's height in inches | numerical |
+| `Pulse` | the subject's pulse in beats per minute | numerical |
+| `BPDiaAve` | the subject's average diastolic blood pressure in mmHg | numerical |
+| `AgeMonths` | the subject's age in months | numerical |
+| `DiabetesAge` | the subject's age in years at which they were diagnosed with Diabetes | numerical |
+| `Gender` | the subject's gender (levels: male, female) | categorical |
 | `SleepTrouble` | whether or not the subject feels they have trouble sleeping (levels: yes, no) | categorical |
-+----------------+-------------------------------------------------------------------------------+-------------+
 
 ## Loading the Data
 

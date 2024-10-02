@@ -1,0 +1,14 @@
+kableExtra
+ggplot2
+ggmosaic
+janitor
+patchwork
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+lubridate

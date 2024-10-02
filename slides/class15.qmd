@@ -9,14 +9,18 @@ format:
     self-contained: true
     slide-number: true
     footnotes-hover: true
-    echo: true
+    execute:
+      echo: false
+      cache: true
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 15 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
-    echo: true
+    execute:
+      echo: false
+      cache: true
     slide-number: true
     navigation: horizontal
     theme: default
@@ -26,3 +30,35 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 15 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
+## Accuracy vs Precision
+
+-   Accuracy describes how similar the estimates in a sampling distribution are to the "true" population parameter
+
+-   Precision describes how similar the estimates in a sampling distribution are to each other (i.e. the variability of the estimates)
+
+## Accuracy vs Precision
+
+![](class15/accuracy-vs-precision.png)
+
+## Accuracy vs Precision
+
+![](class15/Accuracy-And-Precision-distributions.png)
+
+## Point Estimates and Population Parameters
+
+Why do we use the ***sample statistic*** (e.g. sample mean $\bar{x}$, standard deviation $s$) as ***point estimates*** for the ***population parameters*** (e.g. population mean $\mu$, population standard deviation $\sigma$)?
+
+::: callout-warning
+## ASSUMPTION
+We have collected enough data and that data is trustworthy enough that our ***sample statistics*** are ***reliable*** estimators of the "ground truth" in our sample population.
+:::
+
+::: callout-warning
+## ASSUMPTION
+Our sample population is sufficiently representative of our study population such that our ***sample statistics*** are ***valid*** estimators of the ***population parameters*** in our study population.
+:::
+
+::: callout-warning
+## ASSUMPTION
+Our study population is sufficiently representative of our target population such that ***inferences*** about the ***population parameters*** of our study population are ***generalizable*** to our target population.
+:::

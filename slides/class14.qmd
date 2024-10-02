@@ -9,14 +9,19 @@ format:
     self-contained: true
     slide-number: true
     footnotes-hover: true
-    echo: false
+    execute:
+      echo: false
+      cache: true
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 14 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
-    echo: false
+      - \usepackage{fontspec}
+    execute:
+      echo: false
+      cache: true
     slide-number: true
     navigation: horizontal
     theme: default
@@ -117,16 +122,15 @@ pnorm(70, mean = 70, sd = 3) - pnorm(63, mean = 70, sd = 3)
 
 -   5.3: Hypothesis testing for a proportion
 
-## Random Sampling
+## Random Sampling {.smaller}
 
 Why do we sample?
 
 ::: pause
-:::
-
 -   Easier, cheaper, convenience, etc.
 
 -   Hard to do a census
+:::
 
 
 ::: pause
@@ -148,7 +152,7 @@ What are the downsides of sampling?
 
 How certain are we that our data is representative?
 
-## Example: Estimating Proportions
+## Example: Estimating Proportions {.smaller}
 
 -   Bureau of Justice Statistics September 2021 Special Report on Recidivism of Prisoners 
 
@@ -158,7 +162,7 @@ How certain are we that our data is representative?
 
 -   42.9% of sampled prisoners were rearrested within 1 year. 43.9% of male sampled prisoners were rearrested within 1 year. 34.4% of female sampled prisoners were rearrested within 1 year.
 
-## Example: Contingency Table with Counts
+## Example: As a dataframe in R
 
 ```{r}
 df <- data.frame(id = sapply(seq(1, 73600), 
@@ -176,13 +180,24 @@ df <- data.frame(id = sapply(seq(1, 73600),
          reoffend = fct_relevel(reoffend, 'Rearrested'))
 ```
 
-```{r echo = T}
-df
+```{r}
+df[sample(1:nrow(df), 10), ]
 ```
 
 ## Example: Contingency Table with Counts
 
-```{r echo = T}
+```{r}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(full_width = F, 
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Count Table Code
+
+```{r echo = T, eval = F}
 df |>
   tabyl(sex, reoffend) |>
   adorn_totals(where = c('row', 'col')) |>
@@ -208,7 +223,19 @@ $$
 
 $P(\operatorname{male}) = 0.89$
 
-```{r echo = T}
+```{r}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'col') |>
+  kbl(full_width = F, digits = 3,
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Proportions by Column Code
+
+```{r echo = T, eval = F}
 df |>
   tabyl(sex, reoffend) |>
   adorn_totals(where = c('row', 'col')) |>
@@ -222,7 +249,19 @@ df |>
 
 $P(\operatorname{rearrested}) = 0.429$
 
-```{r echo = T}
+```{r}
+df |>
+  tabyl(sex, reoffend) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages(denominator = 'row') |>
+  kbl(full_width = F, digits = 3,
+      caption = 'Rearrests Within 1 Year of Release from Prison by Sex') |>
+  kable_classic()
+```
+
+## Example: Proportions by Row Code
+
+```{r echo = T, eval = F}
 df |>
   tabyl(sex, reoffend) |>
   adorn_totals(where = c('row', 'col')) |>
@@ -302,10 +341,10 @@ df |>
 
 -   Requires ***independent, identically distributed (I.I.D)*** variables
 
-    *   Each observation is *independent* of the next
-    
-    *   Each observation comes from the same source distribution
-    
+*   Each observation is *independent* of the next
+
+*   Each observation comes from the same source distribution
+
 -   Sample size must be sufficient for estimates to be valid
 
 ## Standard Error of the Sample Statistic
@@ -349,7 +388,7 @@ $$
 $$
 :::
 :::
-    
+
 ## Central Limit Theorem for Sample Proportions
 
 -   ***Assumption***: Sample proportions will be nearly normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$ (i.e. standard error)
@@ -362,9 +401,9 @@ $$
 
 -   Need a sufficiently large sample size!
 
-    *   $np > 10$
-    
-    *   $n(1-p) > 10$
+*   $np > 10$
+
+*   $n(1-p) > 10$
 
 -   Need ***i.i.d.*** samples
 
@@ -390,17 +429,15 @@ $$
 
 -   Need a sufficiently large sample size!
 
-    *   $n>30$ when underlying distribution is normal
-    
-    *   Need larger $n$ when underlying distribution is skewed
+*   $n>30$ when underlying distribution is normal
+
+*   Need larger $n$ when underlying distribution is skewed
 
 -   Need ***i.i.d.*** samples
 
 ## Example: Small Sample Size
 
-If our population has the distribution $N(30, 5)$ and we take random samples of size $n=20$. Will the distribution of sample means be nearly normal?
-
-![.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class13/.png?raw=true){fig-align="center"}
+If our population has the distribution $N(30, 10)$ and we take random samples of size $n=20$. Will the distribution of sample means be nearly normal with the ***sampling distribution*** $N(30, \frac{10}{\sqrt{20}})$?
 
 ## Statistical Inference and Hypothesis Testing
 
@@ -418,27 +455,27 @@ If our population has the distribution $N(30, 5)$ and we take random samples of 
 
 -   Does the probability of developing myocarditis vary by whether or not someone has been vaccinated against COVID-19?
 
-## Example: Estimating the Population Probability of Myocarditis 
+## Example: Estimating the Population Probability of Myocarditis {.smaller}
 
 If 269 of the 4,931,775 individuals sampled regardless of vaccination status, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our study population?
 
 $$
 \begin{aligned}
-  \hat{p}&=\frac{\operatorname{count}(\operatorname{cases})}{\operatorname{count}(\operatorname{subjects})} \\
-  &= \frac{269}{4,931,775} \\
-  &= 0.00005
+\hat{p}&=\frac{\operatorname{count}(\operatorname{cases})}{\operatorname{count}(\operatorname{subjects})} \\
+&= \frac{269}{4,931,775} \\
+&= 0.00005
 \end{aligned}
 $$
 
-## Example: Standard Error of the Measurement
+## Example: Standard Error of the Measurement {.smaller}
 
 If 269 of the 4,931,775 individuals sampled regardless of vaccination status, what is the ***standard error*** of our sample statistic $\hat{p}=0.00005$, the probability of developing myocarditis in our study population?
 
 $$
 \begin{aligned}
-  SE_\hat{p} &= \sqrt{\frac{p(1-p)}{n}} \\
-  &= \sqrt{\frac{0.00005(1-0.00005)}{4,931,775}} \\
-  &= 0.000003
+SE_{\hat{p}} &= \sqrt{\frac{p(1-p)}{n}} \\
+&= \sqrt{\frac{0.00005(1-0.00005)}{4,931,775}} \\
+&= 0.000003
 \end{aligned}
 $$
 
@@ -449,8 +486,8 @@ The proportion of all individuals in the study population who develop myocarditi
 ```{r}
 df <- data.frame(x = seq(0.0000075, 0.000075, by = 0.0000001), 
                  d1 = sapply(seq(0.0000075, 0.000075, by = 0.0000001), 
-                            function(x) dnorm(x, mean = 0.00005, 
-                                              sd = 0.000003)), 
+                             function(x) dnorm(x, mean = 0.00005, 
+                                               sd = 0.000003)), 
                  d2 = sapply(seq(0.0000075, 0.000075, by = 0.0000001), 
                              function(x) dnorm(x, mean = 0.00001,
                                                sd = 0.000000000003)), 
@@ -471,25 +508,21 @@ df |>
 
 ## Example: 68-95-99.7 Rule
 
-If my population has the theoretical sampling distribution $p \sim N(0.00005, 0.000003)$... 
-
--   What is the proportion of theoretical samples with a sample proportion $0.000047 \le \hat{p} \le 0.000053$?
-
--   What is the proportion of theoretical samples with a sample proportion $0.000041 \le \hat{p} \le 0.000059$?
-
--   In what range do 95% of the theoretical sample means occur?
+If my population has the theoretical sampling distribution $p \sim N(0.00005, 0.000003)$, in what range do 95% of the theoretical sample means occur?
 
 95% Confidence Interval = $(0.000044, 0.000056)$
 
-## Example: Probability of Myocarditis in Vaccinated
+*95% of the theoretical sample means in this sampling distribution are between 0.000044 and 0.000056.*
+
+## Example: Probability of Myocarditis in Vaccinated {.smaller}
 
 If 48 of the 3,482,295 vaccinated individuals developed myocarditis, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our vaccinated population?
 
 $$
 \begin{aligned}
-  \hat{p}&=\frac{\operatorname{count}(\operatorname{vaccinated cases})}{\operatorname{count}(\operatorname{vaccinated subjects})} \\
-  &= \frac{48}{3,482,295} \\
-  &= 0.00001
+\hat{p}&=\frac{\operatorname{count}(\operatorname{vaccinated cases})}{\operatorname{count}(\operatorname{vaccinated subjects})} \\
+&= \frac{48}{3,482,295} \\
+&= 0.00001
 \end{aligned}
 $$
 
@@ -519,15 +552,15 @@ What's the probability of observing a sample proportion as small or smaller than
 pnorm(0.00001, mean = 0.00005, sd = 0.000003)
 ```
 
-## Example: Probability of Myocarditis in Unvaccinated
+## Example: Probability of Myocarditis in Unvaccinated {.smaller}
 
 If 221 of the 1,449,480 unvaccinated individuals developed myocarditis, what is our ***point estimate*** (i.e. sample statistic) for the probability of developing myocarditis in our unvaccinated population?
 
 $$
 \begin{aligned}
-  \hat{p}&=\frac{\operatorname{count}(\operatorname{unvaccinated cases})}{\operatorname{count}(\operatorname{unvaccinated subjects})} \\
-  &= \frac{221}{1,449,480} \\
-  &= 0.00015
+\hat{p}&=\frac{\operatorname{count}(\operatorname{unvaccinated cases})}{\operatorname{count}(\operatorname{unvaccinated subjects})} \\
+&= \frac{221}{1,449,480} \\
+&= 0.00015
 \end{aligned}
 $$
 
