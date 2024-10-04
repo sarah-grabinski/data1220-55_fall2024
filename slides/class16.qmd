@@ -9,14 +9,19 @@ format:
     self-contained: true
     slide-number: true
     footnotes-hover: true
-    echo: true
+    execute:
+      echo: false
+      cache: true
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 16 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
-    echo: true
+      - \usepackage{fontspec}
+    execute:
+      echo: false
+      cache: true
     slide-number: true
     navigation: horizontal
     theme: default
@@ -26,3 +31,29 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 16 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
+## Recap: The Central Limit Theorem (CLT)
+
+-   A distribution of sample means approximates a normal distribution as the sample size gets larger
+
+-   Requires at least 10 success/failures each for a proportion, $n > 30$ for a mean
+
+-   Requires independent and identically distributed (i.i.d.) observations
+
+## Recap: Standard Error of the Sample Statistic
+
+-   ***Standard error (SE)*** is the *standard deviation* of the *sample statistic*
+
+-   If you took an infinite number of samples from a known distribution, the ***standard error*** is the standard deviation of the means of those samples
+
+-   Describes the scale (i.e. variability, sampling error) of the sampling distribution
+
+## Recap: Calculating the standard error
+
+-   For a distribution of sample means, $SE=\frac{\sigma}{\sqrt{n}}$
+
+-   For a distribution of sample proportions, $SE=\sqrt{\frac{p(1-p)}{n}}$
+
+::: pause
+:::
+
+As $n$ increases, the standard error $SE$ decreases.
