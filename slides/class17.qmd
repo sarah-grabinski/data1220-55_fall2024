@@ -1,0 +1,188 @@
+---
+title: "Class 17"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-14'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 17 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
+    execute:
+      echo: false
+      cache: true
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 17 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Recap: The Central Limit Theorem (CLT)
+
+-   A distribution of multiple sample means approximates a normal distribution as the sample size for each mean gets larger
+
+-   If you take an infinite number of samples of size $n$ from a population, the *sample statistics* (i.e. means $\bar{x}_1, \bar{x}_2, ..., \bar{x}_\infty$) have a probability distribution (i.e. the ***sampling distribution***) that is about normal
+
+-   Requires at least 10 success/failures each for $\hat{p}$, $n > 30$ for $\bar{x}$
+
+-   Requires independent and identically distributed (i.i.d.) observations
+
+## Recap: The CLT in Practice
+
+![The ***sampling distribution*** of an infinite number of ***sample statistics*** from a population approximates a normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/Accuracy-And-Precision-distributions.png?raw=true)
+
+## Recap: Standard Error of the Sample Statistic
+
+-   ***Standard error (SE)*** is the *standard deviation* of the *sample statistic* in a theoretical *sampling distribution*
+
+-   If you took an infinite number of samples from a known distribution, the ***standard error*** is the standard deviation of the means of those samples
+
+-   Describes the scale (i.e. variability, sampling error) of the sampling distribution
+
+## Recap: Calculating the standard error
+
+-   For a distribution of sample means, $SE=\frac{\sigma}{\sqrt{n}}$
+
+-   For a distribution of sample proportions, $SE=\sqrt{\frac{p(1-p)}{n}}$
+
+::: pause
+:::
+
+As $n$ increases, the standard error $SE$ decreases.
+
+## Recap: Calculating a Z-Score
+
+A ***Z-score*** indicates how many standard deviations $\sigma$ away from the mean $\mu$ a given observation is.
+
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma}
+\end{aligned}
+$$
+
+## Example: Calculating & Interpreting a Z-Score
+
+::::: columns
+::: column
+The retirement age of NFL players follows the distribution $N(\mu=34, \sigma=3)$, and Aaron Rodgers, the quarterback for the New York Jets, is 40 years old. How unusual is it for Aaron Rodgers to still be playing?
+:::
+
+::: column
+![Histogram of the ages at which NFL players retire, which approximates the normal distribution $N(34, 3)$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/nfl-retirement-ages.png?raw=true)
+:::
+:::::
+
+## Example: Z-Score Calculation by Hand
+
+Aaron Rodgers' age is 2 standard deviations above the mean age at which NFL players retire.
+
+$$
+\begin{aligned}
+Z&= \frac{x-\mu}{\sigma} \\
+&= \frac{40 - 34}{3} \\
+&= 2
+\end{aligned}
+$$
+
+## Example: Z-Score Calculation in R
+
+```{r echo = T}
+mean <- 34
+sd <- 3
+
+z <- (40 - 34) / 3
+
+print(z)
+```
+
+## Example: Percentiles from Z-Scores
+
+`r round(pnorm(2) * 100, 1)`% of NFL players retire at a younger age than Aaron Rodgers.
+
+```{r echo = T}
+pnorm(2, mean = 0, sd = 1)
+```
+
+## Recap: Probabilities from Z-Scores
+
+The probability that an NFL player is older than Aaron Rodgers when they retire is `r round(pnorm(2, lower.tail = F) * 100, 1)`%.
+
+```{r echo = T}
+pnorm(2, mean = 0, sd = 1, 
+      lower.tail = F)
+```
+
+## Recap: Accuracy vs Precision
+
+-   Accuracy describes how similar an observation or statistic is to the "true" population parameter
+
+-   Precision describes how similar the observations or statistics in a distribution are to each other (i.e. the variability of the estimates)
+
+## Recap: Accuracy & Precision of Estimates
+
+![What do we mean when we say that estimates are accurate and/or precise?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/Accuracy-And-Precision-distributions.png?raw=true){width="250"}
+
+## Recap: Point Estimates & Confidence Intervals
+
+-   A ***point estimate*** describes the ***location*** of an estimate or distribution
+
+-   A ***confidence interval*** describes the ***scale*** of an estimate or distribution
+
+-   The ***confidence threshold*** or ***confidence level*** describes our uncertainty regarding these values
+
+## Recap: Confidence Intervals
+
+A ***confidence interval*** is a numerical range *inside* which a statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population 
+
+-   $1-\alpha$ is the ***confidence level*** and is often expressed as a %
+
+-   ***This is only true if your assumptions about the population hold.***
+
+## Recap: Confidence Intervals in Practice
+
+![Properties of known distributions, like the 68-95-99.7 Rule, are used to calculate the bounds of a confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution.jpg?raw=true)
+
+## Recap: Confidence Intervals & $Z^*$
+
+-   A confidence interval is defined as $\operatorname{point estimate} \pm \operatorname{margin of error}$
+
+-   $\operatorname{margin of error}=Z^* \times SE$
+
+-   $Z^*=\operatorname{Z-Score}_{\alpha / 2}$
+
+
+
+## Recap: Assumptions
+
+1.  The random process follows a known distribution which we can use to model the process and draw inferences.
+
+2.  Your data is ***reliable***, so your sample statistics are ***reliable*** estimations of your sample population distribution.
+
+3.  Your data is ***valid***, so a sampling distribution based on your sample statistics is a ***valid*** estimation of the "true" distribution in the study population.
+
+4.  Your data is ***generalizable***, so your estimated sampling distribution for your study population is ***generalizable*** as the "true" sampling distribution for your target population
+
+## Statistical Inference and Hypothesis Testing
+
+-   We use sample statistics to describe sample populations and estimate the parameters of the study population's sampling distribution
+
+-   We also describe the variability of our measure and quantify our uncertainty regarding our estimate
+
+-   We use the overlap between theoretical distributions to decide how meaningful the differences between groups are

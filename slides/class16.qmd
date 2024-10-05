@@ -19,6 +19,8 @@ format:
     header-includes: 
       - \newcommand{\theHtable}{\thetable}
       - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
     execute:
       echo: false
       cache: true
@@ -33,27 +35,124 @@ format:
 
 ## Recap: The Central Limit Theorem (CLT)
 
--   A distribution of sample means approximates a normal distribution as the sample size gets larger
+-   We can use properties of the normal distribution to calculate the probability of observing a given value or range of values
 
--   Requires at least 10 success/failures each for a proportion, $n > 30$ for a mean
+-   ***The Central Limit Theorem***: The probability distribution of means for multiple samples of the same size $n$ from the same population approximates a normal distribution as the $n$ increases
 
--   Requires independent and identically distributed (i.i.d.) observations
+-   We can combine these principles to create point estimates and confidence intervals for population parameters from our observed sample statistics
 
-## Recap: Standard Error of the Sample Statistic
+## Recap: Point Estimates & Confidence Intervals
 
--   ***Standard error (SE)*** is the *standard deviation* of the *sample statistic*
+-   A ***point estimate*** describes the ***location*** of an estimate or distribution
 
--   If you took an infinite number of samples from a known distribution, the ***standard error*** is the standard deviation of the means of those samples
+-   A ***confidence interval*** describes the ***scale*** or ***precision*** of an estimate or distribution
 
--   Describes the scale (i.e. variability, sampling error) of the sampling distribution
+-   The ***confidence threshold*** or ***confidence level*** describes our uncertainty regarding the ***accuracy*** of our estimates
 
-## Recap: Calculating the standard error
+## Recap: Z-Scores & Confidence Intervals
 
--   For a distribution of sample means, $SE=\frac{\sigma}{\sqrt{n}}$
+![We use Z-Scores from the standard normal distribution to calculate the boundaries of our confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution.jpg?raw=true)
 
--   For a distribution of sample proportions, $SE=\sqrt{\frac{p(1-p)}{n}}$
+## Recap: Assumptions
 
-::: pause
+1.  A random process follows a known distribution which we can use to model that process and draw inferences about our population.
+
+2.  Your data is ***reliable***, so your sample statistics are ***reliable*** estimations of your sample population distribution.
+
+3.  Your data is ***valid***, so a sampling distribution based on your sample statistics is a ***valid*** estimation of the "true" distribution in the study population.
+
+4.  Your data is ***generalizable***, so your estimated sampling distribution for your study population is ***generalizable*** as the "true" sampling distribution for your target population
+
+## Statistical Inference and Hypothesis Testing
+
+-   We use sample statistics to describe sample populations and estimate the parameters of the study population's sampling distribution
+
+-   We also describe the variability of our measure and quantify our uncertainty regarding our estimate
+
+-   We use the overlap between theoretical distributions to decide how meaningful the differences between groups are
+
+## Hypothesis Testing Framework
+
+-   $\mathbf{H_0}$: The "Null" Hypothesis
+    
+    +   Represents a position of skepticism, *nothing* is happening here
+    
+    +   "There is *not* an association between process A and B"
+    
+    +   Variables are *independent*
+    
+-   $\mathbf{H_A}$: The "Alternative" Hypothesis
+
+    +   The complement of $H_0$, *something* is happening here
+    
+    +   "There *is* an association between process A and B"
+    
+    +   Variables are *dependent*
+
+## Conducting a hypothesis test
+
+-   Begin by *assuming* $H_0$ is the "true" state
+
+-   Calculate *the probability that you would see results as extreme or more extreme* than what you saw in your study given the distribution under $H_0$
+
+-   The lower the probability, the less likely it is that we would see these results if $H_0$ was the "true" state of our population
+
+-   If the probability is sufficiently low, we *reject* $\mathbf{H_0}$ and *accept* $\mathbf{H_A}$
+
+## Revisiting Confidence Thresholds
+
+-   $\alpha$ is called the ***confidence threshold*** 
+
+-   The statistic is expected to occur *outside* the ***confidence interval*** with probability $\alpha$
+
+-   $(\alpha * 100)$% of confidence intervals for statistics from theoretical samples of this population will *NOT* contain the "true" population parameter
+
+
+
+
+
+
+
+
+
+
+## Recap: Calculating a Z-Score
+
+A ***Z-score*** indicates how many standard deviations $\sigma$ away from the mean $\mu$ a given observation is.
+
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma}
+\end{aligned}
+$$
+
+## Example: Calculating & Interpreting a Z-Score
+
+::::: columns
+::: column
+The retirement age of NFL players follows the distribution $N(\mu=34, \sigma=3)$, and Aaron Rodgers, the quarterback for the New York Jets, is 40 years old. How unusual is it for Aaron Rodgers to still be playing?
 :::
 
-As $n$ increases, the standard error $SE$ decreases.
+::: column
+![Histogram of the ages at which NFL players retire, which approximates the normal distribution $N(34, 3)$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/nfl-retirement-ages.png?raw=true)
+:::
+:::::
+
+## Example: Z-Score Calculation by Hand
+
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma} \\
+&= \frac{40 - 34}{3} \\
+&= 2
+\end{aligned}
+$$
+
+## Example: Z-Score Calculation in R
+
+```{r echo = T}
+
+```
+
