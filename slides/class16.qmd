@@ -12,6 +12,8 @@ format:
     execute:
       echo: false
       cache: true
+      message: false
+      warning: false
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 16 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
@@ -20,10 +22,13 @@ format:
       - \newcommand{\theHtable}{\thetable}
       - \usepackage{fontspec}
       - \usepackage{graphicx}
+      - \usepackage{grffile}
       - \setkeys{Gin}{width=\textwidth,height=\textheight}
     execute:
       echo: false
       cache: true
+      message: false
+      warning: false
     slide-number: true
     navigation: horizontal
     theme: default
@@ -33,13 +38,20 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 16 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
-## Recap: The Central Limit Theorem (CLT)
+```{r message = F, warning = F, cache = F}
+library(janitor)
+library(tidyverse)
 
--   We can use properties of the normal distribution to calculate the probability of observing a given value or range of values
+theme_set(theme_bw())
+```
 
--   ***The Central Limit Theorem***: The probability distribution of means for multiple samples of the same size $n$ from the same population approximates a normal distribution as the $n$ increases
+## Recap: The Central Limit Theorem
 
--   We can combine these principles to create point estimates and confidence intervals for population parameters from our observed sample statistics
+-   Properties of the normal distribution let us calculate the probability of observing a given value or range of values
+
+-   ***The Central Limit Theorem***: The probability distribution of the sample means from multiple samples of the same size $n$ from the same population approximates a normal distribution as $n$ increases (i.e. the *sampling distribution*)
+
+-   The ***sampling distribution*** provides point estimates and confidence intervals for population parameters
 
 ## Recap: Point Estimates & Confidence Intervals
 
@@ -53,15 +65,21 @@ format:
 
 ![We use Z-Scores from the standard normal distribution to calculate the boundaries of our confidence interval.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/ci-probability-distribution.jpg?raw=true)
 
-## Recap: Assumptions
+## Recap: Assumptions {.smaller}
 
 1.  A random process follows a known distribution which we can use to model that process and draw inferences about our population.
 
-2.  Your data is ***reliable***, so your sample statistics are ***reliable*** estimations of your sample population distribution.
+. . .
 
-3.  Your data is ***valid***, so a sampling distribution based on your sample statistics is a ***valid*** estimation of the "true" distribution in the study population.
+2.  Your data is ***reliable***: your sample statistics are ***reliable*** estimations of the sample population's distribution.
 
-4.  Your data is ***generalizable***, so your estimated sampling distribution for your study population is ***generalizable*** as the "true" sampling distribution for your target population
+. . .
+
+3.  Your data is ***valid***: your sampling distribution, based on your sample statistics, is a ***valid*** estimation of the study population distribution.
+
+. . .
+
+4.  Your data is ***generalizable***: your sampling distribution for your study population is ***generalizable*** as the sampling distribution for your target population
 
 ## Statistical Inference and Hypothesis Testing
 
@@ -69,90 +87,433 @@ format:
 
 -   We also describe the variability of our measure and quantify our uncertainty regarding our estimate
 
--   We use the overlap between theoretical distributions to decide how meaningful the differences between groups are
+-   We use the overlap between theoretical distributions to decide whether any differences are meaningful
+
+## Example: Hypothesis Testing (Proportion)
+
+Deshaun Watson, the quarterback for the Cleveland Browns, has made 176 pass attempts in the 2024 NFL season, 106 of which were completed (`r round(106/176*100, 1)`%). How do we know if that's good or not?
+
+. . .
+
+Among the 38 quarterbacks in the NFL who have attempted at least 20 passes, the average completion rate is 65.3%.
 
 ## Hypothesis Testing Framework
 
 -   $\mathbf{H_0}$: The "Null" Hypothesis
-    
-    +   Represents a position of skepticism, *nothing* is happening here
-    
-    +   "There is *not* an association between process A and B"
-    
-    +   Variables are *independent*
-    
+
+    -   Represents a position of skepticism, *nothing* is happening here
+
+    -   "There is *not* an association between process A and B"
+
 -   $\mathbf{H_A}$: The "Alternative" Hypothesis
 
-    +   The complement of $H_0$, *something* is happening here
-    
-    +   "There *is* an association between process A and B"
-    
-    +   Variables are *dependent*
+    -   The complement of $H_0$, *something* is happening here
+
+    -   "There *is* an association between process A and B"
 
 ## Conducting a hypothesis test
 
 -   Begin by *assuming* $H_0$ is the "true" state
 
--   Calculate *the probability that you would see results as extreme or more extreme* than what you saw in your study given the distribution under $H_0$
+. . .
+
+-   Calculate *the probability that you would see results as extreme or more extreme* than what you saw in your study, assuming the distribution under $H_0$
+
+. . .
 
 -   The lower the probability, the less likely it is that we would see these results if $H_0$ was the "true" state of our population
 
+. . .
+
 -   If the probability is sufficiently low, we *reject* $\mathbf{H_0}$ and *accept* $\mathbf{H_A}$
 
-## Revisiting Confidence Thresholds
+## Example: Hypothesis Testing (Proportion)
 
--   $\alpha$ is called the ***confidence threshold*** 
+Research question: Is Deshaun Watson's pass completion rate below average for the 2024 NFL season so far?
 
--   The statistic is expected to occur *outside* the ***confidence interval*** with probability $\alpha$
+-   $H_0$: Deshaun Watson has an average pass completion rate for the 2024 NFL season ($\hat{p}_{\operatorname{DW}} \approx p_{\operatorname{NFL}}$)
 
--   $(\alpha * 100)$% of confidence intervals for statistics from theoretical samples of this population will *NOT* contain the "true" population parameter
+-   $H_A$: Deshaun Watson has a below-average pass completion rate for the 2024 NFL season ($\hat{p}_{\operatorname{DW}} \neq p_{\operatorname{NFL}}$)
 
+## Example: Hypothesis Testing (Proportion) {.smaller}
 
-
-
-
-
-
-
-
-
-## Recap: Calculating a Z-Score
-
-A ***Z-score*** indicates how many standard deviations $\sigma$ away from the mean $\mu$ a given observation is.
+We can use the NFL's average (65.3%) plus the sample size ($n = 176$ passes) to construct a sampling distribution $\hat{p} \sim N(p=65.3, SE=3.6)$ for the average NFL quarterback's pass completion rate.
 
 $$
 \begin{aligned}
-Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
-&= \frac{x-\mu}{\sigma}
+SE_p &= \sqrt{\frac{p(1-p)}{n}} \\
+&= \sqrt{\frac{0.653(1-0.653)}{176}} \\
+&= 0.036
 \end{aligned}
 $$
 
-## Example: Calculating & Interpreting a Z-Score
+## Example: Hypothesis Testing (Proportion)
+
+*Assuming Deshaun Watson is an average NFL quarterback*, what is the probability he would have a completion rate of 60.2% *or less* over the last 176 passes?
+
+```{r}
+#| fig.height: 5.5
+
+
+data.frame(cmp_percent = seq(50, 80, by = 0.01)) |>
+  mutate(density = dnorm(cmp_percent, mean = 65.3, sd = 3.6), 
+         x2 = ifelse(cmp_percent < 60.2, 
+                     cmp_percent, NA)) |>
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_ribbon(aes(x = x2, ymin = 0, ymax = density), 
+              alpha = 0.5, fill = 'steelblue') +
+  geom_line(aes(x = cmp_percent, y = density)) +
+  geom_vline(xintercept = 60.2, linetype = 'dashed') +
+  labs(x = 'Completion Rate', y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(47.3, 76.1, by = 3.6))
+```
+
+## Example: Hypothesis Testing (Proportion)
+
+The probability that Deshaun Watson would have a completion rate of 0.602 or worse, *assuming he is an average NFL quarterback*, is 0.078.
+
+```{r echo = T}
+pnorm(0.602, mean = 0.653, sd = 0.036)
+```
+
+. . .
+
+Is this situation unlikely enough that we can reject our null hypothesis $H_0$?
+
+## Significance Level/Threshold
+
+-   $\alpha$ is also called the ***significance level***
+
+-   The probability below which you will reject the null hypothesis
+
+-   Predetermined before doing hypothesis test (often $p < 0.05$)
+
+-   Also the probability of rejecting the null hypothesis when $H_0$ is true (i.e. ***Type I Error*** or ***false positive rate***)
+
+## Decision Errors
+
+In a perfect world, we will only reject $H_0$ when $H_A$ is true, and we will always fail to reject $H_0$ when $H_0$ is true.
+
+![](class16/decision-errors-1.png)
+
+## Decision Errors
+
+When we reject $H_0$ when $H_0$ is "true" (i.e. *false positive*), it is called a ***Type I Error***.
+
+![](class16/decision-errors-2.png)
+
+## Decision Errors
+
+When we fail to reject $H_0$ when $H_A$ is "true" (i.e. *false negative*), it is called a ***Type II Error***.
+
+![](class16/decision-errors-3.png)
+
+## Decision Errors
+
+-   $\alpha = P(\operatorname{False Positive})$
+
+-   $\beta = P(\operatorname{False Negative})$
+
+![](class16/decision-errors-4.png)
+
+## Decision Errors
+
+-   $1-\alpha = \operatorname{Confidence Level}$
+
+-   $1-\beta = \operatorname{Power}$
+
+![](class16/decision-errors-5.png)
+
+## Practice: Decision Errors
+
+The justice system can be thought of like a hypothesis test. We *assume* the defendant is innocent ($H_0$), until we have sufficient evidence to reject the null hypothesis and accept the alternate hypothesis ($H_A$) that the defendant is guilty.
+
+## Practice: Decision Errors
+
+In a criminal trial, what type of error is committed when the jury finds the defendant guilty, when they were innocent?
+
+What are the hypotheses?
+
+. . .
+
+$H_0$: Defendant is not guilty
+
+$H_A$: Defendant is guilty
+
+. . .
+
+***Type I Error***
+
+## Practice: Decision Errors
+
+In a criminal trial, what type of error is committed when the jury finds the defendant not guilty, when they were guilty?
+
+What are the hypotheses?
+
+. . .
+
+$H_0$: Defendant is not guilty
+
+$H_A$: Defendant is guilty
+
+. . .
+
+***Type II Error***
+
+## Decision Error Trade-Offs
+
+-   Often, reducing the false positive rate increases the false negative rate (and vice versa)
+
+-   There are different costs to false negatives and false positives
+
+. . .
+
+We'd rather let a guilty person go free than an innocent person go to jail (false negative preferable to false positive)
+
+. . .
+
+Metal detectors are overly sensitive so weapons aren't missed during scans (false positive preferable to false negative)
+
+## Test Statistics
+
+-   When conducting a hypothesis test, you calculate a ***test statistic*** to assess how "extreme" your observed result is compared to the reference distribution
+
+-   For normal sampling distributions (means & proportions), the test statistic is the $Z-Score$
+
+-   Remember: $Z=\frac{\bar{x}-\mu}{\sigma}$
+
+## Example: Hypothesis Testing (Proportion)
+
+*Assuming Deshaun Watson is an average NFL quarterback*, what is the probability he would have a completion rate of 60.2% *or less* over the last 176 passes?
+
+```{r}
+#| fig.height: 5.5
+
+
+data.frame(cmp_percent = seq(50, 80, by = 0.01)) |>
+  mutate(density = dnorm(cmp_percent, mean = 65.3, sd = 3.6), 
+         x2 = ifelse(cmp_percent < 60.2, 
+                     cmp_percent, NA)) |>
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_ribbon(aes(x = x2, ymin = 0, ymax = density), 
+              alpha = 0.5, fill = 'steelblue') +
+  geom_line(aes(x = cmp_percent, y = density)) +
+  geom_vline(xintercept = 60.2, linetype = 'dashed') +
+  labs(x = 'Completion Rate', y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(47.3, 79.7, by = 3.6))
+```
+
+## Example: Hypothesis Testing (Proportion)
+
+Assuming $\hat{p} \sim N(p=65.3, SE=3.6)$...
+
+$$
+\begin{aligned}
+Z &= \frac{\hat{p}-p}{SE} \\
+&= \frac{60.2 - 65.3}{3.6} \\
+&= -1.42
+\end{aligned}
+$$
+
+. . .
+
+Is 1.42 standard errors below the hypothesized completion rate unusual enough to reject $H_0$?
+
+## P-Values
+
+A ***p-value*** is the probability of a theoretical sample having a test statistic equal to or more extreme than the one you observed, *assuming that the reference distribution is "true"*.
+
+. . .
+
+-   If the p-value is *low*, you were very *unlikely* to have observed the data that you did if the null hypothesis were true.
+
+. . .
+
+-   If the p-value is *high*, you were very *likely* to have observed the data that you did if the null hypothesis were true.
+
+## P-Values
+
+-   If the p-value is below our pre-determined ***significance level*** $\alpha$, we *reject* $H_0$ and *accept* the alternative hypothesis $H_A$.
+
+. . .
+
+-   *NEVER ACCEPT* $H_0$!! Always *fail to reject* $H_0$.
+
+. . .
+
+-   The p-value is ***NOT*** the probability that $H_0$ is true or that the data were produced by chance alone
+
+## One-Sided Hypothesis Tests
 
 ::::: columns
-::: column
-The retirement age of NFL players follows the distribution $N(\mu=34, \sigma=3)$, and Aaron Rodgers, the quarterback for the New York Jets, is 40 years old. How unusual is it for Aaron Rodgers to still be playing?
+::: {.column width="50%"}
+![The probability of a test statistic *less than* the one you observed.](class16/lower-tail.png)
 :::
 
-::: column
-![Histogram of the ages at which NFL players retire, which approximates the normal distribution $N(34, 3)$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/nfl-retirement-ages.png?raw=true)
+::: {.column width="50%"}
+![The probability of a test statistic *greater than* the one you observed.](class16/upper-tail.png)
 :::
 :::::
 
-## Example: Z-Score Calculation by Hand
+## Example
+
+If our test statistic is $Z=-1.42$, what is the p-value for $Z \le -1.42$?
+
+```{r echo = T}
+pnorm(-1.42, mean = 0, sd = 1)
+```
+
+. . .
+
+If $\alpha = 0.05$, then $p > \alpha$ and we fail to reject the null hypothesis $H_0: \hat{p}=0.653$. There is insufficient evidence that Deshaun Watson has a below-average completion rate.
+
+## Two-Sided Hypothesis Tests
+
+![The probability of a test statistic more extreme (greater OR lesser than) the one you observed.](class16/two-tailed.png){width="231"}
+
+## Example: Hypothesis Testing (Proportion)
+
+If our test statistic is $Z=-1.42$, what is the p-value for the null hypothesis $\hat{p} = 65.3$ ($|Z| \ge 1.42$)?
+
+```{r echo = T}
+pnorm(-1.42, mean = 0, sd = 1) * 2
+```
+
+. . .
+
+If $\alpha = 0.05$, then $p > \alpha$ and we fail to reject the null hypothesis $H_0: \hat{p}=0.653$. There is insufficient evidence that Deshaun Watson has a below-average completion rate.
+
+## Example: Hypothesis Testing (Proportion)
+
+```{r warning = F}
+#| fig.height: 5.5
+
+
+data.frame(cmp_percent = seq(50, 80, by = 0.01)) |>
+  mutate(density = dnorm(cmp_percent, mean = 65.3, sd = 3.6), 
+         density2 = ifelse(cmp_percent < qnorm(0.025, mean = 65.3, sd = 3.6) |
+                             cmp_percent > qnorm(0.975, mean = 65.3, sd = 3.6), 
+                           density, 0)) |>
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_ribbon(aes(x = cmp_percent, ymin = 0, ymax = density2), 
+              alpha = 0.5, fill = 'steelblue') +
+  geom_line(aes(x = cmp_percent, y = density)) +
+  geom_vline(xintercept = 60.2, linetype = 'dashed') +
+  geom_point(aes(x = 65.3, y = 0), size = 5) +
+  geom_errorbar(aes(xmin = qnorm(0.025, mean = 65.3, sd = 3.6),
+                    xmax = qnorm(0.975, mean = 65.3, sd = 3.6), 
+                    y = 0), width = 0.01, linewidth = 1) +
+  labs(x = 'Completion Rate', y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(47.3, 79.7, by = 3.6))
+```
+
+## Checking Assumptions
+
+-   Were the observations *independent* of each other?
+
+. . .
+
+-   Do the observations come from *identical distributions*?
+
+. . .
+
+-   Do we have a *sufficient sample size* to assume normality?
+
+. . .
+
+-   Is a normal distribution the *appropriate model* for this kind of data?
+
+## Example: Hypothesis Testing (Mean)
+
+Deshaun Watson is averaging 4.84 yards per pass attempt in the 2024 NFL season. How do we know if that's good or not?
+
+. . .
+
+```{r message = F}
+passes <- read_csv('./class16/pass_stats.csv') |>
+  clean_names()
+
+mean_x <- passes |>
+  filter(att > 20) |>
+  pull(avg) |>
+  mean()
+
+sd_x <- passes |>
+  filter(att > 20) |>
+  pull(avg) |>
+  sd()
+
+se_x <- sd_x / sqrt(38)
+```
+
+Among the 38 quarterbacks in the NFL who have attempted at least 20 passes, the average yards per pass attempt approximates the distribution $\bar{x} \sim N(\mu = 7.06, SE = 0.19)$.
+
+## Example: Hypothesis Testing (Mean)
+
+Research question: Is Deshaun Watson's average yards per pass attempt average for the 2024 NFL season so far?
+
+-   $H_0$: Deshaun Watson has an average yards per pass attempt for the 2024 NFL season ($\bar{x}_{\operatorname{DW}} \approx \mu_{\operatorname{NFL}}$)
+
+-   $H_A$: Deshaun Watson does not have an average yards per pass attempt for the 2024 NFL season ($\bar{x}_{\operatorname{DW}} \neq \mu_{\operatorname{NFL}}$)
+
+## Example: Hypothesis Testing (Mean)
+
+```{r}
+#| fig.height: 5.5
+
+
+data.frame(x = seq(mean_x - se_x*12, 
+                             mean_x + se_x*4, by = 0.01)) |>
+  mutate(density = dnorm(x, mean = mean_x, sd = se_x), 
+         density2 = ifelse(x < qnorm(0.025, mean = mean_x, sd = se_x) |
+                             x > qnorm(0.975, mean = mean_x, sd = se_x), 
+                           density, 0)) |>
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_ribbon(aes(x = x, ymin = 0, ymax = density2), 
+              alpha = 0.5, fill = 'steelblue') +
+  geom_line(aes(x = x, y = density)) +
+  geom_vline(xintercept = 4.84, linetype = 'dashed') +
+  geom_point(aes(x = 7.06, y = 0), size = 5) +
+  geom_errorbar(aes(xmin = qnorm(0.025, mean = mean_x, sd = se_x),
+                    xmax = qnorm(0.975, mean = mean_x, sd = se_x), 
+                    y = 0), width = 0.1, linewidth = 1) +
+  labs(x = 'Completion Rate', y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(round(mean_x - se_x*12, 2), 
+                                  round(mean_x + se_x*4, 2), by = 0.19))
+```
+
+## Example: Hypothesis Testing (Mean)
 
 $$
 \begin{aligned}
-Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
-&= \frac{x-\mu}{\sigma} \\
-&= \frac{40 - 34}{3} \\
-&= 2
+Z&=\frac{\bar{x} - \mu}{SE} \\
+&= \frac{4.84-7.06}{0.19} \\
+&= -11.68
 \end{aligned}
 $$
 
-## Example: Z-Score Calculation in R
+. . .
+
+Deshaun Watson's average is 11.68 SD below the hypothesized mean. Is that unusual?
+
+## Example: Hypothesis Testing (Mean)
+
+If our test statistic is $Z=-11.68$, what is the p-value for $|Z| \ge 11.68$?
 
 ```{r echo = T}
-
+pnorm(-11.68, mean = 7.06, sd = 0.19) * 2
 ```
 
+. . .
+
+The probability that Deshaun Watson's average yards would be 4.84 *assuming he is an average quarterback* is $p < 0.05$.
+
+## Example: Hypothesis Testing (Mean)
+
+-   The p-value is extremely low, so we *reject* $H_0$ and *accept* $H_A$ that Deshaun Watson does not have an average yards per pass attempt.
+
+-   This data provides convincing evidence that Deshaun Watson is performing below average.
