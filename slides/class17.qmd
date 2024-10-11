@@ -2,7 +2,7 @@
 title: "Class 17"
 subtitle: "DATA1220-55, Fall 2024"
 author: "Sarah E. Grabinski"
-date: '2024-10-14'
+date: '2024-10-12'
 format:
   revealjs: 
     theme: default
@@ -12,6 +12,8 @@ format:
     execute:
       echo: false
       cache: true
+      message: false
+      warning: false
     preview-links: auto
     fig-align: center
     footer: "DATA1220-55 Fall 2024, Class 17 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
@@ -20,10 +22,13 @@ format:
       - \newcommand{\theHtable}{\thetable}
       - \usepackage{fontspec}
       - \usepackage{graphicx}
+      - \usepackage{grffile}
       - \setkeys{Gin}{width=\textwidth,height=\textheight}
     execute:
       echo: false
       cache: true
+      message: false
+      warning: false
     slide-number: true
     navigation: horizontal
     theme: default
@@ -33,19 +38,40 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 17 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
-## Recap: The Central Limit Theorem (CLT)
+```{r}
+library(janitor)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+## Recap: The Central Limit Theorem
 
 -   A distribution of multiple sample means approximates a normal distribution as the sample size for each mean gets larger
 
+. . .
+
 -   If you take an infinite number of samples of size $n$ from a population, the *sample statistics* (i.e. means $\bar{x}_1, \bar{x}_2, ..., \bar{x}_\infty$) have a probability distribution (i.e. the ***sampling distribution***) that is about normal
 
--   Requires at least 10 success/failures each for $\hat{p}$, $n > 30$ for $\bar{x}$
+## Recap: CLT Requirements
 
--   Requires independent and identically distributed (i.i.d.) observations
+-   Requires at least 10 success/failures each for $\hat{p}$
+
+. . .
+
+-   Requires at least $n > 30$ for $\bar{x}$
+
+. . .
+
+-   Requires independent observations
+
+. . .
+
+-   Requires identically distributed (i.i.d.) observations
 
 ## Recap: The CLT in Practice
 
-![The ***sampling distribution*** of an infinite number of ***sample statistics*** from a population approximates a normal distribution.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class15/Accuracy-And-Precision-distributions.png?raw=true)
+![The ***sampling distribution*** of an infinite number of ***sample statistics*** from a population approximates a normal distribution.](class16/clt-example.png)
 
 ## Recap: Standard Error of the Sample Statistic
 
@@ -59,10 +85,11 @@ format:
 
 -   For a distribution of sample means, $SE=\frac{\sigma}{\sqrt{n}}$
 
+. . .
+
 -   For a distribution of sample proportions, $SE=\sqrt{\frac{p(1-p)}{n}}$
 
-::: pause
-:::
+. . .
 
 As $n$ increases, the standard error $SE$ decreases.
 
@@ -77,61 +104,13 @@ Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standa
 \end{aligned}
 $$
 
-## Example: Calculating & Interpreting a Z-Score
-
-::::: columns
-::: column
-The retirement age of NFL players follows the distribution $N(\mu=34, \sigma=3)$, and Aaron Rodgers, the quarterback for the New York Jets, is 40 years old. How unusual is it for Aaron Rodgers to still be playing?
-:::
-
-::: column
-![Histogram of the ages at which NFL players retire, which approximates the normal distribution $N(34, 3)$.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/nfl-retirement-ages.png?raw=true)
-:::
-:::::
-
-## Example: Z-Score Calculation by Hand
-
-Aaron Rodgers' age is 2 standard deviations above the mean age at which NFL players retire.
-
-$$
-\begin{aligned}
-Z&= \frac{x-\mu}{\sigma} \\
-&= \frac{40 - 34}{3} \\
-&= 2
-\end{aligned}
-$$
-
-## Example: Z-Score Calculation in R
-
-```{r echo = T}
-mean <- 34
-sd <- 3
-
-z <- (40 - 34) / 3
-
-print(z)
-```
-
-## Example: Percentiles from Z-Scores
-
-`r round(pnorm(2) * 100, 1)`% of NFL players retire at a younger age than Aaron Rodgers.
-
-```{r echo = T}
-pnorm(2, mean = 0, sd = 1)
-```
-
-## Recap: Probabilities from Z-Scores
-
-The probability that an NFL player is older than Aaron Rodgers when they retire is `r round(pnorm(2, lower.tail = F) * 100, 1)`%.
-
-```{r echo = T}
-pnorm(2, mean = 0, sd = 1, 
-      lower.tail = F)
-```
-
 ## Recap: Accuracy vs Precision
 
+. . .
+
 -   Accuracy describes how similar an observation or statistic is to the "true" population parameter
+
+. . .
 
 -   Precision describes how similar the observations or statistics in a distribution are to each other (i.e. the variability of the estimates)
 
@@ -143,15 +122,23 @@ pnorm(2, mean = 0, sd = 1,
 
 -   A ***point estimate*** describes the ***location*** of an estimate or distribution
 
+. . .
+
 -   A ***confidence interval*** describes the ***scale*** of an estimate or distribution
+
+. . .
 
 -   The ***confidence threshold*** or ***confidence level*** describes our uncertainty regarding these values
 
 ## Recap: Confidence Intervals
 
-A ***confidence interval*** is a numerical range *inside* which a statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population 
+A ***confidence interval*** is a numerical range *inside* which a statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population
+
+. . .
 
 -   $1-\alpha$ is the ***confidence level*** and is often expressed as a %
+
+. . .
 
 -   ***This is only true if your assumptions about the population hold.***
 
@@ -167,15 +154,19 @@ A ***confidence interval*** is a numerical range *inside* which a statistic is e
 
 -   $Z^*=\operatorname{Z-Score}_{\alpha / 2}$
 
-
-
-## Recap: Assumptions
+## Recap: Assumptions {.smaller}
 
 1.  The random process follows a known distribution which we can use to model the process and draw inferences.
 
+. . .
+
 2.  Your data is ***reliable***, so your sample statistics are ***reliable*** estimations of your sample population distribution.
 
+. . .
+
 3.  Your data is ***valid***, so a sampling distribution based on your sample statistics is a ***valid*** estimation of the "true" distribution in the study population.
+
+. . .
 
 4.  Your data is ***generalizable***, so your estimated sampling distribution for your study population is ***generalizable*** as the "true" sampling distribution for your target population
 
@@ -183,6 +174,332 @@ A ***confidence interval*** is a numerical range *inside* which a statistic is e
 
 -   We use sample statistics to describe sample populations and estimate the parameters of the study population's sampling distribution
 
+. . .
+
 -   We also describe the variability of our measure and quantify our uncertainty regarding our estimate
 
+. . .
+
 -   We use the overlap between theoretical distributions to decide how meaningful the differences between groups are
+
+## Hypothesis Testing Framework
+
+-   $\mathbf{H_0}$: The "Null" Hypothesis
+
+    -   Represents a position of skepticism, *nothing* is happening here
+
+    -   "There is *not* an association between process A and B"
+
+. . .
+
+-   $\mathbf{H_A}$: The "Alternative" Hypothesis
+
+    -   The complement of $H_0$, *something* is happening here
+
+    -   "There *is* an association between process A and B"
+
+## Conducting a hypothesis test
+
+-   Begin by *assuming* $H_0$ is the "true" state
+
+. . .
+
+-   Calculate *the probability that you would see results as extreme or more extreme* than what you saw in your study, assuming the distribution under $H_0$
+
+. . .
+
+-   The lower the probability, the less likely it is that we would see these results if $H_0$ was the "true" state of our population
+
+. . .
+
+-   If the probability is sufficiently low, we *reject* $\mathbf{H_0}$ and *accept* $\mathbf{H_A}$
+
+## Significance Level/Threshold
+
+-   $\alpha$ is also called the ***significance level***
+
+. . .
+
+-   The probability below which you will reject the null hypothesis
+
+. . .
+
+-   Predetermined before doing hypothesis test (often $p < 0.05$)
+
+. . .
+
+-   Also the probability of rejecting the null hypothesis when $H_0$ is true (i.e. ***Type I Error*** or ***false positive rate***)
+
+## Decision Errors
+
+::::: columns
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-3.png)
+:::
+
+::: column
+![](class17/decision-errors.png)
+:::
+:::::
+
+## Inference for a Single Proportion
+
+***Central Limit Theorem for Proportions***: sample proportions $\hat{p}$ will be nearly normally distributed with the mean equal to the population proportion ($\mu=p$) and the standard deviation equal to the standard error for a proportion ($\sigma=\sqrt{\frac{p(1-p)}{n}}$), such that $\hat{p} \sim N(\mu=p, \sigma=SE_p)$).
+
+. . .
+
+***Assumptions***: independence, identically distributed, 10+ successes/failures each
+
+## Example
+
+From 1980-2023, 709 tropical cyclones have formed in the Atlantic Ocean. 298 of those tropical cyclones developed into hurricanes, and 72 of those hurricanes made landfall in the continental US.
+
+. . .
+
+So far in 2024, 13 tropical cyclones have formed in the Atlantic Ocean. 9 of those tropical cyclones developed into hurricanes, and 2 of those hurricanes made landfall in the continental US.
+
+. . .
+
+***Research Question***: Is a hurricane more likely to hit the continental US in 2024?
+
+## Example {.smaller}
+
+From 1980-2023, 709 tropical cyclones have formed in the Atlantic Ocean. 298 of those tropical cyclones developed into hurricanes, and 72 of those hurricanes made landfall in the continental US.
+
+So far in 2024, 13 tropical cyclones have formed in the Atlantic Ocean. 9 of those tropical cyclones developed into hurricanes, and 2 of those hurricanes made landfall in the continental US.
+
+***What is the study population?***
+
+. . .
+
+*All hurricanes which formed in the Atlantic Ocean with the potential to make landfall in the continental US, for which we have records.*
+
+## Example {.smaller}
+
+From 1980-2023, 709 tropical cyclones have formed in the Atlantic Ocean. 298 of those tropical cyclones developed into hurricanes, and 72 of those hurricanes made landfall in the continental US.
+
+So far in 2024, 13 tropical cyclones have formed in the Atlantic Ocean. 9 of those tropical cyclones developed into hurricanes, and 2 of those hurricanes made landfall in the continental US.
+
+***What is the sample population?***
+
+. . .
+
+*298 hurricanes which formed in the Atlantic Ocean between 1980-2023 with the potential to make landfall in the continental United States.*
+
+## Example {.smaller}
+
+From 1980-2023, 709 tropical cyclones have formed in the Atlantic Ocean. 298 of those tropical cyclones developed into hurricanes, and 72 of those hurricanes made landfall in the continental US.
+
+So far in 2024, 13 tropical cyclones have formed in the Atlantic Ocean. 9 of those tropical cyclones developed into hurricanes, and 2 of those hurricanes made landfall in the continental US.
+
+***What is the target population?***
+
+. . .
+
+*Future hurricanes which form in the Atlantic Ocean with the potential to make landfall in the continental US.*
+
+## Example
+
+Is it reasonable to assume that the sample statistics from the data will reliably describe the observed distribution in the sample population?
+
+. . .
+
+Is it reasonable to assume that the sample statistics will be a valid estimation of the sampling distribution in the study population?
+
+. . .
+
+Is it reasonable to assume that the estimated sampling distribution for the study population will be generalizable to the unobserved distribution in the target population?
+
+## Example
+
+Is it reasonable to assume that the population parameters can be modeled using a normal distribution?
+
+. . .
+
+-   Are the observations *independent*?
+
+. . .
+
+-   Are the observations *identically distributed*?
+
+. . .
+
+-   Is the *sample size sufficient*?
+
+## Example
+
+If we assume our data is reliable, then our sample statistics will be accurate estimations of the underlying distribution in the sample population.
+
+. . .
+
+If we assume our data is valid, then we can use our sample statistics to *infer* the sampling distribution for the study population.
+
+. . .
+
+If we assume our data is generalizeable, then we can use our sampling distribution to *test the hypothesis* in the target population.
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 1: Calculate the sample statistic.
+
+. . .
+
+$$
+\begin{aligned}
+\hat{p} &= \frac{72}{298} = 0.242 
+\end{aligned}
+$$
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 2: Estimate the sampling distribution.
+
+. . .
+
+$$
+\begin{aligned}
+SE&=\sqrt{\frac{0.242(1-0.242)}{298}} = 0.025
+\end{aligned}
+$$
+
+The sampling distribution for $\hat{p}$ approximates the normal distribution $N(24.2, 2.5)$.
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 3: Calculate $Z^*$ for the confidence threshold $\alpha=0.05$.
+
+. . .
+
+$$
+Z^*=Z_{\alpha/2}
+$$
+
+. . .
+
+```{r echo = t}
+qnorm(0.05 / 2)
+```
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 4: Construct a 95% confidence interval.
+
+. . .
+
+$\operatorname{point estimate} \pm Z^* \times SE$
+
+```{r echo = T}
+24.2 - qnorm(0.05 / 2) * 2.5
+
+24.2 + qnorm(0.05 / 2) * 2.5
+```
+
+. . .
+
+With 95% confidence, the probability of a hurricane making landfall in the continental US is 19.3% to 29.1%.
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 5: Assume the null hypothesis.
+
+. . .
+
+$H_0$: The probability of a hurricane making landfall in 2024 is 24.2% ($\hat{p}=24.2$%).
+
+$H_A$ The probability of a hurricane making landfall in 2024 is *not* 24.2% ($\hat{p} \ne 24.2$%).
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 6: Calculate the sample statistic.
+
+. . .
+
+$$
+\begin{aligned}
+\hat{p} &= \frac{2}{9} \\
+&= 0.222
+\end{aligned}
+$$
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 7: Calculate the test statistic under $H_0$.
+
+. . .
+
+$$
+\begin{aligned}
+Z&=\frac{\hat{p}-p}{SE} \\
+&= \frac{22.2 - 24.2}{2.5} \\
+&= -0.8
+\end{aligned}
+$$
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 8: Calculate the p-value under $H_0$.
+
+. . .
+
+```{r echo = T}
+pnorm(-0.8, mean = 0, sd = 1) * 2
+```
+
+## Example
+
+Based on the data from 1980-2023, what is the average probability that a hurricane makes landfall in the continental US?
+
+Step 9: Reject or fail to reject the null hypothesis.
+
+. . .
+
+The p-value for the observed data under the null hypothesis is $p = 0.423$. As $p > \alpha$ ($\alpha = 0.05$), this is *not* sufficient evidence of a difference.
+
+. . .
+
+***We fail to reject the null hypothesis that the probability of a hurricane making landfall in 2024 is 24.2%.***
+
+## Example
+
+```{r}
+#| fig.height: 5.5
+
+mean_x <- 24.2
+se_x <- 2.5
+
+data.frame(x = seq(mean_x - se_x*4, 
+                             mean_x + se_x*4, by = 0.01)) |>
+  mutate(density = dnorm(x, mean = mean_x, sd = se_x), 
+         density2 = ifelse(x < qnorm(0.025, mean = mean_x, sd = se_x) |
+                             x > qnorm(0.975, mean = mean_x, sd = se_x), 
+                           density, 0)) |>
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_ribbon(aes(x = x, ymin = 0, ymax = density2), 
+              alpha = 0.5, fill = 'steelblue') +
+  geom_line(aes(x = x, y = density)) +
+  geom_vline(xintercept = 22.2, linetype = 'dashed') +
+  geom_point(aes(x = mean_x, y = 0), size = 5) +
+  geom_errorbar(aes(xmin = qnorm(0.025, mean = mean_x, sd = se_x),
+                    xmax = qnorm(0.975, mean = mean_x, sd = se_x), 
+                    y = 0), width = 0.01, linewidth = 1) +
+  labs(x = 'Probability', y = 'Probability Density') +
+  scale_x_continuous(breaks = seq(round(mean_x - se_x*12, 2), 
+                                  round(mean_x + se_x*4, 2), by = se_x))
+```

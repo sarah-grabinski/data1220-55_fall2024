@@ -195,19 +195,19 @@ Is this situation unlikely enough that we can reject our null hypothesis $H_0$?
 
 In a perfect world, we will only reject $H_0$ when $H_A$ is true, and we will always fail to reject $H_0$ when $H_0$ is true.
 
-![](class16/decision-errors-1.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-1.png?raw=true)
 
 ## Decision Errors
 
 When we reject $H_0$ when $H_0$ is "true" (i.e. *false positive*), it is called a ***Type I Error***.
 
-![](class16/decision-errors-2.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-2.png)
 
 ## Decision Errors
 
 When we fail to reject $H_0$ when $H_A$ is "true" (i.e. *false negative*), it is called a ***Type II Error***.
 
-![](class16/decision-errors-3.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-3.png)
 
 ## Decision Errors
 
@@ -215,7 +215,7 @@ When we fail to reject $H_0$ when $H_A$ is "true" (i.e. *false negative*), it is
 
 -   $\beta = P(\operatorname{False Negative})$
 
-![](class16/decision-errors-4.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-4.png)
 
 ## Decision Errors
 
@@ -223,7 +223,7 @@ When we fail to reject $H_0$ when $H_A$ is "true" (i.e. *false negative*), it is
 
 -   $1-\beta = \operatorname{Power}$
 
-![](class16/decision-errors-5.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class16/decision-errors-5.png)
 
 ## Practice: Decision Errors
 
