@@ -2,7 +2,7 @@
 title: "Homework 1 Answer Key"
 subtitle: "DATA1220-55, Fall 2024"
 author: "Sarah E. Grabinski"
-date: "2024-09-19"
+date: "`r Sys.Date()`"
 engine: knitr
 format:
   pdf:
@@ -17,7 +17,7 @@ format:
 
 # Objectives
 
-Homework 1 was assigned on date, due on date, and was worth 30 points. The material covered in Homework 1 was drawn from Chapter 1, *Introduction to Data*, of the textbook OpenIntro Statistics available on Canvas. This chapter discusses the basics of how to best collect, analyze, and draw conclusions from data. In addition, Homework 1 introduced the use of RStudio to create publication-ready data analyses. The objectives of Homework 1 were as follows.
+The material covered in Homework 1 was drawn from Chapter 1, *Introduction to Data*, of the textbook OpenIntro Statistics available on Canvas. This chapter discusses the basics of how to best collect, analyze, and draw conclusions from data. In addition, Homework 1 introduced the use of RStudio to create publication-ready data analyses. The objectives of Homework 1 were as follows.
 
 -   Help Sarah get to know you and better understand the specific needs of the class
 
@@ -77,88 +77,116 @@ Homework 1 was assigned on date, due on date, and was worth 30 points. The mater
 
 -   Students received 2 points if...
 
-    *   Their answer for data set 1 described the study population as all people 16 years of age or older not living in communal residences in England and Wales.
-    
-    *   Their answer for data set 2 described the study population as all people who reported crimes to the police in the UK.
-    
--   Students lost 0.5 points if...
+    -   Their answer for data set 1 described the study population as all people 16 years of age or older not living in communal residences in England and Wales.
 
-    *   They described the study population for data set 1 as 38,000 individuals rather than all individuals and/or
-    
-    *   They did not mention people being studied for data set 2 and/or
-    
-    *   They did not indicate the age or residence restrictions for data set 1
-    
--   Students lost 0.5 points if they failed to mention the geographical source (e.g. England, UK, Wales) for 1 of the data sets and lost 1 point if they failed to mention it for both. *Geographical location is important to include when describing study/sample/target populations.*
+    -   Their answer for data set 2 described the study population crimes committed in the UK and/or victims of that crime.
 
-***2.***  ***In 1 sentence each, describe the sampling strategy of the data sets. (Points: 2)***
+-   Students lost 0.25 points if...
+
+    -   They described the study population for data set 1 as 38,000 individuals rather than all individuals and/or
+
+    -   They did not indicate the age or residence restrictions for data set 1
+
+    -   They did not indicate mention crimes or victims of crimes for data set 2
+
+    -   They did not mention the geographical source (e.g. England & Wales, UK) for the data sets. *Geographical location is important to include when describing populations.*
+
+-   Students received at least 1 point if they made a good-faith attempt to answer the question.
+
+-   Students who did not attempt to answer the question received 0 points.
+
+***2.*** ***In 1 sentence each, describe the sampling strategy of the data sets. (Points: 2)***
 
 -   Students received 2 points if...
 
-    *   Their answer for data set 1 indicated that these were voluntary responses and/or that no sampling strategy was indicated.
-    
-    *   Their answer for data set 2 indicated that no sampling strategy was used, as they have access to all the data that is available, also known as a census.
-    
--   Students lost 0.5 points if they described the sampling strategy for data set 1 as a random sample. *Never assume data was (randomly) sampled unless explicitly told so!*
-    
--   Students lost 0.5 points if they described any sampling strategy for data set 2 besides a census. If you're not using a *subset* of the total data available, then you're not using a *sampling strategy*.
+    -   Their answer for data set 1 indicated that these were voluntary responses and/or that no sampling strategy was indicated.
 
--   I also accepted convenience sampling for data set 2, however it is not technically correct. Although using records like this is convenient, the researchers did not actually sample the data.  
+    -   Their answer for data set 2 indicated that no sampling strategy was used, as they have access to all the data that is available, also known as a census.
 
-***3.***  ***In 1 sentence each, describe the sampled population of the data set. (Points: 2)***
+-   Students lost 0.25 points if...
 
--   Students received 2 points if... 
+    -   they described the sampling strategy for data set 1 as a random sample. *Never assume data was (randomly) sampled unless explicitly told so!*
 
-    *   Their answer for data set 1 described the sampled population as 38,000 people 16 years of age or older not living in communal residences in England and Wales.
-    
-    *   Their answer for data set 2 indicated that the sampled population was people who reported crimes to police in the UK where police made a record of that report (i.e. people who reported crimes the police thought were worth investigating). 
-    
--   Students lost 0.25 points if they failed to mention the geographical source (e.g. England, UK, Wales) of either data set.
+    -   they described any sampling strategy for data set 2 besides a census. If you're not using a *subset* of the total data available, then you're not using a *sampling strategy*.
 
--   Students lost 0.25 points if they failed to mention the sample size for data set 1
+-   I also accepted convenience sampling for data set 2, however it is not technically correct. Although it is correct that using records like this is convenient, when you use *all* the available data, you aren't actually doing any sampling.
 
--   Students lost 0.25 points if they failed to mention people being studied for data set 2
+-   Students received at least 1 point if they made a good-faith attempt to answer the question.
 
-***4.***  ***In 1 sentence, describe the target population of the study (Points: 1)***
+-   Students who did not attempt to answer the question received 0 points.
 
--   Students received 1 point if their answer indicated that the target population was potential victims of crime in Britain (or UK, or England/Wales), as described under ***The Studies*** introducing the motivation for the research.
+***3.*** ***In 1 sentence each, describe the sampled population of the data set. (Points: 2)***
 
--   Students lost 0.5 points if they described the target populations for data sets 1 and 2 separately, as a single motivation for the research was described under ***The Studies***.
+-   Students received 2 points if...
 
--   Students lost 0.25 points if they described a *plausible* target population for this research but not the specific target population described under ***The Studies***.
+    -   Their answer for data set 1 described the sampled population as 38,000 people 16 years of age or older not living in communal residences in England and Wales.
 
-***5.***  ***In a short paragraph (3-6 sentences), please describe... (Points: 3)***
+    -   Their answer for data set 2 indicated that the sampled population was victims of crimes reported to police in the UK where police made a record of that report (i.e. people who reported crimes the police thought were worth investigating) or the records of the crimes themselves.
 
-    ***a.***  ***the reliability of each data set***
+-   Students lost 0.25 points if...
 
-    ***b.***  ***the validity of each data set***
+    -   they failed to mention the geographical source (e.g. England, UK, Wales) of either data set.
 
-    ***c.***  ***if conclusions based on each data set from the study population are generalizable to the target population***
-    
+    -   they failed to mention the sample size for data set 1
+
+-   Students received at least 1 point if they made a good-faith attempt to answer the question.
+
+-   Students who did not attempt to answer the question received 0 points.
+
+***4.*** ***In 1 sentence, describe the target population of the study (Points: 1)***
+
+-   Students received 1 point if their answer indicated that the target population was crime in Britain (or UK, or England/Wales) and/or its potential victims, as described under ***The Studies*** introducing the motivation for the research.
+
+-   Students lost 0.25 points if...
+
+    -   they described the target populations for data sets 1 and 2 separately, as a single motivation for the research was described under ***The Studies***.
+
+    -   they described a *plausible* target population for this research but not the specific target population described under ***The Studies***.
+
+-   Students received at least 0.5 points if they made a good-faith attempt to answer the question.
+
+-   Students who did not attempt to answer the question received 0 points.
+
+5.  ***In a short paragraph (3-6 sentences), please describe... (Points: 3)***
+
+    a)  ***the reliability of each data set***
+
+    b)  ***the validity of each data set***
+
+    c)  ***if conclusions based on each data set from the study population are generalizable to the target population***
+
 -   Students received all 3 points if they...
-    
-    *   Indicated data set 1 was self-report, which affects its reliability
-    
-    *   Indicated data set 2 was also self-report (i.e. self-reported crimes, police choose which crimes to document), which affects its reliability 
-    
-    *   Indicated data set 1 is missing data from non-responders, which affects whether or not its a valid representation of the study population if there's a high non-response rate.
-    
-    *   Indicated data set 2 is missing unreported crimes and/or reported crimes that police don't document, which could exclude a meaningful amount of crime and affects whether or not its a valid representation of the experiences of crime in the study population
-    
-    *   Mentioned the large sample size of data set 1 or that we have all available data for set 2 when discussing their  validity and/or generalizability to the target population
-    
-    *   Indicated that conclusions from data set 1 were not generalizable to people under the age of 16 or those in communal residences
-    
-    *   Indicated that conclusions from data set 2 were not generalizable to those likely to be victims of crimes that are underreported or not well documented/investigated by police. 
-    
--   Students lost 0.5 points if they failed to note that data set 1 and/or 2 contains self-report data, which affects their reliability.
 
--   Students lost 0.5 points if they failed to discuss the impact of data which may be missing from data set 1 and/or 2, which affects their validity
+    -   Indicated data set 1 was self-report, which affects its reliability
 
--   Students lost 0.25 points if they failed to discuss the size of the data sets when describing their generalizability
+    -   Indicated data set 2 was also self-report (i.e. crimes themselves are self-reported, police define what counts as a crime, police choose which reported crimes to document and how), which affects its reliability
 
--   Students lost 0.25 points if they failed to mention who data set 1 is *not* generalizable to and/or who data set 2 is *not* generalizable to
-    
+    -   Indicated data set 1 is missing data from non-responders, which affects whether or not its a valid representation of the study population if there's a high non-response rate.
+
+    -   Indicated data set 2 is missing unreported crimes and/or reported crimes that police don't document, which could exclude a meaningful amount of crime and affects whether or not its a valid representation of the experiences of crime in the study population
+
+    -   Mentioned the large sample size of data set 1 or that we have all available data for set 2 when discussing their validity and/or generalizability to the target population
+
+-   Students lost 0.25 points if...
+
+    -   they failed to note that data set 1 and/or 2 contains self-report data, which affects their reliability.
+
+    -   they failed to discuss the impact of data which may be missing from data set 1 and/or 2, which affects their validity
+
+    -   they failed to discuss the size of the data sets when describing their generalizability
+
+-   Students received at least 1.5 points if they made a good-faith attempt to answer the question.
+
+-   Students who did not attempt to answer the question received 0 points.
+
+-   I did not deduct points for this, but when considering how generalizable a study is, it's important to consider who the data is NOT generalizable to.
+
+    -   The conclusions from data set 1 were not generalizable to people under the age of 16 or those in communal residences, because they were not part of the study population
+
+        -   The conclusions from data set 1 were not generalizable to people who are victims of crime in the UK who are NOT native residents, because they were not part of the study population
+
+    -   The conclusions from data set 2 were not generalizable to those likely to be victims of crimes that are underreported or not well documented/investigated by police, because they were not part of the study population
+
 # Problem 3 - Interpreting Data
 
 ### ***The Data***
@@ -167,61 +195,71 @@ Homework 1 was assigned on date, due on date, and was worth 30 points. The mater
 
 ### Questions
 
-***1.  Read in the .csv document (Points: 1)***
+***1. Read in the .csv document (Points: 1)***
 
 -   Students received 1 point if the output in their HTML document indicates that they properly loaded the `.csv` file.
 
-***2.  Print a summary of the data. (Points: 1)***
+***2. Print a summary of the data. (Points: 1)***
 
 -   Students received 1 point if the output in their HTML document contains the numerical summary of the data created by the `describe()` function from the `Hmisc` package.
 
-***3.  Complete the data dictionary. (Points: 3)***
+***3. Complete the data dictionary. (Points: 3)***
 
 -   Students received all 3 points if they...
 
-    *   Correctly identified `bwt`, `gestation`, `age`, `height`, and `weight` as numeric variables
-    
-    *   Correctly identified `parity` and `smoke` as categorical variables
-    
-    *   Correctly identified `age` and/or `height` as discrete numerical variables
-    
-    *   Correctly identified `parity` and `smoke` as binary or nominal categorical variables
-    
--   Students lost 0.5 points if they didn't attempt to identify numerical variables as continuous or discrete.
+    -   Correctly identified `bwt`, `gestation`, `age`, `height`, and `weight` as numeric variables
 
--   Students lost 0.5 points if they didn't attempt to identify categorical variables as binary, nominal, or ordinal.
+    -   Specified whether numeric variables were continuous or discrete
 
--   Students lost 0.5 points if they identified `parity` or `smoke` as numerical variables
+    -   Correctly identified `parity` and `smoke` as categorical variables
 
--   Students lost 0.25 points if they did not identify `age` *or* `height` as a discrete numerical variable
+    -   Described `parity` and/or `smoke` as binary or nominal categorical variables
 
--   ***NOTE:*** Students did *not* lose points for indicating that `case` was a numeric variable, but its important to remember to treat variables that contain unique identifiers (e.g. ID #'s) as categorical variables and not as numbers.
+-   Students lost 0.25 points if...
 
-***4.  Add the name of an explanatory (i.e. independent) variable to the x-axis of the plot and a response (i.e. dependent) variable to the y-axis of the plot. In 1 sentence, describe what you see. (Points: 3)***
+    -   they didn't attempt to identify numerical variables as continuous or discrete.
+
+    -   they didn't attempt to identify categorical variables as binary, nominal, or ordinal.
+
+    -   they identified `parity` or `smoke` as numerical variables
+
+-   ***NOTE:*** Students did *not* lose points for indicating that `case` was a numeric variable, but its important to remember to treat variables that contain unique identifiers (e.g. ID \#'s) as categorical variables and not as numbers.
+
+-   Students received at least 1.5 point if they made a good-faith attempt to complete the table.
+
+-   Students who did not attempt to complete the table received 0 points.
+
+***4. Add the name of an explanatory (i.e. independent) variable to the x-axis of the plot and a response (i.e. dependent) variable to the y-axis of the plot. In 1 sentence, describe what you see. (Points: 3)***
 
 -   Students received all 3 points if they...
 
-    *   Changed both the x and y variables shown in the plot as requested in the instructions
-    
-    *   Successfully embedded the plot in their HTML document
-    
-    *   Appropriately described the relationship between the two variables as positive, negative, or independent
-    
--   Students lost 0.5 points if they did not change the variables as requested in the instructions
+    -   Changed both the x and y variables shown in the plot as requested in the instructions
 
--   Students lost 0.5 points if they accurately described the relationship in their plot but failed to use any of the words "independent", "positive", or "negative" to describe it.
-    
-***5.  BONUS: Add features such as titles, axis labels, colors, shapes, etc. to enhance your data visualization (Points available: 2)***
+    -   Successfully embedded the plot in their HTML document
+
+    -   Appropriately described the relationship between the two variables as positive, negative, or independent
+
+-   Students lost 0.25 points if...
+
+    -   they did not change the variables as requested in the instructions
+
+    -   they accurately described the relationship in their plot but failed to use any of the words "independent", "positive", or "negative" to describe it.
+
+-   Students received at least 1.5 points if they did any one of the things listed.
+
+-   Students who did not attempt the question received 0 points.
+
+***5. BONUS: Add features such as titles, axis labels, colors, shapes, etc. to enhance your data visualization (Points available: 2)***
 
 -   Students received 0.5 additional points for adding a regression line to help visualize the relationship between the two variables
 
 -   Students received 0.5 additional points for adding text features like titles and labels
 
--   Students received # additional points for adding aesthetic features like colors and shapes
+-   Students received 0.5 additional points for adding aesthetic features like colors and shapes
 
--   Students received # additional points for adding anything to the plot which was not included in one of the previous lectures
+-   Students received 0.5 additional points for adding anything to the plot which was not included in one of the previous lectures
 
-***6.  Render your document as an HTML file (Points: 2)***
+***6. Render your document as an HTML file (Points: 2)***
 
 -   Students received 2 points if their document was properly rendered and submitted as a `.html` file.
 

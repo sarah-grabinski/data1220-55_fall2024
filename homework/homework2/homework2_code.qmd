@@ -36,7 +36,6 @@ nhanes_df |>
   html()
 ```
 
-
 # Create Distribution Plots
 
 ```{r generate_plots, warning = F}
@@ -190,5 +189,3 @@ nhanes_df |>
   janitor::adorn_totals(where = c('row', 'col')) |>
   janitor::adorn_percentages(denominator = 'col')
 ```
-
-

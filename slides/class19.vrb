@@ -1,0 +1,16 @@
+\frametitle{Chapter 2 Objectives: Visualizing Data}
+\phantomsection\label{chapter-2-objectives-visualizing-data}
+\begin{itemize}
+\item
+  Recognize common visualization techniques / plots
+
+  \begin{itemize}
+  \item
+    Numerical: Dot plots, histograms, density plots, box plots, violin
+    plots
+  \item
+    Categorical: bar plots, mosaic plots, tree map
+  \end{itemize}
+\item
+  Build basic visualizations in \texttt{R} using \texttt{ggplot2}
+\end{itemize}

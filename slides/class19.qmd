@@ -1,0 +1,483 @@
+---
+title: "Class 19"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-16'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 19 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 18 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(Hmisc)
+library(NHANES)
+library(patchwork)
+library(tidyverse)
+
+baby_df <- read_csv('https://www.openintro.org/data/csv/babies.csv')
+
+nhanes_df <- NHANES
+```
+
+## Chapter 2 Objectives: Numerical Data
+
+-   Describe the "shape" (i.e. distribution) of numerical variables
+
+-   Calculate means, medians, modes, variances, standard deviations, IQRs
+
+-   Learn the appropriate use of summary statistics (i.e. mean vs. median)
+
+-   Characterize the relationship between 2 numerical variables
+
+## Chapter 2 Objectives: Categorical Data
+
+-   Analyze contingency (e.g. 2x2) tables
+
+-   Summarizing categorical variables with proportions
+
+-   Comparison of numerical data between categorical groups
+
+## Chapter 2 Objectives: Visualizing Data
+
+-   Recognize common visualization techniques / plots
+
+    -   Numerical: Dot plots, histograms, density plots, box plots, violin plots
+
+    -   Categorical: bar plots, mosaic plots, tree map
+
+-   Build basic visualizations in `R` using `ggplot2`
+
+## Distribution Checklist
+
+-   Modality
+
+-   Symmetry
+
+-   Skew
+
+-   Outliers
+
+-   Summary Statistics
+
+## Modality
+
+What is the modality of the distribution?
+
+. . .
+
+-   ***Unimodal***: one peak
+
+-   ***Bimodal***: two peaks
+
+-   ***Multimodal***: many peaks
+
+-   ***Uniform***: no clear peak, flat distribution
+
+## Symmetry
+
+Is the distribution symmetric or asymmetric?
+
+. . .
+
+-   ***Symmetric***: "mirror image", the distribution to the left of center looks like the distribution to the right of center
+
+-   ***Asymmetric***: left half looks different than the right half
+
+## Skew
+
+If the distribution is asymmetric, is it because it's skewed?
+
+. . .
+
+-   Does the distribution "lean" towards the left or the right?
+
+-   Does the distribution have a long "tail" on one side but not the other?
+
+## Outliers
+
+Are there outliers in this distribution?
+
+. . .
+
+-   Are there any unusual data points?
+
+-   How extreme are the most extreme values?
+
+-   Outliers are *rare*
+
+-   When data points are unusual but not rare, they create *skew* or *modality*
+
+## Summary Statistics
+
+Is the distribution normal or does it require robust statistics?
+
+. . .
+
+-   When the distribution is very close to normal, the mean + SD will describe the center \~70% of the data
+
+-   The mean + SD are sensitive to modality, asymmetry, skew, and outliers
+
+-   It's never wrong to use the median + IQR, but when the distribution IS normal, the mean + SD are better
+
+## Robust Statistics
+
+![The ***median*** and ***interquartile range*** are considered to be ***robust statistics*** for the numerical summary of data because they are less sensitive to ***skew*** and ***outliers*** than the ***mean*** and ***standard deviation***.](class05/outlier_statistics.png)
+
+## 5-Number Summary of Numerical Data
+
+1.  Minimum value or Q1 - 1.5 x Interquartile Region
+
+2.  1st quartile (Q1, 25th percentile)
+
+3.  Median (Q2, 50th percentile)
+
+4.  3rd quartile (Q3, 75th percentile)
+
+5.  Maximum value or Q3 + 1.5 x Interquartile Region
+
+## Anatomy of a Boxplot
+
+![A boxplot is a visual representation of a 5-number summary. The "box" represents the middle 50% of the data, or the interquartile range. The line inside the box indicates the median or 50th percentile. The whiskers, the lines coming out from the box, extend 1.5 x IQR beyond Q1 and Q3. Values larger or smaller than that range are classified as outliers and appear as points.](class06/boxplot_anatomy.png)
+
+## Boxplot whiskers and outliers
+
+-   The ***whiskers*** of a boxplot (the lines extending out from the box) are 1.5 times the ***interquartile region*** long
+
+    -   Min whisker: Q1 - 1.5 x IQR
+
+    -   Max whisker: Q3 + 1.5 x IQR
+
+-   If a point is outside this range, it is considered to be a potential ***outlier***
+
+## Homework 2, Plot A
+
+The median of this distribution is `r median(nhanes_df$Weight, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$Weight, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 10) +
+  labs(y = 'Count', 
+        title = 'Plot A',
+       subtitle = 'Histogram of Weight')
+```
+
+## Homework 2, Plot
+
+The median of this distribution is `r median(nhanes_df$Height, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$Height, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = Height)) +
+  geom_density() +
+  labs(y = 'Density', 
+title = 'Plot B', 
+subtitle = 'Density plot of Height')
+```
+
+## Homework 2, Plot C
+
+The median of this distribution is `r median(nhanes_df$Pulse, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$Pulse, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = Pulse, y = '')) +
+  geom_violin() +
+  labs(y = '', title = 'Plot C')
+```
+
+## Homework 2, Plot D
+
+The median of this distribution is `r median(nhanes_df$BPDiaAve, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$BPDiaAve, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = BPDiaAve)) +
+  geom_density() +
+  labs(y = '', title = 'Plot D')
+
+```
+
+## Homework 2, Plot E
+
+The median of this distribution is `r median(nhanes_df$AgeMonths, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$AgeMonths, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = AgeMonths)) +
+  geom_histogram(binwidth = 50) +
+  labs(y = '', title = 'Plot E')
+
+```
+
+## Homework 2, Plot F
+
+The median of this distribution is `r median(nhanes_df$DiabetesAge, na.rm = T)`, and the mean of this distribution is `r round(mean(nhanes_df$DiabetesAge, na.rm = T), 1)`.
+
+```{r}
+nhanes_df |>
+  ggplot(aes(x = DiabetesAge)) +
+  ggdist::stat_halfeye() +
+  ggdist::stat_dots(side = 'left', 
+                    alpha = 0.75) +
+  theme(axis.ticks.y = element_blank(), 
+        axis.text.y = element_blank()) +
+  labs(y = '', title = 'Plot F')
+
+```
+
+## Homework 2, Summary Statistics
+
+```{r}
+p1 <- nhanes_df |>
+  ggplot(aes(x = Pulse)) +
+  geom_violin(aes(y = 0)) +
+  labs(y = '', title = 'Plot C')
+
+p2 <- nhanes_df |>
+  ggplot(aes(x = BPDiaAve)) +
+  geom_density() +
+  labs(y = '', title = 'Plot D')
+
+p1 + p2
+```
+
+## Homework 2, Boxplots
+
+```{r}
+set.seed(123); dist_df <- data.frame(
+  id = seq(1, 100),
+  uniform = c(unlist(lapply(0:10, function(x) rep(x, 8))), 
+              sample(0:10, 12, replace = T)), 
+  left_skew = sapply(seq(1, 100), 
+                     function(x) x^(1/3) * 2),
+  right_skew = sapply(seq(1, 100), 
+                      function(x) x^2/1000),
+  normal = abs(rnorm(100, mean = 5, sd = 2)),
+  bimodal = c(abs(rnorm(70, mean = 3, sd = 1)), 
+              abs(rnorm(30, mean = 7, sd = 1))),
+  outlier = c(rpois(95, 3), sample(11:13, 5, replace = T))
+)
+
+p1 <- dist_df |>
+  ggplot(aes(x = bimodal, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot G')
+
+p2 <- dist_df |>
+  ggplot(aes(x = left_skew, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot H')
+
+p3 <- dist_df |>
+  ggplot(aes(x = normal, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot I')
+
+p4 <- dist_df |>
+  ggplot(aes(x = outlier, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot J')
+
+p5 <- dist_df |>
+  ggplot(aes(x = right_skew, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot K')
+
+p6 <- dist_df |>
+  ggplot(aes(x = uniform, y = '')) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(0, 15)) +
+  coord_cartesian(xlim = c(0, 13)) +
+  labs(x = '', y = '', title = 'Plot L')
+
+patchwork::wrap_plots(list(p1, p2, p3, p4, p5, p6))
+```
+
+## Contingency Tables: Counts
+
+![How to construct a contingency table with counts for 2 categorical variables.](class19/contingency-table-counts.png){fig-align="center"}
+
+## Calculating Proportions by row
+
+![The row totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the row total for each cell.](class07/contingency-table-row-proportions.png){fig-align="center"}
+
+## Calculating Proportions by Column
+
+![The column totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the column total for each cell.](class07/contingency-table-col-proportions.png){fig-align="center"}
+
+## Chapter 3 Objectives
+
+-   Define probability, random processes, and the law of large numbers
+
+-   Describe the sample space for disjoint and non-disjoint outcomes
+
+-   Calculate probabilities using the General Addition and Multiplication Rules
+
+-   Create a probability distribution for disjoint outcomes
+
+## Defining the sample space
+
+The **sample space** is the total collection of possible outcomes for a **random process**.
+
+-   Die rolls: 1, 2, 3, 4, 5, 6
+
+-   Coin flips: heads, tails
+
+-   Stock market: up, down, no change
+
+## Law of Large Numbers
+
+As more observations are collected, the sample statistic $\hat{p}$ or $\bar{x}$ of a particular outcome approaches the population proportion $p$ or population mean $\mu$ for that outcome.
+
+![](class19/law-of-large-numbers.png){fig-align="center"}
+
+## The General Addition Rule
+
+The probability of event A ***or*** event B occurring is the sum of the probability that A occurs and the probability that B occurs minus the probability that A *and* B occurs.
+
+$$
+\begin{aligned}
+P(A \operatorname{or} B) &= P(A) + P(B) - P(A \operatorname{and} B) \\
+&= P(A) + P(B) - P(A \cup B) \\
+&= P(A \cap B)
+\end{aligned}
+$$
+
+## The Addition Rule for Disjoint Events
+
+When events A and B are ***disjoint***, the probability of event A ***or*** event B occurring is just the sum of the probability that A occurs and the probability that B occurs, because the probability that event A *and* event B occurs is 0.
+
+$$
+\begin{aligned}
+P(A \operatorname{or} B) &= P(A) + P(B) - P(A \operatorname{and} B) \\
+&= P(A) + P(B) \\
+&= P(A \cap B)
+\end{aligned}
+$$
+
+## Dependent Processes
+
+-   If random process B is ***dependent*** on random process A, then the probability of random process B varies based on the outcome of random process A
+
+. . .
+
+-   *Knowing the outcome of A provides additional information about the probability of B*
+
+## The General Multiplication Rule
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the *conditional probability* that B occurs given that A has already occurred.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## Independent Processes
+
+-   If random process B is ***independent*** of random process A, then the probability of random process B does NOT vary based on the outcome of random process A
+
+. . .
+
+-   *Knowing the outcome of A does NOT provide additional information about the probability of B*
+
+## Multiplication Rule for Independent Processes
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the probability that B occurs, because the probability of B does not change based on the outcome of A.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A) \times P(B) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## How do you know if two random processes are independent? {.smaller}
+
+. . .
+
+-   Compare the conditional probabilities of B given the different possible outcomes of A. If $P(B|A)\approx P(B)$ for all values of A, then the two random processes are likely independent.
+
+. . .
+
+-   Calculate the probability that event A and B occur under both an independence model ($P(A \operatorname{and} B)=P(A)\times P(B)$) and a dependence model ($P(A \operatorname{and} B) = P(A) \times P(B|A)$.
+    -   If $P(A)\times P(B) \approx P(A) \times P(B|A)$, then A and B are likely ***independent processes***.
+    -   If $P(A)\times P(B) \neq P(A) \times P(B|A)$, then A and B are likely ***dependent*** processes.
+
+## Standardizing Normal Distributions with Z-Scores {.smaller}
+
+A ***Z-score*** is the number of standard deviations a value falls above (when positive) or below (when negative) the mean of the data
+
+::: columns
+::: column
+Z-scores standardize a normal distribution by...
+
+    -   Centering the data at 0 by subtracting the mean from each score
+
+    -   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
+:::
+::: column
+$$
+\begin{aligned}
+Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standard deviation}} \\
+&= \frac{x-\mu}{\sigma}
+\end{aligned}
+$$
+:::
+:::
+
+## Probabilities with the Standard Normal Distribution
+
+::: columns
+::: column
+![The shaded area under this normal probability distribution is the proportion of observations which are ***less than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-below.png?raw=true){fig-align="center"}
+:::
+::: column
+![The shaded area under this normal probability distribution is the proportion of observations which are ***greater than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-above.png?raw=true){fig-align="center"}
+:::
+:::
