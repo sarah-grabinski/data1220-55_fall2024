@@ -151,7 +151,7 @@ Is the distribution normal or does it require robust statistics?
 
 ## Robust Statistics
 
-![The ***median*** and ***interquartile range*** are considered to be ***robust statistics*** for the numerical summary of data because they are less sensitive to ***skew*** and ***outliers*** than the ***mean*** and ***standard deviation***.](class05/outlier_statistics.png)
+![The ***median*** and ***interquartile range*** are considered to be ***robust statistics*** for the numerical summary of data because they are less sensitive to ***skew*** and ***outliers*** than the ***mean*** and ***standard deviation***.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class05/outlier_statistics.png)
 
 ## 5-Number Summary of Numerical Data
 
@@ -167,7 +167,7 @@ Is the distribution normal or does it require robust statistics?
 
 ## Anatomy of a Boxplot
 
-![A boxplot is a visual representation of a 5-number summary. The "box" represents the middle 50% of the data, or the interquartile range. The line inside the box indicates the median or 50th percentile. The whiskers, the lines coming out from the box, extend 1.5 x IQR beyond Q1 and Q3. Values larger or smaller than that range are classified as outliers and appear as points.](class06/boxplot_anatomy.png)
+![A boxplot is a visual representation of a 5-number summary. The "box" represents the middle 50% of the data, or the interquartile range. The line inside the box indicates the median or 50th percentile. The whiskers, the lines coming out from the box, extend 1.5 x IQR beyond Q1 and Q3. Values larger or smaller than that range are classified as outliers and appear as points.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class06/boxplot_anatomy.png){width="192"}
 
 ## Boxplot whiskers and outliers
 
@@ -336,15 +336,15 @@ patchwork::wrap_plots(list(p1, p2, p3, p4, p5, p6))
 
 ## Contingency Tables: Counts
 
-![How to construct a contingency table with counts for 2 categorical variables.](class19/contingency-table-counts.png){fig-align="center"}
+![How to construct a contingency table with counts for 2 categorical variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class19/contingency-table-counts.png){fig-align="center"}
 
 ## Calculating Proportions by row
 
-![The row totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the row total for each cell.](class07/contingency-table-row-proportions.png){fig-align="center"}
+![The row totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the row total for each cell.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class07/contingency-table-row-proportions.png){fig-align="center"}
 
 ## Calculating Proportions by Column
 
-![The column totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the column total for each cell.](class07/contingency-table-col-proportions.png){fig-align="center"}
+![The column totals are all 1, which is the maximum value of a proportion. This indicates that the denominator for the proportions is the column total for each cell.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class07/contingency-table-col-proportions.png){fig-align="center"}
 
 ## Chapter 3 Objectives
 
@@ -370,7 +370,7 @@ The **sample space** is the total collection of possible outcomes for a **random
 
 As more observations are collected, the sample statistic $\hat{p}$ or $\bar{x}$ of a particular outcome approaches the population proportion $p$ or population mean $\mu$ for that outcome.
 
-![](class19/law-of-large-numbers.png){fig-align="center"}
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class19/law-of-large-numbers.png){fig-align="center" width="267"}
 
 ## The General Addition Rule
 
@@ -453,14 +453,13 @@ $$
 
 A ***Z-score*** is the number of standard deviations a value falls above (when positive) or below (when negative) the mean of the data
 
-::: columns
+::::: columns
 ::: column
-Z-scores standardize a normal distribution by...
+-   Center the data at 0 by subtracting the mean from each score
 
-    -   Centering the data at 0 by subtracting the mean from each score
-
-    -   Scaling the units of the data to 1 by dividing the centered data by the standard deviation
+-   Scale the units of the data to 1 by dividing the centered data by the standard deviation
 :::
+
 ::: column
 $$
 \begin{aligned}
@@ -469,15 +468,16 @@ Z&=\frac{\operatorname{observed value}-\operatorname{mean}}{\operatorname{standa
 \end{aligned}
 $$
 :::
-:::
+:::::
 
 ## Probabilities with the Standard Normal Distribution
 
-::: columns
+::::: columns
 ::: column
 ![The shaded area under this normal probability distribution is the proportion of observations which are ***less than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-below.png?raw=true){fig-align="center"}
 :::
+
 ::: column
 ![The shaded area under this normal probability distribution is the proportion of observations which are ***greater than*** a given threshold.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class12/shaded-above.png?raw=true){fig-align="center"}
 :::
-:::
+:::::
