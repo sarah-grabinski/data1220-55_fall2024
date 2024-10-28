@@ -1,0 +1,164 @@
+---
+title: "Class 23"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-28'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 23 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 23 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(kableExtra)
+library(tidyverse)
+
+df <- data.frame(camps = c(rep('Y', 1328), 
+                           rep('N', 353), 
+                           rep('Y', 674), 
+                           rep('N', 761), 
+                           rep('Y', 408), 
+                           rep('N', 1445), 
+                           rep('Y', 105), 
+                           rep('N', 278)), 
+                 party = c(rep('R', 1681), 
+                           rep('I', 1435), 
+                           rep('D', 1853), 
+                           rep(NA, 383))) |>
+  mutate(party = fct_relevel(factor(party), 'R', 'I', 'D'), 
+         camps = fct_relevel(factor(camps), 'Y')) 
+
+df <- data.frame(restaurant = c(rep("McDonald's", 235), 
+                                rep("Chipotle", 415), 
+                                rep("Arby's", 350)), 
+                 sick = c(rep('Sick', 115), 
+                          rep('Not Sick', 120), 
+                          rep('Sick', 165), 
+                          rep('Not Sick', 250), 
+                          rep('Sick', 140), 
+                          rep('Not Sick', 210))) |>
+  mutate(restaurant = fct_relevel(restaurant, 
+                                  "McDonald's", 
+                                  'Chipotle'), 
+         sick = fct_relevel(sick, 'Sick'))
+```
+
+## Chi-Square Test for Independence in 2-Way Tables {.smaller}
+
+1.  Assume the 2 variables are ***independent***. ($H_0$: Independence)
+
+. . .
+
+2.  Calculate the ***expected*** counts under the null hypothesis of independence.
+
+. . .
+
+3.  Find the ***test statistic***.
+
+. . .
+
+4.  Compute the ***degrees of freedom***.
+
+. . .
+
+5.  Determine the probability of the ***observed*** counts under the null hypothesis.
+
+. . .
+
+6.  If it is sufficiently unlikely to have gotten the ***observed*** data under the null hypothesis of independence, reject $H_0$ and accept $H_A$: Dependence.
+
+## Example: Foodborne Illness
+
+::: smaller
+-   There have been 420 cases of E. coli in your region.
+-   You interviewed these patients and 580 of their close associates about what they ate.
+-   235 people ate at McDonald's, 415 people ate at Chipotle, and 350 ate at Arby's.
+-   115, 165, and 140 of the people who ate at McDonald's, Chipotle, and Arby's respectively got sick.
+:::
+
+. . .
+
+***Research question:*** Is whether or not a person got sick dependent on what restaurant they ate at?
+
+## The Data
+
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+
+## Step 1: Assume independence
+
+::: callout-tip
+## The Multiplication Rule for Independent Events
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the probability that B occurs.
+:::
+
+. . .
+
+$$
+\begin{aligned}
+\operatorname{Expected}_{\operatorname{A and B}}&=\frac{\operatorname{count}(A) \times  \operatorname{count}(B)}{n} \\
+&= P(A) \times P(B) \times n
+\end{aligned}
+$$
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{E}_{\operatorname{McD, S}}=\frac{n_{\operatorname{McD}} \times n_{\operatorname{S}}}{n}
+\end{aligned}
+$$
+:::
+:::::
+
+

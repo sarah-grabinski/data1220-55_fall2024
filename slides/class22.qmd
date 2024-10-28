@@ -1,0 +1,290 @@
+---
+title: "Class 22"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-25'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 22 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 22 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Chi-Square Test for Independence in 2-Way Tables {.smaller}
+
+1.  Assume the 2 variables are ***independent***. ($H_0$: Independence)
+
+. . .
+
+2.  Calculate the ***expected*** counts under the null hypothesis of independence.
+
+. . .
+
+3.  Find the ***test statistic***.
+
+. . .
+
+4.  Compute the ***degrees of freedom***.
+
+. . .
+
+5.  Determine the probability of the ***observed*** counts under the null hypothesis.
+
+. . .
+
+6.  If it is sufficiently unlikely to have gotten the ***observed*** data under the null hypothesis of independence, reject $H_0$ and accept $H_A$: Dependence.
+
+## Expected Counts
+
+If we assume $H_0$: Independence, how can we estimate the data ***expected*** under the null hypothesis?
+
+. . .
+
+::: callout-tip
+## The Multiplication Rule for Independent Events
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the probability that B occurs.
+:::
+
+## Proportions
+
+|     |           |            |       |
+|-----|-----------|------------|-------|
+|     | B         | B'         |       |
+| A   | P(A + B)  | P(A + B')  | P(A)  |
+| A'  | P(A' + B) | P(A' + B') | P(A') |
+|     | P(B)      | P(B')      | 1     |
+
+: Proportion of Observations
+
+## Calculating Expected Counts
+
+Using proportions...
+
+$$
+\operatorname{Expected}_{\operatorname{A and B}}=P(A) \times P(B) \times n
+$$ 
+
+. . .
+
+Using counts...
+
+$$
+\operatorname{Expected}_{\operatorname{A and B}}=\frac{\operatorname{count}(A) \times \operatorname{count}(B)}{n}
+$$
+
+## The Test Statistic
+
+The Chi-Square ($\chi^2$) test statistic is the sum of the squared difference between observed and expected value divided by the expected value for all combinations of categories.
+
+$$
+\chi^2_{df} =\sum^k_{i=1} \frac{{\left( \operatorname{observed} - \operatorname{expected} \right)}^2}{\operatorname{expected}}
+$$
+
+## Degrees of Freedom
+
+For a two-way table, the degrees of freedom for a $\chi^2$ test statistic are...
+
+$$
+\begin{aligned}
+df &= \left( n_{\operatorname{rows}} - 1 \right) \times \left( n_{\operatorname{cols}} - 1 \right) \\
+&= \left( R-1 \right) \times \left( C-1 \right)
+\end{aligned}
+$$
+
+...where $R$ is the number of rows in the table and $C$ is the number of columns.
+
+## P-Values in R
+
+You can find p-values in R using the `pchisq()` function, which takes a test statistic (`q`) and the degrees of freedom (`df`) as parameters.
+
+```{r echo = T}
+pchisq(2, df = 3, lower.tail = F)
+```
+
+For the $\chi^2$ test, we always use the ***upper tail***, or the probability of seeing a result more extreme than what we observed.
+
+## Conditions
+
+The $\chi^2$ test is most appropriate for large sample sizes.
+
+-   \> 20% of expected counts are \>5.
+
+. . .
+
+-   All individual expected counts are \>1.
+
+. . .
+
+-   In a 2x2 table, all 4 expected counts \>5.
+
+. . .
+
+When sample sizes are small, use Fisher's Exact Test.
+
+## Limitations
+
+-   Neither the $\chi^2$ test nor the Fisher's Exact Test will tell you the nature of the relationship between your 2 categorical variables.
+
+-   Additional tests are needed to determine if the outcomes are dependent on variable 1, variable 2, or both.
+
+## Sample Size Estimation for Proportions
+
+You can use the margin of error calculation to estimate the sample size needed to detect a given difference in proportions.
+
+$$
+\operatorname{margin of error} = Z^* \times \sqrt{\frac{p(1-p)}{n}}
+$$
+
+## Example: Sample Size
+
+We want to know if people favor candidate 1 or candidate 2 ($H_0$: $P(C_1)=P(C_2)$), but it will be a very close race. If we want to find 52% for candidate 1 vs 48% for candidate 2, what size sample do we need?
+
+
+. . .
+
+What margin of error do we need?
+
+a.  4%
+b.  2%
+c.  1%
+d.  5%
+
+## Example: Sample Size
+
+We want to know if people favor candidate 1 or candidate 2 ($H_0$: $P(C_1)=P(C_2)$), but it will be a very close race. If we want to find 52% for candidate 1 vs 48% for candidate 2, what size sample do we need?
+
+. . .
+
+What margin of error do we need?
+
+***b. 2%***
+
+## Example: Sample Size {.smaller}
+
+If we need a margin of error of 2%, and we want to have 95% confidence in our results, we can solve for $n$ to find the minimum sample size needed.
+
+$$
+\begin{aligned}
+0.02 &= 1.96 \times \sqrt{\frac{0.52(1-0.52)}{n}} \\
+0.01 &= \sqrt{\frac{0.52(1-0.52)}{n}} \\
+0.0001 &= \frac{0.52(1-0.52)}{n} \\
+0.0001n &= 0.250 \\
+n &= 2397
+\end{aligned}
+$$
+
+
+## Polling History
+
+![](https://www.pewresearch.org/wp-content/uploads/sites/20/2024/08/SR_24.08.28_facts-about-polling_2.png?resize=1024,576)
+
+## Polling Error
+
+![](https://www.pewresearch.org/wp-content/uploads/sites/20/2024/08/SR_24.08.28_facts-about-polling_4.png?resize=1024,773)
+
+## Modern Polling
+
+::::: columns
+::: {.column width="50%"}
+*   Fewer live phone surveys
+*   More online opt-in surveys
+*   More active pollsters
+:::
+
+::: {.column width="50%"}
+![](https://www.pewresearch.org/wp-content/uploads/sites/20/2024/08/SR_24.08.28_facts-about-polling_3.png?resize=640,843)
+:::
+:::::
+
+## Sampling
+
+*   Probabilitistic samples have less error than non-probabilistic samples
+
+*   Results coming out are only as good as the data going in
+
+*   Can you reliably, validly, generalizably describe the US when $n=1000$? $n=2000$?
+
+## Weighting
+
+*   Some demographics are hard to characterize in a pure random sample
+*   Some categories are oversampled while others are undersampled, not always intentionally
+*   Sampled data is adjusted to more closely match the study population characteristics
+
+## Likely Voters
+
+*   ~ 1/3 of eligible Americans do not vote in presidential elections
+*   Many people feel social pressure to say they'll vote even if it's unlikely
+*   The study population is not static over time!
+*   Popular vote does not necessarily win
+
+## Sources of Error
+
+![](https://www.pewresearch.org/wp-content/uploads/sites/20/2024/08/SR_24.08.28_facts-about-polling_5.png?resize=640,507)
+
+## Other Sources of Error
+
+*   Interviewer
+
+*   Responder
+
+*   Survey
+
+## Aggregators
+
+*   Combining results from multiple surveys may improve accuracy 
+
+*   Are all polls created equal?
+
+*   If the underlying assumptions are faulty, more data won't improve the quality
+
+## Communicating Results
+
+*   Transparency
+
+*   Point estimates? Confidence intervals?
+
+*   Certainty
+
+## What to Look For {.smaller}
+
+*   Poll's sponsor and data collection firm
+
+*   Participant selection process
+
+*   Interview methods and dates
+
+*   Sample sizes, non-response rates
+
+*   Question phrasing
+
+*   Weighting methods
+

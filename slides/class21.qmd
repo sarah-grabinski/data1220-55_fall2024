@@ -1,0 +1,501 @@
+---
+title: "Class 21"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-23'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 20 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \newcommand{\theHtable}{\thetable}
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+      - \setkeys{Gin}{width=\textwidth,height=\textheight}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 21 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(kableExtra)
+library(tidyverse)
+```
+
+## Independence
+
+What does it mean for 2 random processes to be ***independent***?
+
+. . .
+
+-   The outcome for event A (e.g. A or A') provides no information about the outcome for event B (e.g. B or B'), and vice versa.
+
+. . .
+
+-   The probability of event B is the same, regardless of whether A is true or A' is true.
+
+. . .
+
+-   $P(B | A)=P(B) =P(B|A')$
+
+## Dependence
+
+What does it mean for 2 random processes to be ***dependent***?
+
+. . .
+
+-   You know more about how likely event B is to occur when you know event A or A' has occurred (i.e. $P(B|A)$ is more informative than $P(B)$)
+
+. . .
+
+-   The probability of event B is different when A is true than when A' is true.
+
+. . .
+
+-   $P(B|A) \ne P(B)$, $P(B|A)\ne P(B|A')$
+
+## The General Multiplication Rule
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the *conditional probability* that B occurs given that A has already occurred.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## Conditional Probability of Independent Events
+
+-   When event B is independent of event A, it's probability is not *conditional* on the outcome of A
+
+. . .
+
+-   When event B is independent of event A, the probability $P(B|A)$ is just the probability $P(B)$
+
+. . .
+
+-   The probability of event B does not depend on event A
+
+## Multiplication Rule for Independent Processes
+
+The probability of event A ***and*** event B occurring is the product of the probability that A occurs and the probability that B occurs, because the probability of B does not change based on the outcome of A.
+
+$$
+\begin{aligned}
+P(A \operatorname{and} B) &= P(A) \times P(B \operatorname{given} A) \\
+&= P(A) \times P(B | A) \\
+&= P(A) \times P(B) \\
+&= P(A \cup B)
+\end{aligned}
+$$
+
+## Determining Independence for Categorical Variables
+
+-   Compare conditional probabilities. $P(B|A_1) \approx P(B|A_2) \approx ... \approx P(B|A_k)$ for all $k$ possible outcomes of event A when event B is independent of event A.
+
+. . .
+
+-   Check if the *observed* outcomes are consistent with the *expected* outcomes, assuming event B is independent of event A. $P(A \operatorname{and} B)=P(A) \times P(B)$ when event B is independent of event A.
+
+## Homework Problem: Marketing
+
+Your company is pilot-testing a new email campaign in a random sample of customers. They sent out 1000 emails. Of those 1000 emails, 176 were marked as read but not opened, 106 were opened but no links clicked, 159 were opened and a link clicked, 100 were opened then deleted, 196 were deleted without being opened, 195 were left unread, and 68 were undeliverable.
+
+. . .
+
+385 of the 1000 sampled customers purchased the advertised product, 142 of which also opened the email.
+
+. . .
+
+Are making a purchase and opening the email dependent or independent processes?
+
+## What are the 2 random processes?
+
+. . .
+
+-   Made a purchase
+
+$$P(\operatorname{bought})$$
+
+-   Opened the email
+
+$$P(\operatorname{opened})$$
+
+## Contingency Table
+
+```{r}
+df <- data.frame(bought = c(rep(T, 385),
+                            rep(F, 615)), 
+                 opened = c(rep(T, 142), 
+                            rep(F, 243), 
+                            rep(T, 223), 
+                            rep(F, 392))) |>
+  mutate(bought = fct_relevel(factor(bought), 'TRUE'),
+         opened = fct_relevel(factor(opened), 'TRUE'))
+
+df |>
+  tabyl(opened, bought) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(caption = 'Purchases by Email Opens') |>
+  kable_classic(full_width = F)
+```
+
+## Approach 1: Conditional Probabilities
+
+$P(\operatorname{bought}|\operatorname{opened}) \approx P(\operatorname{bought}|\operatorname{not opened})$ or $P(\operatorname{bought}|\operatorname{opened}) \approx P(\operatorname{bought})$ suggests independence.
+
+. . .
+
+-   Of the 1000 customers, 385 made a purchase.
+
+-   Of the 365 people who opened the email, 142 of them made a purchase.
+
+-   Of the 635 people who did not open the email, 243 of them made a purchase.
+
+. . .
+
+Are these probabilities the same??
+
+## What is the probability a customer made a purchase?
+
+*"385 of the 1000 sampled customers purchased the advertised product"*
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{bought})&=\frac{\operatorname{count}(\operatorname{count})}{\operatorname{count}(\operatorname{customers})} \\
+&= \frac{385}{1000} \\
+&= 0.385
+\end{aligned}
+$$
+
+## Calculating Conditional Probabilities {.smaller}
+
+$$
+\begin{aligned}
+P(\operatorname{bought}|\operatorname{opened})&=\frac{\operatorname{count}(\operatorname{bought})}{\operatorname{count}(\operatorname{opened})} \\
+&=\frac{142}{365} \\
+&= 0.389
+\end{aligned}
+$$
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{bought}|\operatorname{not opened})&=\frac{\operatorname{count}(\operatorname{bought})}{\operatorname{count}(\operatorname{not opened})} \\
+&=\frac{243}{635} \\
+&= 0.383
+\end{aligned}
+$$
+
+## Calculating Conditional Probabilities
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class07/contingency-table-row-proportions.png){fig-align="center"}
+
+## Proportions by Row
+
+```{r}
+df |>
+  tabyl(opened, bought) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages() |>
+  kbl(caption = 'Proportion of Purchases by Email Opens') |>
+  kable_classic(full_width = F)
+```
+
+## Approach 2: Assume Independence
+
+If making a purchase is independent of opening the email, then $P(\operatorname{bought and opened}) \approx P(\operatorname{opened}) \times P(\operatorname{bought})$.
+
+. . .
+
+-   Of the 1000 customers, 385 made a purchase.
+
+-   Of the 1000 customers, 365 opened the email.
+
+-   Of the 1000 customers, 142 opened the email and made a purchase.
+
+. . .
+
+Are these results consistent with the expected results, assuming these events are independent?
+
+## What is the probability a customer opened the email?
+
+*"**159 were opened and a link clicked**, **100 were opened then deleted**"*
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{open})&=\frac{\operatorname{count}(\operatorname{opened})}{\operatorname{count}(\operatorname{sent})} \\
+&= \frac{106 + 159 + 100}{1000} \\
+&= \frac{365}{1000} \\
+&= 0.365
+\end{aligned}
+$$
+
+## Calculating Expected Results
+
+If we assume making a purchase is independent of opening the email, we can apply ***The Multiplication Rule for Independent Events*** to estimate the proportion of customers who we would expect to do both and compare it to the observed data.
+
+. . .
+
+-   $H_0$: $P(\operatorname{bought and opened})=P(\operatorname{opened}) \times P(\operatorname{bought})$
+
+-   $H_A$: $P(\operatorname{bought and opened}) \ne P(\operatorname{opened}) \times P(\operatorname{bought})$
+
+## Calculating Expected Results {.smaller}
+
+$$
+\begin{aligned}
+P(\operatorname{bought and opened})&=P(\operatorname{opened}) \times P(\operatorname{bought}) \\
+&= 0.365 \times 0.385 \\
+&=0.141
+\end{aligned}
+$$
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{bought and opened})&=\frac{\operatorname{count}(\operatorname{bought and opened})}{n} \\
+&= \frac{142}{1000} \\
+&=0.142
+\end{aligned}
+$$
+
+## Homework Problem: Marketing {.smaller}
+
+Your company is pilot-testing a new email campaign in a random sample of customers. They sent out 1000 emails. Of those 1000 emails, 176 were marked as read but not opened, 106 were opened but no links clicked, 159 were opened and a link clicked, 100 were opened then deleted, 196 were deleted without being opened, 195 were left unread, and 68 were undeliverable.
+
+. . .
+
+385 of the 1000 sampled customers purchased the advertised product, 107 of which also opened the email and clicked a link.
+
+. . .
+
+Are making a purchase and clicking a link after opening the email dependent or independent processes?
+
+## What are the 2 random processes?
+
+. . .
+
+-   Made a purchase
+
+$$P(\operatorname{bought})$$
+
+-   Clicked a link
+
+$$P(\operatorname{linked})$$
+
+## Contingency Table
+
+```{r}
+df <- data.frame(bought = c(rep(T, 385),
+                            rep(F, 615)), 
+                 linked = c(rep(T, 107), 
+                            rep(F, 278), 
+                            rep(T, 52), 
+                            rep(F, 563))) |>
+  mutate(bought = fct_relevel(factor(bought), 'TRUE'),
+         linked = fct_relevel(factor(linked), 'TRUE'))
+
+df |>
+  tabyl(linked, bought) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(caption = 'Purchases by Link Clicks') |>
+  kable_classic(full_width = F)
+```
+
+## Approach 1: Conditional Probabilities
+
+$P(\operatorname{bought}|\operatorname{linked}) \approx P(\operatorname{bought}|\operatorname{not linked})$ or $P(\operatorname{bought}|\operatorname{linked})  \approx P(\operatorname{bought})$ suggests independence.
+
+. . .
+
+-   Of the 1000 customers, 385 made a purchase.
+
+-   Of the 159 people who clicked a link, 107 of them made a purchase.
+
+-   Of the 841 people who did not click a link, 278 of them made a purchase.
+
+. . .
+
+Are these probabilities the same??
+
+## What is the probability a customer made a purchase?
+
+*"385 of the 1000 sampled customers purchased the advertised product"*
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{buy})&=\frac{\operatorname{count}(\operatorname{purchases})}{\operatorname{count}(\operatorname{customers})} \\
+&= \frac{385}{1000} \\
+&= 0.385
+\end{aligned}
+$$
+
+## Calculating Conditional Probabilities {.smaller}
+
+$$
+\begin{aligned}
+P(\operatorname{bought}|\operatorname{linked})&=\frac{\operatorname{count}(\operatorname{bought})}{\operatorname{count}(\operatorname{linked})} \\
+&=\frac{107}{159} \\
+&= 0.673
+\end{aligned}
+$$
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{bought}|\operatorname{not linked})&=\frac{\operatorname{count}(\operatorname{bought})}{\operatorname{count}(\operatorname{not linked})} \\
+&=\frac{278}{841} \\
+&= 0.331
+\end{aligned}
+$$
+
+## Calculating Conditional Probabilities
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class07/contingency-table-row-proportions.png){fig-align="center"}
+
+## Proportions by Row
+
+```{r}
+df |>
+  tabyl(linked, bought) |>
+  adorn_totals(where = c('row', 'col')) |>
+  adorn_percentages() |>
+  kbl(caption = 'Proportion of Purchases by Link Clicks') |>
+  kable_classic(full_width = F)
+```
+
+## Approach 2: Assume Independence
+
+If making a purchase is independent of clicking a link, then $P(\operatorname{bought and linked}) \approx P(\operatorname{linked}) \times P(\operatorname{bought})$.
+
+. . .
+
+-   Of the 1000 customers, 385 made a purchase.
+
+-   Of the 1000 customers, 159 clicked a link.
+
+-   Of the 1000 customers, 107 clicked a link and made a purchase.
+
+. . .
+
+Are these results consistent with the expected results, assuming these events are independent?
+
+## What is the probability a customer clicked a link?
+
+*"**159 were opened and a link clicked**"*
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{linked})&=\frac{\operatorname{count}(\operatorname{linked})}{\operatorname{count}(\operatorname{sent})} \\
+&= \frac{159}{1000} \\
+&= 0.159
+\end{aligned}
+$$
+
+## Calculating Expected Results
+
+If we assume making a purchase is independent of clicking a link, we can apply ***The Multiplication Rule for Independent Events*** to estimate the proportion of customers who we would expect to do both and compare it to the observed data.
+
+. . .
+
+-   $H_0$: $P(\operatorname{bought and linked})=P(\operatorname{linked}) \times P(\operatorname{bought})$
+
+-   $H_A$: $P(\operatorname{bought and linked}) \ne P(\operatorname{linked}) \times P(\operatorname{bought})$
+
+## Calculating Expected Results {.smaller}
+
+$$
+\begin{aligned}
+P(\operatorname{bought and linked})&=P(\operatorname{linked}) \times P(\operatorname{bought}) \\
+&= 0.159 \times 0.385 \\
+&=0.061
+\end{aligned}
+$$
+
+. . .
+
+$$
+\begin{aligned}
+P(\operatorname{bought and linked})&=\frac{\operatorname{count}(\operatorname{bought and linked})}{n} \\
+&= \frac{107}{1000} \\
+&=0.107
+\end{aligned}
+$$
+
+## Homework: Car Crash Injuries
+
+You're trying to investigate if the risk of injury following a car accident differs between men and women. You took a random sample of 1000 car accident reports involving 672 women and 428 men. An injury occurred in 697 of the reports.
+
+. . .
+
+If these two processes are independent, what is the probability that a woman was injured?
+
+## Homework: Car Crash Injuries {.smaller}
+
+If getting an injury in a car accident is independent of the sex of the occupant, then we would expect $P(\operatorname{woman injured}) = P(\operatorname{injury}) \times P(\operatorname{woman})$.
+
+. . .
+
+-   Out of 1000 accident reports, 697 involved injuries. $P(\operatorname{injury})=\frac{697}{1000}=0.697$
+
+. . .
+
+-   Out of 1000 accident reports, 672 involved women. $P(\operatorname{woman})=\frac{672}{1000}=0.672$
+
+. . .
+
+If these events were independent, the probability that a woman is injured in an accident would be $0.697 \times 0.672 = 0.468$.
+
+## Homework: Hurricanes
+
+From 1980-2023, 709 tropical cyclones have formed in the Atlantic Ocean. 298 of those tropical cyclones developed into hurricanes, and 72 of those hurricanes made landfall in the continental US.
+
+Assuming that events are independent, what is the probability that 2 hurricanes in a row make landfall in 2024?
+
+## Homework: Hurricanes
+
+If one hurricane making landfall is independent of another hurricane making landfall, we would expect $P(\operatorname{landfall}_1 \operatorname{and landfall}_2)=P(\operatorname{landfall}_1) \times P(\operatorname{landfall}_2)$
+
+. . .
+
+Out of 298 hurricanes from 1980-2023, 72 made landfall. $P(\operatorname{landfall})=\frac{72}{298}=0.242$
+
+. . .
+
+If these events were independent, the probability two hurricanes make landfall would be $0.242 \times 0.242 = 0.058$.
