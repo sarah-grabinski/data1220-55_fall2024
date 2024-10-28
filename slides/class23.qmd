@@ -155,9 +155,216 @@ df |>
 ::: {.column width="50%"}
 $$
 \begin{aligned}
-\operatorname{E}_{\operatorname{McD, S}}=\frac{n_{\operatorname{McD}} \times n_{\operatorname{S}}}{n}
+\operatorname{Exp}_{\operatorname{McD, S}}&=\frac{n_{\operatorname{McD}} \times n_{\operatorname{S}}}{n} \\
+&= \frac{235 \times 420}{1000} \\
+&= 98.7
 \end{aligned}
 $$
+:::
+:::::
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{Exp}_{\operatorname{McD, NS}}&=\frac{n_{\operatorname{McD}} \times n_{\operatorname{NS}}}{n} \\
+&= \frac{235 \times 580}{1000} \\
+&= 136.3
+\end{aligned}
+$$
+:::
+:::::
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{Exp}_{\operatorname{Chi, S}}&=\frac{n_{\operatorname{Chi}} \times n_{\operatorname{S}}}{n} \\
+&= \frac{415 \times 420}{1000} \\
+&= 174.3
+\end{aligned}
+$$
+:::
+:::::
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{Exp}_{\operatorname{Chi, NS}}&=\frac{n_{\operatorname{Chi}} \times n_{\operatorname{NS}}}{n} \\
+&= \frac{415 \times 580}{1000} \\
+&= 240.7
+\end{aligned}
+$$
+:::
+:::::
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{Exp}_{\operatorname{Arb, S}}&=\frac{n_{\operatorname{Arb}} \times n_{\operatorname{S}}}{n} \\
+&= \frac{350 \times 420}{1000} \\
+&= 147
+\end{aligned}
+$$
+:::
+:::::
+
+## Step 2: Calculate expected counts {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+:::
+
+::: {.column width="50%"}
+$$
+\begin{aligned}
+\operatorname{Exp}_{\operatorname{Arb, NS}}&=\frac{n_{\operatorname{Arb}} \times n_{\operatorname{NS}}}{n} \\
+&= \frac{350 \times 580}{1000} \\
+&= 203
+\end{aligned}
+$$
+:::
+:::::
+
+## Step 2: Calculate expected counts
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+df |>
+  tabyl(restaurant, sick) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      align = 'rccc', caption = 'Illness by Restaurant') |>
+  kable_classic(full_width = F)
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"), 
+           Sick = c(98.7, 174.3, 147), 
+           `Not Sick` = c(136.3, 240.7, 203)) |>
+  adorn_totals(where = c('row', 'col')) |>
+  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
+      digits = 0, align = 'rccc', caption = 'Expected Counts') |>
+  kable_classic(full_width = F)
+```
+:::
+:::::
+
+## Inference & Hypothesis Testing with Means
+
+-   The distribution of sample means $\bar{x}$ calculated from samples of size $n$ from the same population approximates a normal distribution (i.e. the *sampling distribution*)
+
+. . .
+
+-   Observations in sample assumed to be ***independent and identically distributed*** (***i.i.d.***)
+
+. . .
+
+-   Need $n \ge 30$ observations in sample 
+
+. . .
+
+-   Underlying population distribution is normal (less strict as sample $n$ increases)
+
+## Sample Means & The Standard Normal ($z$) Distribution
+
+-   As $n$ increases, the sampling distribution of $\bar{x}$ approximates the distribution $N \left( \mu, \frac{\sigma}{\sqrt{n}} \right)$) 
+
+. . .
+
+-   When assumptions met, $\bar{x} \approx \mu$ and $s \approx \sigma$
+
+. . .
+
+-   $s \approx \sigma$ is a strong assumption!
+
+## The $t$ distribution
+
+-   Better than $z$ when the population standard deviation $\sigma$ is unknown (almost always)
+
+. . .
+
+-   Appears normal, but is flatter to allow more uncertainty about $SE=\frac{s}{\sqrt{n}}$ of $\mu$
+
+. . .
+
+-   Centered at 0 with the single parameter ***degrees of freedom*** ($df = n-1$)
+
+## The $t$ distribution
+
+::::: columns
+::: {.column width="50%"}
+![The $t$ distribution versus the standard normal ($z$) distribution](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist.png)
+:::
+
+::: {.column width="50%"}
+![The $t$ distribution is centered at 0 and has the parameter *degrees of freedom* ($df$)](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist-with-df.png)
 :::
 :::::
 
