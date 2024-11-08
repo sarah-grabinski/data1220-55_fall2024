@@ -1,0 +1,56 @@
+---
+title: "Elementary Statistics Workflows"
+author: "Sarah E. Grabinski"
+date: '`r Sys.Date()`'
+format: 
+  pdf:
+    documentclass: article
+    toc: true
+    theme: default
+    geometry:
+      - top=30mm
+      - left=30mm
+      - right=30mm
+      - bottom=30mm
+    execute:
+      echo: true
+      message: true
+      warning: true
+      output: true
+      self-contained: true
+    fig-align: center
+---
+
+# Statistical Analysis Workflow
+
+Many basic data analyses follow a workflow similar to the one outlined below. This document will go through each step and outline
+
+1.  Develop research question.
+
+2.  Identify target, study, and sample populations.
+
+3.  Collect data / take sample.
+
+4.  Check assumptions.
+
+5.  Calculate sample statistics for sample.
+
+6.  Infer the sampling distribution of the study population from the sample statistics.
+
+7.  Test a hypothesis.
+
+8.  Apply results to target population.
+
+
+Useful functions (summarize)
+Center: mean(), median()
+
+Spread: sd(), IQR(), mad()
+
+Range: min(), max(),
+
+Position: first(), last(), nth(),
+
+Count: n(), n_distinct()
+
+Logical: any(), all()

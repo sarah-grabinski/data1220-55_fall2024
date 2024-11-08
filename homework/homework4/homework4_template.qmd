@@ -1,0 +1,43 @@
+---
+title: "Homework 4"
+author: "YOURNAMEHERE"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Setup  {.unnumbered}
+
+Load the packages you will need to complete this analysis in the code chunk below.
+
+```{r}
+library(readxl)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+Download the file `nhanes.xlsx` from Canvas. Load the data into R using the function `read_excel()` from the `readxl` package and save it as the dataframe `nhanes` in the code chunk below.
+
+```{r}
+path_to_folder <- getwd()
+file_name <- 'nhanes.xlsx'
+path_to_file <- paste(path_to_folder, 
+                      file_name, 
+                      sep = '/')
+nhanes <- read_xlsx(path_to_file)
+```
+
+# Instructions  {.unnumbered}
+
+-   Use complete sentences where indicated.
+
+-   Save your file as `homework4_yournamehere.qmd` and renter it as an HTML file (`homework4_yournamehere.html`).
+
+-   Submit both `homework4_yournamehere.qmd` and `homework4_yournamehere.html` to Canvas by November 8th, 2024 at 6:00pm.
+
+# Problem 1

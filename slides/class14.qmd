@@ -311,7 +311,6 @@ df |>
 | Difference in Means       | $\mu_1-\mu_2$ | $\bar{x}_1-\bar{x}_2$ |
 | Difference in Proportions | $p_1-p_2$     | $\hat{p}_1-\hat{p}_2$ |
 | Standard Deviation        | $\sigma$      | $s$                   |
-| Correlation               | $\rho$        | $r$                   |
 
 ## Sampling Distribution
 

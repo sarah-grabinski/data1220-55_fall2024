@@ -11,7 +11,7 @@ format:
     footnotes-hover: true
     execute:
       echo: false
-      cache: true
+      cache: false
       message: false
       warning: false
     preview-links: auto
@@ -19,14 +19,13 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 23 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
-      - \newcommand{\theHtable}{\thetable}
       - \usepackage{fontspec}
       - \usepackage{graphicx}
       - \usepackage{grffile}
       - \setkeys{Gin}{width=\textwidth,height=\textheight}
     execute:
       echo: false
-      cache: true
+      cache: false
       message: false
       warning: false
     slide-number: true
@@ -40,6 +39,7 @@ format:
 
 ```{r}
 library(janitor)
+library(RColorBrewer)
 library(kableExtra)
 library(tidyverse)
 
@@ -61,8 +61,8 @@ df <- data.frame(camps = c(rep('Y', 1328),
 df <- data.frame(restaurant = c(rep("McDonald's", 235), 
                                 rep("Chipotle", 415), 
                                 rep("Arby's", 350)), 
-                 sick = c(rep('Sick', 115), 
-                          rep('Not Sick', 120), 
+                 sick = c(rep('Sick', 125), 
+                          rep('Not Sick', 110), 
                           rep('Sick', 165), 
                           rep('Not Sick', 250), 
                           rep('Sick', 140), 
@@ -100,10 +100,10 @@ df <- data.frame(restaurant = c(rep("McDonald's", 235),
 ## Example: Foodborne Illness
 
 ::: smaller
--   There have been 420 cases of E. coli in your region.
--   You interviewed these patients and 580 of their close associates about what they ate.
+-   There have been 430 cases of E. coli in your region.
+-   You interviewed these patients and 570 of their close associates about what they ate.
 -   235 people ate at McDonald's, 415 people ate at Chipotle, and 350 ate at Arby's.
--   115, 165, and 140 of the people who ate at McDonald's, Chipotle, and Arby's respectively got sick.
+-   125, 165, and 140 of the people who ate at McDonald's, Chipotle, and Arby's respectively got sick.
 :::
 
 . . .
@@ -143,12 +143,33 @@ $$
 ::::: columns
 ::: {.column width="50%"}
 ```{r}
-df |>
-  tabyl(restaurant, sick) |>
+crosstab <- df |>
+  tabyl(restaurant, sick) |> 
   adorn_totals(where = c('row', 'col')) |>
+  as.data.frame()
+
+crosstab |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(1, NA, NA, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(2, 
+              background = spec_color(c(rep(NA, 3), 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(2, 
+              background = spec_color(c(1, NA, NA, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -156,8 +177,8 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{McD, S}}&=\frac{n_{\operatorname{McD}} \times n_{\operatorname{S}}}{n} \\
-&= \frac{235 \times 420}{1000} \\
-&= 98.7
+&= \frac{235 \times 430}{1000} \\
+&= 101.1
 \end{aligned}
 $$
 :::
@@ -173,7 +194,19 @@ df |>
   adorn_totals(where = c('row', 'col')) |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(1, NA, NA, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(3, 
+              background = spec_color(c(1, NA, NA, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -181,8 +214,8 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{McD, NS}}&=\frac{n_{\operatorname{McD}} \times n_{\operatorname{NS}}}{n} \\
-&= \frac{235 \times 580}{1000} \\
-&= 136.3
+&= \frac{235 \times 570}{1000} \\
+&= 134.0
 \end{aligned}
 $$
 :::
@@ -198,7 +231,19 @@ df |>
   adorn_totals(where = c('row', 'col')) |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(NA, 1, NA, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(2, 
+              background = spec_color(c(NA, 1, NA, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -206,8 +251,8 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{Chi, S}}&=\frac{n_{\operatorname{Chi}} \times n_{\operatorname{S}}}{n} \\
-&= \frac{415 \times 420}{1000} \\
-&= 174.3
+&= \frac{415 \times 430}{1000} \\
+&= 178.5
 \end{aligned}
 $$
 :::
@@ -223,7 +268,19 @@ df |>
   adorn_totals(where = c('row', 'col')) |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(NA, 1, NA, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(3, 
+              background = spec_color(c(NA, 1, NA, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -231,8 +288,8 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{Chi, NS}}&=\frac{n_{\operatorname{Chi}} \times n_{\operatorname{NS}}}{n} \\
-&= \frac{415 \times 580}{1000} \\
-&= 240.7
+&= \frac{415 \times 570}{1000} \\
+&= 236.6
 \end{aligned}
 $$
 :::
@@ -248,7 +305,19 @@ df |>
   adorn_totals(where = c('row', 'col')) |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(NA, NA, 1, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(2, 
+              background = spec_color(c(NA, NA, 1, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -256,8 +325,8 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{Arb, S}}&=\frac{n_{\operatorname{Arb}} \times n_{\operatorname{S}}}{n} \\
-&= \frac{350 \times 420}{1000} \\
-&= 147
+&= \frac{350 \times 430}{1000} \\
+&= 150.5
 \end{aligned}
 $$
 :::
@@ -273,7 +342,19 @@ df |>
   adorn_totals(where = c('row', 'col')) |>
   kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
       align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+  kable_classic(full_width = F) |>
+  column_spec(4, 
+              background = spec_color(c(NA, NA, 1, 1), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 0.75, 
+                                      na_color = 'white')) |>
+  column_spec(3, 
+              background = spec_color(c(NA, NA, 1, 0), 
+                                      alpha = 0.25, 
+                                      begin = 0.75, 
+                                      end = 1, 
+                                      na_color = 'white'))
 ```
 :::
 
@@ -281,42 +362,80 @@ df |>
 $$
 \begin{aligned}
 \operatorname{Exp}_{\operatorname{Arb, NS}}&=\frac{n_{\operatorname{Arb}} \times n_{\operatorname{NS}}}{n} \\
-&= \frac{350 \times 580}{1000} \\
-&= 203
+&= \frac{350 \times 570}{1000} \\
+&= 199.5
 \end{aligned}
 $$
 :::
 :::::
 
-## Step 2: Calculate expected counts
+## Step 2: Calculate expected counts  {.smaller}
 
-::::: columns
-::: {.column width="50%"}
 ```{r}
-df |>
-  tabyl(restaurant, sick) |>
-  adorn_totals(where = c('row', 'col')) |>
-  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
-      align = 'rccc', caption = 'Illness by Restaurant') |>
-  kable_classic(full_width = F)
+obs_vs_exp <- 
+  data.frame(
+    restaurant = rep(c("McDonald's", 
+                       'Chipotle', 
+                       "Arby's"), 2),
+    observed = c(125, 165, 140, 110, 250, 210), 
+    expected = c(101, 178, 151, 134, 237, 199), 
+    diff = c(125-101, 165-178, 140-151,
+             110-134, 250-237, 210-199)
+  )
+
+obs_vs_exp |>
+  kbl(col.names = c('Restaurant', 
+                    'Observed', 'Expected', 'Difference')) |>
+  kable_classic(full_width = F) |>
+  pack_rows('Sick', 1, 3) |>
+  pack_rows('Not Sick', 4, 6) |>
+  column_spec(4, color = 'white',
+              background = spec_color(
+                obs_vs_exp$diff,
+                palette = rev(brewer.pal(11, 
+                                         'BrBG'))))
 ```
 
-:::
 
-::: {.column width="50%"}
-```{r}
-data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"), 
-           Sick = c(98.7, 174.3, 147), 
-           `Not Sick` = c(136.3, 240.7, 203)) |>
-  adorn_totals(where = c('row', 'col')) |>
-  kbl(col.names = c('Restaurant', 'Sick', 'Not Sick', 'Total'), 
-      digits = 0, align = 'rccc', caption = 'Expected Counts') |>
-  kable_classic(full_width = F)
+## Step 3: Find the test statistic
+
+$$
+\begin{aligned}
+\chi^2_{\operatorname{df}} &= \sum^k_{i=1} \frac{{\left( \operatorname{observed} - \operatorname{expected} \right)}^2}{\operatorname{expected}} \\
+&= \frac{\left(120 - 101 \right)^2}{101} + \frac{\left( 115-134 \right)^2}{134} + \frac{\left(165-178\right)^2}{178} + \\
+&\phantom{{}={1}} \frac{\left(250-237 \right)^2}{237} + \frac{\left(140-151 \right)^2}{151} + \frac{\left( 210-199 \right)^2}{199} \\
+&= 9.34
+\end{aligned}
+$$
+
+## Step 4: Compute the degrees of freedom
+
+For 2 categorical variables in a 2-way contingency table where $R$ is the number of rows and $C$ is the number of columns, the degrees of freedom for a chi-square test of independence is...
+
+$$
+\begin{aligned}
+\operatorname{df}&=(R-1) \times (C-1) \\
+&=(3-1) \times (2-1) \\
+&= 2
+\end{aligned}
+$$
+
+## Step 5: Determine p-value
+
+We always use the upper tail of the probability distribution for a chi-square test, so we use the parameter `lower.tail = F` in the function.
+
+```{r echo = T}
+pchisq(9.34, df = 2, lower.tail = F)
 ```
-:::
-:::::
+## Step 6: Decide to reject $H_0$
 
-## Inference & Hypothesis Testing with Means
+If our significance threshold is $\alpha = 0.05$ and the p-value of 0.0094, should we reject $H_0$?
+
+. . .
+
+Yes! It is unlikely that we would observe the data that we did if the null hypothesis were true.
+
+## Inference & Hypothesis Testing with Means {.smaller}
 
 -   The distribution of sample means $\bar{x}$ calculated from samples of size $n$ from the same population approximates a normal distribution (i.e. the *sampling distribution*)
 
@@ -326,7 +445,7 @@ data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"),
 
 . . .
 
--   Need $n \ge 30$ observations in sample 
+-   Need $n \ge 30$ observations in sample
 
 . . .
 
@@ -334,7 +453,7 @@ data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"),
 
 ## Sample Means & The Standard Normal ($z$) Distribution
 
--   As $n$ increases, the sampling distribution of $\bar{x}$ approximates the distribution $N \left( \mu, \frac{\sigma}{\sqrt{n}} \right)$) 
+-   As $n$ increases, the sampling distribution of $\bar{x}$ approximates the distribution $N \left( \mu, \frac{\sigma}{\sqrt{n}} \right)$)
 
 . . .
 
@@ -354,7 +473,7 @@ data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"),
 
 . . .
 
--   Centered at 0 with the single parameter ***degrees of freedom*** ($df = n-1$)
+-   Centered at 0 with the single parameter ***degrees of freedom*** ($\operatorname{df} = n-1$)
 
 ## The $t$ distribution
 
@@ -364,8 +483,48 @@ data.frame(Restaurant = c("McDonald's", "Chipotle", "Arby's"),
 :::
 
 ::: {.column width="50%"}
-![The $t$ distribution is centered at 0 and has the parameter *degrees of freedom* ($df$)](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist-with-df.png)
+![The $t$ distribution is centered at 0 and has the parameter *degrees of freedom* ($\operatorname{df}$)](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist-with-df.png)
 :::
 :::::
 
+## $t$ Distribution Test Statistic
 
+$$
+\begin{aligned}
+T_{\operatorname{df}}&= \frac{\text{point estimate} - \text{null value}}{SE} \\
+T_{n-1}&=\frac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}
+\end{aligned}
+$$
+
+## P-Values in R
+
+::::: columns
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/p-value.png){width="243"}
+:::
+
+::: {.column width="50%"}
+```{r echo = T}
+1 - pt(4.135, 
+       df = 205)
+```
+
+```{r echo = T}
+pt(4.135, 
+   df = 205, 
+   lower.tail = F)
+```
+:::
+:::::
+
+## Confidence Intervals
+
+*   When $s \approx \sigma$, the confidence interval is $\text{point estimate} \pm Z^* \times SE$
+
+. . .
+
+*   When $\sigma$ is unknown, we use $\text{point estimate} \pm T^* \times SE$
+
+. . .
+
+*   $T^* = T_{\alpha/2}$

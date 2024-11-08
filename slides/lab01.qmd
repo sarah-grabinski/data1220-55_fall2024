@@ -1,0 +1,253 @@
+---
+title: "Using R for Data Analysis"
+subtitle: "Exercises with Means"
+author: "Sarah E. Grabinski"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Packages
+
+```{r}
+library(janitor)
+library(readr)
+library(readxl)
+library(dplyr)
+library(forcats)
+```
+
+# Examples
+
+## Loading Data
+
+### Folder & File Paths
+
+For every folder and file on your user, there is a text address called a ***"path"*** which points the computer towards its physical location.
+
+Sometimes, the data we need is stored in a package that we can load directly. Other times, the data is publicly available on the internet. When that is the case, the path to the file should be saved as a string (text) containing the URL.
+
+```{r}
+url <- "https://www.openintro.org/data/csv/arbuthnot.csv"
+
+print(url)
+```
+
+Usually, the file we need to access is stored locally. Download the file `.csv`
+
+We need to tell R (1) the location of the folder the file is in, and (2) the name of the file. Run the code below to find the path of the folder that your project is in.
+
+```{r}
+folder_path <- getwd()
+
+print(folder_path)
+```
+
+Now we need to save the name of the file as it appears on our computer. 
+
+```{r}
+
+```
+
+
+### Delimited Files in Base R
+
+The `read.delim()`, `read.csv()`, and `read.tsv()` functions are included in `base` R and do not require loading a package. However, they can be slow to use and do not have many options for customizing your import. You may prefer using the options below.
+
+```{r}
+read.delim(url, sep = ",")
+```
+
+```{r}
+read.csv(url)
+```
+
+
+### Delimited Files with `readr`
+
+`readr` is a package that is also part of the `tidyverse` bundle of packages. If you load the `tidyverse` library, you load the `readr` package automatically.
+
+Functions from the `readr` package are called "wrap-around" functions, in that they operate using the functions above from base R, but also have additional options to make the process more user-friendly.
+
+```{r}
+read_
+```
+
+
+### Excel Spreadsheets
+
+The `readxl` package is commonly used to import Excel files. 
+
+```{r}
+
+```
+
+## R Data Sets
+
+```{r}
+
+```
+
+
+## Inspecting & Describing Data
+
+```{r}
+
+```
+
+## Cleaning & Manipulating Data
+
+mutate
+rename
+factors
+clean_names
+
+```{r}
+
+```
+
+## Sorting & Filtering
+
+```{r}
+
+```
+
+
+## Checking Assumptions
+
+```{r}
+
+```
+
+## Calculating Sample Statistics
+
+```{r}
+
+```
+
+## Inferring Sampling Distributions
+
+```{r}
+
+```
+
+## Hypothesis Testing
+
+```{r}
+
+```
+
+## Visualizing Results
+
+```{r}
+
+```
+
+# Practice
+
+## Load data
+
+```{r}
+
+```
+
+## Clean data
+
+filter and select, mutate and rename
+
+```{r}
+
+```
+
+
+## Inspect & describe data
+
+```{r}
+
+```
+
+## One-Sample $t$-Test for Means
+
+
+### Check assumptions
+
+```{r}
+
+```
+
+### Calculate sample statistics
+
+```{r}
+
+```
+
+### Infer sampling distribution
+
+```{r}
+
+```
+
+### Test the hypothesis
+
+```{r}
+
+```
+
+## Two-Sample $t$-Test for Means
+
+
+### Check assumptions
+
+```{r}
+
+```
+
+### Calculate sample statistics
+
+```{r}
+
+```
+
+### Infer sampling distribution
+
+```{r}
+
+```
+
+### Test the hypothesis
+
+```{r}
+
+```
+
+## Paired $t$-Test for Means
+
+
+### Check assumptions
+
+```{r}
+
+```
+
+### Calculate sample statistics
+
+```{r}
+
+```
+
+### Infer sampling distribution
+
+```{r}
+
+```
+
+### Test the hypothesis
+
+```{r}
+
+```
+

@@ -1,0 +1,694 @@
+---
+title: "Class 24"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-10-30'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 24 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    fig-height: 6
+    footer: "DATA1220-55 Fall 2024, Class 24 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+library(janitor)
+library(ggridges)
+library(ggdist)
+library(colorspace)
+library(kableExtra)
+library(patchwork)
+library(tidyverse)
+
+theme_set(theme_bw())
+
+set.seed(123)
+sims <- 1000
+n <- 30
+
+df <- lapply(1:sims, function(x) {
+  df <- data.frame(observation = 1:n,
+                   x = rnorm(n))
+  
+  return(df)
+}) |>
+  bind_rows(.id = 'iteration')
+
+df_sum <- df |>
+  summarize(x_bar = mean(x), 
+            s = sd(x), 
+            lwr = mean(x) - 1.96 * sd(x),
+            upr = mean(x) + 1.96 * sd(x),
+            .by = 'iteration')
+
+dist_fcn <- function(mean, sd) {
+  df <- data.frame(x = seq(-3, 3, length.out = 100)) |>
+    mutate(density = dnorm(x, mean = mean, sd = sd))
+  return(list(df))
+}
+
+df_dist <- mapply(dist_fcn, 
+                  mean = df_sum$x_bar, 
+                  sd = df_sum$s) |>
+  bind_rows(.id = 'iteration')
+
+df_norm <- data.frame(x = seq(-3, 3, length.out = 100), 
+                      x_bar = seq(-3, 3, length.out = 100)) |>
+  mutate(density1 = dnorm(x), 
+         density2 = dnorm(x, sd = (1 / sqrt(n))), 
+         x1 = ifelse(x >= -1 & x <= 1, 
+                     x, NA), 
+         x2 = ifelse(x >= -2 & x <= 2, 
+                     x, NA), 
+         x3 = ifelse(x >= -3 & x <= 3, 
+                     x, NA), 
+         x_bar1 = ifelse(x_bar >= -(1 / sqrt(n)) & 
+                           x_bar <= (1 / sqrt(n)), 
+                         x_bar, NA), 
+         x_bar2 = ifelse(x_bar >= -(2 / sqrt(n)) & 
+                           x_bar <= (2 / sqrt(n)), 
+                         x_bar, NA), 
+         x_bar3 = ifelse(x_bar >= -(3 / sqrt(n)) & 
+                           x_bar <= (3 / sqrt(n)), 
+                         x_bar, NA))
+
+df2 <- lapply(1:sims, function(x) {
+  df <- data.frame(observation = 1:n,
+                   x = rbinom(n, size = 1, p = 0.5))
+  
+  return(df)
+}) |>
+  bind_rows(.id = 'iteration')
+
+df_sum2 <- df2 |>
+  summarize(p_hat1 = mean(x), 
+            se = sqrt((mean(x) * (1 - mean(x))) / n()), 
+            lwr = mean(x) - 1.96 * sqrt((mean(x) * (1 - mean(x))) / n()),
+            upr = mean(x) + 1.96 * sqrt((mean(x) * (1 - mean(x))) / n()),
+            .by = 'iteration')
+
+df_norm2 <- data.frame(p_hat = seq(0, 1, length.out = 100)) |>
+  mutate(
+    density = dnorm(p_hat, mean = 0.5, 
+                    sd = sqrt((0.5 * (1 - 0.5)) / n)), 
+    p_hat1 = ifelse(p_hat >= 0.5 + -sqrt((0.5 * (1 - 0.5)) / n) & 
+                      p_hat <= 0.5 + sqrt((0.5 * (1 - 0.5)) / n), 
+                    p_hat, NA), 
+    p_hat2 = ifelse(p_hat >= 0.5 + -2 * sqrt((0.5 * (1 - 0.5)) / n) & 
+                      p_hat <= 0.5 + 2 * sqrt((0.5 * (1 - 0.5)) / n), 
+                    p_hat, NA), 
+    p_hat3 = ifelse(p_hat >= 0.5 + -3 * sqrt((0.5 * (1 - 0.5)) / n) & 
+                      p_hat <= 0.5 + 3 * sqrt((0.5 * (1 - 0.5)) / n), 
+                    p_hat, NA))
+```
+
+## Population Parameters versus Sample Statistics {.smaller}
+
+| Measure                   | Sample Statistic        | Population Parameter |
+|---------------------------|-------------------------|----------------------|
+| Mean                      | $\bar{x}$               | $\mu$                |
+| Proportion                | $\hat{p}$               | $p$                  |
+| Difference in Means       | $\bar{x}_1-\bar{x}_2$   | $\mu_1-\mu_2$        |
+| Difference in Proportions | $\hat{p}_1 - \hat{p}_2$ | $p_1 - p_2$          |
+| Standard Deviation        | $s$                     | $\sigma$             |
+
+: Sample statistics are used to estimate unknowable population parameters
+
+## Assumptions {.smaller}
+
+-   Data is ***reliable*** and ***valid***
+    -   $\bar{x}_{\operatorname{observed}} \approx \bar{x}_{\operatorname{expected}}$ or $\hat{p}_{\operatorname{observed}} \approx \hat{p}_{\operatorname{expected}}$ when data is ***reliable***
+    -   $\bar{x}_{\operatorname{observed}} \approx \mu$ or $\hat{p}_{\operatorname{observed}} \approx p$ when data is ***valid***
+
+. . .
+
+-   Observations are independent and identically distributed
+
+. . .
+
+-   Sufficient sample size
+
+    -   $n \ge 30$ for $\bar{x}$ (means)
+
+    -   $n \ge 20$, $n_{x=1} \ge 10$, & $n_{x=0} \ge 10$ for $\hat{p}$ (proportions)
+
+. . .
+
+-   For means, the observed distribution in the sample approximates a normal distribution (less strict as $n \to \infty$)
+
+## The Central Limit Theorem
+
+***The distribution of the sample statistic*** $\bar{x}$ or $\hat{p}$ approximates the normal distribution $N\left(\text{population parameter}, \text{standard error}\right)$ as $n \to \infty$.
+
+. . .
+
+-   $\bar{x} \sim N\left(\mu, \frac{\sigma}{n}\right)$)
+
+-   $\hat{p} \sim N\left(p, \sqrt{\frac{p (1-p)}{n}}\right)$
+
+. . .
+
+The ***sampling distribution*** is normal with $\mu=\text{sample statistic}$ and $\sigma=\operatorname{standard error}$.
+
+## Standard Error of Sample Mean $\bar{x}$ {.smaller}
+
+The standard deviation of the sampling distribution of $\bar{x}$ is the population standard deviation $\sigma$ divided by the square root of the size of the sample $n$.
+
+$$
+\begin{aligned}
+SE_{\bar{x}} &= \frac{\sigma}{\sqrt{n}}
+\end{aligned}
+$$
+
+. . .
+
+Because we don't have access to the "true" value of $\sigma$, we substitute the observed standard deviation in the sample $s$ for inference and hypothesis testing.
+
+$$
+\begin{aligned}
+SE_{\bar{x}} &= \frac{s}{\sqrt{n}}
+\end{aligned}
+$$
+
+## Population Distribution of $x$ {.smaller}
+
+The population in this figure has the "true" parameters of mean $\mu=0$ and standard deviation $\sigma=1$.
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x, 
+                y = density1), 
+            linewidth = 1.5, 
+            linetype = 'longdash') +
+  annotate('rect', xmin = -1, xmax = 1, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  annotate('rect', xmin = -2, xmax = 2, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  annotate('rect', xmin = -3, xmax = 3, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  # geom_density(data = df,
+  #              aes(x = x,
+  #                  group = iteration)) +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', 
+       title = 'Theoretical Distribution of Variable x', 
+       subtitle = 'x ~ N(0, 1)', 
+       caption = 'This represents the "true" underlying distribution of the variable x.') +
+  theme_bw()
+```
+
+## Sampling Distribution for $\bar{x}$ {.smaller}
+
+The ***sampling distribution*** is the distribution of sample statistics $\bar{x}$ from samples with size $n$ taken from the population $x \sim N(0, 1)$, were you to sample infinite times.
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x_bar, 
+                y = density2), 
+            linewidth = 1, 
+            linetype = 'longdash') +
+  annotate('rect', xmin = -(1/sqrt(n)), 
+           xmax = (1/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  annotate('rect', xmin = -(2/sqrt(n)), 
+           xmax = (2/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  annotate('rect', xmin = -(3/sqrt(n)), 
+           xmax = (3/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  # geom_density(data = df,
+  #              aes(x = x,
+  #                  group = iteration)) +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', 
+       title = 'Theoretical Sampling Distribution of Sample Statistic x_bar', 
+       subtitle = 'x_bar ~ N(0, SE)', 
+       caption = 'This represents the "true" underlying distribution of x_bar for the variable x ~ N(0, 1).') +
+  theme_bw()
+```
+
+## Side-By-Side
+
+```{r}
+p1 <- ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x, 
+                y = density1), 
+            linewidth = 1.5, 
+            linetype = 'longdash') +
+  annotate('rect', xmin = -1, xmax = 1, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  annotate('rect', xmin = -2, xmax = 2, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  annotate('rect', xmin = -3, xmax = 3, 
+           ymin = 0, ymax = Inf, alpha = 0.15) +
+  # geom_density(data = df,
+  #              aes(x = x,
+  #                  group = iteration)) +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', 
+       title = 'Theoretical Normal Distribution of Variable x', 
+       subtitle = 'x ~ N(0, 1)', 
+       caption = 'This represents the "true" underlying distribution of the variable x.') +
+  theme_bw()
+
+p2 <- ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x_bar, 
+                y = density2), 
+            linewidth = 1, 
+            linetype = 'longdash') +
+  annotate('rect', xmin = -(1/sqrt(n)), 
+           xmax = (1/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  annotate('rect', xmin = -(2/sqrt(n)), 
+           xmax = (2/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  annotate('rect', xmin = -(3/sqrt(n)), 
+           xmax = (3/sqrt(n)), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.15) +
+  # geom_density(data = df,
+  #              aes(x = x,
+  #                  group = iteration)) +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', 
+       title = 'Theoretical Sampling Distribution of Sample Statistic x_bar', 
+       subtitle = 'x_bar ~ N(0, SE)', 
+       caption = 'This represents the "true" underlying distribution of x_bar for the variable x ~ N(0, 1).') +
+  theme_bw()
+
+(p1 / p2)
+```
+
+## Distribution of $\bar{x}$ versus $x$
+
+Observed values of $x$ are more variable than observed values of $\bar{x}$.
+
+```{r}
+ggplot() +
+  geom_ribbon(data = df_norm, 
+              aes(x = x1, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.25) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x2, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.2) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x3, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.15) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar1, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.25) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar2, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.2) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar3, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.15) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x, 
+                y = density1), 
+            linewidth = 1, 
+            linetype = 'longdash', 
+            col = '#E6610066') +
+  geom_line(data = df_norm,
+            aes(x = x_bar, 
+                y = density2), 
+            linewidth = 1, 
+            linetype = 'longdash', 
+            col = '#5D3A9B66') +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', x = 'x',
+       title = 'A Theoretical Normal Distribution\n& The Sampling Distribution of its Mean', 
+       subtitle = 'x ~ N(0, 1) in orange, x_bar ~ N(0, SE) in purple', 
+       caption = 'The distribution of x_bar is narrower than the distribution of x.') +
+  theme_bw()
+```
+
+## Example
+
+-   The "true" distribution in your population is normal with mean $\mu = 0$ and standard deviation $\sigma = 1$ ($x \sim N(0, 1)$)
+
+. . .
+
+-   Take repeated samples of $n = 50$ from the population $x \sim N(0, 1)$.
+
+. . .
+
+-   Calculate $\bar{x}_i$ for each sample of size $n$.
+
+. . .
+
+-   Compare the observed distribution of $\bar{x}_i$ to the expected distribution $\bar{x} \sim N\left(0, \frac{1}{\sqrt{n}} \right)$.
+
+## Observed Distributions of $x$ in Samples
+
+```{r}
+df |>
+  filter(iteration %in% sample(as.character(1:sims), 30)) |>
+  ggplot(aes(x = x,
+             y = reorder(iteration, x), 
+             fill = stat(x))) +
+  geom_density_ridges_gradient(alpha = 0.5) +
+  scale_fill_continuous_divergingx(palette = 'PuOr', mid = 0) +
+  coord_flip() +
+  guides(fill = 'none') +
+  theme(axis.text.x = element_text(size = 6)) +
+  labs(y = 'Sample ID')
+```
+
+## Observed Sample Means
+
+```{r}
+df |>
+  summarize(x_bar = mean(x), 
+            s = sd(x),
+            .by = c('iteration')) |>
+  select(iteration, x_bar, s) |>
+  head(7) |>
+  kbl(digits = 3, align = 'c',
+      col.names = c('Sample ID', 'x_bar', 's')) |>
+  kable_classic(full_width = F)
+```
+
+## Observed Distributions vs Expected Distribution
+
+```{r}
+p1 <- ggplot() +
+  geom_density(data = df,
+               aes(x = x,
+                   group = iteration), 
+               linewidth = 1, 
+               col = '#4682b422') +
+  geom_ribbon(data = df_norm, 
+              aes(x = x1, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.25) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x2, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.2) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x3, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.15) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linetype = 'dashed', 
+             linewidth = 1) +
+  geom_line(data = df_norm,
+            aes(x = x, 
+                y = density1), 
+            linewidth = 1,
+            linetype = 'longdash', 
+            col = '#E6610066') +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', x = 'x',
+       title = 'Actual',
+       subtitle = 'P(x = x), in blue') +
+  theme_bw() +
+  coord_cartesian(ylim = c(0, 0.875))
+
+p2 <- ggplot() +
+  geom_line(data = df_dist, 
+            aes(x = x,
+                y = density,
+                group = iteration), 
+            linewidth = 1, 
+            col = '#4682b422') +
+  geom_ribbon(data = df_norm, 
+              aes(x = x1, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.25) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x2, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.2) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x3, 
+                  ymin = 0, 
+                  ymax = density1), 
+              fill = '#E6610066', alpha = 0.15) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linetype = 'dashed', 
+             linewidth = 1) +
+  geom_line(data = df_norm,
+            aes(x = x, 
+                y = density1), 
+            linewidth = 1,
+            linetype = 'longdash', 
+            col = '#E6610066') +
+  scale_x_continuous(breaks = seq(-3, 3)) +
+  labs(y = 'Probability Density', x = 'x',
+       title = 'Ideal',
+       subtitle = 'x ~ N(x_bar, s), in blue') +
+  theme_bw() +
+  coord_cartesian(ylim = c(0, 0.875))
+
+(p1 + p2) &
+  plot_annotation(title = 'Observed Distribution in Sample vs Theoretical Population Distribution')
+```
+
+## Observed Distributions vs Expected Distribution
+
+```{r}
+ggplot() +
+  geom_rug(data = df_sum,
+           aes(x = x_bar), 
+           col = '#4682b422', 
+           length = unit(0.1, 'npc'), 
+           linewidth = 0.75) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar1, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.25) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar2, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.2) +
+  geom_ribbon(data = df_norm, 
+              aes(x = x_bar3, 
+                  ymin = 0, 
+                  ymax = density2), 
+              fill = '#5D3A9B66', alpha = 0.15) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0, 
+             linewidth = 1, 
+             linetype = 'dashed') +
+  geom_line(data = df_norm,
+            aes(x = x_bar, 
+                y = density2), 
+            linewidth = 1, 
+            linetype = 'longdash', 
+            col = '#5D3A9B66') +
+  geom_density(data = df_sum,
+               aes(x = x_bar), 
+               linewidth = 1, 
+               col = '#4682b466') +
+  scale_y_continuous(expand = c(0.1, 0.1)) +
+  coord_cartesian(xlim = c(-1, 1)) +
+  labs(y = 'Probability Density', x = 'x_bar',
+       title = 'Observed Distribution of x_bar\nvs Theoretical Sampling Distribution', 
+       subtitle = 'x_bar ~ N(0, SE) in purple, blue is observed', 
+       caption = 'Rug plot below x-axis shows x_bar for each individual sample.') +
+  theme_bw()
+```
+
+## Standard Error of Sample Proportion $\hat{p}$ {.smaller}
+
+The standard deviation of the sampling distribution of $\hat{p}$ for sample size $n$ is...
+
+$$
+\begin{aligned}
+SE_{\bar{x}} &= \sqrt{\frac{p(1-p)}{n}}
+\end{aligned}
+$$
+
+. . .
+
+Because we don't have access to the "true" value of $p$, we substitute the observed statistic in the sample $\hat{p}$ for inference and hypothesis testing.
+
+$$
+\begin{aligned}
+SE_{\hat{p}} &= \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\end{aligned}
+$$
+
+## Example
+
+-   The "true" distribution in your population is $p=0.5$
+
+. . .
+
+-   Take repeated samples of $n = 50$ from the population $p=0.5$
+
+. . .
+
+-   Calculate $\hat{p}_i$ for each sample of size $n$.
+
+. . .
+
+-   Compare the observed distribution of $\hat{p}_i$ to the expected distribution $\hat{p} \sim N\left(0.5, \sqrt{\frac{0.5(1-0.5)}{n}} \right)$.
+
+## Observed Distributions of $\hat{p}$ in Samples
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_col(data = df_sum2 |>
+             filter(row_number() < 31), 
+           aes(x = iteration, 
+               y = p_hat1), 
+           fill = '#4682b4CC') +
+  # geom_line(data = df_norm,
+  #           aes(x = x, 
+  #               y = density1), 
+  #           linewidth = 1, 
+  #           linetype = 'longdash') +
+  # geom_density(data = df,
+  #              aes(x = x,
+  #                  group = iteration)) +
+  geom_hline(yintercept = 0.5, 
+             linewidth = 1, 
+             linetype = 'dashed', 
+             col = '#E6610066') +
+  labs(y = 'p_hat', 
+       title = 'Observed Distribution in Sample vs Population Distribution', 
+       subtitle = 'p_hat approximates p = 0.5', 
+       caption = 'Orange line indicates "true" population proportion for x.') +
+  theme_bw() +
+  theme(axis.text.x = element_blank())
+```
+
+## Observed Sample Proportions
+
+```{r}
+df_sum2 |>
+  select(iteration, p_hat1, se) |>
+  head(7) |>
+  kbl(digits = 3, align = 'c',
+      col.names = c('Sample ID', 'p_hat', 'SE')) |>
+  kable_classic(full_width = F)
+```
+
+## Observed Distributions vs Expected Distribution
+
+```{r}
+ggplot() +
+  geom_rug(data = df_sum2,
+           aes(x = p_hat1, y = 0),
+           sides = 'b',
+           position = 'jitter',
+           col = '#4682b422', 
+           length = unit(0.15, 'npc')) +
+  geom_ribbon(data = df_norm2, 
+              aes(x = p_hat, 
+                  ymin = 0, 
+                  ymax = density), 
+              fill = '#5D3A9B66', alpha = 0.25) +
+  geom_ribbon(data = df_norm2,
+              aes(x = p_hat1,
+                  ymin = 0,
+                  ymax = density),
+              fill = '#5D3A9B66', alpha = 0.2) +
+  geom_ribbon(data = df_norm2,
+              aes(x = p_hat3,
+                  ymin = 0,
+                  ymax = density),
+              fill = '#5D3A9B66', alpha = 0.15) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0.5,
+             linewidth = 1,
+             linetype = 'dashed') +
+  geom_line(data = df_norm2,
+            aes(x = p_hat,
+                y = density),
+            linewidth = 1,
+            linetype = 'longdash',
+            col = '#5D3A9B66') +
+  geom_density(data = df_sum2,
+               aes(x = p_hat1),
+               linewidth = 1,
+               col = '#4682b466') +
+  scale_y_continuous(expand = c(0.1, 0.1)) +
+  labs(y = 'Probability Density', x = 'p_hat',
+       title = 'Observed Distribution of p_hat\nvs Theoretical Sampling Distribution', 
+       subtitle = 'p_hat approximates N(0.5, SE), in blue') +
+  theme_bw()
+```
+
+
+

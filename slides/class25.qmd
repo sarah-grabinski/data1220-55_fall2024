@@ -1,0 +1,293 @@
+---
+title: "Class 25"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-11-01'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 25 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    fig-height: 6
+    footer: "DATA1220-55 Fall 2024, Class 25 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## In-Class Quiz
+
+-   Friday, November 15th, in-class (closed-note, open-R)
+
+. . .
+
+-   Covers Chapters 2.1-2.2, 5.1-5.3, 6.1-6.2/6.4, and/or 7.1/7.3
+
+. . .
+
+-   Quiz will take ~30 minutes, review of answers will follow
+
+. . .
+
+-   5 extra credit points available (+0-5% to final grade)
+
+## Take-Home Quiz
+
+-   Due Monday, November 18th by 6:00pm (open-note, open-R)
+
+. . .
+
+-   Covers Chapters 2.1-2.2, 5.1-5.3, 6.1-6.2/6.4, and/or 7.1/7.3
+
+. . .
+
+-   Will require use of R, but will be in Google Forms or Canvas
+
+. . .
+
+-   Worth 10% of final grade, will be bonus points available
+
+## Statistical Analysis Workflow {.smaller}
+
+1.  Develop research question.
+
+. . .
+
+2.  Identify target, study, and sample populations.
+
+. . .
+
+3.  Collect data / take sample.
+
+. . .
+
+4.    Check assumptions.
+
+. . .
+
+5.  Calculate sample statistics for sample.
+
+. . .
+
+6.  Infer the sampling distribution of the study population from the sample statistics.
+
+. . .
+
+7.  Test a hypothesis.
+
+. . .
+
+8.  Apply results to target population.
+
+## Example: One-Sample Proportion
+
+***Research question:*** Did it rain more than usual in April of 2024?
+
+. . .
+
+Based on historical data you pulled for 1980-2020 from the National Oceanic and Atmospheric Administration (NOAA), it has rained on 594 of the 1200 days in April.
+
+. . .
+
+In 2024, it rained on 18 days and didn't rain on 12 days in April.
+
+## Sample Statistics
+
+The sample statistic for a population proportion $p$ is the sample proportion $\hat{p}$.
+
+In 2024, it rained on 18 days and didn't rain on 12 days in April, and April has 30 days total.
+
+. . .
+
+```{r echo = T}
+p_hat <- 18 / 30
+
+p_hat
+```
+
+
+## Inference: Rain Days April 2024
+
+With 95% confidence, what percentage of days were rainy in April 2024?
+
+. . .
+
+-   $\hat{p} \pm Z^* \times SE_{\hat{p}}$
+
+-   $Z^* = Z_{1 - \alpha/2}$
+
+-   $\operatorname{Confidence}=1-\alpha$
+
+## Finding $Z^*$
+
+If our confidence level is 95% (0.95), then our $\alpha$ is 0.05. We need the Z-score that corresponds to the probability $p = 1-\alpha/2=0.975$. Use the `qnorm()` function to find $Z^*$.
+
+```{r echo = T}
+z_star <- qnorm(0.975)
+
+z_star
+```
+
+## Standard Error for a Single Proportion
+
+```{r echo = T}
+se_phat <- sqrt((0.6 * (1 - 0.6)) / 30)
+
+se_phat
+```
+
+## Confidence Interval for $\hat{p}$
+
+Lower bound:
+
+```{r echo = T}
+p_hat - z_star * se_phat
+```
+
+Upper bound:
+
+```{r echo = T}
+p_hat + z_star * se_phat
+```
+
+## Test Statistic
+
+```{r echo = T}
+z_test <- (p_hat - 0.5) / 0.09
+
+z_test
+```
+
+## P-Value
+
+```{r echo = T}
+pnorm(z_test, lower.tail = F) * 2
+```
+
+## The Central Limit Theorem
+
+***The distribution of the sample statistic*** $\bar{x}$ or $\hat{p}$ approximates the normal distribution $N\left(\operatorname{population parameter}, \operatorname{standard error}\right)$ as $n \to \infty$.
+
+. . .
+
+-   $\bar{x} \sim N\left(\mu, \frac{\sigma}{n}\right)$)
+
+-   $\hat{p} \sim N\left(p, \sqrt{\frac{p (1-p)}{n}}\right)$
+
+. . .
+
+The ***sampling distribution*** is normal with $\mu=\operatorname{sample statistic}$ and $\sigma=\operatorname{standard error}$.
+
+## Inference & Hypothesis Testing with Means {.smaller}
+
+-   The distribution of sample means $\bar{x}$ calculated from samples of size $n$ from the same population approximates a normal distribution (i.e. the *sampling distribution*)
+
+. . .
+
+-   Observations in sample assumed to be ***independent and identically distributed*** (***i.i.d.***)
+
+. . .
+
+-   Need $n \ge 30$ observations in sample
+
+. . .
+
+-   Underlying population distribution is normal (less strict as sample $n$ increases)
+
+## Sample Means & The Standard Normal ($z$) Distribution
+
+-   As $n$ increases, the sampling distribution of $\bar{x}$ approximates the distribution $N \left( \mu, \frac{\sigma}{\sqrt{n}} \right)$)
+
+. . .
+
+-   When assumptions met, $\bar{x} \approx \mu$ and $s \approx \sigma$
+
+. . .
+
+-   $s \approx \sigma$ is a strong assumption!
+
+## The $t$ distribution
+
+-   Better than $z$ when the population standard deviation $\sigma$ is unknown (almost always)
+
+. . .
+
+-   Appears normal, but is flatter to allow more uncertainty about $SE=\frac{s}{\sqrt{n}}$ of $\mu$
+
+. . .
+
+-   Centered at 0 with the single parameter ***degrees of freedom*** ($df = n-1$)
+
+## The $t$ distribution
+
+::::: columns
+::: {.column width="50%"}
+![The $t$ distribution versus the standard normal ($z$) distribution](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist.png)
+:::
+
+::: {.column width="50%"}
+![The $t$ distribution is centered at 0 and has the parameter *degrees of freedom* ($df$)](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/t-dist-with-df.png)
+:::
+:::::
+
+## $t$ Distribution Test Statistic
+
+$$
+\begin{aligned}
+T_{df}&= \frac{\operatorname{point estimate} - \operatorname{null value}}{SE} \\
+T_{n-1}&=\frac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}
+\end{aligned}
+$$
+
+## P-Values in R
+
+::::: columns
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class23/p-value.png){width="243"}
+:::
+
+::: {.column width="50%"}
+```{r echo = T}
+1 - pt(4.135, 205)
+```
+
+```{r echo = T}
+pt(4.135, 205, lower.tail = F)
+```
+:::
+:::::
+
+## Confidence Intervals
+
+*   When $s \approx \sigma$, the confidence interval is $\operatorname{point estimate} \pm Z^* \times SE$
+
+. . .
+
+*   When $\sigma$ is unknown, we use $\operatorname{point estimate} \pm T^* \times SE$
+
+. . .
+
+*   $T^* = T_{1-\alpha/2}$
+

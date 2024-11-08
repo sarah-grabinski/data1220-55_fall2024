@@ -1,0 +1,294 @@
+---
+title: "Using R for Data Analysis"
+subtitle: "Exercises with Means"
+author: "Sarah E. Grabinski"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Packages
+
+```{r}
+library(readr)
+library(readxl)
+library(Hmisc)
+library(mosaic)
+library(dplyr)
+```
+
+# Examples
+
+## Loading Data
+
+### Folder & File Paths
+
+For every folder and file on your user, there is a text address called a ***"path"*** which points the computer towards its physical location.
+
+Sometimes, the data we need is stored in a package that we can load directly. Other times, the data is publicly available on the internet. When that is the case, the path to the file should be saved as a string (text) containing the URL.
+
+```{r}
+url_path <- "https://www.openintro.org/data/tab-delimited/births14.txt"
+
+print(url_path)
+```
+
+Usually, the file we need to access is stored locally. For R to find the file we want to use, we need to tell R (1) the location of the folder the file is in, and (2) the name of the file. Run the code below to find the path of the folder that your project is in with the `getwd()` function.
+
+```{r}
+folder_path <- getwd()
+
+print(folder_path)
+```
+
+Now we need to save the name of the files as they appears on our computer. Download the files `births14.csv`, `births14.rda`, `births14.R`, and `births14.xlsx` from Canvas. Move them to this project folder. Below, we save the names of the files as variables.
+
+```{r}
+excel_file <- "births14.xlsx"
+rda_file <- "births14.rda"
+csv_file <- "births14.csv"
+source_file <- "births14.R"
+```
+
+Finally, we will combine the paths to the folder with the file names to create a full-length path to the file. We will do this using the `paste()` function.
+
+```{r}
+excel_path <- paste(folder_path, 
+                    excel_file, 
+                    sep = '/')
+
+print(excel_path)
+
+rda_path <- paste(folder_path, 
+                  rda_file, 
+                  sep = '/')
+
+print(rda_path)
+
+csv_path <- paste(folder_path, 
+                  csv_file, 
+                  sep = '/')
+
+print(csv_path)
+
+source_path <- paste(folder_path, 
+                     source_file, 
+                     sep = '/')
+
+print(source_path)
+```
+
+We will use these different paths to direct R to the files we need.
+
+### Delimited Files in Base R
+
+The `read.delim()`, `read.csv()`, and `read.tsv()` functions are included in `base` R and do not require loading a package. However, they can be slow to use and do not have many options for customizing your import. You may prefer using the options below.
+
+```{r}
+tsv_df <- read.delim(url_path, sep = "\t")
+
+head(tsv_df)
+```
+
+### Delimited Files with `readr`
+
+`readr` is a package that is also part of the `tidyverse` bundle of packages. If you load the `tidyverse` library, you load the `readr` package automatically.
+
+Functions from the `readr` package are called "wrap-around" functions, in that they operate using the functions above from base R, but also have additional options to make the process more user-friendly.
+
+```{r}
+csv_df <- read_csv(csv_path)
+
+head(csv_df)
+```
+
+### Excel Spreadsheets
+
+The `readxl` package is commonly used to import Excel files.
+
+```{r}
+excel_df <- read_excel(excel_path)
+
+head(excel_df)
+```
+
+### R Data Sets
+
+You can use the `load()` function from `base` R with the parameter `file` to have R load a pre-formatted data set. This file imports as `births14`.
+
+```{r}
+load(file = rda_path)
+```
+
+### R Source Files
+
+You can also load data files using an R script with the ending `.R`. Load these using the `source()` function from `base` R.
+
+```{r}
+source_files <- source(source_path)
+
+source_df <- source_files$value
+
+head(source_df)
+```
+
+## Inspecting & Describing Data
+
+The `summary()` function from `base` R gives a decent overall summary of your data, including the minimum, Q1, median, mean, Q3, max, $n$, count of missing values, and variable type. It does not provide the standard deviation.
+
+```{r}
+summary(births14)
+```
+
+The `describe()` function from the `Hmisc` package is a comprehensive summary function. It provides the $n$, number of missing observations, number of distinct observations, mean, 5th/10th/25th/75th/90th/95th percentiles, median, mean, and the 5 lowest and 5 highest values. It will also calculate proportions for categorical variables where it finds them. It does not provide the standard deviation.
+
+```{r}
+describe(births14)
+```
+
+## Calculating Sample Statistics
+
+The `summarize()` function can help you create custom summary tables, depending on what you're looking for. It takes a parameter `.by`, which is a list of variables that the data will be grouped by. This is particularly useful for calculating means or proportions across different groups. If you do not want to group your data, you can omit this parameter.
+
+```{r}
+births14 |>   
+  summarize(n = n(),              
+            min = min(weight),              
+            q1 = quantile(weight, 0.25),              
+            median = median(weight),              
+            q3 = quantile(weight, 0.75),              
+            max = max(weight),              
+            iqr = IQR(weight),              
+            mean = mean(weight, na.rm = T),              
+            sd = sd(weight, na.rm = T),              
+            .by = c('premie'))
+```
+
+The `favstats()` function from the `mosaic` package is great for numerical variable summary statistics by category. On the first line, you are telling the function to calculate summary statistics for the continuous numerical variable `weight` grouped by (`~`) whether the baby was premature or full-term (`premie`). The parameter `data` on the second line provides the variable name of the data source. It outputs the minimum, Q1, median, Q3, max, mean, standard deviation, $n$, and number of missing values, grouped by the variable of your choice.
+
+```{r}
+favstats(weight ~ premie,            
+         data = births14)
+```
+
+## Inferring Sampling Distributions
+
+#### $Z$ Distribution (Standard Normal)
+
+You can use the function `qnorm()` to find the $Z^*$ needed for a given confidence level. It takes a probability and returns a $Z$-score.
+
+This function takes the parameters...
+
+-   `p` - probability (e.g. $\alpha/2$ )
+
+-   `mean` - reference distribution mean
+
+-   `sd` - reference distribution standard deviation
+
+-   `lower.tail` - default is `TRUE` or `T`; set to `FALSE` or `F` when you want the upper-tail probability.
+
+Remember...
+
+-   $\text{confidence}=1-\alpha$
+
+-   $Z^*=Z_{\alpha/2}=Z_{1-\alpha/2}$
+
+In the example below, we want $Z^*$ for a 95% confidence interval.
+
+```{r}
+confidence <- 0.95
+alpha <- 1 - confidence
+
+qnorm(alpha/2)
+
+qnorm(1-alpha/2, lower.tail = F)
+```
+
+You can then calculate
+
+#### $T$ Distribution (Student's $t$)
+
+You can use the function `qt()` to find the $T_{\text{df}}^*$ needed for a given confidence level. It takes a probability and returns a $T_{\text{df}}$-score.
+
+This function takes the parameters...
+
+-   `p` - probability (e.g. $\alpha/2$ )
+
+-   `df` - degrees of freedom (e.g. $n-1$)
+
+-   `lower.tail` - default is `TRUE` or `T`; set to `FALSE` or `F` when you want the upper-tail probability.
+
+Remember...
+
+-   $\text{confidence}=1-\alpha$
+
+-   $T_{\text{df}}^*=T_{n-1,\alpha/2}=T_{n-1,1-\alpha/2}$
+
+In the example below, we want $T^*$ for a 95% confidence interval from a sample with size $n=100$.
+
+```{r}
+n <- 100
+df <- n - 1
+confidence <- 0.95
+alpha <- 1 - confidence
+
+qt(alpha/2, df = n)
+
+qt(1-alpha/2, df = n, lower.tail = F)
+```
+
+# Practice
+
+## Load data
+
+Download the `nhanes.xlsx` data from Canvas and follow the steps above to load it into RStudio.
+
+```{r}
+
+```
+
+## Inspect & describe data
+
+Use one of the summary functions above to inspect your data.
+
+```{r}
+
+```
+
+## Two-Sample Means
+
+### Calculate sample statistics
+
+Use one of the summary methods above to find the means and standard deviations for `Weight` grouped by `Gender`.
+
+```{r}
+
+```
+
+### Find the Standard Error of Each
+
+Find the standard error for males.
+
+```{r}
+
+```
+
+Find the standard error for females.
+
+### Infer sampling distribution
+
+Find the $T^*$ which corresponds to a 95% confidence interval for males.
+
+```{r}
+
+```
+
+Find the $T^*$ which corresponds to a 95% confidence interval for males.
+
+```{r}
+
+```

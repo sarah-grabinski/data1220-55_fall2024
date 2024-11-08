@@ -1,0 +1,494 @@
+---
+title: "Homework 4"
+author: "YOURNAMEHERE"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+editor: visual
+---
+
+# Instructions  {.unnumbered}
+
+*You work for Secretary of Transportation Pete Buttigieg, and he has asked you to prepare a year end report comparing flight delays during the Trump administration and the Biden administration. He would like to know on average what percentage of flights were delayed and how long they were delayed for during each administration. He would also know if there was a meaningful difference between the two administrations.*
+
+*Your data comes from the [Bureau of Transportation Statistics](https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp?20=E), run by the US Department of Transportation. It is a random sample of 800 airports from the years 2016-2024.*
+
+-   Follow the previously given instructions to start a new project in RStudio for Homework 4. Go to the project folder.
+
+-   Download the files `homework4_template.qmd` and `airline_delays.xlsx` from Canvas. Move these files to your Homework 4 project folder.
+
+-   Please save your homework as `homework4_firstnamelastname.qmd`. When you render, it should produce the file `homework4_firstnamelastname.html`.
+
+-   Follow the prompts to complete the steps of each statistical analysis. Work must be shown in code chunks for partial credit.
+
+-   Add packages to the `load_packages` code chunk as you work through the analysis and need their functions. This portion has not been pre-filled for you.
+
+-   Answer in complete sentences where indicated.
+
+# Codebook {.unnumbered}
+
+
+
+# Packages  {.unnumbered}
+
+Load any packages required for your analysis below using the `library()` function. 
+
+```{r load_packages}
+# library()
+# library(janitor)
+library(readxl)
+# library(ggplot2)
+library(dplyr)
+# library(tidyverse)
+```
+
+## Load Data {.unnumbered}
+
+In the code chunk below, use the `getwd()` function to save the path to your project folder as a text string called `folder_path`.
+
+```{r}
+folder_path <- getwd()
+```
+
+Now, create a variable called `file_name` which sorts the name of your data file `airline_delays.xlsx`.
+
+```{r}
+file_name <- "airline_delays.xlsx"
+```
+
+Use the `paste()` function to connect `folder_path` to `file_name`, using the slash character "/" to separate them. Save this result as `file_path`.
+
+```{r}
+file_path <- paste(folder_path, 
+                   file_name, 
+                   sep = '/')
+```
+
+Now that you have made a path to your file, load it using a function that will handle Excel spreadsheets ending in `.xlsx`. 
+
+```{r}
+delays <- read_xlsx(file_path)
+```
+
+# Inspect data
+
+In the code chunk below, use one of the functions we've learned to summarize your data set. 
+
+```{r}
+Hmisc::describe(delays)
+```
+
+Write 2-3 sentences describing anything you learned from this summary.
+
+
+
+# Proportions
+
+***Research Question: On average, how frequently were flights delayed during 2016-2020 and 2021-2024, and were the rates different between the 2 administrations?***
+
+Your first task is to calculate your sample statistics from your data: the proportions of flights delayed during the Trump ($\hat{p}_{\text{Trump}}$) and Biden administrations ($\hat{p}_{\text{Biden}}$).
+
+Your second task is to check the assumptions for inference and hypothesis testing using the Central Limit Theorem for proportions.
+
+Your third task is to infer the average proportion of flights in the US were delayed during the Trump and Biden administrations from your sample statistics. 
+
+Your fourth task is to test the hypothesis that the proportion of flights delayed during the Trump administration is different from the proportion of flights delayed during the Biden administration. 
+
+## Sample Statistics
+
+Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the total number of flights (`flights`), and the total number of delayed flights (`delayed`) for each administration (`admin`). 
+
+```{r}
+delays |>
+  summarize(n = n(), 
+            flights = sum(flights), 
+            delayed = sum(delayed), 
+            proportion = sum(delayed) / sum(flights),
+            .by = 'admin')
+```
+
+Calculate your point estimate of the proportion of flights that were delayed during the Trump administration $\hat{p}_{\text{Trump}}$ and save it as the variable `phat_trump`.
+
+```{r}
+phat_trump <- 4503558/26613488
+
+phat_trump
+```
+
+Calculate your point estimate of the proportion of flights that were delayed during the Biden administration $\hat{p}_{\text{Biden}}$ and save it as the variable `phat_biden`.
+
+```{r}
+phat_biden <- 5497718/30326333
+
+phat_biden
+```
+
+You will need sample sizes later in the analysis. Save the sample size for airports from the Trump administration as the variable `n_trump`. 
+
+```{r}
+n_trump <- 404
+```
+
+Save the sample size for airports from the Biden administration as the variable `n_biden`. 
+
+```{r}
+n_biden <- 396
+```
+
+## Assumptions
+
+### Reliability
+
+When the data you observe in your sample is very close to the "ground truth" or what you would expect to see under perfect conditions in that sample, the data and its sample statistics are considered to be *reliable*. You don't expect $\hat{p}_{\text{observed}}$ to be very different from $\hat{p}_{\text{expected}}$, so $\hat{p}_{\text{observed}}$ is a reliable/accurate estimator for your sample.
+
+    -   You don't believe there is much bias or measurement error in the data
+
+    -   Your sample does not have a lot of missing data
+
+    -   You expect your sample statistic to be close to the "true" sample population parameter
+
+$$\hat{p}_{\text{sample}} \approx p_{\text{sample}}$$
+
+Write 1-2 sentences reflecting on whether the data from your sample could be considered reliable.
+
+
+
+### Validity
+
+When the data you observe in your sample is very close to the "ground truth" or what you would expect to see under perfect conditions in any sample of size $n$ from your study population, the data and sample statistics are considered to be *valid*. You don't expect the sample statistic $\hat{p}$ to be very different from the population parameter $p$, so $\hat{p}$ is a valid/accurate estimator for your study population.
+
+    -   You don't believe there is much bias or measurement error in the data
+
+    -   You have a large, representative sample (or you have all the data available)
+
+    -   Your sample does not have a lot of missing data
+
+    -   You expect your sample statistics to be close to the "true" study population parameter
+
+$$\hat{p}_{\text{sample}} \approx p$$
+
+Since I have access to the full data, I can tell you the "true" population parameters.
+
+$$
+\begin{aligned}
+p_{\text{Trump}} &= 0.169 \\
+p_{\text{Biden}} &= 0.181
+\end{aligned}
+$$
+
+Compare these population parameters to your sample statistics and write 1-2 sentences reflecting on whether or not your data is valid.
+
+
+### Sample Size
+
+For the Central Limit Theorem to apply for a proportion, you need at least 10 successes and 10 failures in your sample such that...
+
+$$
+\begin{aligned}
+n \ge 20 \\
+np \ge 10 \\
+n(1-p) \ge 10
+\end{aligned}
+$$
+
+In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Trump administration.
+
+```{r}
+n_trump * phat_trump
+```
+
+In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Trump administration.
+
+```{r}
+n_trump * (1 - phat_trump)
+```
+
+In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Biden administration.
+
+```{r}
+n_biden * phat_biden
+```
+
+In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Biden administration.
+
+```{r}
+n_biden * (1 - phat_biden)
+```
+
+## Inference
+
+Once you have checked your assumptions, you can use the Central Limit Theorem to infer the sampling distribution of $\hat{p}$ in the study population. 
+
+The Central Limit Theorem states that as the sample size $n$ increases ($n \to \infty$), the distribution of the sample statistic $\hat{p}$ approximates a normal distribution with mean $p$ and standard deviation $\operatorname{SE}$ or the standard error of a proportion.
+
+$$
+\begin{aligned}
+\hat{p} &\sim \operatorname{N}\left(p, \operatorname{SE}\right) \\
+\hat{p} &\sim \operatorname{N}\left(p, \sqrt{\frac{p(1-p)}{n}}\right)
+\end{aligned}
+$$
+
+The population parameter $p$, the "true" proportion of flights that are delayed, is essentially "unknowable" unless you have all the data possible. You have a random sample, so you can not directly observed the sampling distribution of $\hat{p}$.
+
+However, when the data in your sample is valid, $\hat{p} \approx p$ and can be used to infer the sampling distribution of $\hat{p}$.
+
+$$
+\begin{aligned}
+\hat{p} &\sim \operatorname{N}\left(\hat{p}, \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right)
+\end{aligned}
+$$
+
+Work through the steps below to infer the sampling distributions  of $\hat{p}_{\text{Trump}}$ and $\hat{p}_{\text{Biden}}$ as $\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)$. 
+
+You calculated your point estimates for $\hat{p}_{\text{Trump}}$ and $\hat{p}_{\text{Biden}}$ in the last section. Calculate the standard errors $\operatorname{SE}_{\text{Trump}}$ and $\operatorname{SE}_{\text{Biden}}$ to find the sampling distributions $\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)$.
+
+Start by calculating the standard errors $\operatorname{SE}_{\text{Trump}}$ and $\operatorname{SE}_{\text{Biden}}$.
+
+Then use those sampling distributions to calculate 95% confidence intervals for the average proportion of flights that were delayed more than 15 minutes during each administration.
+
+### Standard Error
+
+group 1
+
+```{r}
+
+```
+
+group 2
+
+```{r}
+
+```
+
+### $Z^*$ for 95% CI
+
+```{r}
+
+```
+
+### $Z$-Distribution CI
+
+lower bound
+
+```{r}
+
+```
+
+upper bound
+
+```{r}
+
+```
+
+Interpretation
+
+## Hypothesis Test
+
+### Hypothesis Statements
+
+#### $H_0$
+
+*State your null hypothesis below in 1 sentence.*
+
+#### $H_A$
+
+*State your alternative hypothesis below in 1 sentence.*
+
+### Summary Statistic
+
+```{r}
+
+```
+
+### Standard Error
+
+```{r}
+
+```
+
+### $Z^*$ for 95% CI
+
+```{r}
+
+```
+
+### Confidence Interval
+
+lower
+
+```{r}
+
+```
+
+upper
+
+```{r}
+
+```
+
+### Test Statistic
+
+```{r}
+
+```
+
+### P-Value
+
+```{r}
+
+```
+
+### Decision
+
+Reject?
+
+# Problem 2
+
+## Research Question
+
+## Assumptions
+
+## Sample Statistics
+
+table
+
+```{r}
+
+```
+
+## Inference
+
+### Standard Error
+
+group 1
+
+```{r}
+
+```
+
+group 2
+
+```{r}
+
+```
+
+### $Z^*$ for 95% CI
+
+```{r}
+
+```
+
+### $T^*$ for 95% CI
+
+```{r}
+
+```
+
+### $Z$-Distribution CI
+
+lower bound
+
+```{r}
+
+```
+
+upper bound
+
+```{r}
+
+```
+
+Interpretation
+
+### $T$-Distribution CI
+
+lower bound
+
+```{r}
+
+```
+
+upper bound
+
+```{r}
+
+```
+
+Interpretation
+
+## $Z$ vs $T$ Distributions
+
+
+
+## Hypothesis Test
+
+### Hypothesis Statements
+
+#### $H_0$
+
+*State your null hypothesis below in 1 sentence.*
+
+#### $H_A$
+
+*State your alternative hypothesis below in 1 sentence.*
+
+### Summary Statistic
+
+```{r}
+
+```
+
+### Standard Error
+
+```{r}
+
+```
+
+### $T^*$ for 95% CI
+
+```{r}
+
+```
+
+### Confidence Interval
+
+lower
+
+```{r}
+
+```
+
+upper
+
+```{r}
+
+```
+
+### Test Statistic
+
+```{r}
+
+```
+
+### P-Value
+
+```{r}
+
+```
+
+### Decision
+
+Reject?
+
+# Bonus Problems
+
+## Populations
+
+### Sample
+
+### Study
+
+
