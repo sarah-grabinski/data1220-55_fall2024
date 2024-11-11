@@ -49,12 +49,26 @@ format:
 
 -   Download the file `nhanes.xlsx` from Canvas under Lab 1 or find it in your `lab01` project folder.
 
+## Files View
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class29/file-view.png?raw=true)
+
 ## Importing a Dataset
 
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class29/import-dataset-button.png)
 
-## Excel Files
+## Importing Files - Excel
+
 
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class29/import-excel-blank.png)
 
+## Importing Files - Excel
+
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class29/import-excel-filled.png)
+
+## Importing Files - Excel (Code)
+
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class29/copy-code.png)
 

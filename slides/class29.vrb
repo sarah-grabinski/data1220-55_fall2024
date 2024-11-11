@@ -1,0 +1,25 @@
+\frametitle{Lab 02}
+\phantomsection\label{lab-02}
+\begin{itemize}
+\tightlist
+\item
+  Open RStudio and start a new project in a folder called \texttt{lab02}
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Go to File \textgreater{} New File \textgreater{} R Script. Save the
+  file as \texttt{lab02.R}.
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Download the file \texttt{nhanes.xlsx} from Canvas under Lab 1 or find
+  it in your \texttt{lab01} project folder.
+\end{itemize}
