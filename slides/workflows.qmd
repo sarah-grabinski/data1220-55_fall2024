@@ -51,6 +51,6 @@ Range: min(), max(),
 
 Position: first(), last(), nth(),
 
-Count: n(), n_distinct()
+Count: n(), n_distinct(), sum()
 
 Logical: any(), all()

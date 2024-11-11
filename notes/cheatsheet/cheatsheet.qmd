@@ -224,7 +224,7 @@ Type II Error
 
 -   A ***1-sample*** $t$-test tests if the mean ($\mu$) of a population is different from a null value ($\mu_0$).
 
--   Sample statistics $\bar{x}$ (mean) and $s$ (standard deviation) are used to infer the sampling distribution of the mean $\bar{x} \sim \operatorname{N}\left(\mu, SE_{\bar{x}}\right)$.
+-   Sample statistics $\bar{x}$ (mean) and $s$ (standard deviation) and the sample size $n$ are used to infer the sampling distribution of the mean $\bar{x} \sim \operatorname{N}\left(\mu, SE_{\bar{x}}\right)$.
 
 -   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter $\text{degrees of freedom (df)}=n-1$.
 
@@ -236,10 +236,10 @@ $$
 \bar{x} \pm T_{\text{df}}^* \times SE_{\bar{x}}
 $$
 
-The standard error of $\bar{x}$ is...
+The standard error of $\bar{x}$ is estimated by...
 
 $$
-\operatorname{SE}_{\bar{x}}=\frac{s}{\sqrt{n}}
+\operatorname{SE}_{\bar{x}}=\frac{\sigma}{\sqrt{n}}\approx\frac{s}{\sqrt{n}}
 $$
 
 The critical value from the $t$ distribution with degrees of freedom $\text{df}=n-1$ is...
@@ -264,16 +264,16 @@ $$
 H_0 \colon \mu=\mu_0
 $$
 
-The null distribution of $\bar{x}$ given the null hypothesis that $\mu=\mu_0$ is $\bar{x} \sim \text{N}\left(\mu_0, SE_{\bar{x}}\right)$. Again, the standard error of $\bar{x}$ is...
+The null distribution of $\bar{x}_0$ given the null hypothesis that $\mu=\mu_0$ is $\bar{x}_0 \sim \text{N}\left(\mu_0, SE_{\bar{x}_0}\right)$. The standard error of $\bar{x}_0$ is estimated as...
 
 $$
-\text{SE}_{\bar{x}}=\frac{s}{\sqrt{n}}
+\text{SE}_{\bar{x}_0}=\frac{s}{\sqrt{n}}
 $$
 
 A confidence interval for the mean under the null hypothesis is calculated as above, but using $\mu_0$ as the point estimate.
 
 $$
-\mu_0 \pm T_{\text{df}}^* \times \text{SE}_{\bar{x}}
+\mu_0 \pm T_{\text{df}}^* \times \text{SE}_{\bar{x}_0}
 $$
 
 The alternate hypothesis of a 1-sample $t$-test states that the population mean $\mu$ is greater than, less than, or not equal to some null value $\mu_0$.
@@ -292,7 +292,7 @@ $$
 t=\frac{\bar{x}-\mu_0}{\text{SE}_{\bar{x}}}=\frac{\bar{x}-\mu_0}{\frac{s}{\sqrt{n}}}
 $$
 
-The $t$-statistic is used to find the probability of your sample having the mean $\bar{x}$ if the null distribution $\text{N}\left(\mu_0, \text{SE}_{\bar{x}}\right)$ were the "true" distribution in your population.
+The $t$-statistic is used to find the probability of your sample having the mean $\bar{x}$ if the null distribution $\text{N}\left(\mu_0, \text{SE}_{\bar{x}_0}\right)$ were the "true" distribution in your population.
 
 The probability of the sample statistic $\bar{x}$ under the null hypothesis $\mu=\mu_0$ is calculated from the $t$ distribution in R using the function `pt()`. This function takes the test statistic $t$ (called `q` or quantile in R) and the degrees of freedom `df` ($n-1$) as parameters. This probability is known as the p-value.
 
@@ -309,7 +309,7 @@ pt(t, df=n-1, lower.tail=F)*2
 pt(-t, df=n-1)+pt(t, df=n-1, lower.tail=F)
 ```
 
-A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}$ from the null sampling distribution $\bar{x} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}}\right)$ is very low.
+A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}$ from the null sampling distribution $\bar{x}_0 \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_0}\right)$ is very low.
 
 If the p-value for your $t$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), this is evidence that the null hypothesis $H_0 \colon \mu=\mu_0$ is not true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
 
@@ -328,4 +328,105 @@ If the p-value for your $t$-statistic is greater than $\alpha$, this is not suff
 
 : Sample Statistics for Inference of Population Proportions
 
-### Single Proportion
+### Assumptions
+
+-   ***Independence***: sample observations are independent (i.e. random sample).
+
+-   ***Sample size***: the sample size should be greater than 20 ($n \ge 20$) with at least 10 successes ($np \ge 10$) and 10 failures ($n(1-p) \ge 10$).
+
+-   ***Validity***: sample statistics approximate the population parameters ($\bar{x} \approx \mu$, $s \approx \sigma$)
+
+### Single Proportion ($\hat{p}$) - One-Sample $Z$-test
+
+-   A ***1-sample*** $Z$-test tests if the mean proportion ($p$) for a population is different from a null value ($p_0$).
+
+-   Sample statistic $\hat{p}$ (proportion) and sample size $n$ are used to infer the sampling distribution of the mean proportion $\hat{p} \sim \operatorname{N}\left(p, SE_{\hat{p}}\right)$.
+
+-   Confidence intervals and hypothesis tests for proportions are based on the $Z$ distribution (standard normal).
+
+#### Confidence Interval
+
+The confidence interval for the mean proportion $\hat{p}$ estimating $p$ is...
+
+$$
+\hat{p} \pm Z^* \times SE_{\hat{p}}
+$$
+
+The standard error of $\hat{p}$ is estimated by...
+
+$$
+\operatorname{SE}_{\hat{p}}=\sqrt{\frac{p(1-p)}{n}}\approx\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+$$
+
+The critical value from the $Z$ distribution is...
+
+$$
+Z^*=Z_{\alpha/2}=Z_{1-\alpha/2}
+$$
+
+A critical value is calculated from the $Z$ distribution in R using the function `qnorm()`. This function takes a probability `p` ($\alpha/2$ or $1-\alpha/2$), a `mean` (default = 0), and a standard deviation (`sd`, default = 1).
+
+```{r}
+qnorm(alpha/2)
+
+qnorm(1-alpha/2)
+```
+
+#### Hypothesis Test
+
+The null hypothesis of a 1-sample proportion- or $Z$-test states that the population proportion $p$ is equal to some null value $p_0$.
+
+$$
+H_0 \colon p=p_0
+$$
+
+The null distribution of $\hat{p}$ given the null hypothesis that $p=p_0$ is $\hat{p} \sim \text{N}\left(p_0, SE_{\hat{p}}\right)$. The standard error of $\hat{p}$ under the null hypothesis $H_0 \colon p=p_0$ is...
+
+$$
+\text{SE}_{\hat{p}_0}=\sqrt{\frac{p_0(1-p_0)}{n}}
+$$
+
+A confidence interval for the mean proportion under the null hypothesis is calculated as before, but using $p_0$ as the point estimate and $\text{SE}_{\hat{p}}$ under the null hypothesis.
+
+$$
+p_0 \pm Z^* \times \text{SE}_{\hat{p}_0}
+$$
+
+The alternate hypothesis of a 1-sample $Z$-test states that the population proportion $p$ is greater than, less than, or not equal to some null value $p_0$.
+
+-   $H_A \colon p < p_0$, left-tailed test (one-sided)
+
+-   $H_A \colon p > p_0$, right-tailed test (one-sided)
+
+-   $H_A \colon p \ne p_0$, two-tailed test (two-sided)
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/z-test.png?raw=true)
+
+The test statistic $Z$ (the $Z$-statistic) calculates how many standard errors ($\text{SE}_{\hat{p}}$) away from the null hypothesis $p_0$ that the observed statistic $\hat{p}$ is.
+
+$$
+Z=\frac{\hat{p}-p_0}{\text{SE}_{\hat{p}_0}}=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}
+$$
+
+The $Z$-statistic is used to find the probability of your sample having the mean proportion $\hat{p}$ if the null distribution $\text{N}\left(p_0, \text{SE}_{\hat{p}_0}\right)$ were the "true" distribution in your population.
+
+The probability of the sample statistic $\hat{p}$ under the null hypothesis $p=p_0$ is calculated from the $Z$ distribution in R using the function `pnorm()`. This function takes the test statistic $Z$ (called `q` or quantile in R), the `mean` (default = 0), and the standard deviation (`sd`, default = 1) as parameters. This probability is known as the p-value.
+
+```{r}
+# left-tailed hypothesis test
+pnorm(-Z)
+
+# right-tailed hypothesis test
+pnorm(Z, lower.tail=F)
+
+# two-tailed hypothesis test
+pnorm(-Z)*2
+pnorm(Z, lower.tail=F)*2
+pnorm(-Z)+pt(Z, lower.tail=F)
+```
+
+A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample proportion $\hat{p}$ from the null sampling distribution $\hat{p}_0 \sim \text{N}\left(p_0, \text{SE}_{\hat{p}_0}\right)$ is very low.
+
+If the p-value for your $Z$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), this is evidence that the null hypothesis $H_0 \colon p=p_0$ is not true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
+
+If the p-value for your $Z$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon p=p_0$. You fail to reject the null hypothesis $H_0$.
