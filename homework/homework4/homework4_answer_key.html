@@ -3243,16 +3243,16 @@ window.Quarto = {
   </ul></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a>
   <ul class="collapse">
-  <li><a href="#standard-error" id="toc-standard-error" class="nav-link" data-scroll-target="#standard-error">Standard Error</a></li>
-  <li><a href="#z-for-95-ci" id="toc-z-for-95-ci" class="nav-link" data-scroll-target="#z-for-95-ci"><span class="math inline">\(Z^*\)</span> for 95% CI</a></li>
+  <li><a href="#standard-errors" id="toc-standard-errors" class="nav-link" data-scroll-target="#standard-errors">Standard Errors</a></li>
+  <li><a href="#critical-value" id="toc-critical-value" class="nav-link" data-scroll-target="#critical-value">Critical Value</a></li>
   <li><a href="#z-distribution-ci" id="toc-z-distribution-ci" class="nav-link" data-scroll-target="#z-distribution-ci"><span class="math inline">\(Z\)</span>-Distribution CI</a></li>
   </ul></li>
   <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test">Hypothesis Test</a>
   <ul class="collapse">
   <li><a href="#hypothesis-statements" id="toc-hypothesis-statements" class="nav-link" data-scroll-target="#hypothesis-statements">Hypothesis Statements</a></li>
   <li><a href="#summary-statistic" id="toc-summary-statistic" class="nav-link" data-scroll-target="#summary-statistic">Summary Statistic</a></li>
-  <li><a href="#standard-error-1" id="toc-standard-error-1" class="nav-link" data-scroll-target="#standard-error-1">Standard Error</a></li>
-  <li><a href="#z-for-95-ci-1" id="toc-z-for-95-ci-1" class="nav-link" data-scroll-target="#z-for-95-ci-1"><span class="math inline">\(Z^*\)</span> for 95% CI</a></li>
+  <li><a href="#standard-error" id="toc-standard-error" class="nav-link" data-scroll-target="#standard-error">Standard Error</a></li>
+  <li><a href="#z-for-95-ci" id="toc-z-for-95-ci" class="nav-link" data-scroll-target="#z-for-95-ci"><span class="math inline">\(Z^*\)</span> for 95% CI</a></li>
   <li><a href="#confidence-interval" id="toc-confidence-interval" class="nav-link" data-scroll-target="#confidence-interval">Confidence Interval</a></li>
   <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic">Test Statistic</a></li>
   <li><a href="#p-value" id="toc-p-value" class="nav-link" data-scroll-target="#p-value">P-Value</a></li>
@@ -3266,8 +3266,8 @@ window.Quarto = {
   <li><a href="#sample-statistics-1" id="toc-sample-statistics-1" class="nav-link" data-scroll-target="#sample-statistics-1">Sample Statistics</a></li>
   <li><a href="#inference-1" id="toc-inference-1" class="nav-link" data-scroll-target="#inference-1">Inference</a>
   <ul class="collapse">
-  <li><a href="#standard-error-2" id="toc-standard-error-2" class="nav-link" data-scroll-target="#standard-error-2">Standard Error</a></li>
-  <li><a href="#z-for-95-ci-2" id="toc-z-for-95-ci-2" class="nav-link" data-scroll-target="#z-for-95-ci-2"><span class="math inline">\(Z^*\)</span> for 95% CI</a></li>
+  <li><a href="#standard-error-1" id="toc-standard-error-1" class="nav-link" data-scroll-target="#standard-error-1">Standard Error</a></li>
+  <li><a href="#z-for-95-ci-1" id="toc-z-for-95-ci-1" class="nav-link" data-scroll-target="#z-for-95-ci-1"><span class="math inline">\(Z^*\)</span> for 95% CI</a></li>
   <li><a href="#t-for-95-ci" id="toc-t-for-95-ci" class="nav-link" data-scroll-target="#t-for-95-ci"><span class="math inline">\(T^*\)</span> for 95% CI</a></li>
   <li><a href="#z-distribution-ci-1" id="toc-z-distribution-ci-1" class="nav-link" data-scroll-target="#z-distribution-ci-1"><span class="math inline">\(Z\)</span>-Distribution CI</a></li>
   <li><a href="#t-distribution-ci" id="toc-t-distribution-ci" class="nav-link" data-scroll-target="#t-distribution-ci"><span class="math inline">\(T\)</span>-Distribution CI</a></li>
@@ -3277,7 +3277,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#hypothesis-statements-1" id="toc-hypothesis-statements-1" class="nav-link" data-scroll-target="#hypothesis-statements-1">Hypothesis Statements</a></li>
   <li><a href="#summary-statistic-1" id="toc-summary-statistic-1" class="nav-link" data-scroll-target="#summary-statistic-1">Summary Statistic</a></li>
-  <li><a href="#standard-error-3" id="toc-standard-error-3" class="nav-link" data-scroll-target="#standard-error-3">Standard Error</a></li>
+  <li><a href="#standard-error-2" id="toc-standard-error-2" class="nav-link" data-scroll-target="#standard-error-2">Standard Error</a></li>
   <li><a href="#t-for-95-ci-1" id="toc-t-for-95-ci-1" class="nav-link" data-scroll-target="#t-for-95-ci-1"><span class="math inline">\(T^*\)</span> for 95% CI</a></li>
   <li><a href="#confidence-interval-1" id="toc-confidence-interval-1" class="nav-link" data-scroll-target="#confidence-interval-1">Confidence Interval</a></li>
   <li><a href="#test-statistic-1" id="toc-test-statistic-1" class="nav-link" data-scroll-target="#test-statistic-1">Test Statistic</a></li>
@@ -3519,24 +3519,23 @@ highest: 26.2338 26.4537 44.4394 59.5    222
 <section id="reliability" class="level3">
 <h3 class="anchored" data-anchor-id="reliability">Reliability</h3>
 <p>When the data you observe in your sample is very close to the “ground truth” or what you would expect to see under perfect conditions in that sample, the data and its sample statistics are considered to be <em>reliable</em>. You don’t expect <span class="math inline">\(\hat{p}_{\text{observed}}\)</span> to be very different from <span class="math inline">\(\hat{p}_{\text{expected}}\)</span>, so <span class="math inline">\(\hat{p}_{\text{observed}}\)</span> is a reliable/accurate estimator for your sample.</p>
-<pre><code>-   You don&#39;t believe there is much bias or measurement error in the data
-
--   Your sample does not have a lot of missing data
-
--   You expect your sample statistic to be close to the &quot;true&quot; sample population parameter</code></pre>
+<ul>
+<li><p>You don’t believe there is much bias or measurement error in the data</p></li>
+<li><p>Your sample does not have a lot of missing data</p></li>
+<li><p>You expect your sample statistic to be close to the “true” sample population parameter</p></li>
+</ul>
 <p><span class="math display">\[\hat{p}_{\text{sample}} \approx p_{\text{sample}}\]</span></p>
 <p>Write 1-2 sentences reflecting on whether the data from your sample could be considered reliable.</p>
 </section>
 <section id="validity" class="level3">
 <h3 class="anchored" data-anchor-id="validity">Validity</h3>
 <p>When the data you observe in your sample is very close to the “ground truth” or what you would expect to see under perfect conditions in any sample of size <span class="math inline">\(n\)</span> from your study population, the data and sample statistics are considered to be <em>valid</em>. You don’t expect the sample statistic <span class="math inline">\(\hat{p}\)</span> to be very different from the population parameter <span class="math inline">\(p\)</span>, so <span class="math inline">\(\hat{p}\)</span> is a valid/accurate estimator for your study population.</p>
-<pre><code>-   You don&#39;t believe there is much bias or measurement error in the data
-
--   You have a large, representative sample (or you have all the data available)
-
--   Your sample does not have a lot of missing data
-
--   You expect your sample statistics to be close to the &quot;true&quot; study population parameter</code></pre>
+<ul>
+<li><p>You don’t believe there is much bias or measurement error in the data</p></li>
+<li><p>You have a large, representative sample (or you have all the data available)</p></li>
+<li><p>Your sample does not have a lot of missing data</p></li>
+<li><p>You expect your sample statistics to be close to the “true” study population parameter</p></li>
+</ul>
 <p><span class="math display">\[\hat{p}_{\text{sample}} \approx p\]</span></p>
 <p>Since I have access to the full data, I can tell you the “true” population parameters.</p>
 <p><span class="math display">\[
@@ -3559,28 +3558,28 @@ n(1-p) \ge 10
 \]</span></p>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 68.36524</code></pre>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_trump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_trump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 335.6348</code></pre>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 71.78897</code></pre>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_biden)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_biden)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 324.211</code></pre>
 </div>
@@ -3593,28 +3592,51 @@ n(1-p) \ge 10
 <p>The Central Limit Theorem states that as the sample size <span class="math inline">\(n\)</span> increases (<span class="math inline">\(n \to \infty\)</span>), the distribution of the sample statistic <span class="math inline">\(\hat{p}\)</span> approximates a normal distribution with mean <span class="math inline">\(p\)</span> and standard deviation <span class="math inline">\(\operatorname{SE}\)</span> or the standard error of a proportion.</p>
 <p><span class="math display">\[
 \begin{aligned}
-\hat{p} &amp;\sim \operatorname{N}\left(p, \operatorname{SE}\right) \\
-\hat{p} &amp;\sim \operatorname{N}\left(p, \sqrt{\frac{p(1-p)}{n}}\right)
+\hat{p} &amp;\sim \operatorname{N}\left(p, \operatorname{SE}\right)
 \end{aligned}
 \]</span></p>
-<p>The population parameter <span class="math inline">\(p\)</span>, the “true” proportion of flights that are delayed, is essentially “unknowable” unless you have all the data possible. You have a random sample, so you can not directly observed the sampling distribution of <span class="math inline">\(\hat{p}\)</span>.</p>
+<p>The standard deviation for this sampling distribution, the standard error <span class="math inline">\(\operatorname{SE}\)</span> of a single sample proportion <span class="math inline">\(\hat{p}\)</span>, is calculated as follows.</p>
+<p><span class="math display">\[
+\operatorname{SE}=\sqrt{\frac{p(1-p)}{n}}
+\]</span></p>
+<p>However, the population parameter <span class="math inline">\(p\)</span>, the “true” proportion of flights that are delayed, is “unknowable” unless you have all the data possible. You have a random sample, so you can not directly observed the sampling distribution of <span class="math inline">\(\hat{p}\)</span>.</p>
 <p>However, when the data in your sample is valid, <span class="math inline">\(\hat{p} \approx p\)</span> and can be used to infer the sampling distribution of <span class="math inline">\(\hat{p}\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \hat{p} &amp;\sim \operatorname{N}\left(\hat{p}, \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right)
 \end{aligned}
 \]</span></p>
-<p>Work through the steps below to infer the sampling distributions of <span class="math inline">\(\hat{p}_{\text{Trump}}\)</span> and <span class="math inline">\(\hat{p}_{\text{Biden}}\)</span> as <span class="math inline">\(\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)\)</span>.</p>
-<p>You calculated your point estimates for <span class="math inline">\(\hat{p}_{\text{Trump}}\)</span> and <span class="math inline">\(\hat{p}_{\text{Biden}}\)</span> in the last section. Calculate the standard errors <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> and <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span> to find the sampling distributions <span class="math inline">\(\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)\)</span>.</p>
-<p>Start by calculating the standard errors <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> and <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span>.</p>
-<p>Then use those sampling distributions to calculate 95% confidence intervals for the average proportion of flights that were delayed more than 15 minutes during each administration.</p>
-<section id="standard-error" class="level3">
-<h3 class="anchored" data-anchor-id="standard-error">Standard Error</h3>
-<p>group 1</p>
-<p>group 2</p>
+<p>Work through the steps below to infer the sampling distributions for <span class="math inline">\(\hat{p}_{\text{Trump}}\)</span> and <span class="math inline">\(\hat{p}_{\text{Biden}}\)</span> as <span class="math inline">\(\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)\)</span>.</p>
+<p>You calculated your point estimates for <span class="math inline">\(\hat{p}_{\text{Trump}}\)</span> and <span class="math inline">\(\hat{p}_{\text{Biden}}\)</span> in the last section. Now, you will calculate the standard errors <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> and <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span>.</p>
+<p>Use these sampling distributions to calculate 95% confidence intervals for the average proportion of flights that were delayed more than 15 minutes during each administration. Because these are proportions, use the <span class="math inline">\(Z\)</span> or standard normal distribution for inference.</p>
+<p><span class="math display">\[
+\text{95\% CI} = \text{point estimate} \pm Z^* \times SE
+\]</span></p>
+<section id="standard-errors" class="level3">
+<h3 class="anchored" data-anchor-id="standard-errors">Standard Errors</h3>
+<p>Use the formula for the standard error of a single proportion to calculate <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> below and save it as the variable <code>se_phat_trump</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>se_phat_trump <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_trump<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_trump))<span class="sc">/</span>n_trump)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01865431</code></pre>
+</div>
+</div>
+<p>Use the formula for the standard error of a single proportion to calculate <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span> below and save it as the variable <code>se_phat_biden</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>se_phat_biden <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_biden<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_biden))<span class="sc">/</span>n_biden)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01935976</code></pre>
+</div>
+</div>
 </section>
-<section id="z-for-95-ci" class="level3">
-<h3 class="anchored" data-anchor-id="z-for-95-ci"><span class="math inline">\(Z^*\)</span> for 95% CI</h3>
+<section id="critical-value" class="level3">
+<h3 class="anchored" data-anchor-id="critical-value">Critical Value</h3>
+<p>The <em>critical value</em> <span class="math inline">\(Z^*\)</span> for a 95% confidence interval from the <span class="math inline">\(Z\)</span> distribution indicates how many standard errors away from the mean proportion <span class="math inline">\(p\)</span> 95% of the data can be in this distribution.</p>
+<p><img role="img" src="data:image/png;base64,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" class="img-fluid"></p>
 </section>
 <section id="z-distribution-ci" class="level3">
 <h3 class="anchored" data-anchor-id="z-distribution-ci"><span class="math inline">\(Z\)</span>-Distribution CI</h3>
@@ -3639,11 +3661,11 @@ n(1-p) \ge 10
 <section id="summary-statistic" class="level3">
 <h3 class="anchored" data-anchor-id="summary-statistic">Summary Statistic</h3>
 </section>
-<section id="standard-error-1" class="level3">
-<h3 class="anchored" data-anchor-id="standard-error-1">Standard Error</h3>
+<section id="standard-error" class="level3">
+<h3 class="anchored" data-anchor-id="standard-error">Standard Error</h3>
 </section>
-<section id="z-for-95-ci-1" class="level3">
-<h3 class="anchored" data-anchor-id="z-for-95-ci-1"><span class="math inline">\(Z^*\)</span> for 95% CI</h3>
+<section id="z-for-95-ci" class="level3">
+<h3 class="anchored" data-anchor-id="z-for-95-ci"><span class="math inline">\(Z^*\)</span> for 95% CI</h3>
 </section>
 <section id="confidence-interval" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-interval">Confidence Interval</h3>
@@ -3676,13 +3698,13 @@ n(1-p) \ge 10
 </section>
 <section id="inference-1" class="level2">
 <h2 class="anchored" data-anchor-id="inference-1">Inference</h2>
-<section id="standard-error-2" class="level3">
-<h3 class="anchored" data-anchor-id="standard-error-2">Standard Error</h3>
+<section id="standard-error-1" class="level3">
+<h3 class="anchored" data-anchor-id="standard-error-1">Standard Error</h3>
 <p>group 1</p>
 <p>group 2</p>
 </section>
-<section id="z-for-95-ci-2" class="level3">
-<h3 class="anchored" data-anchor-id="z-for-95-ci-2"><span class="math inline">\(Z^*\)</span> for 95% CI</h3>
+<section id="z-for-95-ci-1" class="level3">
+<h3 class="anchored" data-anchor-id="z-for-95-ci-1"><span class="math inline">\(Z^*\)</span> for 95% CI</h3>
 </section>
 <section id="t-for-95-ci" class="level3">
 <h3 class="anchored" data-anchor-id="t-for-95-ci"><span class="math inline">\(T^*\)</span> for 95% CI</h3>
@@ -3719,8 +3741,8 @@ n(1-p) \ge 10
 <section id="summary-statistic-1" class="level3">
 <h3 class="anchored" data-anchor-id="summary-statistic-1">Summary Statistic</h3>
 </section>
-<section id="standard-error-3" class="level3">
-<h3 class="anchored" data-anchor-id="standard-error-3">Standard Error</h3>
+<section id="standard-error-2" class="level3">
+<h3 class="anchored" data-anchor-id="standard-error-2">Standard Error</h3>
 </section>
 <section id="t-for-95-ci-1" class="level3">
 <h3 class="anchored" data-anchor-id="t-for-95-ci-1"><span class="math inline">\(T^*\)</span> for 95% CI</h3>

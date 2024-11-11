@@ -14,10 +14,11 @@ df <- rbind(df_trump |> mutate(admin = 'Trump'),
                           sum(arr_flights, na.rm = T),
             avg_delay = sum(arr_delay, na.rm = T) / 
                           sum(arr_flights, na.rm = T),
-            .by = c('airport',
-                    'airport_name', 'admin'))
+            .by = c('admin', 'airport',
+                    'airport_name')) |>
+  drop_na()
 
-set.seed(3272); df_sample <- df[sample(1:nrow(df), 800),]
+set.seed(16554); df_sample <- df[sample(1:nrow(df), 800),]
 
 write_xlsx(df_sample, 'airline_delays.xlsx')
 
@@ -39,7 +40,7 @@ sd_b <- stats[stats$admin == 'Biden',][['sd']]
 
 prop_b <- stats[stats$admin == 'Biden',][['proportion']]
 
-n_b <- stats[stats$admin == 'Biden',][['flights']]
+n_b <- stats[stats$admin == 'Biden',][['n']]
 
 se_xb <- sd_b / sqrt(n_b)
 
@@ -59,7 +60,7 @@ sd_t <- stats[stats$admin == 'Trump',][['sd']]
 
 prop_t <- stats[stats$admin == 'Trump',][['proportion']]
 
-n_t <- stats[stats$admin == 'Trump',][['flights']]
+n_t <- stats[stats$admin == 'Trump',][['n']]
 
 se_xt <- sd_t / sqrt(n_t)
 
