@@ -1,6 +1,5 @@
 ---
-title: ""
-subtitle: ""
+title: "DATA1220-55 Cheat Sheet"
 author: "Sarah E. Grabinski"
 date: '`r Sys.Date()`'
 format: 
@@ -14,127 +13,196 @@ format:
       message: false
       warning: false
     geometry:
-      - top=15mm
-      - bottom=15mm
-      - left=15mm
-      - right=15mm
+      - top=20mm
+      - bottom=20mm
+      - left=20mm
+      - right=20mm
     fig-align: center
     self-contained: true
 ---
 
-# Terms
-
-Population
-: The entire group being researched (e.g. sample, study, target)
-
-Sample
-: A subset of the population, ideally random and large enough to be representative
-
-Sample size
-: The total number of subjects or observations in the sample, represented by $n$.
-
-Reliability
-: The consistency of the observed measurements from a sample. Data from a sample is considered reliable estimate of the sample statistic when there is very little bias or measurement error.
-
-Validity
-: The degree to which the sample statistic approximates the population parameter. A sample statistic is considered a valid estimate of the population parameter when the sample is large and/or representative of the study population.
-
-Median
-: The middle value in the data separating the top 50% from the bottom 50%. Found by arranging all values from lowest to highest and taking the middle value (or mean of the 2 middle values)
-
-Quartile
-: Each of the 4 equal groups into a which a population can be divided. The divisions between the quartiles are Q1 = 0.25 (25th percentile), Q2 = 0.50 (50th percentile, median), and Q3 = 0.75 (75th percentile).
-
-Interquartile Range (IQR)
-: The difference between the 3rd quartile (Q3 = 0.75) and the 1st quartile (Q1 = 0.25). The middle 50% of the data.
-
-Mean
-: Also called the average. The sum of all values in the sample divided by number of values in the sample. $\mu$ (mu) represents the mean of a population, and $\bar{x}$ represents the mean of a sample.
-
-Variance
-: Dispersion (spread) around the mean, determined by averaging the squared differences of all values from the mean. $\sigma^2$ (sigma squared) represents the variance of a population, and $s^2$ represents the variance of a sample.
-
-Standard Deviation
-: The square root of the variance. Also measures dispersion (spread) around the mean, but in the same units as the variable. $\sigma$ (sigma) represents the standard deviation of a population, and $s$ represents the standard deviation of a sample.
-
-Central Limit Theorem
-: The distribution of a sample statistic approximates the normal distribution $N\left(\text{population parameter}, \text{standard error}\right)$ as $n \to \infty$.
-
-Sampling Distribution
-: the distribution of theoretically possible sample statistics from all samples of size $n$ that can be taken from a population
-
-Standard Error
-: The standard deviation of a sampling distribution. Reflects how variable a sample statistic is expected to be from sample to sample.
-
-Confidence Interval
-: A range of values within which you expect the "true" population parameter to fall if you repeated the study an infinite number of times. The confidence level is the percentage of samples whose confidence interval would capture the "true" population parameter. A confidence intervals upper and lower bounds are found by calculating $\text{point estimate} \pm \text{critical value} \times \text{standard error}$.
-
-Critical Value
-: The number which defines the upper and lower bounds of a confidence interval from a given distribution. Its value corresponds to the probabilities $\alpha/2$ and $1-\alpha/2$.
-
-Null Hypothesis
-: There is no meaningful relationship in the data. Represented as $H_0$, gives the null distribution under which the hypothesis is tested.
-
-Alternate Hypothesis
-: There is something meaningful in the data. Represented as $H_A$, indicates whether the hypothesis test is one-sided (left- or right-tailed) or two-sided (both tails).
-
-Type I Error
-: The probability of rejecting the null hypothesis $H_0$ when $H_0$ is actually "true." Represented by $\alpha$.
-
-Type II Error
-: The probability of failing to reject the null hypothesis $H_0$ when $H_0$ is not actually "true."
-
 # Formulas
 
-## Proportion
+\begin{multicols}{2}
+
+\begin{center}
+
+\textbf{Sample Proportion}
 
 $$
 \hat{p} = \frac{\text{count}\left(\text{something}\right)}{\text{count}\left(\text{everything}\right)}=\frac{\text{count}\left(\text{something}\right)}{n}
 $$
 
-## Mean
+\end{center}
+
+\columnbreak
+
+\begin{center}
+
+\textbf{Sample Mean}
 
 $$
 \bar{x}=\frac{\sum_{i=1}^n x_i}{n}=\frac{x_1+x_2+...+x_n}{n}
 $$
 
-## Variance
+\end{center}
 
+\end{multicols}
 \begin{multicols}{2}
+
+\begin{center}
+
+\textbf{Population Variance}
+
 $$
 \sigma^2=\frac{\sum_{i=1}^n (x_i-\mu)^2}{n}
 $$
 
+\end{center}
+
 \columnbreak
+
+\begin{center}
+
+\textbf{Sample Variance}
 
 $$
 s^2=\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{n-1}
 $$
 
+\end{center}
+
 \end{multicols}
 
-## Standard Deviation
-
 \begin{multicols}{2}
+
+\begin{center}
+
+\textbf{Population Standard Deviation}
+
 $$
 \sigma=\sqrt{\frac{\sum_{i=1}^n (x_i-\mu)^2}{n}}
 $$
 
+\end{center}
+
 \columnbreak
+
+\begin{center}
+
+\textbf{Sample Standard Deviation}
 
 $$
 s=\sqrt{\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{n-1}}
 $$
 
+\end{center}
+
 \end{multicols}
 
+| Measure                    | SE      | Calculation |
+|:----------------------------:|:------------------------:|----------------|
+| Mean                       | $\text{SE}_{\bar{x}}$ |         $\frac{\sigma}{\sqrt{n}}\approx\frac{s}{\sqrt{n}}$       |
+| Paired Difference in Means |           $\text{SE}_{\bar{x}_{\text{difference}}}$             |       $\frac{\sigma_{\text{difference}}}{n}\approx\frac{s_{\text{difference}}}{n}$         |
+| Difference in Means        |            $\text{SE}_{\bar{x}_1-\bar{x}_2}$            |         $\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}\approx\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}$       |
+| Proportion                 |           $\text{SE}_{\hat{p}}$             |         $\sqrt{\frac{p(1-p)}{n}}\approx\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$       |
+| Difference in Proportions ($H_0 \colon p_1-p_2=\mu$)  |          $\text{SE}_{\hat{p}_1-\hat{p}_2}$              |      $\sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\approx\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$          |
+| Difference in Proportions ($H_0 \colon p_1-p_2=0$)  |          $\text{SE}_{\hat{p}_1-\hat{p}_2}$              |      $\sqrt{\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_1}+\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_2}}\approx\sqrt{\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_1}+\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_2}}$          |
+
+: Standard Errors of Sample Statistics {tbl-colwidths="[27, 10, 63]" .striped}
+
+# Terms
+
+Population
+
+:   The entire group being researched (e.g. sample, study, target)
+
+Sample
+
+:   A subset of the population, ideally random and large enough to be representative
+
+Sample size
+
+:   The total number of subjects or observations in the sample, represented by $n$.
+
+Reliability
+
+:   The consistency of the observed measurements from a sample. Data from a sample is considered reliable estimate of the sample statistic when there is very little bias or measurement error.
+
+Validity
+
+:   The degree to which the sample statistic approximates the population parameter. A sample statistic is considered a valid estimate of the population parameter when the sample is large and/or representative of the study population.
+
+Median
+
+:   The middle value in the data separating the top 50% from the bottom 50%. Found by arranging all values from lowest to highest and taking the middle value (or mean of the 2 middle values)
+
+Quartile
+
+:   Each of the 4 equal groups into a which a population can be divided. The divisions between the quartiles are Q1 = 0.25 (25th percentile), Q2 = 0.50 (50th percentile, median), and Q3 = 0.75 (75th percentile).
+
+Interquartile Range (IQR)
+
+:   The difference between the 3rd quartile (Q3 = 0.75) and the 1st quartile (Q1 = 0.25). The middle 50% of the data.
+
+Mean
+
+:   Also called the average. The sum of all values in the sample divided by number of values in the sample. $\mu$ (mu) represents the mean of a population, and $\bar{x}$ represents the mean of a sample.
+
+Variance
+
+:   Dispersion (spread) around the mean, determined by averaging the squared differences of all values from the mean. $\sigma^2$ (sigma squared) represents the variance of a population, and $s^2$ represents the variance of a sample.
+
+Standard Deviation
+
+:   The square root of the variance. Also measures dispersion (spread) around the mean, but in the same units as the variable. $\sigma$ (sigma) represents the standard deviation of a population, and $s$ represents the standard deviation of a sample.
+
+Central Limit Theorem
+
+:   The distribution of a sample statistic approximates the normal distribution $N\left(\text{population parameter}, \text{standard error}\right)$ as $n \to \infty$.
+
+Sampling Distribution
+
+:   the distribution of theoretically possible sample statistics from all samples of size $n$ that can be taken from a population
+
+Standard Error
+
+:   The standard deviation of a sampling distribution. Reflects how variable a sample statistic is expected to be from sample to sample.
+
+Confidence Interval
+
+:   A range of values within which you expect the "true" population parameter to fall if you repeated the study an infinite number of times. The confidence level is the percentage of samples whose confidence interval would capture the "true" population parameter. A confidence intervals upper and lower bounds are found by calculating $\text{point estimate} \pm \text{critical value} \times \text{standard error}$.
+
+Critical Value
+
+:   The number which defines the upper and lower bounds of a confidence interval from a given distribution. Its value corresponds to the probabilities $\alpha/2$ and $1-\alpha/2$.
+
+Null Hypothesis
+
+:   There is no meaningful relationship in the data. Represented as $H_0$, gives the null distribution under which the hypothesis is tested.
+
+Alternate Hypothesis
+
+:   There is something meaningful in the data. Represented as $H_A$, indicates whether the hypothesis test is one-sided (left- or right-tailed) or two-sided (both tails).
+
+Test Statistic
+
+:   The standardized value of the observed sample statistic under the null hypothesis $H_0$, used to find the p-value of a hypothesis test.
+
+Type I Error
+
+:   The probability of rejecting the null hypothesis $H_0$ when $H_0$ is actually "true." Represented by $\alpha$.
+
+Type II Error
+
+:   The probability of failing to reject the null hypothesis $H_0$ when $H_0$ is not actually "true."
 
 # Inference
 
 ## Means
 
 | Measure | Sample Statistic | Population Parameter |
-|--------------------------|------------------------|----------------------|
+|:--------------------------:|:------------------------:|:----------------------:|
 | Mean | $\bar{x}$ | $\mu$ |
 | Paired Difference in Means | $\bar{x}_{\text{difference}}$ | $\mu_{\text{difference}}$ |
 | Difference in Means | $\bar{x}_1-\bar{x}_2$ | $\mu_1-\mu_2$ |
@@ -154,7 +222,7 @@ $$
 
 ### Single Mean ($\bar{x}$) - One-Sample $t$-test
 
--   A ***1-sample $t$-test*** tests if the mean ($\mu$) of a population is different from a null value ($\mu_0$). 
+-   A ***1-sample*** $t$-test tests if the mean ($\mu$) of a population is different from a null value ($\mu_0$).
 
 -   Sample statistics $\bar{x}$ (mean) and $s$ (standard deviation) are used to infer the sampling distribution of the mean $\bar{x} \sim \operatorname{N}\left(\mu, SE_{\bar{x}}\right)$.
 
@@ -183,11 +251,10 @@ $$
 A critical value is calculated from the $t$ distribution in R using the function `qt()`. This function takes a probability `p` ($\alpha/2$ or $1-\alpha/2$) and degrees of freedom `df` ($n-1$).
 
 ```{r}
-qt(alpha/2, df = n-1)
+qt(alpha/2, df=n-1)
 
-qt(1-alpha/2, df = n-1)
+qt(1-alpha/2, df=n-1)
 ```
-
 
 #### Hypothesis Test
 
@@ -197,7 +264,19 @@ $$
 H_0 \colon \mu=\mu_0
 $$
 
-The alternate hypotheses of a 1-sample $t$-test state that the population mean $\mu$ is greater than, less than, or not equal to some null value $\mu_0$.
+The null distribution of $\bar{x}$ given the null hypothesis that $\mu=\mu_0$ is $\bar{x} \sim \text{N}\left(\mu_0, SE_{\bar{x}}\right)$. Again, the standard error of $\bar{x}$ is...
+
+$$
+\text{SE}_{\bar{x}}=\frac{s}{\sqrt{n}}
+$$
+
+A confidence interval for the mean under the null hypothesis is calculated as above, but using $\mu_0$ as the point estimate.
+
+$$
+\mu_0 \pm T_{\text{df}}^* \times \text{SE}_{\bar{x}}
+$$
+
+The alternate hypothesis of a 1-sample $t$-test states that the population mean $\mu$ is greater than, less than, or not equal to some null value $\mu_0$.
 
 -   $H_A \colon \mu < \mu_0$, left-tailed test (one-sided)
 
@@ -205,24 +284,48 @@ The alternate hypotheses of a 1-sample $t$-test state that the population mean $
 
 -   $H_A \colon \mu \ne \mu_0$, two-tailed test (two-sided)
 
-The null distribution 
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/t-test.png?raw=true)
+
+The test statistic $t$ (the $t$-statistic) calculates how many standard errors ($\text{SE}_{\bar{x}}$) away from the null hypothesis $\mu_0$ that the observed statistic $\bar{x}$ is.
+
+$$
+t=\frac{\bar{x}-\mu_0}{\text{SE}_{\bar{x}}}=\frac{\bar{x}-\mu_0}{\frac{s}{\sqrt{n}}}
+$$
+
+The $t$-statistic is used to find the probability of your sample having the mean $\bar{x}$ if the null distribution $\text{N}\left(\mu_0, \text{SE}_{\bar{x}}\right)$ were the "true" distribution in your population.
+
+The probability of the sample statistic $\bar{x}$ under the null hypothesis $\mu=\mu_0$ is calculated from the $t$ distribution in R using the function `pt()`. This function takes the test statistic $t$ (called `q` or quantile in R) and the degrees of freedom `df` ($n-1$) as parameters. This probability is known as the p-value.
+
+```{r}
+# left-tailed hypothesis test
+pt(-t, df=n-1)
+
+# right-tailed hypothesis test
+pt(t, df=n-1, lower.tail=F)
+
+# two-tailed hypothesis test
+pt(-t, df=n-1)*2
+pt(t, df=n-1, lower.tail=F)*2
+pt(-t, df=n-1)+pt(t, df=n-1, lower.tail=F)
+```
+
+A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}$ from the null sampling distribution $\bar{x} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}}\right)$ is very low.
+
+If the p-value for your $t$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), this is evidence that the null hypothesis $H_0 \colon \mu=\mu_0$ is not true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
+
+If the p-value for your $t$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon \mu=\mu_0$. You fail to reject the null hypothesis $H_0$.
 
 ### Paired Means
 
-
-
 ### Difference in Means
-
-
 
 ## Proportions
 
-| Measure | Sample Statistic | Population Parameter |
-|--------------------------|------------------------|----------------------|
-| Proportion | $\hat{p}$ | $p$ |
-| Difference in Proportions | $\hat{p}_1-\hat{p}_2$ | $p_1-p_2$ |
+| Measure                   | Sample Statistic      | Population Parameter |
+|---------------------------|-----------------------|----------------------|
+| Proportion                | $\hat{p}$             | $p$                  |
+| Difference in Proportions | $\hat{p}_1-\hat{p}_2$ | $p_1-p_2$            |
 
 : Sample Statistics for Inference of Population Proportions
 
 ### Single Proportion
-
