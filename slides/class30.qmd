@@ -2,7 +2,7 @@
 title: "Class 30"
 subtitle: "DATA1220-55, Fall 2024"
 author: "Sarah E. Grabinski"
-date: '2024-11-13'
+date: '2024-11-18'
 format:
   revealjs: 
     theme: default
@@ -37,3 +37,96 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 30 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
+## Analysis Tools (So Far) {.smaller}
+
+-   1-sample proportion- or $Z$-test for a single proportion
+
+-   2-sample proportion- or $Z$-test for the difference between 2 proportions
+
+-   Chi-squared test for independence between 2 categorical variables
+
+-   1 sample $t$-test for a single mean
+
+-   Paired means $t$-test for the difference between 2 means from same unit
+
+-   2-sample $t$-test for the difference between 2 unpaired means
+
+## Remaining Tools {.smaller}
+
+-   ANOVA test for the difference between 3+ unpaired means
+
+-   Pearson correlation test for dependence between 2 numeric variables
+
+-   Linear regression for dependence between 1 or more explanatory variables (numeric or categorical) and a numerical or binary (0/1) response variable (if time)
+
+-   Developing a research question with a testable hypothesis
+
+-   Communicating statistical methods and analysis results
+
+-   Data visualization tips & tricks, do's & dont's
+
+-   Statistical analysis best practice
+
+## ANOVA and the F-Test for Comparing 3+ Means {.smaller}
+
+-   The ANOVA test (***An***alysis ***o***f ***Va***riance) tests for a difference between the means $\mu_i$ of $k$ groups ($k \ge 3$).
+
+. . .
+
+-   Compares the ratio of the ***between-group*** variability in means to what would be expected based on the ***within-group*** variability in the means.
+
+    $$
+      \text{test statistic}=\frac{\text{Between-Groups Variability/Error}}{\text{Within-Groups Variability/Error}}
+    $$
+    
+. . .
+
+-   The probability of the observed difference in between-group variability vs within-group variability is calculated using the $F$ distribution.
+
+## ANOVA F-Test Hypotheses
+
+-   Null hypothesis: the mean outcome $\mu_i$ is the same across all $k$ groups, such that each group has the same population mean $\mu$.
+
+    $$
+      H_0 \colon \mu_1=\mu_2=...=\mu_k=\mu
+    $$
+    
+. . .
+
+-   Alternate hypothesis: at least one mean $\mu_i$ is different from the other $k-1$ means, such that there is no single population mean $\mu$.
+
+    $$
+      H_A \colon \text{At least 1 } \mu_i \ne \mu
+    $$
+
+## Assumptions {.smaller}
+
+1.    ***Independent & Identically Distributed Observations***: Observations are independent both within and between groups and identically distributed within groups.
+
+. . .
+
+2.    ***Sample size***: There are more than 30 observations in each of the $k$ groups ($n_i \ge 30$).
+
+. . .
+
+3.    ***Normality***: Especially when $n_i$ are small, data within each of the $k$ groups is normally distributed. This condition relaxes as $n_i$ increases ($n_i \to \infty$).
+
+. . .
+
+4.    ***Equal variance***: Within-group variance is approximately equal across the $k$ groups. This condition relaxes as sample sizes $n_i$ become more balanced between the $k$ groups ($\frac{n}{k} \to n_i$).
+
+## The F-Distribution
+
+-   2 degree of freedom parameters
+
+    -   The number of groups $k$ minus 1: $\text{df}_1=k-1$
+    
+    -   The number of observations $n$ minus the number of groups $k$: $\text{df}_2=n-k$
+    
+. . .
+    
+-   The larger the test statistic $F$, the less likely the observed data is under the null hypothesis
+
+. . .
+
+-   Like the Chi-squared ($\chi^2$) distribution, always take the upper tail probability for hypothesis tetsing

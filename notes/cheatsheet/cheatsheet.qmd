@@ -7,6 +7,7 @@ format:
     engine: knitr
     header-includes: 
       - \usepackage{multicol}
+      - \usepackage{fontspec}
     execute:
       echo: true
       eval: false
@@ -19,7 +20,11 @@ format:
       - right=20mm
     fig-align: center
     self-contained: true
+    toc: true
+    toc-depth: 6
 ---
+
+\pagebreak
 
 # Formulas
 
@@ -73,7 +78,6 @@ $$
 \end{center}
 
 \end{multicols}
-
 \begin{multicols}{2}
 
 \begin{center}
@@ -100,16 +104,16 @@ $$
 
 \end{multicols}
 
-| Measure                    | SE      | Calculation |
-|:----------------------------:|:------------------------:|----------------|
-| Mean                       | $\text{SE}_{\bar{x}}$ |         $\frac{\sigma}{\sqrt{n}}\approx\frac{s}{\sqrt{n}}$       |
-| Paired Difference in Means |           $\text{SE}_{\bar{x}_{\text{difference}}}$             |       $\frac{\sigma_{\text{difference}}}{n}\approx\frac{s_{\text{difference}}}{n}$         |
-| Difference in Means        |            $\text{SE}_{\bar{x}_1-\bar{x}_2}$            |         $\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}\approx\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}$       |
-| Proportion                 |           $\text{SE}_{\hat{p}}$             |         $\sqrt{\frac{p(1-p)}{n}}\approx\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$       |
-| Difference in Proportions ($H_0 \colon p_1-p_2=\mu$)  |          $\text{SE}_{\hat{p}_1-\hat{p}_2}$              |      $\sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\approx\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$          |
-| Difference in Proportions ($H_0 \colon p_1-p_2=0$)  |          $\text{SE}_{\hat{p}_1-\hat{p}_2}$              |      $\sqrt{\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_1}+\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_2}}\approx\sqrt{\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_1}+\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_2}}$          |
+| Measure | SE | Calculation |
+|:----------------------:|:----------------------:|------------------------|
+| Mean | $\text{SE}_{\bar{x}}$ | $\frac{\sigma}{\sqrt{n}}\approx$ $\frac{s}{\sqrt{n}}$ |
+| Paired Difference in Means | $\text{SE}_{\bar{x}_{\text{difference}}}$ | $\frac{\sigma_{\text{difference}}}{n}$ $\approx$ $\frac{s_{\text{difference}}}{n}$ |
+| Difference in Means | $\text{SE}_{\bar{x}_1-\bar{x}_2}$ | $\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}$ $\approx$ $\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}$ |
+| Proportion | $\text{SE}_{\hat{p}}$ | $\sqrt{\frac{p(1-p)}{n}}$ $\approx$ $\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$ |
+| Difference in Proportions ($H_0 \colon p_1-p_2=\mu$) | $\text{SE}_{\hat{p}_1-\hat{p}_2}$ | $\sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}$ $\approx$ $\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$ |
+| Difference in Proportions ($H_0 \colon p_1-p_2=0$) | $\text{SE}_{\hat{p}_1-\hat{p}_2}$ | $\sqrt{\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_1}+\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_2}}$ $\approx$ $\sqrt{\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_1}+\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_2}}$ |
 
-: Standard Errors of Sample Statistics {tbl-colwidths="[27, 10, 63]" .striped}
+: Standard Errors of Sample Statistics {tbl-colwidths="\[27, 10, 63\]" .striped}
 
 # Terms
 
@@ -197,38 +201,36 @@ Type II Error
 
 :   The probability of failing to reject the null hypothesis $H_0$ when $H_0$ is not actually "true."
 
-# Inference
-
-## Means
+# Means
 
 | Measure | Sample Statistic | Population Parameter |
-|:--------------------------:|:------------------------:|:----------------------:|
+|:----------------------:|:----------------------:|:----------------------:|
 | Mean | $\bar{x}$ | $\mu$ |
 | Paired Difference in Means | $\bar{x}_{\text{difference}}$ | $\mu_{\text{difference}}$ |
 | Difference in Means | $\bar{x}_1-\bar{x}_2$ | $\mu_1-\mu_2$ |
 | Standard Deviation | $s$ | $\sigma$ |
 
-: Sample Statistics for Inference of Population Means
+: Sample Statistics for Analysis of Population Means
 
-### Assumptions
+## Assumptions
 
 -   ***Independence***: sample observations are independent (i.e. random sample).
 
--   ***Sample size***: the sample size should be greater than 30 ($n \ge 30$) with no extreme outliers.
+-   ***Sample size***: the sample size should be greater than 30 ($n \ge 30$).
 
--   ***Normality***: when the sample size $n$ is small, observations come from a normally distribution population. This condition relaxes as $n \to \infty$.
+-   ***Normality***: when the sample size $n$ is small, observations come from a normally distributed population  with no extreme outliers. This condition relaxes as $n \to \infty$.
 
 -   ***Validity***: sample statistics approximate the population parameters ($\bar{x} \approx \mu$, $s \approx \sigma$)
 
-### Single Mean ($\bar{x}$) - One-Sample $t$-test
+## Single Mean (One-Sample t-Test)
 
--   A ***1-sample*** $t$-test tests if the mean ($\mu$) of a population is different from a null value ($\mu_0$).
+-   A 1-sample $t$-test tests if the mean ($\mu$) of a population is different from a null value ($\mu_0$).
 
 -   Sample statistics $\bar{x}$ (mean) and $s$ (standard deviation) and the sample size $n$ are used to infer the sampling distribution of the mean $\bar{x} \sim \operatorname{N}\left(\mu, SE_{\bar{x}}\right)$.
 
--   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter $\text{degrees of freedom (df)}=n-1$.
+-   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter degrees of freedom $\text{df}=n-1$.
 
-#### Confidence Interval
+### Confidence Interval
 
 The confidence interval for a single population mean $\mu$ is calculated using the point estimate $\bar{x}$.
 
@@ -236,13 +238,13 @@ $$
 \bar{x} \pm T_{\text{df}}^* \times SE_{\bar{x}}
 $$
 
-The standard error of $\bar{x}$ is estimated from the observed standard deviation $s$ and the sample size $n$.
+The standard error of $\bar{x}$ is estimated from the sample standard deviation $s$ and the sample size $n$.
 
 $$
 \operatorname{SE}_{\bar{x}}=\frac{\sigma}{\sqrt{n}}\approx\frac{s}{\sqrt{n}}
 $$
 
-The critical value from the $t$ distribution with degrees of freedom $\text{df}=n-1$ is...
+The critical value for the confidence level $1-\alpha$ from a $t$ distribution with degrees of freedom $\text{df}=n-1$ is...
 
 $$
 T_{\text{df}}^*=T_{\text{df},\alpha/2}=T_{\text{df}, 1-\alpha/2}
@@ -256,7 +258,7 @@ qt(alpha/2, df=n-1)
 qt(1-alpha/2, df=n-1)
 ```
 
-#### Hypothesis Test
+### Hypothesis Test
 
 The null hypothesis for a 1-sample $t$-test states that the population mean $\mu$ is equal to some null value $\mu_0$.
 
@@ -284,7 +286,7 @@ The alternate hypothesis of a 1-sample $t$-test states that the population mean 
 
 -   $H_A \colon \mu \ne \mu_0$, two-tailed test (two-sided)
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/t-test.png?raw=true)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/one-sample-t-test.png?raw=true)
 
 The test statistic $t$ (the $t$-statistic) calculates how many standard errors ($\text{SE}_{\bar{x}}$) away from the null hypothesis $\mu_0$ that the observed statistic $\bar{x}$ is.
 
@@ -309,23 +311,23 @@ pt(t, df=n-1, lower.tail=F)*2
 pt(-t, df=n-1)+pt(t, df=n-1, lower.tail=F)
 ```
 
-A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}$ from the null sampling distribution $\bar{x}_0 \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_0}\right)$ is very low.
+A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}$ from the null sampling distribution $\bar{x}_0 \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}}\right)$ is very low.
 
 If the p-value for your $t$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), then this is sufficient evidence that the null hypothesis $H_0 \colon \mu=\mu_0$ may not be true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
 
 If the p-value for your $t$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon \mu=\mu_0$. You fail to reject the null hypothesis $H_0$.
 
-### Paired Means
+## Difference in Paired Means (Paired Means t-Test)
 
--   A ***paired means*** $t$-test is a special instance of a 1-sample $t$-test. It tests if the mean of the difference between 2 paired measures ($\mu_{\text{difference}}$) in a population is different from a null value ($\mu_0$). Typically, $\mu_0=0$.
+-   A paired means $t$-test is a special instance of a one-sample $t$-test. It tests if the mean of the difference $\mu_{\text{difference}}$ between 2 paired measures $\mu_1$ and $\mu_2$ ($\mu_{\text{difference}}=\mu_1-\mu_2$) in a population is different from a null value ($\mu_0$). Typically, $\mu_0=0$.
 
--  Sample statistics mean $\bar{x}_{\text{difference}}$ and standard deviation $s_{\text{difference}}$ are calculated using the difference between the 2 paired measures $x_{\text{difference}}=x_1-x_2$, not the individual measures $x_1$ or $x_2$.
+-   Sample statistics mean $\bar{x}_{\text{difference}}$ and standard deviation $s_{\text{difference}}$ are calculated using the difference between the 2 paired measures $x_{\text{difference}}=x_1-x_2$, not the individual measures $x_1$ or $x_2$.
 
 -   Sample statistics $\bar{x}_{\text{difference}}$ (mean) and $s_{\text{difference}}$ (standard deviation) and the sample size $n$ are used to infer the sampling distribution of the mean $\bar{x}_{\text{difference}} \sim \operatorname{N}\left(\mu_{\text{difference}}, SE_{\bar{x}_{\text{difference}}}\right)$.
 
--   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter $\text{degrees of freedom (df)}=n-1$.
+-   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter degrees of freedom $\text{df}=n-1$.
 
-#### Confidence Interval
+### Confidence Interval
 
 The confidence interval for the population difference in paired means $\mu_{\text{difference}}$ is calculated using the point estimate $\bar{x}_{\text{difference}}$.
 
@@ -333,7 +335,7 @@ $$
 \bar{x}_{\text{difference}} \pm T_{\text{df}}^* \times SE_{\bar{x}_{\text{difference}}}
 $$
 
-The standard error of $\bar{x}_{\text{difference}}$ is estimated from the observed standard deviation $s_{\text{difference}}$ and the sample size $n$.
+The standard error of $\bar{x}_{\text{difference}}$ is estimated from the sample standard deviation $s_{\text{difference}}$ and the sample size $n$.
 
 $$
 \operatorname{SE}_{\bar{x}_{\text{difference}}}=\frac{\sigma_{\text{difference}}}{\sqrt{n}}\approx\frac{s_{\text{difference}}}{\sqrt{n}}
@@ -353,7 +355,7 @@ qt(alpha/2, df=n-1)
 qt(1-alpha/2, df=n-1)
 ```
 
-#### Hypothesis Test
+### Hypothesis Test
 
 The null hypothesis for a paired means $t$-test states that the population mean $\mu_{\text{difference}}$ is equal to some null value $\mu_0$. Typically, $\mu_0=0$.
 
@@ -361,10 +363,10 @@ $$
 H_0 \colon \mu_{\text{difference}}=\mu_0
 $$
 
-The null distribution of the sample mean $\bar{x}__{\text{difference}0}$, given the null hypothesis that $\mu_{\text{difference}}=\mu_0$, is $\bar{x}_{\text{difference}0} \sim \text{N}\left(\mu_0, SE_{\bar{x}_{\text{difference}}}\right)$. The standard error of the null sample mean $\bar{x}_{\text{difference}0}$ is the same as the standard error of the observed sample mean $\bar{x}_{\text{difference}}$.
+The null distribution of the sample mean $\bar{x}_{\text{difference}}$, given the null hypothesis that $\mu_{\text{difference}}=\mu_0$, is $\bar{x}_{\text{difference}} \sim \text{N}\left(\mu_0, SE_{\bar{x}_{\text{difference}}}\right)$. The standard error of the null mean is the same as the standard error of the observed sample mean $\bar{x}_{\text{difference}}$.
 
 $$
-\text{SE}_{\bar{x}_{\text{difference}0}}=\text{SE}_{\bar{x}_{\text{difference}}}=\frac{\sigma_{\text{difference}}}{\sqrt{n}} \approx \frac{s_{\text{difference}}}{\sqrt{n}}
+\text{SE}_{\bar{x}_{\text{difference}}}=\frac{\sigma_{\text{difference}}}{\sqrt{n}} \approx \frac{s_{\text{difference}}}{\sqrt{n}}
 $$
 
 A confidence interval for the null population mean $\mu_{\text{difference}}$ under the null hypothesis $H_0 \colon \mu_{\text{difference}}=\mu_0$ is calculated using $\mu_0$ as the point estimate.
@@ -373,7 +375,7 @@ $$
 \mu_0 \pm T_{\text{df}}^* \times \text{SE}_{\bar{x}_{\text{difference}}}
 $$
 
-The alternate hypothesis of a 1-sample $t$-test states that the population mean $\mu_{\text{difference}}$ is greater than, less than, or not equal to some null value $\mu_0$.
+The alternate hypothesis of a paired means $t$-test states that the population mean $\mu_{\text{difference}}$ is greater than, less than, or not equal to some null value $\mu_0$.
 
 -   $H_A \colon \mu_{\text{difference}} < \mu_0$, left-tailed test (one-sided)
 
@@ -381,7 +383,7 @@ The alternate hypothesis of a 1-sample $t$-test states that the population mean 
 
 -   $H_A \colon \mu_{\text{difference}} \ne \mu_0$, two-tailed test (two-sided)
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/t-test.png?raw=true)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/paired-means-t-test.png?raw=true)
 
 The test statistic $t$ (the $t$-statistic) calculates how many standard errors ($\text{SE}_{\bar{x}_{\text{difference}}}$) away from the null hypothesis $\mu_0$ that the observed statistic $\bar{x}_{\text{difference}}$ is.
 
@@ -391,7 +393,7 @@ $$
 
 The $t$-statistic is used to find the probability of your sample having the mean $\bar{x}_{\text{difference}}$ if the null distribution $\text{N}\left(\mu_0, \text{SE}_{\bar{x}_{\text{difference}}}\right)$ were the "true" distribution in your population for $\bar{x}_{\text{difference}}$.
 
-The probability of the sample statistic $\bar{x}_{\text{difference}}$ under the null hypothesis $\mu_{\text{difference}}=\mu_0$ and $\bar{x}_{\text{difference}0} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_{\text{difference}}}\right)$ is calculated from the $t$ distribution in R using the function `pt()`. This function takes the test statistic $t$ (called `q` or quantile in R) and the degrees of freedom `df` ($n-1$) as parameters. This probability is known as the p-value.
+The probability of the sample statistic $\bar{x}_{\text{difference}}$ under the null hypothesis $\mu_{\text{difference}}=\mu_0$ and $\bar{x}_{\text{difference0}} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_{\text{difference}}}\right)$ is calculated from the $t$ distribution in R using the function `pt()`. This function takes the test statistic $t$ (called `q` or quantile in R) and the degrees of freedom `df` ($n-1$) as parameters. This probability is known as the p-value.
 
 ```{r}
 # left-tailed hypothesis test
@@ -406,13 +408,13 @@ pt(t, df=n-1, lower.tail=F)*2
 pt(-t, df=n-1)+pt(t, df=n-1, lower.tail=F)
 ```
 
-A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}_{\text{difference}}$ from the null sampling distribution $\bar{x}_{\text{difference}0} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_{\text{difference}}}\right)$ is very low.
+A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample mean $\bar{x}_{\text{difference}}$ from the null sampling distribution $\bar{x}_{\text{difference0}} \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_{\text{difference}}}\right)$ is very low.
 
 If the p-value for your $t$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), then this is sufficient evidence that the null hypothesis $H_0 \colon \mu_{\text{difference}}=\mu_0$ may not be true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
 
 If the p-value for your $t$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon \mu_{\text{difference}}=\mu_0$. You fail to reject the null hypothesis $H_0$.
 
-### Two Means
+## Difference Between 2 Means (Two-Sample t-Test)
 
 -   A ***2-sample*** $t$-test tests if the difference between 2 means ($\mu_1-\mu_2$) of a population is different from a null value ($\mu_0$). Often, $\mu_0=0$.
 
@@ -420,7 +422,7 @@ If the p-value for your $t$-statistic is greater than $\alpha$, this is not suff
 
 -   To account for using $s \approx \sigma$ in the standard error, confidence intervals and hypothesis tests are based on the $T$ distribution (Student's $t$) with the parameter $\text{degrees of freedom (df)}=\text{min}(n_1, n_2)-1$.
 
-#### Confidence Interval
+### Confidence Interval
 
 The confidence interval for a difference in means $\mu_1-\mu_2$ is calculated using the point estimate $\bar{x}_1-\bar{x}_2$.
 
@@ -448,7 +450,7 @@ qt(alpha/2, df=min(n1, n2)-1)
 qt(1-alpha/2, df=min(n1, n2)-1)
 ```
 
-#### Hypothesis Test
+### Hypothesis Test
 
 The null hypothesis for a 2-sample $t$-test states that the population difference in means $\mu_1-\mu_2$ is equal to some null value $\mu_0$. Often, $\mu_0=0$.
 
@@ -476,7 +478,7 @@ The alternate hypothesis of a 2-sample $t$-test states that the population diffe
 
 -   $H_A \colon \mu_1-\mu_2 \ne \mu_0$, two-tailed test (two-sided)
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/t-test.png?raw=true)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/two-sample-t-test.png?raw=true)
 
 The test statistic $t$ (the $t$-statistic) calculates how many standard errors ($\text{SE}_{\bar{x}_1-\bar{x}_2}$) away from the null hypothesis $\mu_0$ that the observed statistic $\bar{x}_1-\bar{x}_2$ is.
 
@@ -507,22 +509,22 @@ pt(t, df=min(n1, n2)-1, lower.tail=F)*2
 pt(-t, df=min(n1, n2)-1)+pt(t, df=min(n1, n2)-1, lower.tail=F)
 ```
 
-A small p-value indicates that the probability of taking  samples of size $n_1$ and $n_2$ with your observed difference in sample means $\bar{x}_1-\bar{x}_2$ from the null sampling distribution $\bar{x}_1-\bar{x}_2 \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_1-\bar{x}_2}\right)$ is very low.
+A small p-value indicates that the probability of taking samples of size $n_1$ and $n_2$ with your observed difference in sample means $\bar{x}_1-\bar{x}_2$ from the null sampling distribution $\bar{x}_1-\bar{x}_2 \sim \text{N}\left(\mu_0, \text{SE}_{\bar{x}_1-\bar{x}_2}\right)$ is very low.
 
 If the p-value for your $t$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), then this is sufficient evidence that the null hypothesis $H_0 \colon \mu_1-\mu_2=\mu_0$ may not be true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
 
 If the p-value for your $t$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon \mu_1-\mu_2=\mu_0$. You fail to reject the null hypothesis $H_0$.
 
-## Proportions
+# Proportions
 
 | Measure                   | Sample Statistic      | Population Parameter |
 |---------------------------|-----------------------|----------------------|
 | Proportion                | $\hat{p}$             | $p$                  |
 | Difference in Proportions | $\hat{p}_1-\hat{p}_2$ | $p_1-p_2$            |
 
-: Sample Statistics for Inference of Population Proportions
+: Sample Statistics for Analysis of Population Proportions
 
-### Assumptions
+## Assumptions
 
 -   ***Independence***: sample observations are independent (i.e. random sample).
 
@@ -530,7 +532,7 @@ If the p-value for your $t$-statistic is greater than $\alpha$, this is not suff
 
 -   ***Validity***: sample statistics approximate the population parameters ($\bar{x} \approx \mu$, $s \approx \sigma$)
 
-### Single Proportion ($\hat{p}$) - One-Sample $Z$-test
+## Single Proportion (One-Sample Proportion- or Z-Test)
 
 -   A ***1-sample*** $Z$-test tests if the mean proportion ($p$) for a population is different from a null value ($p_0$).
 
@@ -538,7 +540,7 @@ If the p-value for your $t$-statistic is greater than $\alpha$, this is not suff
 
 -   Confidence intervals and hypothesis tests for proportions are based on the $Z$ distribution (standard normal).
 
-#### Confidence Interval
+### Confidence Interval
 
 The confidence interval for a population proportion $p$ is estimated from the sample proportion $\hat{p}$.
 
@@ -566,7 +568,7 @@ qnorm(alpha/2)
 qnorm(1-alpha/2)
 ```
 
-#### Hypothesis Test
+### Hypothesis Test
 
 The null hypothesis of a 1-sample proportion- or $Z$-test states that the population proportion $p$ is equal to some null value $p_0$.
 
@@ -594,7 +596,7 @@ The alternate hypothesis of a 1-sample $Z$-test states that the population propo
 
 -   $H_A \colon p \ne p_0$, two-tailed test (two-sided)
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/z-test.png?raw=true)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/one-sample-prop-test.png?raw=true)
 
 The test statistic $Z$ (the $Z$-statistic) calculates how many standard errors ($\text{SE}_{\hat{p}_0}$) away from the null hypothesis $p_0$ that the observed statistic $\hat{p}$ is.
 
@@ -625,15 +627,15 @@ If the p-value for your $Z$-statistic is less than your significance threshold $
 
 If the p-value for your $Z$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon p=p_0$. You fail to reject the null hypothesis $H_0$.
 
-### Difference in Proportions ($\hat{p}_1-\hat{p}_2$) - Two-Sample $Z$-test
+## Difference in Proportions (Two-Sample Proportion- or Z-Test)
 
--   A ***2-sample*** $Z$-test for proportions tests if the difference ($p_1-p_2$) between the mean proportion in population 1 ($p_1$) and the mean proportion in population 2 ($p_2$) is different from a null value $\mu$. Typically, $\mu=0$.
+-   A ***2-sample*** $Z$-test for a difference in proportions tests if the difference ($p_1-p_2$) between the mean proportion in population 1 ($p_1$) and the mean proportion in population 2 ($p_2$) is different from a null value $\mu$. Typically, $\mu=0$.
 
 -   Sample statistics $\hat{p}_1$ and $\hat{p}_2$ (proportions) and sample size $n$ are used to infer the sampling distribution of the difference $\hat{p}_1-\hat{p}_2 \sim \operatorname{N}\left(p_1-p_2, SE_{\hat{p}_1-\hat{p}_2}\right)$.
 
 -   Confidence intervals and hypothesis tests for the difference between proportions are based on the $Z$ distribution (standard normal).
 
-#### Confidence Interval
+### Confidence Interval
 
 The confidence interval for a difference in population proportions $p_1-p_2$ is estimated from the difference in sample proportions $\hat{p}_1-\hat{p}_2$.
 
@@ -644,7 +646,10 @@ $$
 The standard error of $\hat{p}_1-\hat{p}_2$ is estimated from the observed sample proportions, $\hat{p}_1$ and $\hat{p}_2$, and the sample sizes, $n_1$ and $n_2$.
 
 $$
-\operatorname{SE}_{\hat{p}}=\sqrt{\frac{p(1-p)}{n}}\approx\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\begin{aligned}
+\operatorname{SE}_{\hat{p}_1-\hat{p}_2}&=\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}} \\
+&\approx \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+\end{aligned}
 $$
 
 The critical value from the $Z$ distribution is...
@@ -653,7 +658,7 @@ $$
 Z^*=Z_{\alpha/2}=Z_{1-\alpha/2}
 $$
 
-A critical value is calculated from the $Z$ distribution in R using the function `qnorm()`. This function takes a probability `p` ($\alpha/2$ or $1-\alpha/2$), a `mean` (default = 0), and a standard deviation (`sd`, default = 1).
+A critical value is calculated from the $Z$ distribution in R using the function `qnorm()`. This function takes a probability `p` ($\alpha/2$ or $1-\alpha/2$), a `mean` (default = 0), and a standard deviation (`sd`, default = 1). You do not need to include the `mean` and `sd` parameters when you are using the default standard normal ($Z$) distribution.
 
 ```{r}
 qnorm(alpha/2)
@@ -661,27 +666,43 @@ qnorm(alpha/2)
 qnorm(1-alpha/2)
 ```
 
-#### Hypothesis Test
+### Hypothesis Test
 
-The null hypothesis of a 1-sample proportion- or $Z$-test states that the population proportion $p$ is equal to some null value $p_0$.
-
-$$
-H_0 \colon p=p_0
-$$
-
-The null distribution of $\hat{p}$ given the null hypothesis that $p=p_0$ is $\hat{p} \sim \text{N}\left(p_0, SE_{\hat{p}}\right)$. The standard error of $\hat{p}$ under the null hypothesis $H_0 \colon p=p_0$ is...
+The null hypothesis of a 2-sample proportion- or $Z$-test states that the difference in population population proportions $p_1-p_2$ is equal to some null value $p_0$.
 
 $$
-\text{SE}_{\hat{p}_0}=\sqrt{\frac{p_0(1-p_0)}{n}}
+H_0 \colon p_1-p_2=p_0
 $$
 
-A confidence interval for the mean proportion under the null hypothesis is calculated as before, but using $p_0$ as the point estimate and $\text{SE}_{\hat{p}}$ under the null hypothesis.
+The null distribution of $\hat{p}_1-\hat{p}_2$ given the null hypothesis that $p_1-p_2=p_0$ is $\hat{p}_1-\hat{p}_2 \sim \text{N}\left(p_0, SE_{\hat{p}_1-\hat{p}_2}\right)$. The standard error calculation for the null distribution of $\hat{p}_1-\hat{p}_2$ depends on the null hypothesis $H_0$.
+
+When the null hypothesis is that the difference between proportions is some null value $p_0$ ($H_0 \colon p_1-p_2=p_0$), $\hat{p}_1$ is used for $p_1$ and $\hat{p}_2$ for $p_2$ in the standard error calculation.
 
 $$
-p_0 \pm Z^* \times \text{SE}_{\hat{p}_0}
+\text{When } H_0 \colon p_1-p_2=p_0, \\
+\begin{aligned}
+\text{SE}_{\hat{p}_1-\hat{p}_2}&= \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}} \\
+&\approx \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+\end{aligned}
 $$
 
-The alternate hypothesis of a 1-sample $Z$-test states that the population proportion $p$ is greater than, less than, or not equal to some null value $p_0$.
+However, when the null hypothesis is that there is no difference between proportions ($H_0 \colon p_1-p_2=0$), the pooled proportion $\hat{p}_{\text{pool}}$ across both groups is used for $p_1$ and $p_2$ in the standard error calculation.
+
+$$
+\text{When } H_0 \colon p_1-p_2=0, \\
+\begin{aligned}
+\text{SE}_{\hat{p}_1-\hat{p}_2}&= \sqrt{\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_1}+\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_2}} \\
+&\approx \sqrt{\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_1}+\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_2}}
+\end{aligned}
+$$
+
+A confidence interval for the difference in proportions under the null hypothesis is calculated using $p_0$ as the point estimate and $\text{SE}_{\hat{p}_1-\hat{p}_2}$ under the null hypothesis.
+
+$$
+p_0 \pm Z^* \times \text{SE}_{\hat{p}_1-\hat{p}_2}
+$$
+
+The alternate hypothesis of a 2-sample proportion- or $Z$-test states that the difference in population proportions $p_1-p_2$ is greater than, less than, or not equal to some null value $p_0$.
 
 -   $H_A \colon p < p_0$, left-tailed test (one-sided)
 
@@ -689,17 +710,20 @@ The alternate hypothesis of a 1-sample $Z$-test states that the population propo
 
 -   $H_A \colon p \ne p_0$, two-tailed test (two-sided)
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/z-test.png?raw=true)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/notes/cheatsheet/images/two-sample-prop-test.png?raw=true)
 
-The test statistic $Z$ (the $Z$-statistic) calculates how many standard errors ($\text{SE}_{\hat{p}}$) away from the null hypothesis $p_0$ that the observed statistic $\hat{p}$ is.
+The test statistic $Z$ (the $Z$-statistic) calculates how many standard errors ($\text{SE}_{\hat{p}_1-\hat{p}_2}$) away from the null hypothesis $p_0$ that the observed statistic $\hat{p}_1-\hat{p}_2$ is.
 
 $$
-Z=\frac{\hat{p}-p_0}{\text{SE}_{\hat{p}_0}}=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}
+Z=\frac{(\hat{p}_1-\hat{p}_2)-p_0}{\text{SE}_{\hat{p}_1-\hat{p}_2}}=\begin{cases}
+\frac{(\hat{p}_1-\hat{p}_2)-p_0}{\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}} & \text{when } H_0 \colon p_1-p_2=p_0 \\
+\frac{\hat{p}_1-\hat{p}_2}{\sqrt{\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_1}+\frac{\hat{p}_{\text{pool}}(1-\hat{p}_{\text{pool}})}{n_2}}} & \text{when } H_0 \colon p_1-p_2=0 \\
+\end{cases}
 $$
 
-The $Z$-statistic is used to find the probability of your sample having the mean proportion $\hat{p}$ if the null distribution $\text{N}\left(p_0, \text{SE}_{\hat{p}_0}\right)$ were the "true" distribution in your population.
+The $Z$-statistic is used to find the probability of your samples having the difference in proportions $\hat{p}_1-\hat{p}_2$ if the null distribution $\text{N}\left(p_0, \text{SE}_{\hat{p}_1-\hat{p}_2}\right)$ were the "true" distribution in your population.
 
-The probability of the sample statistic $\hat{p}$ under the null hypothesis $p=p_0$ is calculated from the $Z$ distribution in R using the function `pnorm()`. This function takes the test statistic $Z$ (called `q` or quantile in R), the `mean` (default = 0), and the standard deviation (`sd`, default = 1) as parameters. This probability is known as the p-value.
+The probability of the sample statistic $\hat{p}_1-\hat{p}_2$ under the null hypothesis $p_1-p_2=p_0$ is calculated from the $Z$ distribution in R using the function `pnorm()`. This function takes the test statistic $Z$ (called `q` or quantile in R), the `mean` (default = 0), and the standard deviation (`sd`, default = 1) as parameters. This probability is known as the p-value. You do not need to include the `mean` and `sd` parameters when you are using the default standard normal ($Z$) distribution.
 
 ```{r}
 # left-tailed hypothesis test
@@ -714,8 +738,8 @@ pnorm(Z, lower.tail=F)*2
 pnorm(-Z)+pt(Z, lower.tail=F)
 ```
 
-A small p-value indicates that the probability of taking a sample of size $n$ with your observed sample proportion $\hat{p}$ from the null sampling distribution $\hat{p}_0 \sim \text{N}\left(p_0, \text{SE}_{\hat{p}_0}\right)$ is very low.
+A small p-value indicates that the probability of taking samples of size $n_1$ and $n_2$ with your observed difference in sample proportions $\hat{p}_1-\hat{p}_2$ from the null sampling distribution $\hat{p}_1-\hat{p}_2 \sim \text{N}\left(p_0, \text{SE}_{\hat{p}_1-\hat{p}_2}\right)$ is very low.
 
-If the p-value for your $Z$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), this is evidence that the null hypothesis $H_0 \colon p=p_0$ is not true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
+If the p-value for your $Z$-statistic is less than your significance threshold $\alpha$ (i.e. the Type I Error Rate), this is considered sufficient evidence that the null hypothesis $H_0 \colon p_1-p_2=p_0$ may not be true. Reject the null hypothesis $H_0$ and accept the alternate hypothesis $H_A$.
 
-If the p-value for your $Z$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon p=p_0$. You fail to reject the null hypothesis $H_0$.
+If the p-value for your $Z$-statistic is greater than $\alpha$, this is not sufficient evidence against the null hypothesis $H_0 \colon p_1-p_2=p_0$. You fail to reject the null hypothesis $H_0$.
