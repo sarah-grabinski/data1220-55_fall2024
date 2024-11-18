@@ -1,16 +1,23 @@
 ---
 title: "Homework 4"
-author: "YOURNAMEHERE"
+subtitle: "Answer Key"
+author: "Sarah E. Grabinski"
 date: "`r Sys.Date()`"
 format: 
   html:
     toc: true
     theme: journal
     self-contained: true
+  pdf:
+    toc: true
+    self-contained: true
+    keep-tex: true
+    header-includes:
+      - \usepackage{xcolor}
 editor: visual
 ---
 
-# Instructions  {.unnumbered}
+# Instructions {.unnumbered}
 
 *You work for Secretary of Transportation Pete Buttigieg, and he has asked you to prepare a year end report comparing flight delays during the Trump administration and the Biden administration. He would like to know on average what percentage of flights were delayed and how long they were delayed for during each administration. He would also know if there was a meaningful difference between the two administrations.*
 
@@ -30,19 +37,22 @@ editor: visual
 
 # Codebook {.unnumbered}
 
+| Variable | Description | Type |
+|------------------------|------------------------|------------------------|
+| `admin` | Administration name (Biden or Trump) | Categorical, binary |
+| `flights` | Total count of flights through airport | Numeric, continuous |
+| `delayed` | total count of delayed flights through airport | Numeric, continuous |
+| `avg_delay` | Average delay in minutes for airport | Numeric, continuous |
 
+: Variables
 
-# Packages  {.unnumbered}
+# Packages {.unnumbered}
 
-Load any packages required for your analysis below using the `library()` function. 
+Load any packages required for your analysis below using the `library()` function.
 
 ```{r load_packages}
-# library()
-# library(janitor)
 library(readxl)
-# library(ggplot2)
 library(dplyr)
-# library(tidyverse)
 ```
 
 ## Load Data {.unnumbered}
@@ -67,7 +77,7 @@ file_path <- paste(folder_path,
                    sep = '/')
 ```
 
-Now that you have made a path to your file, load it using a function that will handle Excel spreadsheets ending in `.xlsx`. 
+Now that you have made a path to your file, load it using a function that will handle Excel spreadsheets ending in `.xlsx`.
 
 ```{r}
 delays <- read_xlsx(file_path)
@@ -75,7 +85,17 @@ delays <- read_xlsx(file_path)
 
 # Inspect data
 
-In the code chunk below, use one of the functions we've learned to summarize your data set. 
+In the code chunk below, use one of the functions we've learned to summarize your data set.
+
+```{r}
+summary(delays)
+```
+
+Write 2-3 sentences describing anything you learned from this summary.
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**From this summary, you can tell which variables are numeric and which are categorical or text. You can also see the minimums and maximums, the values of the quartiles, and the mean.**
+:::
 
 ```{r}
 Hmisc::describe(delays)
@@ -83,31 +103,37 @@ Hmisc::describe(delays)
 
 Write 2-3 sentences describing anything you learned from this summary.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**Like with the `summary()` function from base R,** **you can tell which variables are numeric and which are categorical or text. You can also see the minimums and maximums, the values of the quartiles, and the mean.**
 
+**An important feature of this description is that it includes the total number of observations, the number of missing observations, and the number of distinct values in each variable. You also get the values of the 5th, 10th, 90th, and 95th percentiles, which can help give an idea of skew in data. You also get the lowest and highest 5 values, which can highlight outliers.**
+:::
 
 # Proportions
 
 ***Research Question: On average, how frequently were flights delayed during 2016-2020 and 2021-2024, and were the rates different between the 2 administrations?***
 
-1. Calculate your sample statistics from your data: the proportions of flights delayed during the Trump ($\hat{p}_{\text{Trump}}$) and Biden administrations ($\hat{p}_{\text{Biden}}$).
+1.  Calculate your sample statistics from your data: the proportions of flights delayed during the Trump ($\hat{p}_{\text{Trump}}$) and Biden administrations ($\hat{p}_{\text{Biden}}$).
 
-2. Check the assumptions for inference and hypothesis testing using the Central Limit Theorem for proportions.
+2.  Check the assumptions for inference and hypothesis testing using the Central Limit Theorem for proportions.
 
-3. Infer the average proportion of flights in the US were delayed during the Trump and Biden administrations from your sample statistics. 
+3.  Infer the average proportion of flights in the US were delayed during the Trump and Biden administrations from your sample statistics.
 
-4. Test the hypothesis that the proportion of flights delayed during the Trump administration is different from the proportion of flights delayed during the Biden administration. 
+4.  Test the hypothesis that the proportion of flights delayed during the Trump administration is different from the proportion of flights delayed during the Biden administration.
 
 ## Sample Statistics
 
-Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the total number of flights (`flights`), and the total number of delayed flights (`delayed`) for each administration (`admin`). 
+Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the total number of flights (`flights`), and the total number of delayed flights (`delayed`) for each administration (`admin`).
 
 ```{r}
-delays |>
+proportion_statistics <- delays |>
   summarize(n = n(), 
             flights = sum(flights), 
             delayed = sum(delayed), 
             proportion = sum(delayed) / sum(flights),
             .by = 'admin')
+
+proportion_statistics
 ```
 
 Calculate your point estimate of the proportion of flights that were delayed during the Trump administration $\hat{p}_{\text{Trump}}$ and save it as the variable `phat_trump`.
@@ -126,13 +152,13 @@ phat_biden <- 5497718/30326333
 phat_biden
 ```
 
-You will need sample sizes later in the analysis. Save the sample size for airports from the Trump administration as the variable `n_trump`. 
+You will need sample sizes later in the analysis. Save the sample size for airports from the Trump administration as the variable `n_trump`.
 
 ```{r}
 n_trump <- 403
 ```
 
-Save the sample size for airports from the Biden administration as the variable `n_biden`. 
+Save the sample size for airports from the Biden administration as the variable `n_biden`.
 
 ```{r}
 n_biden <- 397
@@ -154,7 +180,9 @@ $$\hat{p}_{\text{sample}} \approx p_{\text{sample}}$$
 
 Write 1-2 sentences reflecting on whether the data from your sample could be considered reliable.
 
-
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The proper timing of flights is a safety issue, so there is not likely to be much error in the recording of delay times. In addition, there is not likely to be a lot of missing data. Finally, the delay time is recorded in seconds, but a flight is considered late if it is delayed over 15 minutes. The time is precisely measured, so there are unlikely to be many flights misclassified as late due to poor measurement. Therefore, it's reasonable to assume that this data is reliable.**
+:::
 
 ### Validity
 
@@ -181,6 +209,13 @@ $$
 
 Compare these population parameters to your sample statistics and write 1-2 sentences reflecting on whether or not your data is valid.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**If you calculated your sample statistics correctly, these should be approximately equal to your** $\hat{p}$ **values `phat_trump` and `phat_biden`. When the sample statistic approximately equals the population parameter, your data is valid. Sample statistics calculated from your data are valid estimators of the study population parameters because they are good approximations of the study population.**
+
+**In addition, this was a random sample of airports. Data from a random sample is likely to be representative of the population, which contributes to the data's validity.**
+
+**Finally, you have large sample sizes with** $n_{\text{Trump}}=403$ **(`n_trump`) and** $n_{\text{Biden}}=397$ **(`n_biden`), which tend to produce valid estimates. Assuming the sample is representative (e.g. random), as the sample size increases (**$n \to \infty$**), the sample statistic** $\hat{p}$ **will be closer and closer to the "true" population parameter** $p$ **(**$\hat{p} \to p$**).**
+:::
 
 ### Sample Size
 
@@ -200,11 +235,19 @@ In the code chunk below, check the assumption that, on average, airports had at 
 n_trump * phat_trump
 ```
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**On average, each airport during the Trump administration had 68 delayed flights per year. This is larger than 10.**
+:::
+
 In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Trump administration.
 
 ```{r}
 n_trump * (1 - phat_trump)
 ```
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**On average, each airport during the Trump administration had 334 on time flights per year. This is larger than 10.**
+:::
 
 In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Biden administration.
 
@@ -212,15 +255,23 @@ In the code chunk below, check the assumption that, on average, airports had at 
 n_biden * phat_biden
 ```
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**On average, each airport during the Biden administration had 72 delayed flights per year. This is larger than 10.**
+:::
+
 In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Biden administration.
 
 ```{r}
 n_biden * (1 - phat_biden)
 ```
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**On average, each airport during the Biden administration had 325 on time flights per year. This is larger than 10.**
+:::
+
 ## Inference
 
-Once you have checked your assumptions, you can use the Central Limit Theorem to infer the sampling distribution of $\hat{p}$ in the study population. 
+Once you have checked your assumptions, you can use the Central Limit Theorem to infer the sampling distribution of $\hat{p}$ in the study population.
 
 The Central Limit Theorem states that as the sample size $n$ increases ($n \to \infty$), the distribution of the sample statistic $\hat{p}$ approximates a normal distribution with mean $p$ and standard deviation $\operatorname{SE}$ or the standard error of a proportion.
 
@@ -246,7 +297,7 @@ $$
 \end{aligned}
 $$
 
-Work through the steps below to infer the sampling distributions  for $\hat{p}_{\text{Trump}}$ and $\hat{p}_{\text{Biden}}$ as $\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)$. 
+Work through the steps below to infer the sampling distributions for $\hat{p}_{\text{Trump}}$ and $\hat{p}_{\text{Biden}}$ as $\hat{p} \sim \operatorname{N}\left(\hat{p}, \operatorname{SE}\right)$.
 
 You calculated your point estimates for $\hat{p}_{\text{Trump}}$ and $\hat{p}_{\text{Biden}}$ in the last section. Now, you will calculate the standard errors $\operatorname{SE}_{\text{Trump}}$ and $\operatorname{SE}_{\text{Biden}}$.
 
@@ -326,6 +377,10 @@ phat_trump + z_star * se_phat_trump
 
 Interpret this confidence interval using a complete sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, 13.26% to 20.58% of flights were delayed at airports during the Trump administration.**
+:::
+
 #### Biden
 
 Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average proportion of flights delayed during the Biden administration.
@@ -342,25 +397,29 @@ phat_biden + z_star * se_phat_biden
 
 Interpret this confidence interval using a complete sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, 14.34% to 21.92% of flights were delayed at airports during the Trump administration.**
+:::
+
 ## Hypothesis Test
 
-Now, you need to test the hypothesis that there's a difference between the two proportions. Testing for the difference between 2 proportions is called a *2-sample proportion test*. 
+Now, you need to test the hypothesis that there's a difference between the two proportions. Testing for the difference between 2 proportions is called a *2-sample proportion test*.
 
 Please do a 2-sided hypothesis test with a significance level of $\alpha=0.05$.
 
-1. Define your null ($H_0$) and alternate ($H_A$) hypotheses regarding the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$. 
+1.  Define your null ($H_0$) and alternate ($H_A$) hypotheses regarding the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$.
 
-2. Calculate a point estimate for the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ from your sample. 
+2.  Calculate a point estimate for the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ from your sample.
 
-3. Calculate the standard error $\operatorname{SE}$ for the difference between 2 proportions and infer the sampling distribution of the  $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ under your null hypothesis. 
+3.  Calculate the standard error $\operatorname{SE}$ for the difference between 2 proportions and infer the sampling distribution of the $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ under your null hypothesis.
 
-4. Construct a confidence interval under the $Z$ distribution for the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ for a significance threshold of $\alpha=0.05$.
+4.  Construct a confidence interval under the $Z$ distribution for the difference between the 2 proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ for a significance threshold of $\alpha=0.05$.
 
-5. Calculate the test statistic for your observed data $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ under your null hypothesis.
+5.  Calculate the test statistic for your observed data $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ under your null hypothesis.
 
-6. Find the p-value, or the probability of observing a difference between proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ as extreme or more extreme than the one you found under the null hypothesis.
+6.  Find the p-value, or the probability of observing a difference between proportions $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}$ as extreme or more extreme than the one you found under the null hypothesis.
 
-7. Compare your p-value to your significance level $\alpha$ and choose whether or not to reject your null hypothesis $H_0$.
+7.  Compare your p-value to your significance level $\alpha$ and choose whether or not to reject your null hypothesis $H_0$.
 
 ### Hypothesis Statements
 
@@ -368,9 +427,31 @@ Please do a 2-sided hypothesis test with a significance level of $\alpha=0.05$.
 
 *State your null hypothesis below in 1 sentence.*
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**Here, you needed to return to the research question motivating your research.**
+
+> *Research Question: On average, how frequently were flights delayed during 2016-2020 and 2021-2024, and were the rates different between the 2 administrations?*
+
+**The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there is NOT a difference.**
+
+**The null hypothesis is that the difference between the proportion of flights delayed at airports during the Trump administration and the proportion of flights delayed at airports during the Biden administration is 0.**
+
+$H_0 \colon p_{\text{Biden}}-p_{\text{Trump}}=0$
+:::
+
 #### $H_A$
 
 *State your alternative hypothesis below in 1 sentence.*
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The alternate hypothesis is a statement regarding the scenario proposed by your research question. If your research question has you investigating whether or not there IS a difference, then your alternate hypothesis should be that there IS a difference.**
+
+**Additionally, you were asked to do a 2-sided hypothesis test, which means you do not assume in advance the direction of the difference. We don't know whether airports under Biden or Trump were expected to have more delays, so we allow for the possibility of both by saying that the difference is not 0. If we were doing a 1-sided hypothesis test, assuming in advance that airports had more delayed flights under one or the other, we would say that the difference is greater or less than zero.**
+
+**The alternate hypothesis is that the difference between the proportion of flights delayed at airports during the Trump administration and the proportion of flights delayed at airports during the Biden administration is not 0.**
+
+$H_A \colon p_{\text{Biden}}-p_{\text{Trump}} \ne 0$
+:::
 
 ### Point Estimate
 
@@ -387,14 +468,16 @@ Use the formula for the standard error of the difference between 2 proportions t
 Choose from the formulas below based on your null hypothesis.
 
 $$
-\begin{equation}
 \operatorname{SE}_{\text{diff}}=
 \begin{cases}
 \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}, & \text{when } H_0\colon \hat{p}_1-\hat{p}_2\ne 0 \\
 \sqrt{\frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_1} + \frac{p_{\text{pool}}(1-p_{\text{pool}})}{n_2}}, & \text{when } H_0\colon \hat{p}_1-\hat{p}_2 = 0 \\
 \end{cases}
-\end{equation}
 $$
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**Based on your research question, your null hypothesis should have been** $H_0: p_1-p_2=0$**. You should have chosen the bottom equation for the standard error of the difference between 2 proportions and completed the steps below.**
+:::
 
 If your null hypothesis is $H_0\colon \hat{p}_1-\hat{p}_2\ne 0$, you will also need to calculate $\hat{p}_{\text{pool}}$. That's because this hypothesis states that the two samples come from the same population. Therefore, we only need 1 parameter $\hat{p}_{\text{pool}}$ for the population.
 
@@ -402,14 +485,16 @@ $$
 \hat{p}_{\text{pool}}=\frac{\text{count}(\text{delays})_{\text{Trump}} + \text{count}(\text{delays})_{\text{Biden}}}{\text{count}(\text{flights})_{\text{Trump}} + \text{count}(\text{flights})_{\text{Biden}}}
 $$
 
-Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the total number of flights (`flights`), and the total number of delayed flights (`delayed`), but do not include a `.by` parameter to separate the results by administration. 
+Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the total number of flights (`flights`), and the total number of delayed flights (`delayed`), but do not include a `.by` parameter to separate the results by administration.
 
 ```{r}
-delays |>
+proportion_statistics2 <- delays |>
   summarize(n = n(), 
             flights = sum(flights), 
             delayed = sum(delayed), 
             proportion = sum(delayed) / sum(flights))
+
+proportion_statistics2
 ```
 
 If you need to calculate $\hat{p}_{\text{pool}}$, use the code chunk below to save the result as the variable `phat_pool`.
@@ -425,7 +510,6 @@ se_phat_diff <- sqrt((phat_pool*(1-phat_pool))/n_trump + (phat_pool*(1-phat_pool
 
 se_phat_diff
 ```
-
 
 ### Critical Score
 
@@ -461,30 +545,37 @@ phat_diff + z_star * se_phat_diff
 
 Interpret this confidence interval in 1 sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, the difference between the proportion of flights delayed more than 15 minutes at airports during the Biden administration and the proportion of flights delayed more than 15 minutes at airports during the Trump administration was -4.1% to 6.5%.**
+:::
 
 ### Test Statistic
 
 Calculate the test statistic $Z$ under your null distribution for your observed value $\text{SE}_{\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}}$. Save the value as `z_diff`.
 
 $$
-\begin{equation}
 Z=
 \begin{cases}
 \frac{(\hat{p}_1-\hat{p}_2)-\mu}{\text{SE}}, & \text{when } H_0\colon \hat{p}_1-\hat{p}_2 \ne 0 \\
 \frac{\hat{p}_1-\hat{p}_2}{\text{SE}}, & \text{when } H_0\colon \hat{p}_1-\hat{p}_2 = 0
 \end{cases}
-\end{equation}
 $$
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**Based on your research question, your null hypothesis should have been** $H_0: p_1-p_2=0$**. You should have chosen the bottom equation for the test statistic calculation.**
+:::
+
 ```{r}
-z_diff <- (phat_biden - phat_trump)/se_phat_diff
+z_diff <- phat_diff/se_phat_diff
 
 z_diff
 ```
 
 Interpret the test statistic in 1 sentence.
 
-
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**In our sample, we observed that 1.2% more flights were delayed more than 15 minutes at airports during the Biden administration than during the Trump administration, which is 0.45 standard errors above the null hypothesis that there was no difference in the proportion of flights delayed more than 15 minutes at airports during the two administrations.**
+:::
 
 ### P-Value
 
@@ -498,28 +589,40 @@ pnorm(z_diff, lower.tail = F) * 2
 
 Given the p-value for your observed data under the null hypothesis and a significance threshold of $\alpha=0.05$, would you reject the null hypothesis? Why or why not?
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The p-value of 0.654 is greater than our significance threshold of 0.05, so you should not have rejected the null hypothesis with this data.**
+
+**If the null hypothesis were true, the difference between the proportion of flights delayed at airports during the Trump and Biden administrations is 0. Assuming the null hypothesis is true, the probability of taking two samples of size** $n_{\text{Trump}}=403$ **and** $n_{\text{Biden}}=397$ **from this study population and seeing a probability difference more extreme than the one we got in our sample (greater than 1.2% or less than -1.2%) is 65%.**
+
+**In other words, if there were no real difference and you repeated this study over and over, you would get** $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}>0.012$ **or** $\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}<-0.012$ **about 65% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis. Here, however, our data is consistent with the null hypothesis, so we fail to reject it.**
+
+**This study did not detect a difference between the proportion of flights delayed more than 15 minutes at airports during the Trump and Biden administrations.**
+:::
+
 # Means
 
 ***Research Question: On average, how many minutes were flights delayed during 2016-2020 and 2021-2024, and were the times different between the 2 administrations?***
 
-1. Calculate your sample statistics from your data: the length of delays during the Trump ($\bar{x}_{\text{Trump}}$) and Biden administrations ($\bar{x}_{\text{Biden}}$).
+1.  Calculate your sample statistics from your data: the length of delays during the Trump ($\bar{x}_{\text{Trump}}$) and Biden administrations ($\bar{x}_{\text{Biden}}$).
 
-2. Check the sample size assumption. 
+2.  Check the sample size assumption.
 
-3. Infer the average delay length in the US during the Trump and Biden administrations from your sample statistics. 
+3.  Infer the average delay length in the US during the Trump and Biden administrations from your sample statistics.
 
-4. Test the hypothesis that the average delay during the Trump administration is different from the average delay during the Biden administration. 
+4.  Test the hypothesis that the average delay during the Trump administration is different from the average delay during the Biden administration.
 
 ## Sample Statistics
 
-Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the mean (`mean`) of the average delay times in minutes (`avg_delay`), and standard deviation (`sd`) of the average delay times in minutes. 
+Use the `summarize()` function from the `dplyr` package to find the sample size ($n$), the mean (`mean`) of the average delay times in minutes (`avg_delay`), and standard deviation (`sd`) of the average delay times in minutes.
 
 ```{r}
-delays |>
+mean_statistics <- delays |>
   summarize(n = n(), 
             mean = mean(avg_delay), 
             sd = sd(avg_delay),
             .by = 'admin')
+
+mean_statistics 
 ```
 
 Save your point estimate of $\bar{x}_{\text{Trump}}$ rounded to 2 decimal places as the variable `mean_trump`.
@@ -564,15 +667,23 @@ In the code chunk below, check the assumption that you have at least 30 observat
 n_trump
 ```
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The sample statistic** $\bar{x}_{\text{Trump}}$ **is based on data from 403 airports under the Trump administration, which is more than 30.**
+:::
+
 In the code chunk below, check the assumption that you have at least 30 observations from the Biden administration.
 
 ```{r}
 n_biden
 ```
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The sample statistic** $\bar{x}_{\text{Biden}}$ **is based on data from 397 airports under the Trump administration, which is more than 30.**
+:::
+
 ## Inference
 
-Once you have checked your assumptions, you can use the Central Limit Theorem to infer the sampling distribution of $\bar{x}$ in the study population. 
+Once you have checked your assumptions, you can use the Central Limit Theorem to infer the sampling distribution of $\bar{x}$ in the study population.
 
 The Central Limit Theorem states that as the sample size $n$ increases ($n \to \infty$), the distribution of the sample statistic $\bar{x}$ approximates a normal distribution with mean $\mu$ and standard deviation $\operatorname{SE}$ or the standard error of a mean
 
@@ -598,11 +709,11 @@ $$
 \end{aligned}
 $$
 
-Work through the steps below to infer the sampling distributions  for $\bar{x}_{\text{Trump}}$ and $\bar{x}_{\text{Biden}}$ as $\bar{x} \sim \operatorname{N}\left(\bar{x}, \operatorname{SE}\right)$. 
+Work through the steps below to infer the sampling distributions for $\bar{x}_{\text{Trump}}$ and $\bar{x}_{\text{Biden}}$ as $\bar{x} \sim \operatorname{N}\left(\bar{x}, \operatorname{SE}\right)$.
 
 You calculated your point estimates for $\bar{x}_{\text{Trump}}$ and $\bar{x}_{\text{Biden}}$ in the last section. Now, you will calculate the standard errors $\operatorname{SE}_{\text{Trump}}$ and $\operatorname{SE}_{\text{Biden}}$.
 
-Use these sampling distributions to calculate 95% confidence intervals for the average delay during each administration. 
+Use these sampling distributions to calculate 95% confidence intervals for the average delay during each administration.
 
 Because we do not know $\sigma$ and are approximating it with the sample statistic $s$, we need to account for the additional uncertainty in our estimates. We use the $T$ or Student's $t$ distribution for inference when we don't know $\sigma$.
 
@@ -647,6 +758,13 @@ alpha <- 1 - 0.95
 Use the `qt()` function to find the $T$-score which corresponds to the probability $\alpha/2$ or $1-\alpha/2$ for the Trump administration. The `qt()` function takes the additional parameter $\text{df}=n-1$. Save this value as `t_star_trump`.
 
 ```{r}
+t_star_trump <- qt(alpha/2, 
+                   df = n_trump-1)
+
+t_star_trump
+```
+
+```{r}
 t_star_trump <- qt(1-alpha/2, 
                    df = n_trump-1)
 
@@ -656,6 +774,13 @@ t_star_trump
 Use the `qt()` function to find the $T$-score which corresponds to the probability $\alpha/2$ or $1-\alpha/2$ for the Biden administration. Save this value as `t_star_biden`.
 
 ```{r}
+t_star_biden <- qt(alpha/2, 
+                   df = n_biden-1)
+
+t_star_biden
+```
+
+```{r}
 t_star_biden <- qt(1-alpha/2, 
                    df = n_biden-1)
 
@@ -663,6 +788,10 @@ t_star_biden
 ```
 
 Compare your $T^*$'s to your $Z^*$ from your proportions. Comment in 1 sentence on why they are similar or different.
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The values from the Z distribution are smaller because it is a narrower distribution. 95% of the data is closer to the mean of the distribution, so the critical values will be closer to 0. The T distribution is wider to account for the uncertainty of using an estimated standard deviation to calculate the standard error. Therefore, you need to be further from 0 to capture 95% of the data.**
+:::
 
 ### Confidence Interval
 
@@ -684,6 +813,10 @@ mean_trump + t_star_trump * se_mean_trump
 
 Interpret this confidence interval using a complete sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, flights were delayed 10.81-11.73 minutes on average at airports during the Trump administration.**
+:::
+
 #### Biden
 
 Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average delay during the Biden administration.
@@ -700,25 +833,29 @@ mean_biden + t_star_biden * se_mean_biden
 
 Interpret this confidence interval using a complete sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, flights were delayed 11.47-13.65 minutes on average at airports during the Biden administration.**
+:::
+
 ## Hypothesis Test
 
-Now, you need to test the hypothesis that there's a difference between the two means. Testing for the difference between 2 proportions is called a *2-sample $t$ test*. 
+Now, you need to test the hypothesis that there's a difference between the two means. Testing for the difference between 2 proportions is called a *2-sample* $t$ test.
 
 Please do a 2-sided hypothesis test with a significance level of $\alpha=0.05$.
 
-1. Define your null ($H_0$) and alternate ($H_A$) hypotheses regarding the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$. 
+1.  Define your null ($H_0$) and alternate ($H_A$) hypotheses regarding the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$.
 
-2. Calculate a point estimate for the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ from your sample. 
+2.  Calculate a point estimate for the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ from your sample.
 
-3. Calculate the standard error $\operatorname{SE}$ for the difference between 2 proportions and infer the sampling distribution of the  $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ under your null hypothesis. 
+3.  Calculate the standard error $\operatorname{SE}$ for the difference between 2 proportions and infer the sampling distribution of the $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ under your null hypothesis.
 
-4. Construct a confidence interval under the $T$ distribution for the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ for a significance threshold of $\alpha=0.05$.
+4.  Construct a confidence interval under the $T$ distribution for the difference between the 2 proportions $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ for a significance threshold of $\alpha=0.05$.
 
-5. Calculate the test statistic for your observed data $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ under your null hypothesis.
+5.  Calculate the test statistic for your observed data $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ under your null hypothesis.
 
-6. Find the p-value, or the probability of observing a difference between means $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ as extreme or more extreme than the one you found under the null hypothesis.
+6.  Find the p-value, or the probability of observing a difference between means $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}$ as extreme or more extreme than the one you found under the null hypothesis.
 
-7. Compare your p-value to your significance level $\alpha$ and choose whether or not to reject your null hypothesis $H_0$.
+7.  Compare your p-value to your significance level $\alpha$ and choose whether or not to reject your null hypothesis $H_0$.
 
 ### Hypothesis Statements
 
@@ -726,9 +863,31 @@ Please do a 2-sided hypothesis test with a significance level of $\alpha=0.05$.
 
 *State your null hypothesis below in 1 sentence.*
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**Here, you needed to return to the research question motivating your research.**
+
+> *Research Question: On average, how many minutes were flights delayed during 2016-2020 and 2021-2024, and were the times different between the 2 administrations?*
+
+**The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there is NOT a difference.**
+
+**The null hypothesis is that the difference between the average delay time at airports during the Trump administration and the average delay time at airports during the Biden administration is 0.**
+
+$H_0 \colon \mu_{\text{Biden}}-\mu_{\text{Trump}}=0$
+:::
+
 #### $H_A$
 
 *State your alternative hypothesis below in 1 sentence.*
+
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The alternate hypothesis is a statement regarding the scenario proposed by your research question. If your research question has you investigating whether or not there IS a difference, then your alternate hypothesis should be that there IS a difference.**
+
+**Additionally, you were asked to do a 2-sided hypothesis test, which means you do not assume in advance the direction of the difference. We don't know whether airports under Biden or Trump were expected to have longer delays, so we allow for the possibility of both by saying that the difference is not 0. If we were doing a 1-sided hypothesis test, assuming in advance that airports had longer delays under one or the other, we would say that the difference is greater or less than zero.**
+
+**The alternate hypothesis is that the difference between the average delay time at airports during the Trump administration and the average delay time at airports during the Biden administration is not 0.**
+
+$H_A \colon \mu_{\text{Biden}}-\mu_{\text{Trump}} \ne 0$
+:::
 
 ### Point Estimate
 
@@ -745,23 +904,20 @@ mean_diff
 Use the formula for the standard error of the difference between 2 proportions to calculate $\text{SE}_{\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}}$ below and save it as the variable `se_mean_diff`.
 
 $$
-\begin{equation}
 \text{SE}=\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
-\end{equation}
 $$
 
 Use the code chunk below to find the standard error of the difference $\text{SE}_{\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}}$ under your null hypothesis. Save the result as `se_mean_diff`.
 
 ```{r}
-se_mean_diff <- sqrt(sd_trump^2/n_trump + sd_biden^2/n_biden)
+se_mean_diff <- sqrt((sd_trump^2)/n_trump + (sd_biden^2)/n_biden)
 
 se_mean_diff
 ```
 
-
 ### Critical Score
 
-The difference of 2 means uses the $T$ distribution with the degrees of freedom $\text{df}=min(n_1, n_2)-1$, so the critical score for this confidence interval is $T^*_{\text{df}}$. 
+The difference of 2 means uses the $T$ distribution with the degrees of freedom $\text{df}=min(n_1, n_2)-1$, so the critical score for this confidence interval is $T^*_{\text{df}}$.
 
 Use the code chunk below to find the degrees of freedom for the difference in means using the `min()` function. Save the result as `dof`.
 
@@ -769,8 +925,14 @@ Use the code chunk below to find the degrees of freedom for the difference in me
 dof <- min(n_trump, n_biden)-1
 ```
 
-
 Find the $T$-score for the probability $\alpha/2$ or $1-\alpha/2$ using the `qt()` function and the parameter `df` set to the degrees of freedom you just calculated. Save the value as `t_star_diff`
+
+```{r}
+t_star_diff <- qt(alpha/2, 
+                  df = dof)
+
+t_star_diff
+```
 
 ```{r}
 t_star_diff <- qt(1-alpha/2, 
@@ -778,7 +940,6 @@ t_star_diff <- qt(1-alpha/2,
 
 t_star_diff
 ```
-
 
 ### Confidence Interval
 
@@ -798,19 +959,20 @@ mean_diff + t_star_diff * se_mean_diff
 
 Interpret this confidence interval in 1 sentence.
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**With 95% confidence, flights were delayed 0.10 to 2.48 minutes longer at airports during the Biden administration than during the Trump administration.**
+:::
 
 ### Test Statistic
 
 Calculate the test statistic $T$ under your null distribution for your observed value $\text{SE}_{\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}}$. Save the value as `t_mean_diff`.
 
 $$
-\begin{equation}
 Z=
 \begin{cases}
 \frac{(\bar{x}_1-\bar{x}_2)-\mu}{\text{SE}}, & \text{when } H_0\colon \bar{x}_1-\bar{x}_2 \ne 0 \\
 \frac{\bar{x}_1-\bar{x}_2}{\text{SE}}, & \text{when } H_0\colon \bar{x}_1-\bar{x}_2 = 0
 \end{cases}
-\end{equation}
 $$
 
 ```{r}
@@ -821,7 +983,9 @@ t_mean_diff
 
 Interpret the test statistic in 1 sentence.
 
-
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**In our sample, we observed that flights were delayed 1.29 minutes longer at airports during the Biden administration than during the Trump administration, which is 2.14 standard errors above the null hypothesis that there was no difference in the average flight delay at airports during the 2 administrations.**
+:::
 
 ### P-Value
 
@@ -837,4 +1001,12 @@ pt(t_mean_diff,
 
 Given the p-value for your observed data under the null hypothesis and a significance threshold of $\alpha=0.05$, would you reject the null hypothesis? Why or why not?
 
+::: {.callout-warning style="color: red" appearance="minimal" icon="false"}
+**The p-value of 0.033 is less than our significance threshold of 0.05, so you should have rejected the null hypothesis with this data.**
 
+**If the null hypothesis were true, the difference between the mean delay time at airports during the Trump and Biden administrations is 0. Assuming the null hypothesis is true, the probability of taking two samples of size** $n_{\text{Trump}}=403$ **and** $n_{\text{Biden}}=397$ **from this study population and seeing a difference in means more extreme than the one we got in our sample (greater than 1.29 minutes or less than -1.29 minutes) is 3.3%.**
+
+**In other words, if there were no real difference and you repeated this study over and over, you would get** $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}>1.29$ **or** $\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}<-1.29$ **about 3.3% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis. Here, we have said that it is evidence against the null hypothesis if the probability of our data under the null hypothesis is less than 5%, therefore, we reject the null hypothesis and accept the alternate hypothesis.**
+
+**Flights were delayed longer during the Biden administration than during the Trump administration.**
+:::

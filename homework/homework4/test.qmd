@@ -1,0 +1,18 @@
+---
+title: "Homework 4"
+subtitle: "Answer Key"
+author: "Sarah E. Grabinski"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    theme: journal
+    self-contained: true
+  pdf:
+    toc: true
+    self-contained: true
+    keep-tex: true
+    header-includes:
+      - \usepackage{xcolor}
+editor: visual
+---

@@ -4,11 +4,13 @@
 .Ruserdata
 zoom/
 old_materials/
-old_materials/*
+old_materials/**
 slides/images
 slides/images/figures.pptx
 slides/images/figures2.pptx
-*.pptx
-*.zip
+**.pptx
+**/**.pptx
+**/**.zip
 homework/homework1/submissions/
 homework/homework2/submissions/
+**/submissions
