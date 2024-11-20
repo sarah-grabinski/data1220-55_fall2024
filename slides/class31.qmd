@@ -37,17 +37,7 @@ format:
 
 ## Review: 2 Numeric Variables {.smaller}
 
-::: columns
-::: column
--   Typically visualized using a scatter plot
-
--   Explanatory/independent/predictor variable on the $X$ axis
-
--   Response/dependent/outcome variable on the $Y$ axis
-:::
-::: column
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/scatter-plot-guide.jpg)
-:::
 
 ## Review: Describing Associations {.smaller}
 
@@ -73,25 +63,29 @@ format:
 
 Which image shows a ***positive*** relationship between the explanatory and response variables?
 
-::: columns
+::::: columns
 ::: column
 ![Income vs Education](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png)
 :::
+
 ::: column
 ![Age vs Survival](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png)
 :::
+:::::
 
 ## Practice
 
 Which image shows a ***strong*** relationship between the explanatory and response variables?
 
-::: columns
+::::: columns
 ::: column
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
 :::
+
 ::: column
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
 :::
+:::::
 
 ## Correlation
 
@@ -102,9 +96,9 @@ Which image shows a ***strong*** relationship between the explanatory and respon
 -   A correlation ranges from -1 to 1
 
     -   A perfect negative correlation equals -1
-    
+
     -   A perfect positive correlation equals 1
-    
+
 . . .
 
 -   A correlation of 0 indicates the two variables are independent (no relationship)
@@ -143,53 +137,78 @@ Which image shows a ***strong*** relationship between the explanatory and respon
 
 . . .
 
-***Correlation: strong, negative***
+***Relationship: linear, negative, moderate to strong***
 
 ## Example: Poverty vs Graduation Rate
 
-::: columns
+::::: columns
 ::: column
-Which of the following is the most likely correlation?
-A. 0.60
-B. -0.25
-C. -0.75
-D. 0.35
+Which of the following is the most likely correlation? A. 0.60 B. -0.25 C. -0.75 D. 0.35
 :::
+
 ::: column
 ![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
 :::
+:::::
 
 ## Example: Poverty vs Graduation Rate
 
-::: columns
+::::: columns
 ::: column
-Which of the following is the most likely correlation?
-***C.*** ***-0.75***
+Which of the following is the most likely correlation? ***C.*** ***-0.75***
 :::
+
 ::: column
 ![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
 :::
+:::::
 
+## Testing a Correlation {.smaller}
 
+-   Null Hypothesis: The two variables are independent (correlation = 0)
 
+$$
+H_0 \colon \rho=0
+$$
 
+. . .
 
+-   Alternate Hypothesis: the two variables are dependent
 
+$$
+\begin{aligned}
+H_A &\colon \rho > 0 \\
+& \rho < 0 \\
+& \rho \ne 0 \\
+\end{aligned}
+$$
 
+## Test Statistic
 
+The test statistic $t$ for the population Pearson correlation $\rho$ (Greek letter rho) is estimated using the observed correlation $r$.
 
+$$
+t=\frac{r\sqrt{n-2}}{\sqrt{1-r^2}}
+$$
 
+## Getting a p-value
 
+Use the Student's $t$ distribution with degrees of freedom $\text{df}=n-2$ to find a p-value for the observed correlation $r$ in a sample of size $n$ under the null hypothesis $H_0 \colon \rho=0$.
 
+```{r echo = T, eval = F}
+# specify the test statistic and degrees of freedom
+pt(test_statistic,
+   df = n-2,
+   lower.tail = F) # optional parameter
+```
 
+## Eyeballing a Line
 
+![How do we find the best line to draw through variables that appear to have a linear relationship?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/eyeball-line.png)
 
+## Quantifying Error: Residuals
 
-
-
-
-
-
+![Residuals are the difference between the observed values and the predicted values.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/residuals-example.jpg)
 
 ## Example: Correlation vs Causation
 
@@ -197,10 +216,11 @@ Which of the following is the most likely correlation?
 
 ## Example: Correlation vs Causation {.smaller}
 
-::: columns
+::::: columns
 ::: column
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
 :::
+
 ::: column
 -   As ice cream sales increase, the number of drownings increases
 
@@ -212,4 +232,4 @@ Which of the following is the most likely correlation?
 
 -   High temperatures increase both ice cream consumption and the number of people swimming
 :::
-
+:::::
