@@ -11,7 +11,6 @@ format:
     footnotes-hover: true
     execute:
       echo: false
-      cache: true
       message: false
       warning: false
     preview-links: auto
@@ -24,7 +23,6 @@ format:
       - \usepackage{grffile}
     execute:
       echo: false
-      cache: true
       message: false
       warning: false
     slide-number: true
@@ -37,7 +35,7 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 31 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
 ---
 
-## Review: 2 Numeric Variables
+## Review: 2 Numeric Variables {.smaller}
 
 ::: columns
 ::: column
@@ -48,10 +46,10 @@ format:
 -   Response/dependent/outcome variable on the $Y$ axis
 :::
 ::: column
-![](/scatter-plot-guide.jpg)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/scatter-plot-guide.jpg)
 :::
 
-## Review: Describing Associations
+## Review: Describing Associations {.smaller}
 
 -   ***Independence***: an increase in $X$ is not associated with a change in $Y$
 
@@ -71,13 +69,33 @@ format:
 
 -   ***Strong association***: data points are tightly clustered
 
-## Review of images
+## Pratice
 
-![]()
+Which image shows a ***positive*** relationship between the explanatory and response variables?
+
+::: columns
+::: column
+![Income vs Education](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png)
+:::
+::: column
+![Age vs Survival](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png)
+:::
+
+## Practice
+
+Which image shows a ***strong*** relationship between the explanatory and response variables?
+
+::: columns
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
+:::
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
+:::
 
 ## Correlation
 
--   Describes the strength of the association between 2 numeric variables
+-   Describes the direction and strength of the association between 2 numeric variables
 
 . . .
 
@@ -89,30 +107,109 @@ format:
     
 . . .
 
--   A correlation of 0 indicates the two variables are independent (no linear relationship)
+-   A correlation of 0 indicates the two variables are independent (no relationship)
 
 . . .
 
--   Different techniques for linear vs non-linear relationships
+-   Different techniques for linear (Pearson) vs non-linear (Spearman) relationships
+
+## Linear vs Non-Linear
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/linear-vs-nonlinear.jpg)
 
 ## Interpreting Correlations
 
 ![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/correlation-examples.svg)
 
-## Linear vs Non-Linear
+## Example: Poverty vs Graduation Rate
 
-![](/linear-vs-nonlinear.jpg)
+![What's the response variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
 
-## Guess the correlation
+. . .
+
+***Response Variable: Percent of people in poverty***
+
+## Example: Poverty vs Graduation Rate
+
+![What's the explanatory variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+
+. . .
+
+***Explanatory variable: Percent of people who graduated high school***
+
+## Example: Poverty vs Gradution Rate
+
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+
+. . .
+
+***Correlation: strong, negative***
+
+## Example: Poverty vs Graduation Rate
+
+::: columns
+::: column
+Which of the following is the most likely correlation?
+A. 0.60
+B. -0.25
+C. -0.75
+D. 0.35
+:::
+::: column
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+:::
+
+## Example: Poverty vs Graduation Rate
+
+::: columns
+::: column
+Which of the following is the most likely correlation?
+***C.*** ***-0.75***
+:::
+::: column
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ## Example: Correlation vs Causation
 
+![Do ice cream sales cause drowning incidents?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
+
+## Example: Correlation vs Causation {.smaller}
+
 ::: columns
 ::: column
-![](/ice-cream-sales.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
 :::
 ::: column
-![](/correlation-vs-causation.png)
+-   As ice cream sales increase, the number of drownings increases
+
+. . .
+
+-   Strong, positive correlation
+
+. . .
+
+-   High temperatures increase both ice cream consumption and the number of people swimming
 :::
+
