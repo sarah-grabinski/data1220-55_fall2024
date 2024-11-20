@@ -1,0 +1,118 @@
+---
+title: "Class 31"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-11-20'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 31 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+    execute:
+      echo: false
+      cache: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    fig-height: 6
+    footer: "DATA1220-55 Fall 2024, Class 31 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Review: 2 Numeric Variables
+
+::: columns
+::: column
+-   Typically visualized using a scatter plot
+
+-   Explanatory/independent/predictor variable on the $X$ axis
+
+-   Response/dependent/outcome variable on the $Y$ axis
+:::
+::: column
+![](/scatter-plot-guide.jpg)
+:::
+
+## Review: Describing Associations
+
+-   ***Independence***: an increase in $X$ is not associated with a change in $Y$
+
+. . .
+
+-   ***Positive association***: an increase in $X$ is associated with an *increase* in $Y$
+
+. . .
+
+-   ***Negative association***: an increase in $X$ is associated with a *decrease* in $Y$
+
+. . .
+
+-   ***Weak association***: data points are very far apart from each other
+
+. . .
+
+-   ***Strong association***: data points are tightly clustered
+
+## Review of images
+
+![]()
+
+## Correlation
+
+-   Describes the strength of the association between 2 numeric variables
+
+. . .
+
+-   A correlation ranges from -1 to 1
+
+    -   A perfect negative correlation equals -1
+    
+    -   A perfect positive correlation equals 1
+    
+. . .
+
+-   A correlation of 0 indicates the two variables are independent (no linear relationship)
+
+. . .
+
+-   Different techniques for linear vs non-linear relationships
+
+## Interpreting Correlations
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/correlation-examples.svg)
+
+## Linear vs Non-Linear
+
+![](/linear-vs-nonlinear.jpg)
+
+## Guess the correlation
+
+
+
+## Example: Correlation vs Causation
+
+::: columns
+::: column
+![](/ice-cream-sales.png)
+:::
+::: column
+![](/correlation-vs-causation.png)
+:::

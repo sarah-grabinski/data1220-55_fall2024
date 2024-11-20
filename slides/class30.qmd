@@ -41,13 +41,23 @@ format:
 
 -   1-sample proportion- or $Z$-test for a single proportion
 
+. . .
+
 -   2-sample proportion- or $Z$-test for the difference between 2 proportions
+
+. . .
 
 -   Chi-squared test for independence between 2 categorical variables
 
+. . .
+
 -   1 sample $t$-test for a single mean
 
+. . .
+
 -   Paired means $t$-test for the difference between 2 means from same unit
+
+. . .
 
 -   2-sample $t$-test for the difference between 2 unpaired means
 
@@ -55,15 +65,27 @@ format:
 
 -   ANOVA test for the difference between 3+ unpaired means
 
+. . .
+
 -   Pearson correlation test for dependence between 2 numeric variables
+
+. . .
 
 -   Linear regression for dependence between 1 or more explanatory variables (numeric or categorical) and a numerical or binary (0/1) response variable (if time)
 
+. . .
+
 -   Developing a research question with a testable hypothesis
+
+. . .
 
 -   Communicating statistical methods and analysis results
 
+. . .
+
 -   Data visualization tips & tricks, do's & dont's
+
+. . .
 
 -   Statistical analysis best practice
 
@@ -78,10 +100,14 @@ format:
     $$
       \text{test statistic}=\frac{\text{Between-Groups Variability/Error}}{\text{Within-Groups Variability/Error}}
     $$
-    
+
 . . .
 
 -   The probability of the observed difference in between-group variability vs within-group variability is calculated using the $F$ distribution.
+
+. . .
+
+-   Rarely calculated by hand. We will perform these exclusively with R.
 
 ## ANOVA F-Test Hypotheses
 
@@ -90,7 +116,7 @@ format:
     $$
       H_0 \colon \mu_1=\mu_2=...=\mu_k=\mu
     $$
-    
+
 . . .
 
 -   Alternate hypothesis: at least one mean $\mu_i$ is different from the other $k-1$ means, such that there is no single population mean $\mu$.
@@ -101,32 +127,99 @@ format:
 
 ## Assumptions {.smaller}
 
-1.    ***Independent & Identically Distributed Observations***: Observations are independent both within and between groups and identically distributed within groups.
+1.  ***Independent & Identically Distributed Observations***: Observations are independent both within and between groups and identically distributed within groups.
 
 . . .
 
-2.    ***Sample size***: There are more than 30 observations in each of the $k$ groups ($n_i \ge 30$).
+2.  ***Sample size***: There are more than 30 observations in each of the $k$ groups ($n_i \ge 30$).
 
 . . .
 
-3.    ***Normality***: Especially when $n_i$ are small, data within each of the $k$ groups is normally distributed. This condition relaxes as $n_i$ increases ($n_i \to \infty$).
+3.  ***Normality***: Especially when $n_i$ are small, data within each of the $k$ groups is normally distributed. This condition relaxes as $n_i$ increases ($n_i \to \infty$).
 
 . . .
 
-4.    ***Equal variance***: Within-group variance is approximately equal across the $k$ groups. This condition relaxes as sample sizes $n_i$ become more balanced between the $k$ groups ($\frac{n}{k} \to n_i$).
+4.  ***Equal variance***: Within-group variance is approximately equal across the $k$ groups. This condition relaxes as sample sizes $n_i$ become more balanced between the $k$ groups ($\frac{n}{k} \to n_i$).
 
-## The F-Distribution
+## The F-Distribution {.smaller}
 
 -   2 degree of freedom parameters
 
     -   The number of groups $k$ minus 1: $\text{df}_1=k-1$
-    
+
     -   The number of observations $n$ minus the number of groups $k$: $\text{df}_2=n-k$
-    
+
 . . .
-    
+
 -   The larger the test statistic $F$, the less likely the observed data is under the null hypothesis
 
 . . .
 
--   Like the Chi-squared ($\chi^2$) distribution, always take the upper tail probability for hypothesis tetsing
+-   Like the Chi-squared ($\chi^2$) distribution, the upper tail probability is always used for hypothesis testing
+
+## The F-Distribution
+
+::::: columns
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/f-distribution.png)
+:::
+
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/f-distribution2.png)
+:::
+:::::
+
+## ANOVA Results Table
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/anova-calculation-table.png)
+
+## Example: Wolf River Sediments {.smallest}
+
+::::: columns
+::: column
+-   The Wolf River in Tennessee flows past an abandoned site once used by the pesticide industry for dumping wastes, including chlordane (pesticide), aldrin, and dieldrin (both insecticides)
+-   These highly toxic organic compounds can cause various cancers and birth defects
+-   The standard methods to test whether these substances are present in a river is to take samples at six-tenths depth
+-   Since these compounds are denser than water and their molecules tend to stick to particles of sediment, they are more likely to be found in higher concentrations near the bottom
+:::
+
+::: column
+![***Research Question:*** Does the average aldrin concentration vary between the bottom, mid-depth, and surface?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/wolf-river-map.png)
+:::
+:::
+
+## The Data
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/concentration-table.png)
+
+## Exploratory Analysis & Sample Statistics
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/summary-statistics.png)
+
+## Equal Variance Assumption
+
+![Do these variances look approximately equal?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/variance.png)
+
+## ANOVA Results
+
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class30/example-anova-output.png)
+
+## Interpreting The Results {.smaller}
+
+-   The test statistic $F$ was 6.14, meaning the between-groups variability was 6.14 times as large as the within-group variability.
+
+. . .
+
+-   The p-value was 0.0063, meaning it was very unlikely to have seen this much variability between groups in samples of these sizes, given the null hypothesis that each mean is the same ($\mu_i=\mu$).
+
+. . .
+
+-   The p-value is less than a significance threshold of $\alpha=0.05$, so we would reject the null hypothesis that the means of the 3 groups are equal. The mean of at least one group differs from the other means.
+
+. . .
+
+-   But we made some pretty strong assumptions.
+
+. . .
+
+-   If you want to know which means are different from each other, you will have to do additional pairwise tests between group means.
