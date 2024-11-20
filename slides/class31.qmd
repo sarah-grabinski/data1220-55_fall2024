@@ -75,19 +75,19 @@ Which image shows a ***positive*** relationship between the explanatory and resp
 
 ## Practice
 
-Which image shows a ***strong*** relationship between the explanatory and response variables?
+Which image shows a ***weak*** relationship between the explanatory and response variables?
 
 ::::: columns
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png)
 :::
 
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png)
 :::
 :::::
 
-## Correlation
+## Correlation {.smaller}
 
 -   Describes the direction and strength of the association between 2 numeric variables
 
@@ -105,7 +105,7 @@ Which image shows a ***strong*** relationship between the explanatory and respon
 
 . . .
 
--   Different techniques for linear (Pearson) vs non-linear (Spearman) relationships
+-   We use the Pearson correlation for linear relationships
 
 ## Linear vs Non-Linear
 
@@ -143,7 +143,11 @@ Which image shows a ***strong*** relationship between the explanatory and respon
 
 ::::: columns
 ::: column
-Which of the following is the most likely correlation? A. 0.60 B. -0.25 C. -0.75 D. 0.35
+Which of the following is the most likely correlation? 
+A)    0.60 
+B)    -0.25 
+C)    -0.75 
+D)    0.35
 :::
 
 ::: column
@@ -210,11 +214,11 @@ pt(test_statistic,
 
 ![Residuals are the difference between the observed values and the predicted values.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/residuals-example.jpg)
 
-## Example: Correlation vs Causation
+## Special Topic: Correlation vs Causation
 
-![Do ice cream sales cause drowning incidents?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
+![Research Question: Do ice cream sales cause sunburns?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
 
-## Example: Correlation vs Causation {.smaller}
+## Special Topic: Correlation vs Causation {.smaller}
 
 ::::: columns
 ::: column
@@ -222,14 +226,21 @@ pt(test_statistic,
 :::
 
 ::: column
--   As ice cream sales increase, the number of drownings increases
+-   As ice cream sales increase, the number of sunburns also increases
 
-. . .
+-   Strong, positive, linear correlation
 
--   Strong, positive correlation
-
-. . .
-
--   High temperatures increase both ice cream consumption and the number of people swimming
+-   High temperatures affect both ice cream consumption and behaviors that lead to sunburn
 :::
 :::::
+
+## Confounding Variables
+
+::: columns
+::: column
+When you have a confounding variable, you might find dependence between two unrelated variables that are only connected by the confounder.
+:::
+::: column
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31//confounders.jfif)
+:::
+:::
