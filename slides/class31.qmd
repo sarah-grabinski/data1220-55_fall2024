@@ -37,7 +37,7 @@ format:
 
 ## Review: 2 Numeric Variables {.smaller}
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/scatter-plot-guide.jpg)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/scatter-plot-guide.jpg){fig-align="center"}
 
 ## Review: Describing Associations {.smaller}
 
@@ -65,11 +65,11 @@ Which image shows a ***positive*** relationship between the explanatory and resp
 
 ::::: columns
 ::: column
-![Income vs Education](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png)
+![Income vs Education](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png){fig-align="center"}
 :::
 
 ::: column
-![Age vs Survival](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png)
+![Age vs Survival](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png){fig-align="center"}
 :::
 :::::
 
@@ -79,11 +79,11 @@ Which image shows a ***weak*** relationship between the explanatory and response
 
 ::::: columns
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png)
+![Income vs Education](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/income-vs-college.png){fig-align="center"}
 :::
 
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png)
+![Age vs Survival](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/age-vs-survival.png){fig-align="center"}
 :::
 :::::
 
@@ -109,15 +109,15 @@ Which image shows a ***weak*** relationship between the explanatory and response
 
 ## Linear vs Non-Linear
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/linear-vs-nonlinear.jpg)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/linear-vs-nonlinear.jpg){fig-align="center"}
 
 ## Interpreting Correlations
 
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/correlation-examples.svg)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/correlation-examples.svg){fig-align="center"}
 
 ## Example: Poverty vs Graduation Rate
 
-![What's the response variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+![What's the response variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png){fig-align="center"}
 
 . . .
 
@@ -125,7 +125,7 @@ Which image shows a ***weak*** relationship between the explanatory and response
 
 ## Example: Poverty vs Graduation Rate
 
-![What's the explanatory variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+![What's the explanatory variable?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png){fig-align="center"}
 
 . . .
 
@@ -133,7 +133,7 @@ Which image shows a ***weak*** relationship between the explanatory and response
 
 ## Example: Poverty vs Gradution Rate
 
-![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png){fig-align="center"}
 
 . . .
 
@@ -143,15 +143,11 @@ Which image shows a ***weak*** relationship between the explanatory and response
 
 ::::: columns
 ::: column
-Which of the following is the most likely correlation? 
-A)    0.60 
-B)    -0.25 
-C)    -0.75 
-D)    0.35
+Which of the following is the most likely correlation? A) 0.60 B) -0.25 C) -0.75 D) 0.35
 :::
 
 ::: column
-![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png){fig-align="center"}
 :::
 :::::
 
@@ -163,7 +159,7 @@ Which of the following is the most likely correlation? ***C.*** ***-0.75***
 :::
 
 ::: column
-![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png)
+![Describe the relationship between these 2 variables.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/poverty-vs-grad-rate.png){fig-align="center"}
 :::
 :::::
 
@@ -208,21 +204,21 @@ pt(test_statistic,
 
 ## Eyeballing a Line
 
-![How do we find the best line to draw through variables that appear to have a linear relationship?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/eyeball-line.png)
+![How do we find the best line to draw through variables that appear to have a linear relationship?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/eyeball-line.png){fig-align="center"}
 
 ## Quantifying Error: Residuals
 
-![Residuals are the difference between the observed values and the predicted values.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/residuals-example.jpg)
+![Residuals are the difference between the observed values and the predicted values.](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/residuals-example.jpg){fig-align="center"}
 
 ## Special Topic: Correlation vs Causation
 
-![Research Question: Do ice cream sales cause sunburns?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
+![Research Question: Do ice cream sales cause sunburns?](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png){fig-align="center"}
 
 ## Special Topic: Correlation vs Causation {.smaller}
 
 ::::: columns
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31/ice-cream-sales.png){fig-align="center"}
 :::
 
 ::: column
@@ -236,11 +232,12 @@ pt(test_statistic,
 
 ## Confounding Variables
 
-::: columns
+::::: columns
 ::: column
 When you have a confounding variable, you might find dependence between two unrelated variables that are only connected by the confounder.
 :::
+
 ::: column
-![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31//confounders.jfif)
+![](https://raw.githubusercontent.com/sarah-grabinski/data1220-55_fall2024/refs/heads/main/slides/class31//confounders.jfif){fig-align="center"}
 :::
-:::
+:::::
