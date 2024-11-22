@@ -1,0 +1,381 @@
+---
+title: "Class 32"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-11-22'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    footer: "DATA1220-55 Fall 2024, Class 32 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+    execute:
+      echo: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    fig-height: 4
+    footer: "DATA1220-55 Fall 2024, Class 32 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+## Correlation vs Causation
+
+![Source: [XKCD](https://xkcd.com/552)](class32/correlation-vs-causation.png){fig-align="center"}
+
+## Tidyverse
+
+![The goal of the \`tidyverse\` is to provide tools that support "human-centered" data analysis.](class32/tidyverse.png){fig-align="center"}
+
+## Tidyverse {.smaller}
+
+-   `readr`: functions for importing data
+
+-   `dplyr`: data cleaning and manipulation
+
+-   `ggplot2`: data visualization
+
+-   `tibble`: better formats for dataframes
+
+-   `forcats`: tools for working with factors
+
+-   `stringr`: tools for working with text strings
+
+-   `purrr`: tools for functions and vectors
+
+-   `tidyr`: tools for reshaping data
+
+## Other Useful Packages {.smaller}
+
+-   `janitor`: functions like `drop_na()`, `clean_names()`, and `tabyl()`
+
+-   `naniar`: very useful for managing missing data
+
+-   `kableExtra`: attractive formatting for tables
+
+-   `gtsummary`: summary statistic tables with attractive formatting
+
+-   `patchwork`: combine ggplot2 figures
+
+-   `Hmisc`: statistical analysis tools like `describe()`
+
+-   `mosaic`: statistical analysis tools like `favstats()`
+
+## Infer Package {.smaller}
+
+::::: columns
+::: column
+-   Functions for "tidy" statistical analysis
+
+-   Specify statistical models, calculate statistics
+
+-   Infer sampling distributions, test hypotheses
+
+-   Uses theoretical or permutation based null distributions
+:::
+
+::: column
+![](class32/infer-logo.png)
+:::
+:::::
+
+## Tests in the Infer Package {.smaller}
+
+-   1- or 2-sample proportion- or Z-tests
+
+-   1- or 2-sample t-tests for means
+
+-   Chi-squared test of independence for categorical variables
+
+-   ANOVA test of independence for numeric variables
+
+-   Correlations and simple linear regression
+
+## Primary Functions {.smaller}
+
+-   `specify()`: set response variable (and explanatory, if needed)
+
+-   `calculate()`: calculate statistics
+
+-   `observe()`: combines `specify()` and `calculate()`
+
+-   `assume()`: sets a null distribution
+
+-   `hypothesize()`: sets a null hypothesis
+
+-   `get_ci()`: calculate a confidence interval from given distribution
+
+-   `visualize()`, `shade_p_value()`: visualize observed statistics vs null hypotheses
+
+-   `get_p_value()`: get p-value for observed statistic under null hypothesis
+
+## Packages for Today
+
+We will be working with the `gss` dataset from the `infer` package.
+
+```{r}
+library(infer) # statistical functions
+library(tidyverse) # always load last in list
+```
+
+## What's in the data?
+
+Running a question mark before a dataset, function, or package name will do a search in RStudio for help pages on that topic.
+
+```{r eval = F}
+?gss
+```
+
+## What's in the data?
+
+![](class32/gss-dataset.png){fig-align="center"}
+
+## The Data
+
+```{r}
+# from the dplyr package
+glimpse(gss)
+```
+
+## The Data
+
+```{r}
+# from base R
+str(gss)
+```
+
+## Codebook {.smaller}
+
+-   `age` - age at time of survey
+
+-   `sex` - respondent's sex
+
+-   `college` - whether subject has a degree
+
+-   `partyid` - political affiliation
+
+-   `hours` - number of hours worked last week
+
+-   `finrela` - opinion of family income
+
+## 1-Sample Proportion
+
+What proportion of the subjects were female?
+
+```{r}
+phat_female <- gss |>
+  observe(response = sex, 
+          success = 'female', 
+          stat = 'prop')
+
+phat_female
+```
+
+## Infer sampling distribution
+
+Generate a theoretical sampling distribution for the proportion of female respondents
+
+```{r}
+dist_female <- gss |>
+  specify(response = sex, 
+          success = 'female') |>
+  assume(distribution = "z")
+
+dist_female
+```
+
+## Confidence Interval
+
+95% confidence interval for the proportion of female respondents
+
+```{r}
+ci_female <- get_ci(dist_female,
+       point_estimate = phat_female)
+
+ci_female
+```
+
+## Visualize
+
+95% confidence interval against the theoretical sampling distribution
+
+```{r eval = F}
+visualize(dist_female) +  # NOTE THE + for ggplot2
+  shade_confidence_interval(endpoints = ci_female)
+```
+
+## Visualize
+
+```{r echo = F}
+visualize(dist_female) +  # NOTE THE + for ggplot2
+  shade_confidence_interval(endpoints = ci_female)
+```
+
+## Hypothesis Test
+
+Let's test if a majority of respondents were women. Set the null distribution.
+
+```{r}
+null_female <- gss |>
+  specify(response = sex, 
+          success = 'female') |>
+  hypothesize(null = 'point', 
+              p = 0.5) |>
+  assume('z')
+
+null_female
+```
+
+## Hypothesis Test
+
+Let's visualize our observed data against the null distribution.
+
+```{r eval = F}
+visualize(null_female) +
+  shade_p_value(obs_stat = phat_female, 
+                direction = 'two-sided')
+```
+
+## Hypothesis Test
+
+```{r echo = F}
+visualize(null_female) +
+  shade_p_value(obs_stat = phat_female, 
+                direction = 'two-sided')
+```
+
+## Hypothesis Test
+
+Let's find the p-value for our observed data under the null hypothesis.
+
+```{r}
+null_female |>
+  get_p_value(obs_stat = phat_female, 
+              direction = 'two-sided')
+```
+
+## 2-Sample T-Test
+
+Do college graduates work the same number of hours as non-college graduates?
+
+$$
+H_0 \colon \mu_{\text{degree}}-\mu_{\text{no degree}}=0
+$$
+
+$$
+H_0 \colon \mu_{\text{degree}}-\mu_{\text{no degree}} \ne 0
+$$
+
+## Sample Statistics
+
+```{r}
+xbar_diff <- gss |>
+  observe(hours ~ college, 
+          stat = 'diff in means', 
+          order = c('degree', 
+                    'no degree'))
+
+xbar_diff
+```
+
+## Infer the sampling distribution
+
+```{r}
+dist_diff <- gss |>
+  specify(hours ~ college) |>
+  assume(distribution = "t")
+
+dist_diff
+```
+
+## Confidence interval for difference
+
+```{r}
+ci_diff <- get_ci(dist_diff,
+       point_estimate = xbar_diff)
+
+ci_diff
+```
+
+## Visualize
+
+95% confidence interval against the theoretical sampling distribution
+
+```{r eval = F}
+visualize(dist_diff) +  # NOTE THE + for ggplot2
+  shade_confidence_interval(endpoints = ci_diff)
+```
+
+## Visualize
+
+95% confidence interval against the theoretical sampling distribution
+
+```{r echo = F}
+visualize(dist_diff) +  # NOTE THE + for ggplot2
+  shade_confidence_interval(endpoints = ci_diff)
+```
+
+## Hypothesis Test
+
+```{r}
+null_diff <- gss |>
+  specify(hours ~ college) |>
+  hypothesize(null = 'independence') |>
+  assume('t')
+
+null_diff
+```
+
+## Hypothesis Test
+
+Let's visualize our observed data against the null distribution.
+
+```{r eval = F}
+visualize(null_diff) +
+  shade_p_value(obs_stat = xbar_diff, 
+                direction = 'two-sided')
+```
+
+## Hypothesis Test
+
+```{r echo = F}
+visualize(null_diff) +
+  shade_p_value(obs_stat = xbar_diff, 
+                direction = 'two-sided')
+```
+
+## Hypothesis Test
+
+Let's find the p-value for our observed data under the null hypothesis.
+
+```{r}
+null_diff |>
+  get_p_value(obs_stat = xbar_diff, 
+              direction = 'two-sided')
+```
+
+## Practice
+
+-   Open RStudio and import the `LungCapData.xls` from the quiz
+
+-   Construct a 95% confidence interval for the proportion of US citizens that smoke
+
+-   Conduct a 2-sample t-test for a difference in lung capacity between smokers and non-smokers.
+
+-   `infer` package coding examples:  [https://infer.netlify.app/articles/observed_stat_examples](https://infer.netlify.app/articles/observed_stat_examples)
