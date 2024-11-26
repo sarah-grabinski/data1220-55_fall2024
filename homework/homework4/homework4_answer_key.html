@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sarah E. Grabinski">
-<meta name="dcterms.date" content="2024-11-16">
+<meta name="dcterms.date" content="2024-11-24">
 
 <title>Homework 4</title>
 <style>
@@ -3227,10 +3227,8 @@ window.Quarto = {
   <ul>
   <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a></li>
   <li><a href="#codebook" id="toc-codebook" class="nav-link" data-scroll-target="#codebook">Codebook</a></li>
-  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a>
-  <ul class="collapse">
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
   <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load Data</a></li>
-  </ul></li>
   <li><a href="#inspect-data" id="toc-inspect-data" class="nav-link" data-scroll-target="#inspect-data">Inspect data</a></li>
   <li><a href="#proportions" id="toc-proportions" class="nav-link" data-scroll-target="#proportions">Proportions</a>
   <ul class="collapse">
@@ -3306,7 +3304,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 16, 2024</p>
+      <p class="date">November 24, 2024</p>
     </div>
   </div>
   
@@ -3327,7 +3325,7 @@ window.Quarto = {
 <li><p>Download the files <code>homework4_template.qmd</code> and <code>airline_delays.xlsx</code> from Canvas. Move these files to your Homework 4 project folder.</p></li>
 <li><p>Please save your homework as <code>homework4_firstnamelastname.qmd</code>. When you render, it should produce the file <code>homework4_firstnamelastname.html</code>.</p></li>
 <li><p>Follow the prompts to complete the steps of each statistical analysis. Work must be shown in code chunks for partial credit.</p></li>
-<li><p>Add packages to the <code>load_packages</code> code chunk as you work through the analysis and need their functions. This portion has not been pre-filled for you.</p></li>
+<li><p>Add packages to the <code>load_packages</code> code chunk as you work through the analysis and need their functions. This portion has not been pre-filled for you. If you use the <code>dplyr</code> or <code>tidyverse</code> packages, make sure that they are the last library you load.</p></li>
 <li><p>Answer in complete sentences where indicated.</p></li>
 </ul>
 </section>
@@ -3392,8 +3390,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
     intersect, setdiff, setequal, union</code></pre>
 </div>
 </div>
-<section id="load-data" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="load-data">Load Data</h2>
+</section>
+<section id="load-data" class="level1 unnumbered">
+<h1 class="unnumbered">Load Data</h1>
 <p>In the code chunk below, use the <code>getwd()</code> function to save the path to your project folder as a text string called <code>folder_path</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3412,7 +3411,6 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>delays <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 </section>
 <section id="inspect-data" class="level1">
 <h1>Inspect data</h1>
@@ -3556,29 +3554,29 @@ highest: 26.2338 26.4537 44.4394 59.5    222
 </div>
 <p>Calculate your point estimate of the proportion of flights that were delayed during the Trump administration <span class="math inline">\(\hat{p}_{\text{Trump}}\)</span> and save it as the variable <code>phat_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="ot">&lt;-</span> <span class="dv">4503558</span><span class="sc">/</span><span class="dv">26613488</span></span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="ot">&lt;-</span> <span class="dv">4295997</span><span class="sc">/</span><span class="dv">25611227</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1692209</code></pre>
+<pre><code>[1] 0.1677388</code></pre>
 </div>
 </div>
 <p>Calculate your point estimate of the proportion of flights that were delayed during the Biden administration <span class="math inline">\(\hat{p}_{\text{Biden}}\)</span> and save it as the variable <code>phat_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="ot">&lt;-</span> <span class="dv">5497718</span><span class="sc">/</span><span class="dv">30326333</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="ot">&lt;-</span> <span class="dv">5538365</span><span class="sc">/</span><span class="dv">30534936</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1812853</code></pre>
+<pre><code>[1] 0.181378</code></pre>
 </div>
 </div>
 <p>You will need sample sizes later in the analysis. Save the sample size for airports from the Trump administration as the variable <code>n_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="ot">&lt;-</span> <span class="dv">403</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="ot">&lt;-</span> <span class="dv">397</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Save the sample size for airports from the Biden administration as the variable <code>n_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="ot">&lt;-</span> <span class="dv">397</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="ot">&lt;-</span> <span class="dv">403</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="assumptions" class="level2">
@@ -3628,9 +3626,9 @@ p_{\text{Biden}} &amp;= 0.181
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>If you calculated your sample statistics correctly, these should be approximately equal to your</strong> <span class="math inline">\(\hat{p}\)</span> <strong>values <code>phat_trump</code> and <code>phat_biden</code>. When the sample statistic approximately equals the population parameter, your data is valid. Sample statistics calculated from your data are valid estimators of the study population parameters because they are good approximations of the study population.</strong></p>
+<p><strong>If you calculated your sample statistics correctly, these should be approximately equal to your</strong> <span class="math inline">\(\hat{p}\)</span> <strong>values <code>phat_trump</code> (0.168) and <code>phat_biden</code>(0.181). When the sample statistic approximately equals the population parameter, your data is valid. Sample statistics calculated from your data are valid estimators of the study population parameters because they are good approximations of the study population.</strong></p>
 <p><strong>In addition, this was a random sample of airports. Data from a random sample is likely to be representative of the population, which contributes to the data’s validity.</strong></p>
-<p><strong>Finally, you have large sample sizes with</strong> <span class="math inline">\(n_{\text{Trump}}=403\)</span> <strong>(<code>n_trump</code>) and</strong> <span class="math inline">\(n_{\text{Biden}}=397\)</span> <strong>(<code>n_biden</code>), which tend to produce valid estimates. Assuming the sample is representative (e.g. random), as the sample size increases (</strong><span class="math inline">\(n \to \infty\)</span><strong>), the sample statistic</strong> <span class="math inline">\(\hat{p}\)</span> <strong>will be closer and closer to the “true” population parameter</strong> <span class="math inline">\(p\)</span> <strong>(</strong><span class="math inline">\(\hat{p} \to p\)</span><strong>).</strong></p>
+<p><strong>Finally, you have large sample sizes with</strong> <span class="math inline">\(n_{\text{Trump}}=397\)</span> <strong>(<code>n_trump</code>) and</strong> <span class="math inline">\(n_{\text{Biden}}=403\)</span> <strong>(<code>n_biden</code>), which tend to produce valid estimates. Assuming the sample is representative (e.g. random), as the sample size increases (</strong><span class="math inline">\(n \to \infty\)</span><strong>), the sample statistic</strong> <span class="math inline">\(\hat{p}\)</span> <strong>will be closer and closer to the “true” population parameter</strong> <span class="math inline">\(p\)</span> <strong>(</strong><span class="math inline">\(\hat{p} \to p\)</span><strong>).</strong></p>
 </div>
 </div>
 </div>
@@ -3649,7 +3647,11 @@ n(1-p) \ge 10
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 68.19602</code></pre>
+<pre><code>[1] 66.59231</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> phat_trump <span class="sc">&gt;=</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -3658,15 +3660,19 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>On average, each airport during the Trump administration had 68 delayed flights per year. This is larger than 10.</strong></p>
+<p><strong>On average, each airport during the Trump administration had 67 delayed flights per year. This is larger than 10.</strong></p>
 </div>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_trump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_trump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 334.804</code></pre>
+<pre><code>[1] 330.4077</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_trump) <span class="sc">&gt;=</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -3675,15 +3681,19 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>On average, each airport during the Trump administration had 334 on time flights per year. This is larger than 10.</strong></p>
+<p><strong>On average, each airport during the Trump administration had 330 on time flights per year. This is larger than 10.</strong></p>
 </div>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 delayed flights during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 71.97026</code></pre>
+<pre><code>[1] 73.09533</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> phat_biden <span class="sc">&gt;=</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -3692,15 +3702,19 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>On average, each airport during the Biden administration had 72 delayed flights per year. This is larger than 10.</strong></p>
+<p><strong>On average, each airport during the Biden administration had 73 delayed flights per year. This is larger than 10.</strong></p>
 </div>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that, on average, airports had at least 10 flights that were not delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_biden)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_biden)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 325.0297</code></pre>
+<pre><code>[1] 329.9047</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> phat_biden) <span class="sc">&gt;=</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -3709,7 +3723,7 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>On average, each airport during the Biden administration had 325 on time flights per year. This is larger than 10.</strong></p>
+<p><strong>On average, each airport during the Biden administration had 330 on time flights per year. This is larger than 10.</strong></p>
 </div>
 </div>
 </div>
@@ -3749,20 +3763,20 @@ n(1-p) \ge 10
 <h3 class="anchored" data-anchor-id="standard-errors">Standard Errors</h3>
 <p>Use the formula for the standard error of a single proportion to calculate <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> below and save it as the variable <code>se_phat_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>se_phat_trump <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_trump<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_trump))<span class="sc">/</span>n_trump)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>se_phat_trump <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_trump<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_trump))<span class="sc">/</span>n_trump)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.01867744</code></pre>
+<pre><code>[1] 0.01875216</code></pre>
 </div>
 </div>
 <p>Use the formula for the standard error of a single proportion to calculate <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span> below and save it as the variable <code>se_phat_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>se_phat_biden <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_biden<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_biden))<span class="sc">/</span>n_biden)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>se_phat_biden <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_biden<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_biden))<span class="sc">/</span>n_biden)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.01933536</code></pre>
+<pre><code>[1] 0.01919471</code></pre>
 </div>
 </div>
 </section>
@@ -3772,21 +3786,26 @@ n(1-p) \ge 10
 <p><img role="img" src="data:image/png;base64,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" class="img-fluid"></p>
 <p>Calculate <span class="math inline">\(\alpha\)</span> in the code chunk below for a 95% confidence interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>alpha</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.05</code></pre>
+</div>
 </div>
 <p>Use the <code>qnorm()</code> function to find the <span class="math inline">\(Z\)</span>-score which corresponds to the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span>. Save this value as <code>z_star</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(alpha<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.959964</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.959964</code></pre>
 </div>
@@ -3799,16 +3818,16 @@ n(1-p) \ge 10
 <h4 class="anchored" data-anchor-id="trump">Trump</h4>
 <p>Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average proportion of flights delayed during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1326138</code></pre>
+<pre><code>[1] 0.1309853</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of the 95% confidence interval for average number of flights delayed during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>phat_trump <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.205828</code></pre>
+<pre><code>[1] 0.2044924</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval using a complete sentence.</p>
@@ -3818,7 +3837,7 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>With 95% confidence, 13.26% to 20.58% of flights were delayed at airports during the Trump administration.</strong></p>
+<p><strong>With 95% confidence, 13.10% to 20.45% of flights were delayed more than 15 minutes at airports during the Trump administration.</strong></p>
 </div>
 </div>
 </div>
@@ -3827,16 +3846,16 @@ n(1-p) \ge 10
 <h4 class="anchored" data-anchor-id="biden">Biden</h4>
 <p>Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average proportion of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1433887</code></pre>
+<pre><code>[1] 0.143757</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of the 95% confidence interval for average number of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>phat_biden <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2191819</code></pre>
+<pre><code>[1] 0.2189989</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval using a complete sentence.</p>
@@ -3846,7 +3865,7 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>With 95% confidence, 14.34% to 21.92% of flights were delayed at airports during the Trump administration.</strong></p>
+<p><strong>With 95% confidence, 14.38% to 21.90% of flights were delayed more than 15 minutes at airports during the Biden administration.</strong></p>
 </div>
 </div>
 </div>
@@ -3881,9 +3900,14 @@ n(1-p) \ge 10
 <blockquote class="blockquote">
 <p><em>Research Question: On average, how frequently were flights delayed during 2016-2020 and 2021-2024, and were the rates different between the 2 administrations?</em></p>
 </blockquote>
-<p><strong>The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there is NOT a difference.</strong></p>
+<p><strong>The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there IS NOT a difference.</strong></p>
 <p><strong>The null hypothesis is that the difference between the proportion of flights delayed at airports during the Trump administration and the proportion of flights delayed at airports during the Biden administration is 0.</strong></p>
-<p><span class="math inline">\(H_0 \colon p_{\text{Biden}}-p_{\text{Trump}}=0\)</span></p>
+<p><span class="math inline">\(H_0 \colon p_{\text{Biden}}-p_{\text{Trump}}=0\)</span><br>
+<br>
+<strong>You could also have said that the null hypothesis is that the two proportions are equal.</strong></p>
+<p><span class="math display">\[
+H_0 \colon p_{\text{Biden}}=p_{\text{Trump}}
+\]</span></p>
 </div>
 </div>
 </div>
@@ -3900,7 +3924,12 @@ n(1-p) \ge 10
 <p><strong>The alternate hypothesis is a statement regarding the scenario proposed by your research question. If your research question has you investigating whether or not there IS a difference, then your alternate hypothesis should be that there IS a difference.</strong></p>
 <p><strong>Additionally, you were asked to do a 2-sided hypothesis test, which means you do not assume in advance the direction of the difference. We don’t know whether airports under Biden or Trump were expected to have more delays, so we allow for the possibility of both by saying that the difference is not 0. If we were doing a 1-sided hypothesis test, assuming in advance that airports had more delayed flights under one or the other, we would say that the difference is greater or less than zero.</strong></p>
 <p><strong>The alternate hypothesis is that the difference between the proportion of flights delayed at airports during the Trump administration and the proportion of flights delayed at airports during the Biden administration is not 0.</strong></p>
-<p><span class="math inline">\(H_A \colon p_{\text{Biden}}-p_{\text{Trump}} \ne 0\)</span></p>
+<p><span class="math inline">\(H_A \colon p_{\text{Biden}}-p_{\text{Trump}} \ne 0\)</span><br>
+<br>
+<strong>You could also have said that the null hypothesis is that the two proportions are not equal.</strong></p>
+<p><span class="math display">\[
+H_A \colon p_{\text{Biden}} \ne p_{\text{Trump}}
+\]</span></p>
 </div>
 </div>
 </div>
@@ -3910,7 +3939,12 @@ n(1-p) \ge 10
 <h3 class="anchored" data-anchor-id="point-estimate">Point Estimate</h3>
 <p>In the code chunk below, use your variables <code>phat_biden</code> and <code>phat_trump</code> to find <span class="math inline">\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}\)</span>. Save the result as the variable <code>phat_diff</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="ot">&lt;-</span> phat_biden <span class="sc">-</span> phat_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="ot">&lt;-</span> phat_biden <span class="sc">-</span> phat_trump</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01363916</code></pre>
+</div>
 </div>
 </section>
 <section id="standard-error" class="level3">
@@ -3934,19 +3968,19 @@ n(1-p) \ge 10
 </div>
 </div>
 </div>
-<p>If your null hypothesis is <span class="math inline">\(H_0\colon \hat{p}_1-\hat{p}_2\ne 0\)</span>, you will also need to calculate <span class="math inline">\(\hat{p}_{\text{pool}}\)</span>. That’s because this hypothesis states that the two samples come from the same population. Therefore, we only need 1 parameter <span class="math inline">\(\hat{p}_{\text{pool}}\)</span> for the population.</p>
+<p>If your null hypothesis is <span class="math inline">\(H_0\colon \hat{p}_1-\hat{p}_2\ne 0\)</span>, you will also need to calculate <span class="math inline">\(\hat{p}_{\text{pool}}\)</span>. That’s because this hypothesis states that the two samples come from the same population. Therefore, you only need 1 parameter <span class="math inline">\(\hat{p}_{\text{pool}}\)</span> for the population.</p>
 <p><span class="math display">\[
 \hat{p}_{\text{pool}}=\frac{\text{count}(\text{delays})_{\text{Trump}} + \text{count}(\text{delays})_{\text{Biden}}}{\text{count}(\text{flights})_{\text{Trump}} + \text{count}(\text{flights})_{\text{Biden}}}
 \]</span></p>
 <p>Use the <code>summarize()</code> function from the <code>dplyr</code> package to find the sample size (<span class="math inline">\(n\)</span>), the total number of flights (<code>flights</code>), and the total number of delayed flights (<code>delayed</code>), but do not include a <code>.by</code> parameter to separate the results by administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>proportion_statistics2 <span class="ot">&lt;-</span> delays <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">flights =</span> <span class="fu">sum</span>(flights), </span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">delayed =</span> <span class="fu">sum</span>(delayed), </span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion =</span> <span class="fu">sum</span>(delayed) <span class="sc">/</span> <span class="fu">sum</span>(flights))</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>proportion_statistics2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>proportion_statistics2 <span class="ot">&lt;-</span> delays <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">flights =</span> <span class="fu">sum</span>(flights), </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">delayed =</span> <span class="fu">sum</span>(delayed), </span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion =</span> <span class="fu">sum</span>(delayed) <span class="sc">/</span> <span class="fu">sum</span>(flights))</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>proportion_statistics2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
       n  flights delayed proportion
@@ -3956,15 +3990,20 @@ n(1-p) \ge 10
 </div>
 <p>If you need to calculate <span class="math inline">\(\hat{p}_{\text{pool}}\)</span>, use the code chunk below to save the result as the variable <code>phat_pool</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>phat_pool <span class="ot">&lt;-</span> <span class="dv">10001276</span><span class="sc">/</span><span class="dv">56939821</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>phat_pool <span class="ot">&lt;-</span> <span class="dv">9834362</span><span class="sc">/</span><span class="dv">56146163</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>phat_pool</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1751564</code></pre>
+</div>
 </div>
 <p>Use the code chunk below to find the standard error of the difference <span class="math inline">\(\text{SE}_{\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}}\)</span> under your null hypothesis. Save the result as <code>se_phat_diff</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>se_phat_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_pool<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_pool))<span class="sc">/</span>n_trump <span class="sc">+</span> (phat_pool<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_pool))<span class="sc">/</span>n_biden)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>se_phat_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((phat_pool<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_pool))<span class="sc">/</span>n_trump <span class="sc">+</span> (phat_pool<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat_pool))<span class="sc">/</span>n_biden)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.02690752</code></pre>
+<pre><code>[1] 0.02687795</code></pre>
 </div>
 </div>
 </section>
@@ -3972,17 +4011,17 @@ n(1-p) \ge 10
 <h3 class="anchored" data-anchor-id="critical-score">Critical Score</h3>
 <p>The difference of 2 proportions uses the <span class="math inline">\(Z\)</span> distribution, so the critical score for this confidence interval is <span class="math inline">\(Z^*\)</span>. Find the <span class="math inline">\(Z\)</span>-score for the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span> using the <code>qnorm()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(alpha<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.959964</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>z_star <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>z_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.959964</code></pre>
 </div>
@@ -3993,16 +4032,16 @@ n(1-p) \ge 10
 <p>As with the 1-sample proportions, the confidence interval for the difference between 2 proportions is calculated as <span class="math inline">\(\text{point estimate} \pm Z^* \times SE\)</span>.</p>
 <p>Use the code chunk below to calculate the lower boundary of your confidence interval for average difference in the proportion of flights delayed during the Trump administration and proportion of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="sc">-</span> z_star <span class="sc">*</span> se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.04067336</code></pre>
+<pre><code>[1] -0.03904065</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of your confidence interval for average difference in the proportion of flights delayed during the Trump administration and proportion of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>phat_diff <span class="sc">+</span> z_star <span class="sc">*</span> se_phat_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.06480217</code></pre>
+<pre><code>[1] 0.06631896</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval in 1 sentence.</p>
@@ -4012,7 +4051,7 @@ n(1-p) \ge 10
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>With 95% confidence, the difference between the proportion of flights delayed more than 15 minutes at airports during the Biden administration and the proportion of flights delayed more than 15 minutes at airports during the Trump administration was -4.1% to 6.5%.</strong></p>
+<p><strong>With 95% confidence, the difference between the proportion of flights delayed more than 15 minutes at airports during the Biden administration and the proportion of flights delayed more than 15 minutes at airports during the Trump administration was -3.9% to 6.6%.</strong></p>
 </div>
 </div>
 </div>
@@ -4038,11 +4077,11 @@ Z=
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>z_diff <span class="ot">&lt;-</span> phat_diff<span class="sc">/</span>se_phat_diff</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>z_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>z_diff <span class="ot">&lt;-</span> phat_diff<span class="sc">/</span>se_phat_diff</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>z_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4483655</code></pre>
+<pre><code>[1] 0.507448</code></pre>
 </div>
 </div>
 <p>Interpret the test statistic in 1 sentence.</p>
@@ -4052,7 +4091,8 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>In our sample, we observed that 1.2% more flights were delayed more than 15 minutes at airports during the Biden administration than during the Trump administration, which is 0.45 standard errors above the null hypothesis that there was no difference in the proportion of flights delayed more than 15 minutes at airports during the two administrations.</strong></p>
+<p><strong>In your sample, your point estimate (the difference you observed) was that 1.4% more flights were delayed over 15 minutes at airports during the Biden administration than during the Trump administration. This difference is 0.51 standard errors above the null hypothesis that there was no difference in the proportion of flights delayed more than 15 minutes at airports during the two administrations.</strong></p>
+<p><strong>You could also have stated that the test statistic was less than your critical value <code>z_diff</code> (</strong> <span class="math inline">\(\pm\)</span> <strong>1.96) for your confidence interval, using the same</strong> <span class="math inline">\(\alpha=0.05\)</span> <strong>as your significance threshold, so you will fail to reject your null hypothesis.</strong></p>
 </div>
 </div>
 </div>
@@ -4061,9 +4101,9 @@ Z=
 <h3 class="anchored" data-anchor-id="p-value">P-Value</h3>
 <p>Find the p-value for your test statistic <code>z_diff</code> using the function <code>pnorm()</code>. Use a 2-sided hypothesis test.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z_diff, <span class="at">lower.tail =</span> F) <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z_diff, <span class="at">lower.tail =</span> F) <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6538894</code></pre>
+<pre><code>[1] 0.6118405</code></pre>
 </div>
 </div>
 </section>
@@ -4076,10 +4116,10 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The p-value of 0.654 is greater than our significance threshold of 0.05, so you should not have rejected the null hypothesis with this data.</strong></p>
-<p><strong>If the null hypothesis were true, the difference between the proportion of flights delayed at airports during the Trump and Biden administrations is 0. Assuming the null hypothesis is true, the probability of taking two samples of size</strong> <span class="math inline">\(n_{\text{Trump}}=403\)</span> <strong>and</strong> <span class="math inline">\(n_{\text{Biden}}=397\)</span> <strong>from this study population and seeing a probability difference more extreme than the one we got in our sample (greater than 1.2% or less than -1.2%) is 65%.</strong></p>
-<p><strong>In other words, if there were no real difference and you repeated this study over and over, you would get</strong> <span class="math inline">\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}&gt;0.012\)</span> <strong>or</strong> <span class="math inline">\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}&lt;-0.012\)</span> <strong>about 65% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis. Here, however, our data is consistent with the null hypothesis, so we fail to reject it.</strong></p>
-<p><strong>This study did not detect a difference between the proportion of flights delayed more than 15 minutes at airports during the Trump and Biden administrations.</strong></p>
+<p><strong>The p-value of 0.612 is greater than our significance threshold (alpha) of 0.05, so you should not have rejected the null hypothesis with this data.</strong></p>
+<p><strong>If the null hypothesis were true, the difference between the proportion of flights delayed at airports during the Trump and Biden administrations was 0. Assuming the null hypothesis is true, the probability of taking two samples of size</strong> <span class="math inline">\(n_{\text{Trump}}=403\)</span> <strong>and</strong> <span class="math inline">\(n_{\text{Biden}}=397\)</span> <strong>from this study population and seeing a probability difference more extreme than the one we got in our sample (greater than 1.4% or less than -1.4%) is 61.2%.</strong></p>
+<p><strong>In other words, if there were no real difference and you repeated this study over and over, you would get</strong> <span class="math inline">\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}&gt;0.014\)</span> <strong>or</strong> <span class="math inline">\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}&lt;-0.014\)</span> <strong>about 61.2% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely to occur under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis. Here, however, our data is consistent with the null hypothesis, so we fail to reject it.</strong></p>
+<p><strong>The conclusion of this analysis is that this study did not detect a difference between the proportion of flights delayed more than 15 minutes at airports during the Trump and Biden administrations. However, we cannot rule out that there is a difference we could detect if only we had a larger sample and smaller margins of error. For this reason, you should not have said that you accept the null hypothesis.</strong></p>
 </div>
 </div>
 </div>
@@ -4099,13 +4139,13 @@ Z=
 <h2 class="anchored" data-anchor-id="sample-statistics-1">Sample Statistics</h2>
 <p>Use the <code>summarize()</code> function from the <code>dplyr</code> package to find the sample size (<span class="math inline">\(n\)</span>), the mean (<code>mean</code>) of the average delay times in minutes (<code>avg_delay</code>), and standard deviation (<code>sd</code>) of the average delay times in minutes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>mean_statistics <span class="ot">&lt;-</span> delays <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(avg_delay), </span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(avg_delay),</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="st">&#39;admin&#39;</span>)</span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>mean_statistics </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>mean_statistics <span class="ot">&lt;-</span> delays <span class="sc">|&gt;</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(avg_delay), </span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(avg_delay),</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="st">&#39;admin&#39;</span>)</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>mean_statistics </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   admin     n  mean    sd
@@ -4116,36 +4156,36 @@ Z=
 </div>
 <p>Save your point estimate of <span class="math inline">\(\bar{x}_{\text{Trump}}\)</span> rounded to 2 decimal places as the variable <code>mean_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="ot">&lt;-</span> <span class="fl">11.27</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="ot">&lt;-</span> <span class="fl">11.28</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.27</code></pre>
+<pre><code>[1] 11.28</code></pre>
 </div>
 </div>
 <p>Save your point estimate of <span class="math inline">\(\bar{x}_{\text{Biden}}\)</span> rounded to 2 decimal places as the variable <code>mean_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="ot">&lt;-</span> <span class="fl">12.56</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="ot">&lt;-</span> <span class="fl">12.56</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12.56</code></pre>
 </div>
 </div>
 <p>Save your point estimate of <span class="math inline">\(s_{\text{Trump}}\)</span> rounded to 2 decimal places as the variable <code>sd_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>sd_trump <span class="ot">&lt;-</span> <span class="fl">4.69</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>sd_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>sd_trump <span class="ot">&lt;-</span> <span class="fl">4.69</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>sd_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.69</code></pre>
 </div>
 </div>
 <p>Save your point estimate of <span class="math inline">\(s_{\text{Biden}}\)</span> rounded to 2 decimal places as the variable <code>sd_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>sd_biden <span class="ot">&lt;-</span> <span class="fl">11.09</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>sd_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>sd_biden <span class="ot">&lt;-</span> <span class="fl">11.09</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>sd_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 11.09</code></pre>
 </div>
@@ -4156,9 +4196,13 @@ Z=
 <p>For the Central Limit Theorem to apply for means, there must be at least <span class="math inline">\(n\ge30\)</span> observations.</p>
 <p>In the code chunk below, check the assumption that you have at least 30 observations from the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>n_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>n_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 403</code></pre>
+<pre><code>[1] 397</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>n_trump <span class="sc">&gt;=</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -4167,15 +4211,19 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The sample statistic</strong> <span class="math inline">\(\bar{x}_{\text{Trump}}\)</span> <strong>is based on data from 403 airports under the Trump administration, which is more than 30.</strong></p>
+<p><strong>The sample statistic</strong> <span class="math inline">\(\bar{x}_{\text{Trump}}\)</span> <strong>is based on a random sample of 397 airports under the Trump administration, which is more than 30.</strong></p>
 </div>
 </div>
 </div>
 <p>In the code chunk below, check the assumption that you have at least 30 observations from the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>n_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>n_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 397</code></pre>
+<pre><code>[1] 403</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>n_biden <span class="sc">&gt;=</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning no-icon" style="color: red">
@@ -4184,7 +4232,7 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The sample statistic</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}\)</span> <strong>is based on data from 397 airports under the Trump administration, which is more than 30.</strong></p>
+<p><strong>The sample statistic</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}\)</span> <strong>is based on a random sample of 403 airports under the Trump administration, which is more than 30.</strong></p>
 </div>
 </div>
 </div>
@@ -4224,20 +4272,20 @@ Z=
 <h3 class="anchored" data-anchor-id="standard-errors-1">Standard Errors</h3>
 <p>Use the formula for the standard error of a single mean to calculate <span class="math inline">\(\operatorname{SE}_{\text{Trump}}\)</span> below and save it as the variable <code>se_mean_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>se_mean_trump <span class="ot">&lt;-</span> sd_trump <span class="sc">/</span> <span class="fu">sqrt</span>(n_trump)</span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>se_mean_trump <span class="ot">&lt;-</span> sd_trump <span class="sc">/</span> <span class="fu">sqrt</span>(n_trump)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2336255</code></pre>
+<pre><code>[1] 0.2353844</code></pre>
 </div>
 </div>
 <p>Use the formula for the standard error of a single proportion to calculate <span class="math inline">\(\operatorname{SE}_{\text{Biden}}\)</span> below and save it as the variable <code>se_mean_biden</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>se_mean_biden <span class="ot">&lt;-</span> sd_biden <span class="sc">/</span> <span class="fu">sqrt</span>(n_biden)</span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>se_mean_biden <span class="ot">&lt;-</span> sd_biden <span class="sc">/</span> <span class="fu">sqrt</span>(n_biden)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5565911</code></pre>
+<pre><code>[1] 0.5524322</code></pre>
 </div>
 </div>
 </section>
@@ -4246,44 +4294,44 @@ Z=
 <p>The <em>critical value</em> <span class="math inline">\(T^*\)</span> for a 95% confidence interval from the <span class="math inline">\(T\)</span> distribution indicates how many standard errors away from the mean delay (<span class="math inline">\(\mu\)</span>) that 95% of the data can be in this distribution. In other words, 95% of the data in this distribution falls between <span class="math inline">\(-T^*\)</span> and <span class="math inline">\(T^*\)</span>.</p>
 <p>Calculate <span class="math inline">\(\alpha\)</span> in the code chunk below for a 95% confidence interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Use the <code>qt()</code> function to find the <span class="math inline">\(T\)</span>-score which corresponds to the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span> for the Trump administration. The <code>qt()</code> function takes the additional parameter <span class="math inline">\(\text{df}=n-1\)</span>. Save this value as <code>t_star_trump</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>t_star_trump <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_trump<span class="dv">-1</span>)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>t_star_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -1.965883</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>t_star_trump <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_trump<span class="dv">-1</span>)</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>t_star_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.965883</code></pre>
-</div>
-</div>
-<p>Use the <code>qt()</code> function to find the <span class="math inline">\(T\)</span>-score which corresponds to the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span> for the Biden administration. Save this value as <code>t_star_biden</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>t_star_biden <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_biden<span class="dv">-1</span>)</span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>t_star_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>t_star_trump <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_trump<span class="dv">-1</span>)</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>t_star_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.965973</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>t_star_biden <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_biden<span class="dv">-1</span>)</span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>t_star_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>t_star_trump <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_trump<span class="dv">-1</span>)</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>t_star_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.965973</code></pre>
+</div>
+</div>
+<p>Use the <code>qt()</code> function to find the <span class="math inline">\(T\)</span>-score which corresponds to the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span> for the Biden administration. Save this value as <code>t_star_biden</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>t_star_biden <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_biden<span class="dv">-1</span>)</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>t_star_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.965883</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>t_star_biden <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> n_biden<span class="dv">-1</span>)</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>t_star_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.965883</code></pre>
 </div>
 </div>
 <p>Compare your <span class="math inline">\(T^*\)</span>’s to your <span class="math inline">\(Z^*\)</span> from your proportions. Comment in 1 sentence on why they are similar or different.</p>
@@ -4293,7 +4341,8 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The values from the Z distribution are smaller because it is a narrower distribution. 95% of the data is closer to the mean of the distribution, so the critical values will be closer to 0. The T distribution is wider to account for the uncertainty of using an estimated standard deviation to calculate the standard error. Therefore, you need to be further from 0 to capture 95% of the data.</strong></p>
+<p><strong>The T distribution is wider than the Z distribution to account for the uncertainty of using a sample statistic (standard deviation</strong> <span class="math inline">\(s\)</span><strong>) versus a population parameter (standard deviation</strong> <span class="math inline">\(\sigma\)</span> <strong>in the standard error calculation. Therefore, you need to go further away from 0 to capture 95% of the data.</strong></p>
+<p><strong>The values from the Z distribution are smaller because it is a narrower distribution. 95% of the data is closer to the mean, because you don’t need to account for the uncertainty of the population standard deviation</strong> <span class="math inline">\(\sigma\)</span> <strong>being unknown. Therefore, critical values will be closer to 0 under the Z distribution than the T distribution for the same confidence level.</strong></p>
 </div>
 </div>
 </div>
@@ -4305,16 +4354,16 @@ Z=
 <h4 class="anchored" data-anchor-id="trump-1">Trump</h4>
 <p>Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average delay during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="sc">-</span> t_star_trump <span class="sc">*</span> se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="sc">-</span> t_star_trump <span class="sc">*</span> se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10.81072</code></pre>
+<pre><code>[1] 10.81724</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of the 95% confidence interval for average delay during the Trump administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="sc">+</span> t_star_trump <span class="sc">*</span> se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>mean_trump <span class="sc">+</span> t_star_trump <span class="sc">*</span> se_mean_trump</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.72928</code></pre>
+<pre><code>[1] 11.74276</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval using a complete sentence.</p>
@@ -4324,7 +4373,7 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>With 95% confidence, flights were delayed 10.81-11.73 minutes on average at airports during the Trump administration.</strong></p>
+<p><strong>With 95% confidence, flights were delayed 10.82-11.74 minutes on average at airports during the Trump administration.</strong></p>
 </div>
 </div>
 </div>
@@ -4333,16 +4382,16 @@ Z=
 <h4 class="anchored" data-anchor-id="biden-1">Biden</h4>
 <p>Use the code chunk below to calculate the lower boundary of the 95% confidence interval for average delay during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="sc">-</span> t_star_biden <span class="sc">*</span> se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="sc">-</span> t_star_biden <span class="sc">*</span> se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.46576</code></pre>
+<pre><code>[1] 11.47398</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of the 95% confidence interval for average delay during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="sc">+</span> t_star_biden <span class="sc">*</span> se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>mean_biden <span class="sc">+</span> t_star_biden <span class="sc">*</span> se_mean_biden</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13.65424</code></pre>
+<pre><code>[1] 13.64602</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval using a complete sentence.</p>
@@ -4387,9 +4436,15 @@ Z=
 <blockquote class="blockquote">
 <p><em>Research Question: On average, how many minutes were flights delayed during 2016-2020 and 2021-2024, and were the times different between the 2 administrations?</em></p>
 </blockquote>
-<p><strong>The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there is NOT a difference.</strong></p>
+<p><strong>The null hypothesis is a statement of skepticism regarding your research question. If your research question has you investigating whether or not there IS a difference, then your null hypothesis should be that there IS NOT a difference.</strong></p>
 <p><strong>The null hypothesis is that the difference between the average delay time at airports during the Trump administration and the average delay time at airports during the Biden administration is 0.</strong></p>
-<p><span class="math inline">\(H_0 \colon \mu_{\text{Biden}}-\mu_{\text{Trump}}=0\)</span></p>
+<p><span class="math display">\[
+H_0 \colon \mu_{\text{Biden}}-\mu_{\text{Trump}}=0
+\]</span></p>
+<p><strong>You could also have said that the null hypothesis is that the two means are equal.</strong></p>
+<p><span class="math display">\[
+H_0 \colon \mu_{\text{Biden}}=\mu_{\text{Trump}}
+\]</span></p>
 </div>
 </div>
 </div>
@@ -4406,7 +4461,13 @@ Z=
 <p><strong>The alternate hypothesis is a statement regarding the scenario proposed by your research question. If your research question has you investigating whether or not there IS a difference, then your alternate hypothesis should be that there IS a difference.</strong></p>
 <p><strong>Additionally, you were asked to do a 2-sided hypothesis test, which means you do not assume in advance the direction of the difference. We don’t know whether airports under Biden or Trump were expected to have longer delays, so we allow for the possibility of both by saying that the difference is not 0. If we were doing a 1-sided hypothesis test, assuming in advance that airports had longer delays under one or the other, we would say that the difference is greater or less than zero.</strong></p>
 <p><strong>The alternate hypothesis is that the difference between the average delay time at airports during the Trump administration and the average delay time at airports during the Biden administration is not 0.</strong></p>
-<p><span class="math inline">\(H_A \colon \mu_{\text{Biden}}-\mu_{\text{Trump}} \ne 0\)</span></p>
+<p><span class="math display">\[
+H_A \colon \mu_{\text{Biden}}-\mu_{\text{Trump}} \ne 0
+\]</span></p>
+<p><strong>You could also have said that the alternate hypothesis is that the two means are not equal.</strong></p>
+<p><span class="math display">\[
+H_A \colon \mu_{\text{Biden}} \ne \mu_{\text{Trump}}
+\]</span></p>
 </div>
 </div>
 </div>
@@ -4416,11 +4477,11 @@ Z=
 <h3 class="anchored" data-anchor-id="point-estimate-1">Point Estimate</h3>
 <p>In the code chunk below, use your variables <code>mean_biden</code> and <code>mean_trump</code> to find <span class="math inline">\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}\)</span>. Save the result as the variable <code>mean_diff</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> mean_biden <span class="sc">-</span> mean_trump</span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> mean_biden <span class="sc">-</span> mean_trump</span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.29</code></pre>
+<pre><code>[1] 1.28</code></pre>
 </div>
 </div>
 </section>
@@ -4432,11 +4493,11 @@ Z=
 \]</span></p>
 <p>Use the code chunk below to find the standard error of the difference <span class="math inline">\(\text{SE}_{\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}}\)</span> under your null hypothesis. Save the result as <code>se_mean_diff</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>se_mean_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sd_trump<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n_trump <span class="sc">+</span> (sd_biden<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n_biden)</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>se_mean_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sd_trump<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n_trump <span class="sc">+</span> (sd_biden<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n_biden)</span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6036345</code></pre>
+<pre><code>[1] 0.6004891</code></pre>
 </div>
 </div>
 </section>
@@ -4445,23 +4506,28 @@ Z=
 <p>The difference of 2 means uses the <span class="math inline">\(T\)</span> distribution with the degrees of freedom <span class="math inline">\(\text{df}=min(n_1, n_2)-1\)</span>, so the critical score for this confidence interval is <span class="math inline">\(T^*_{\text{df}}\)</span>.</p>
 <p>Use the code chunk below to find the degrees of freedom for the difference in means using the <code>min()</code> function. Save the result as <code>dof</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>dof <span class="ot">&lt;-</span> <span class="fu">min</span>(n_trump, n_biden)<span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>dof <span class="ot">&lt;-</span> <span class="fu">min</span>(n_trump, n_biden)<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>dof</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 396</code></pre>
+</div>
 </div>
 <p>Find the <span class="math inline">\(T\)</span>-score for the probability <span class="math inline">\(\alpha/2\)</span> or <span class="math inline">\(1-\alpha/2\)</span> using the <code>qt()</code> function and the parameter <code>df</code> set to the degrees of freedom you just calculated. Save the value as <code>t_star_diff</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>t_star_diff <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">df =</span> dof)</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>t_star_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>t_star_diff <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">df =</span> dof)</span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>t_star_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.965973</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>t_star_diff <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">df =</span> dof)</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>t_star_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>t_star_diff <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">df =</span> dof)</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>t_star_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.965973</code></pre>
 </div>
@@ -4472,16 +4538,16 @@ Z=
 <p>As with the 1-sample means, the confidence interval for the difference between 2 means is calculated as <span class="math inline">\(\text{point estimate} \pm T^*_{\text{df}} \times SE\)</span>.</p>
 <p>Use the code chunk below to calculate the lower boundary of your confidence interval for average difference in the proportion of flights delayed during the Trump administration and proportion of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="sc">-</span> t_star_diff <span class="sc">*</span> se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="sc">-</span> t_star_diff <span class="sc">*</span> se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1032711</code></pre>
+<pre><code>[1] 0.09945484</code></pre>
 </div>
 </div>
 <p>Use the code chunk below to calculate the upper boundary of your confidence interval for average difference in the proportion of flights delayed during the Trump administration and proportion of flights delayed during the Biden administration.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="sc">+</span> t_star_diff <span class="sc">*</span> se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="sc">+</span> t_star_diff <span class="sc">*</span> se_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.476729</code></pre>
+<pre><code>[1] 2.460545</code></pre>
 </div>
 </div>
 <p>Interpret this confidence interval in 1 sentence.</p>
@@ -4491,7 +4557,7 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>With 95% confidence, flights were delayed 0.10 to 2.48 minutes longer at airports during the Biden administration than during the Trump administration.</strong></p>
+<p><strong>With 95% confidence, flights were delayed on average 0.10 to 2.46 minutes longer at airports during the Biden administration than during the Trump administration.</strong></p>
 </div>
 </div>
 </div>
@@ -4507,11 +4573,11 @@ Z=
 \end{cases}
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>t_mean_diff <span class="ot">&lt;-</span> (mean_biden <span class="sc">-</span> mean_trump)<span class="sc">/</span>se_mean_diff</span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>t_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>t_mean_diff <span class="ot">&lt;-</span> (mean_biden <span class="sc">-</span> mean_trump)<span class="sc">/</span>se_mean_diff</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>t_mean_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.137055</code></pre>
+<pre><code>[1] 2.131596</code></pre>
 </div>
 </div>
 <p>Interpret the test statistic in 1 sentence.</p>
@@ -4521,7 +4587,8 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>In our sample, we observed that flights were delayed 1.29 minutes longer at airports during the Biden administration than during the Trump administration, which is 2.14 standard errors above the null hypothesis that there was no difference in the average flight delay at airports during the 2 administrations.</strong></p>
+<p><strong>In your sample, your point estimate (the difference you observed) was that flights were delayed 1.28 minutes longer at airports during the Biden administration than during the Trump administration. This difference is 2.13 standard errors above the null hypothesis that there was no difference in the average flight delay at airports during the 2 administrations.</strong></p>
+<p><strong>You could also have stated that the test statistic was greater than your critical value <code>t_star_diff</code> (</strong><span class="math inline">\(\pm\)</span> <strong>1.97) for your confidence interval, using the same</strong> <span class="math inline">\(\alpha=0.05\)</span> <strong>as your significance threshold, so you will fail to reject your null hypothesis.</strong></p>
 </div>
 </div>
 </div>
@@ -4530,11 +4597,11 @@ Z=
 <h3 class="anchored" data-anchor-id="p-value-1">P-Value</h3>
 <p>Find the p-value for your test statistic <code>t_mean_diff</code> using the function <code>pt()</code> and your degrees of freedom <code>dof</code>. Use a 2-sided hypothesis test.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_mean_diff, </span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">df =</span> dof, </span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">lower.tail =</span> F) <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_mean_diff, </span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">df =</span> dof, </span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">lower.tail =</span> F) <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.03320565</code></pre>
+<pre><code>[1] 0.0336552</code></pre>
 </div>
 </div>
 </section>
@@ -4547,10 +4614,10 @@ Z=
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The p-value of 0.033 is less than our significance threshold of 0.05, so you should have rejected the null hypothesis with this data.</strong></p>
-<p><strong>If the null hypothesis were true, the difference between the mean delay time at airports during the Trump and Biden administrations is 0. Assuming the null hypothesis is true, the probability of taking two samples of size</strong> <span class="math inline">\(n_{\text{Trump}}=403\)</span> <strong>and</strong> <span class="math inline">\(n_{\text{Biden}}=397\)</span> <strong>from this study population and seeing a difference in means more extreme than the one we got in our sample (greater than 1.29 minutes or less than -1.29 minutes) is 3.3%.</strong></p>
-<p><strong>In other words, if there were no real difference and you repeated this study over and over, you would get</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}&gt;1.29\)</span> <strong>or</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}&lt;-1.29\)</span> <strong>about 3.3% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis. Here, we have said that it is evidence against the null hypothesis if the probability of our data under the null hypothesis is less than 5%, therefore, we reject the null hypothesis and accept the alternate hypothesis.</strong></p>
-<p><strong>Flights were delayed longer during the Biden administration than during the Trump administration.</strong></p>
+<p><strong>The p-value of 0.034 is less than your significance threshold of 0.05, so you should have rejected the null hypothesis with the data from your sample.</strong></p>
+<p><strong>If the null hypothesis were true, the difference between the mean delay time at airports during the Trump and Biden administrations is 0. Assuming the null hypothesis is true, the probability of taking two samples of size</strong> <span class="math inline">\(n_{\text{Trump}}=397\)</span> <strong>and</strong> <span class="math inline">\(n_{\text{Biden}}=403\)</span> <strong>from this study population and seeing a difference in means more extreme than the one we got in our sample (greater than 1.28 minutes or less than -1.28 minutes) is 3.4%.</strong></p>
+<p><strong>In other words, if there were no real difference and you repeated this study over and over, you would get</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}&gt;1.28\)</span> <strong>or</strong> <span class="math inline">\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}&lt;-1.28\)</span> <strong>about 3.3% of the time. To reject a null hypothesis, we need our observed data to be UNLIKELY under the null hypothesis, or a small p-value. When the observed data is unlikely under the null hypothesis, we can reject that theory of the world and accept the alternate hypothesis.</strong></p>
+<p><strong>Here, we have said that it is evidence against the null hypothesis if the probability of our data under the null hypothesis is less than 5%, therefore, we reject the null hypothesis and accept the alternate hypothesis. The conclusion of this analysis is that flights were delayed longer during the Biden administration than during the Trump administration.</strong></p>
 </div>
 </div>
 </div>

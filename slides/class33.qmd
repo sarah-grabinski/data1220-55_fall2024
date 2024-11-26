@@ -1,0 +1,737 @@
+---
+title: "Class 33"
+subtitle: "DATA1220-55, Fall 2024"
+author: "Sarah E. Grabinski"
+date: '2024-11-25'
+format:
+  revealjs: 
+    theme: default
+    self-contained: true
+    slide-number: true
+    footnotes-hover: true
+    execute:
+      echo: true
+      message: false
+      warning: false
+    preview-links: auto
+    fig-align: center
+    keep-tex: true
+    footer: "DATA1220-55 Fall 2024, Class 33 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+  beamer:
+    header-includes: 
+      - \usepackage{fontspec}
+      - \usepackage{graphicx}
+      - \usepackage{grffile}
+      - \usepackage{listings}
+    execute:
+      echo: true
+      message: false
+      warning: false
+    slide-number: true
+    navigation: horizontal
+    theme: default
+    self-contained: true
+    preview-links: auto
+    fig-align: center
+    fig-height: 4.5
+    footer: "DATA1220-55 Fall 2024, Class 33 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
+---
+
+```{r}
+
+```
+
+## Infer Package {.smaller}
+
+::::: columns
+::: column
+-   Functions for "tidy" statistical analysis
+
+-   Specify statistical models, calculate statistics
+
+-   Infer sampling distributions, test hypotheses
+
+-   Uses theoretical or permutation based null distributions
+:::
+
+::: column
+![](class32/infer-logo.png)
+:::
+:::::
+
+## Tests in the Infer Package {.smaller}
+
+-   1- or 2-sample proportion- or Z-tests
+
+-   1- or 2-sample t-tests for means
+
+-   Chi-squared test of independence for categorical variables
+
+-   ANOVA test of independence for numeric variables
+
+-   Correlations and simple linear regression
+
+## Primary Functions {.smaller}
+
+-   `specify()`: set response variable (and explanatory, if needed)
+
+-   `calculate()`: calculate statistics
+
+-   `observe()`: combines `specify()` and `calculate()`
+
+-   `assume()`: sets a null distribution
+
+-   `hypothesize()`: sets a null hypothesis
+
+-   `get_ci()`: calculate a confidence interval from given distribution
+
+-   `visualize()`, `shade_p_value()`: visualize observed statistics vs null hypotheses
+
+-   `get_p_value()`: get p-value for observed statistic under null hypothesis
+
+## Packages for Today
+
+We will be working with the `pennies` dataset from the `moderndive` package.
+
+```{r}
+library(patchwork) # combining ggplot figures
+library(GGally) # for ggpairs() plot matrix
+library(Hmisc) # for describe function
+library(moderndive) # contains pennies data
+library(infer) # statistical functions
+library(kableExtra) # for pretty tables
+library(tidyverse) # always load last in list
+
+theme_set(theme_bw()) # white background for ggplot2
+```
+
+## Research Question
+
+***What is the average year of minting for pennies in circulation in the US in 2019?***
+
+. . .
+
+*Is it reasonable to gather up all the pennies in the US and get the average of the mint years?*
+
+. . .
+
+No, we should probably take a sample of pennies and use it to draw inferences and test hypotheses regarding our study and target populations.
+
+## Sampling Methods
+
+![In 2011, Dr. Chester Ismay and Dr. Albert Y. Kim went to a local bank in Northampton, MA and requested all 800 pennies they had available.](class33/sampling-pennies.jpg){fig-align="center" width="50%"}
+
+## What's in the data?
+
+::::: columns
+::: column
+Running a question mark before a dataset, function, or package name will do a search in RStudio for help pages on that topic.
+
+```{r eval = F}
+?moderndive::pennies
+```
+:::
+
+::: column
+![](class33/pennies-help.png){fig-align="center"}
+:::
+:::::
+
+## What's in the data?
+
+![](class33/pennies-help.png){fig-align="center" width="658"}
+
+## A Peek at the Data
+
+```{r}
+# from the dplyr package
+glimpse(pennies)
+```
+
+## Another Peek at the Data
+
+```{r}
+# from base R
+str(pennies)
+```
+
+## Codebook
+
+-   `year`: year that the penny was minted
+
+-   `age_in_2011`: the age of the penny in years in 2011
+
+## Exploratory Data Analysis
+
+```{r eval = T}
+# from the Hmisc package
+describe(pennies$year)
+```
+
+## A Picture's Worth 1000 Words
+
+```{r}
+# From the GGally package
+ggpairs(pennies)
+```
+
+## More Exploratory Data Analysis
+
+What do you see in this population distribution?
+
+```{r echo = F}
+pennies |>
+  ggplot(aes(x = year)) +
+  geom_histogram(binwidth = 5, 
+                 col = 'white', 
+                 fill = 'steelblue') +
+  scale_x_continuous(breaks = seq(1945, 
+                                  2011, 
+                                  by = 5))
+```
+
+## More Exploratory Data Analysis
+
+```{r eval = F}
+pennies |>
+  ggplot(aes(x = year)) +
+  geom_histogram(binwidth = 5, 
+                 col = 'white', 
+                 fill = 'steelblue') +
+  scale_x_continuous(breaks = seq(1945, 
+                                  2011, 
+                                  by = 5))
+```
+
+## Keep it Going
+
+Does this population seem normally distributed to you? Why or why not?
+
+```{r echo = F}
+pennies |>
+  ggplot(aes(x = year, y = '')) +
+  geom_violin(fill = 'steelblue', 
+              alpha = 0.5) +
+  geom_boxplot(width = 0.3) +
+  stat_summary(fun = 'mean', geom = 'point', 
+               shape = 23, size = 5, fill = 'orange') +
+  labs(caption = 'Orange diamond indicates the population mean.')
+```
+
+## Keep it Going
+
+```{r eval = F}
+pennies |>
+  ggplot(aes(x = year, y = '')) +
+  geom_violin(fill = 'steelblue', 
+              alpha = 0.5) +
+  geom_boxplot(width = 0.3) +
+  stat_summary(fun = 'mean', geom = 'point', 
+               shape = 23, size = 5, fill = 'orange') +
+  labs(caption = 'Orange diamond indicates the population mean.')
+```
+
+## Last One
+
+If the points in your Q-Q plot don't follow the straight line closely, it may not be reasonable to assume that your population is normally distributed.
+
+```{r echo = F}
+pennies |>
+  ggplot(aes(sample = year)) +
+  geom_qq_line() +
+  geom_qq(col = 'steelblue', alpha = 0.5, size = 3) +
+  labs(title = 'Q-Q Plot for a Normal Distribution in Minting Year', 
+       subtitle = paste('Q-Q stands for Quartile-Quartile, because it plots', 
+                        'the theoretical distribution against the observed.', 
+                        sep = '\n'), 
+       caption = 'The points will all fall on the straight line when the distribution is perfectly normal.')
+```
+
+## Last One
+
+```{r eval = F}
+pennies |>
+  ggplot(aes(sample = year)) +
+  geom_qq_line() +
+  geom_qq(col = 'steelblue', alpha = 0.5, size = 3) +
+  labs(title = 'Q-Q Plot for a Normal Distribution in Minting Year', 
+       subtitle = paste('Q-Q stands for Quartile-Quartile, because it plots', 
+                        'the theoretical distribution against the observed.', 
+                        sep = '\n'), 
+       caption = 'The points will all fall on the straight line when the distribution is perfectly normal.')
+```
+
+## Calculating population parameters
+
+You can use functions from the `kableExtra` package to turn your raw R outputs into attractive tables.
+
+```{r echo = F}
+# from the dplyr package
+pennies |>
+  summarize(
+    n = n(),
+    mean = mean(year), 
+    sd = sd(year)) |>
+  kable(col.names = c('n', 'mean', 'SD'), 
+        digits = c(0, 1, 1)) |>
+  kable_classic(full_width = F)
+```
+
+## Calculating population parameters
+
+Find more info here: [kableExtra Vignettes](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+
+```{r eval = F}
+# from the dplyr package
+pennies |>
+  summarize(
+    n = n(),
+    mean = mean(year), 
+    sd = sd(year)) |>
+  kable(col.names = c('n', 'mean', 'SD'), 
+        digits = c(0, 1, 1)) |>
+  kable_classic(full_width = F)
+```
+
+## Storing population mean as a variable
+
+Use the `pull()` function from `dplyr` to grab just the value(s) from a column, ditching the data frame component.
+
+```{r}
+pop_mean <- pennies |>
+  summarize(mean = mean(year)) |>
+  pull(mean)
+
+pop_mean
+```
+
+## Storing population standard deviation as a variable
+
+Use the `pull()` function from `dplyr` to grab just the value(s) from a column, ditching the data frame component.
+
+```{r}
+pop_sd <- pennies |>
+  summarize(sd = sd(year)) |>
+  pull(sd)
+
+pop_sd
+```
+
+## Can we predict our sampling distribution? {.smaller}
+
+```{r eval = F}
+# from the dplyr package
+pennies |>
+  summarize(
+    n = 50,
+    pop_mean = mean(year), 
+    sample_se = sd(year) / sqrt(50),
+    lower95 = mean(year) - qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(50)),
+    upper95 = mean(year) + qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(50))) |>
+  kable(col.names = c('n', 'population mean', 
+                      'SE for n=50', 
+                      'Lower 95% CI', 'Upper 95% CI'), 
+        digits = c(0, 1, 1, 2, 1, 1)) |>
+  kable_classic(full_width = F)
+```
+
+## Can we predict our sampling distribution? {.smaller}
+
+```{r echo = F}
+# from the dplyr package
+pennies |>
+  summarize(
+    n = 50,
+    pop_mean = mean(year), 
+    sample_se = sd(year) / sqrt(50),
+    lower95 = mean(year) - qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(50)),
+    upper95 = mean(year) + qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(50))) |>
+  kable(col.names = c('n', 'population mean', 
+                      'SE for n=50', 
+                      'Lower 95% CI', 'Upper 95% CI'), 
+        digits = c(0, 1, 1, 2, 1, 1)) |>
+  kable_classic(full_width = F)
+```
+
+. . .
+
+The sample means $\bar{x}$ from a sample of size $n=50$ from this population should follow the distribution $\text{N}(1989.8, 1.76)$ if assumptions hold.
+
+## Storing sampling distribution estimates
+
+Use the `pull()` function from `dplyr` to grab just the value(s) from a column, ditching the data frame component.
+
+```{r}
+pop_low <- pennies |>
+  summarize(lower95 = mean(year) - qt(0.975, 
+                                      df = n()) * (sd(year) / sqrt(50))) |>
+  pull(lower95)
+
+pop_high <- pennies |>
+  summarize(upper95 = mean(year) + qt(0.975, 
+                                      df = n()) * (sd(year) / sqrt(50))) |>
+  pull(upper95)
+```
+
+## Sampling Method
+
+![From their study population of 800 pennies, they took a sample of 50 pennies.](class33/penny-roll.jpg){width="667"}
+
+## The Sample
+
+![The pennies in the sample are labeled with a unique ID number and the year that they were minted.](class33/penny-sample.jpg){width="975"}
+
+## Taking a sample, pt. 1 {.smaller}
+
+When doing random processes in R, you need to use the `set.seed()` function and give it a number. This temporarily "fixes" the randomness so that the function generates the same set of numbers every time.
+
+```{r}
+# store number of observations
+n <- nrow(pennies)
+
+# randomly sample row numbers/indexes
+# set a seed to reproduce exact sample next time
+set.seed(123); sample_rows <- sample(seq(1, n), 
+                                     size = 50)
+sort(sample_rows)
+```
+
+## Taking a sample, pt. 1 {.smaller}
+
+When doing random processes in R, you need to use the `set.seed()` function and give it a number. This temporarily "fixes" the randomness so that the function generates the same set of numbers every time.
+
+```{r}
+# store number of observations
+n <- nrow(pennies)
+
+# randomly sample row numbers/indexes
+# set a seed to reproduce exact sample next time
+set.seed(123); sample_rows <- sample(seq(1, n), 
+                                     size = 50)
+sort(sample_rows)
+```
+
+## Taking a sample, pt. 2 {.smaller}
+
+Use the `filter()` function from the `dplyr` package to retain observations whose row number matches your generated sample.
+
+```{r}
+# filter your table for rows whose
+# number/index is in your sample list
+sample1 <- pennies |>
+  # function from dplyr package
+  filter(row_number() %in% sample_rows)
+
+nrow(sample1)
+```
+
+Or use base `R` to index the proper rows. The 1st parameter contains the row numbers to keep. The 2nd parameter contains the column numbers to keep. Leave blank if you want them all.
+
+```{r}
+sample1 <- pennies[sample_rows, ]
+```
+
+## What about another sample?
+
+Set a different seed with the `set.seed()` function to generate a new (but reproducible) random sample.
+
+```{r}
+# randomly sample row numbers/indexes
+# set a seed to reproduce exact sample next time
+set.seed(456); sample_rows2 <- sample(seq(1, n), 
+                                      size = 50)
+
+# Select sampled rows through indexing
+sample2 <- pennies[sample_rows2, ]
+```
+
+## Resampling with Infer
+
+You can use the `rep_sample_n()` function from the `infer` package to take `reps` number of repeated samples of a specified `size`, with (`replace = T`) or without (`replace = F`) replacement.
+
+```{r}
+# don't forget to set a seed!
+set.seed(789); samples <- pennies %>% 
+  rep_sample_n(size = 50, 
+               replace = TRUE, 
+               reps = 100)
+
+head(samples)
+```
+
+## Summary Statistics & CIs {.smaller}
+
+This function returns a grouped table, so you don't need to use the `.by =` parameter to group by replicate in the `summarize()` function.
+
+```{r echo = F}
+samples |>
+  summarize(
+    n = n(),
+    mean = mean(year), 
+    lower95 = mean(year) - qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(n())),
+    upper95 = mean(year) + qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(n()))) |> 
+  head() |>
+  kable(col.names = c('replicate', 'n', 'point estimate', 
+                      'Lower 95% CI', 'Upper 95% CI'), 
+        digits = c(0, 1, 1, 2, 1, 1)) |>
+  kable_classic(full_width = F)
+```
+
+## Summary Statistics & CIs
+
+Complete the confidence interval calculations within the `summarize()` function.
+
+```{r}
+cis <- samples |>
+  summarize(
+    n = n(),
+    mean = mean(year), 
+    s = sd(year),
+    lower95 = mean(year) - qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(n())),
+    upper95 = mean(year) + qt(0.975, 
+                              df = n()) * (sd(year) / sqrt(n())))
+```
+
+## Summary Statistics & CIs
+
+Remember, the parameters were a mean year of `r round(pop_mean, 1)` and a standard deviation of `r round(pop_sd, 1)` years in a population of `r n`. How do these compare?
+
+```{r eval = F}
+cis |> 
+  head() |>
+  kable(col.names = c('replicate', 'n', 'point estimate', 's',
+                      'Lower 95% CI', 'Upper 95% CI'), 
+        digits = c(0, 1, 1, 2, 1, 1), align = 'c') |>
+  kable_classic(full_width = F)
+```
+
+## Visualizing the CI's
+
+```{r echo = F}
+p1 <- cis |> 
+  # from the dplyr package, for modifying data
+  mutate(contains_mu = ifelse(
+    pop_mean >= lower95 &  #conditional statement
+      pop_mean <= upper95, 
+    T, F)) |> # value to return if true, if false
+  ggplot(aes(x = replicate)) +
+  geom_ribbon(aes(ymin = pop_low, 
+                  ymax = pop_high), 
+              alpha = 0.1) +
+  geom_hline(yintercept = pop_mean, 
+             linetype = 'dashed') +
+  coord_cartesian(ylim = c(min(cis$lower95), 
+                           max(cis$upper95)))
+
+p1
+```
+
+## Visualizing the CI's
+
+```{r eval = F}
+p1 <- cis |> 
+  # from the dplyr package, for modifying data
+  mutate(contains_mu = ifelse(
+    pop_mean >= lower95 &  #conditional statement
+      pop_mean <= upper95, 
+    T, F)) |> # value to return if true, if false
+  ggplot(aes(x = replicate)) +
+  geom_ribbon(aes(ymin = pop_low, 
+                  ymax = pop_high), 
+              alpha = 0.1) +
+  geom_hline(yintercept = pop_mean, 
+             linetype = 'dashed') +
+  coord_cartesian(ylim = c(min(cis$lower95), 
+                           max(cis$upper95)))
+
+p1
+```
+
+## Visualizing the CI's
+
+```{r echo = F}
+p2 <- p1 +
+  geom_pointrange(aes(y = mean, 
+                      ymin = lower95, 
+                      ymax = upper95, 
+                      col = contains_mu, 
+                      fill = contains_mu))
+
+p2
+```
+
+## Visualizing the CI's
+
+```{r eval = F}
+p2 <- p1 +
+  geom_pointrange(aes(y = mean, 
+                      ymin = lower95, 
+                      ymax = upper95, 
+                      col = contains_mu, 
+                      fill = contains_mu))
+
+p2
+```
+
+## Visualizing the CI's
+
+```{r echo = F}
+p3 <- p2 +
+  theme(legend.position = 'bottom') +
+  labs(title = '95% Confidence Intervals for the Mean Year of Penny Minting', 
+       subtitle = 'Inferences from Samples vs Population Parameters', 
+       caption = 'Pop. Mean = 1989.8, Pop. SD = 12.4', 
+       x = 'Replicate', y = 'Year')
+
+p3
+```
+
+## Visualizing the CI's
+
+```{r eval = F}
+p3 <- p2 +
+  theme(legend.position = 'bottom') +
+  labs(title = '95% Confidence Intervals for the Mean Year of Penny Minting', 
+       subtitle = 'Inferences from Samples vs Population Parameters', 
+       caption = 'Pop. Mean = 1989.8, Pop. SD = 12.4', 
+       x = 'Replicate', y = 'Year')
+
+p3
+```
+
+## All Together
+
+```{r echo = F}
+cis |> 
+  # from the dplyr package, for modifying data
+  mutate(contains_mu = ifelse(
+    pop_mean >= lower95 &  #conditional statement
+      pop_mean <= upper95, 
+    T, F)) |> # value to return if true, if false
+  ggplot(aes(x = reorder(replicate, mean))) +
+  geom_ribbon(aes(ymin = pop_low, 
+                  ymax = pop_high), 
+              alpha = 0.1) +
+  geom_hline(yintercept = pop_mean, 
+             linetype = 'dashed') +
+  coord_cartesian(ylim = c(min(cis$lower95), 
+                           max(cis$upper95))) +
+  geom_pointrange(aes(y = mean, 
+                      ymin = lower95, 
+                      ymax = upper95, 
+                      col = contains_mu, 
+                      fill = contains_mu)) +
+  theme(legend.position = 'bottom', 
+        axis.text.x = element_blank()) +
+  labs(title = '95% Confidence Intervals for the Mean Year of Penny Minting', 
+       subtitle = 'Inferences from Samples vs Population Parameters', 
+       caption = 'Pop. Mean = 1989.8, Pop. SD = 12.4', 
+       x = 'Replicate', y = 'Year')
+```
+
+## Reordered
+
+```{r echo = F}
+cis |> 
+  mutate(contains_mu = ifelse(
+    pop_mean >= lower95 & 
+      pop_mean <= upper95, T, F)) |> 
+  ggplot(aes(x = reorder(replicate, mean))) +
+  geom_ribbon(aes(ymin = pop_low, ymax = pop_high), 
+              alpha = 0.1) +
+  geom_hline(yintercept = pop_mean, 
+             linetype = 'dashed') +
+  coord_cartesian(ylim = c(min(cis$lower95), 
+                           max(cis$upper95))) +
+  geom_pointrange(aes(y = mean, ymin = lower95, ymax = upper95, 
+                      col = contains_mu, fill = contains_mu)) +
+  theme(legend.position = 'bottom', 
+        axis.text.x = element_blank()) +
+  labs(title = '95% Confidence Intervals for the Mean Year of Penny Minting', 
+       subtitle = 'Inferences from Samples vs Population Parameters', 
+       caption = 'Pop. Mean = 1989.8, Pop. SD = 12.4', 
+       x = 'Replicate', y = 'Year')
+```
+
+## Reordered
+
+```{r eval = F}
+cis |> 
+  mutate(contains_mu = ifelse(
+    pop_mean >= lower95 & 
+      pop_mean <= upper95, T, F)) |> 
+  ggplot(aes(x = reorder(replicate, mean))) +
+  geom_ribbon(aes(ymin = pop_low, ymax = pop_high), 
+              alpha = 0.1) +
+  geom_hline(yintercept = pop_mean, 
+             linetype = 'dashed') +
+  coord_cartesian(ylim = c(min(cis$lower95), 
+                           max(cis$upper95))) +
+  geom_pointrange(aes(y = mean, ymin = lower95, ymax = upper95, 
+                      col = contains_mu, fill = contains_mu)) +
+  theme(legend.position = 'bottom', 
+        axis.text.x = element_blank()) +
+  labs(title = '95% Confidence Intervals for the Mean Year of Penny Minting', 
+       subtitle = 'Inferences from Samples vs Population Parameters', 
+       caption = 'Pop. Mean = 1989.8, Pop. SD = 12.4', 
+       x = 'Replicate', y = 'Year')
+```
+
+## Misinterpreting Confidence Intervals {.smaller}
+
+-   Taking a sample and constructing a confidence interval are considered random processes
+
+. . .
+
+-   Confidence is an expression of probability regarding the PROCESS, not the result
+
+. . .
+
+-   The confidence level is a pre-analysis statement about the process, not a post-analysis statement about the result
+
+. . .
+
+-   95% confidence means that 95% of the time, confidence intervals constructed using samples of size n from this population will contain the population parameter...
+
+. . .
+
+-   ***...meaning there's a 5% chance (alpha) that your confidence interval does NOT contain the population parameter no matter how good your data is!***
+
+## Misinterpreting Confidenc Intervals {.smaller}
+
+-   A "true" population parameter is unknownable. You should not be using this terminology to interpret your results.
+
+. . .
+
+-   If you have made reasonable assumptions, theory suggests (and one hopes) the point estimate or sample statistic will be close to that "true" population parameter we can't know.
+
+. . .
+
+-   However, if any assumptions are violated, the sample statistics may no longer be accurate estimators of the population parameters.
+
+. . .
+
+-   The confidence level is not the probability that YOUR confidence interval contains the population parameter.
+
+## Activity {.largest}
+
+Interpreting confidence intervals: an interactive activity: <https://rpsychologist.com/d3/ci/>
+
+## Questions {.smaller}
+
+1.  What happens to the intervals as you change the confidence level?
+
+2.  What happens to the intervals as you change the sample size?
+
+3.  What concept from Chapter 3 does the left-middle plot remind you of?
+
+4.  Is the confidence interval width normally distributed?
+
+5.  How has your understanding of confidence intervals and their interpretation changed?

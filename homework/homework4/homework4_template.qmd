@@ -31,7 +31,7 @@ editor: visual
 # Codebook {.unnumbered}
 
 | Variable | Description | Type |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `admin` | Administration name (Biden or Trump) | Categorical, binary |
 | `flights` | Total count of flights through airport | Numeric, continuous |
 | `delayed` | total count of delayed flights through airport | Numeric, continuous |
@@ -47,7 +47,7 @@ Load any packages required for your analysis below using the `library()` functio
 
 ```
 
-## Load Data {.unnumbered}
+# Load Data {.unnumbered}
 
 In the code chunk below, use the `getwd()` function to save the path to your project folder as a text string called `folder_path`.
 

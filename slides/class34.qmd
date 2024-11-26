@@ -1,0 +1,40 @@
+---
+title: "Untitled"
+format: revealjs
+editor: visual
+---
+
+## Tidyverse {.smaller}
+
+-   `readr`: functions for importing data
+
+-   `dplyr`: data cleaning and manipulation
+
+-   `ggplot2`: data visualization
+
+-   `tibble`: better formats for dataframes
+
+-   `forcats`: tools for working with factors
+
+-   `stringr`: tools for working with text strings
+
+-   `purrr`: tools for functions and vectors
+
+-   `tidyr`: tools for reshaping data
+
+## Other Useful Packages {.smaller}
+
+-   `janitor`: functions like `drop_na()`, `clean_names()`, and `tabyl()`
+
+-   `naniar`: very useful for managing missing data
+
+-   `kableExtra`: attractive formatting for tables
+
+-   `gtsummary`: summary statistic tables with attractive formatting
+
+-   `patchwork`: combine ggplot2 figures
+
+-   `Hmisc`: statistical analysis tools like `describe()`
+
+-   `mosaic`: statistical analysis tools like `favstats()`
+

@@ -219,7 +219,7 @@
 \makeatother
 \subtitle{Answer Key}
 \author{Sarah E. Grabinski}
-\date{2024-11-16}
+\date{2024-11-24}
 
 \begin{document}
 \maketitle
@@ -266,7 +266,9 @@ Transportation. It is a random sample of 800 airports from the years
 \item
   Add packages to the \texttt{load\_packages} code chunk as you work
   through the analysis and need their functions. This portion has not
-  been pre-filled for you.
+  been pre-filled for you. If you use the \texttt{dplyr} or
+  \texttt{tidyverse} packages, make sure that they are the last library
+  you load.
 \item
   Answer in complete sentences where indicated.
 \end{itemize}
@@ -341,8 +343,8 @@ The following objects are masked from 'package:base':
     intersect, setdiff, setequal, union
 \end{verbatim}
 
-\subsection*{Load Data}\label{load-data}
-\addcontentsline{toc}{subsection}{Load Data}
+\section*{Load Data}\label{load-data}
+\addcontentsline{toc}{section}{Load Data}
 
 In the code chunk below, use the \texttt{getwd()} function to save the
 path to your project folder as a text string called
@@ -414,7 +416,7 @@ summarize your data set.
 
 Write 2-3 sentences describing anything you learned from this summary.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{From this summary, you can tell which variables are numeric and
 which are categorical or text. You can also see the minimums and
@@ -493,7 +495,7 @@ highest: 26.2338 26.4537 44.4394 59.5    222
 
 Write 2-3 sentences describing anything you learned from this summary.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{Like with the \texttt{summary()} function from base R,}
 \textbf{you can tell which variables are numeric and which are
@@ -567,14 +569,14 @@ save it as the variable \texttt{phat\_trump}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{phat\_trump }\OtherTok{\textless{}{-}} \DecValTok{4503558}\SpecialCharTok{/}\DecValTok{26613488}
+\NormalTok{phat\_trump }\OtherTok{\textless{}{-}} \DecValTok{4295997}\SpecialCharTok{/}\DecValTok{25611227}
 
 \NormalTok{phat\_trump}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.1692209
+[1] 0.1677388
 \end{verbatim}
 
 Calculate your point estimate of the proportion of flights that were
@@ -583,14 +585,14 @@ save it as the variable \texttt{phat\_biden}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{phat\_biden }\OtherTok{\textless{}{-}} \DecValTok{5497718}\SpecialCharTok{/}\DecValTok{30326333}
+\NormalTok{phat\_biden }\OtherTok{\textless{}{-}} \DecValTok{5538365}\SpecialCharTok{/}\DecValTok{30534936}
 
 \NormalTok{phat\_biden}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.1812853
+[1] 0.181378
 \end{verbatim}
 
 You will need sample sizes later in the analysis. Save the sample size
@@ -599,7 +601,7 @@ for airports from the Trump administration as the variable
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n\_trump }\OtherTok{\textless{}{-}} \DecValTok{403}
+\NormalTok{n\_trump }\OtherTok{\textless{}{-}} \DecValTok{397}
 \end{Highlighting}
 \end{Shaded}
 
@@ -608,7 +610,7 @@ variable \texttt{n\_biden}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n\_biden }\OtherTok{\textless{}{-}} \DecValTok{397}
+\NormalTok{n\_biden }\OtherTok{\textless{}{-}} \DecValTok{403}
 \end{Highlighting}
 \end{Shaded}
 
@@ -639,7 +641,7 @@ sample.
 Write 1-2 sentences reflecting on whether the data from your sample
 could be considered reliable.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{The proper timing of flights is a safety issue, so there is not
 likely to be much error in the recording of delay times. In addition,
@@ -689,23 +691,23 @@ p_{\text{Biden}} &= 0.181
 Compare these population parameters to your sample statistics and write
 1-2 sentences reflecting on whether or not your data is valid.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{If you calculated your sample statistics correctly, these should
 be approximately equal to your} \(\hat{p}\) \textbf{values
-\texttt{phat\_trump} and \texttt{phat\_biden}. When the sample statistic
-approximately equals the population parameter, your data is valid.
-Sample statistics calculated from your data are valid estimators of the
-study population parameters because they are good approximations of the
-study population.}
+\texttt{phat\_trump} (0.168) and \texttt{phat\_biden}(0.181). When the
+sample statistic approximately equals the population parameter, your
+data is valid. Sample statistics calculated from your data are valid
+estimators of the study population parameters because they are good
+approximations of the study population.}
 
 \textbf{In addition, this was a random sample of airports. Data from a
 random sample is likely to be representative of the population, which
 contributes to the data's validity.}
 
 \textbf{Finally, you have large sample sizes with}
-\(n_{\text{Trump}}=403\) \textbf{(\texttt{n\_trump}) and}
-\(n_{\text{Biden}}=397\) \textbf{(\texttt{n\_biden}), which tend to
+\(n_{\text{Trump}}=397\) \textbf{(\texttt{n\_trump}) and}
+\(n_{\text{Biden}}=403\) \textbf{(\texttt{n\_biden}), which tend to
 produce valid estimates. Assuming the sample is representative
 (e.g.~random), as the sample size increases (}\(n \to \infty\)\textbf{),
 the sample statistic} \(\hat{p}\) \textbf{will be closer and closer to
@@ -737,12 +739,22 @@ had at least 10 delayed flights during the Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 68.19602
+[1] 66.59231
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_trump }\SpecialCharTok{*}\NormalTok{ phat\_trump }\SpecialCharTok{\textgreater{}=} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
 
-\textbf{On average, each airport during the Trump administration had 68
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
+
+\textbf{On average, each airport during the Trump administration had 67
 delayed flights per year. This is larger than 10.}
 
 \end{tcolorbox}
@@ -758,12 +770,22 @@ administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 334.804
+[1] 330.4077
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_trump }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ phat\_trump) }\SpecialCharTok{\textgreater{}=} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
 
-\textbf{On average, each airport during the Trump administration had 334
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
+
+\textbf{On average, each airport during the Trump administration had 330
 on time flights per year. This is larger than 10.}
 
 \end{tcolorbox}
@@ -778,12 +800,22 @@ had at least 10 delayed flights during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 71.97026
+[1] 73.09533
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_biden }\SpecialCharTok{*}\NormalTok{ phat\_biden }\SpecialCharTok{\textgreater{}=} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
 
-\textbf{On average, each airport during the Biden administration had 72
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
+
+\textbf{On average, each airport during the Biden administration had 73
 delayed flights per year. This is larger than 10.}
 
 \end{tcolorbox}
@@ -799,12 +831,22 @@ administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 325.0297
+[1] 329.9047
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_biden }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ phat\_biden) }\SpecialCharTok{\textgreater{}=} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
 
-\textbf{On average, each airport during the Biden administration had 325
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
+
+\textbf{On average, each airport during the Biden administration had 330
 on time flights per year. This is larger than 10.}
 
 \end{tcolorbox}
@@ -889,7 +931,7 @@ variable \texttt{se\_phat\_trump}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.01867744
+[1] 0.01875216
 \end{verbatim}
 
 Use the formula for the standard error of a single proportion to
@@ -905,7 +947,7 @@ variable \texttt{se\_phat\_biden}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.01933536
+[1] 0.01919471
 \end{verbatim}
 
 \subsubsection{Critical Value}\label{critical-value}
@@ -924,8 +966,14 @@ interval.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{alpha }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FloatTok{0.95}
+
+\NormalTok{alpha}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 0.05
+\end{verbatim}
 
 Use the \texttt{qnorm()} function to find the \(Z\)-score which
 corresponds to the probability \(\alpha/2\) or \(1-\alpha/2\). Save this
@@ -974,7 +1022,7 @@ Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.1326138
+[1] 0.1309853
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of the 95\%
@@ -988,15 +1036,15 @@ Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.205828
+[1] 0.2044924
 \end{verbatim}
 
 Interpret this confidence interval using a complete sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{With 95\% confidence, 13.26\% to 20.58\% of flights were delayed
-at airports during the Trump administration.}
+\textbf{With 95\% confidence, 13.10\% to 20.45\% of flights were delayed
+more than 15 minutes at airports during the Trump administration.}
 
 \end{tcolorbox}
 
@@ -1013,7 +1061,7 @@ Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.1433887
+[1] 0.143757
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of the 95\%
@@ -1027,15 +1075,15 @@ Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.2191819
+[1] 0.2189989
 \end{verbatim}
 
 Interpret this confidence interval using a complete sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{With 95\% confidence, 14.34\% to 21.92\% of flights were delayed
-at airports during the Trump administration.}
+\textbf{With 95\% confidence, 14.38\% to 21.90\% of flights were delayed
+more than 15 minutes at airports during the Biden administration.}
 
 \end{tcolorbox}
 
@@ -1088,7 +1136,7 @@ Please do a 2-sided hypothesis test with a significance level of
 
 \emph{State your null hypothesis below in 1 sentence.}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{Here, you needed to return to the research question motivating
 your research.}
@@ -1102,14 +1150,21 @@ during 2016-2020 and 2021-2024, and were the rates different between the
 \textbf{The null hypothesis is a statement of skepticism regarding your
 research question. If your research question has you investigating
 whether or not there IS a difference, then your null hypothesis should
-be that there is NOT a difference.}
+be that there IS NOT a difference.}
 
 \textbf{The null hypothesis is that the difference between the
 proportion of flights delayed at airports during the Trump
 administration and the proportion of flights delayed at airports during
 the Biden administration is 0.}
 
-\(H_0 \colon p_{\text{Biden}}-p_{\text{Trump}}=0\)
+\(H_0 \colon p_{\text{Biden}}-p_{\text{Trump}}=0\)\\
+\strut \\
+\textbf{You could also have said that the null hypothesis is that the
+two proportions are equal.}
+
+\[
+H_0 \colon p_{\text{Biden}}=p_{\text{Trump}}
+\]
 
 \end{tcolorbox}
 
@@ -1117,7 +1172,7 @@ the Biden administration is 0.}
 
 \emph{State your alternative hypothesis below in 1 sentence.}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{The alternate hypothesis is a statement regarding the scenario
 proposed by your research question. If your research question has you
@@ -1138,7 +1193,14 @@ proportion of flights delayed at airports during the Trump
 administration and the proportion of flights delayed at airports during
 the Biden administration is not 0.}
 
-\(H_A \colon p_{\text{Biden}}-p_{\text{Trump}} \ne 0\)
+\(H_A \colon p_{\text{Biden}}-p_{\text{Trump}} \ne 0\)\\
+\strut \\
+\textbf{You could also have said that the null hypothesis is that the
+two proportions are not equal.}
+
+\[
+H_A \colon p_{\text{Biden}} \ne p_{\text{Trump}}
+\]
 
 \end{tcolorbox}
 
@@ -1152,8 +1214,14 @@ the variable \texttt{phat\_diff}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{phat\_diff }\OtherTok{\textless{}{-}}\NormalTok{ phat\_biden }\SpecialCharTok{{-}}\NormalTok{ phat\_trump}
+
+\NormalTok{phat\_diff}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 0.01363916
+\end{verbatim}
 
 \subsubsection{Standard Error}\label{standard-error}
 
@@ -1172,7 +1240,7 @@ Choose from the formulas below based on your null hypothesis.
 \end{cases}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{Based on your research question, your null hypothesis should
 have been} \(H_0: p_1-p_2=0\)\textbf{. You should have chosen the bottom
@@ -1184,7 +1252,7 @@ and completed the steps below.}
 If your null hypothesis is \(H_0\colon \hat{p}_1-\hat{p}_2\ne 0\), you
 will also need to calculate \(\hat{p}_{\text{pool}}\). That's because
 this hypothesis states that the two samples come from the same
-population. Therefore, we only need 1 parameter
+population. Therefore, you only need 1 parameter
 \(\hat{p}_{\text{pool}}\) for the population.
 
 \[
@@ -1221,9 +1289,15 @@ below to save the result as the variable \texttt{phat\_pool}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{phat\_pool }\OtherTok{\textless{}{-}} \DecValTok{10001276}\SpecialCharTok{/}\DecValTok{56939821}
+\NormalTok{phat\_pool }\OtherTok{\textless{}{-}} \DecValTok{9834362}\SpecialCharTok{/}\DecValTok{56146163}
+
+\NormalTok{phat\_pool}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 0.1751564
+\end{verbatim}
 
 Use the code chunk below to find the standard error of the difference
 \(\text{SE}_{\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}}\) under your
@@ -1238,7 +1312,7 @@ null hypothesis. Save the result as \texttt{se\_phat\_diff}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.02690752
+[1] 0.02687795
 \end{verbatim}
 
 \subsubsection{Critical Score}\label{critical-score}
@@ -1290,7 +1364,7 @@ delayed during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] -0.04067336
+[1] -0.03904065
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of your
@@ -1305,18 +1379,18 @@ delayed during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.06480217
+[1] 0.06631896
 \end{verbatim}
 
 Interpret this confidence interval in 1 sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{With 95\% confidence, the difference between the proportion of
 flights delayed more than 15 minutes at airports during the Biden
 administration and the proportion of flights delayed more than 15
-minutes at airports during the Trump administration was -4.1\% to
-6.5\%.}
+minutes at airports during the Trump administration was -3.9\% to
+6.6\%.}
 
 \end{tcolorbox}
 
@@ -1335,7 +1409,7 @@ Z=
 \end{cases}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{Based on your research question, your null hypothesis should
 have been} \(H_0: p_1-p_2=0\)\textbf{. You should have chosen the bottom
@@ -1352,19 +1426,26 @@ equation for the test statistic calculation.}
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.4483655
+[1] 0.507448
 \end{verbatim}
 
 Interpret the test statistic in 1 sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{In our sample, we observed that 1.2\% more flights were delayed
-more than 15 minutes at airports during the Biden administration than
-during the Trump administration, which is 0.45 standard errors above the
-null hypothesis that there was no difference in the proportion of
-flights delayed more than 15 minutes at airports during the two
+\textbf{In your sample, your point estimate (the difference you
+observed) was that 1.4\% more flights were delayed over 15 minutes at
+airports during the Biden administration than during the Trump
+administration. This difference is 0.51 standard errors above the null
+hypothesis that there was no difference in the proportion of flights
+delayed more than 15 minutes at airports during the two
 administrations.}
+
+\textbf{You could also have stated that the test statistic was less than
+your critical value \texttt{z\_diff} (} \(\pm\) \textbf{1.96) for your
+confidence interval, using the same} \(\alpha=0.05\) \textbf{as your
+significance threshold, so you will fail to reject your null
+hypothesis.}
 
 \end{tcolorbox}
 
@@ -1380,7 +1461,7 @@ function \texttt{pnorm()}. Use a 2-sided hypothesis test.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.6538894
+[1] 0.6118405
 \end{verbatim}
 
 \subsubsection{Decision}\label{decision}
@@ -1389,34 +1470,45 @@ Given the p-value for your observed data under the null hypothesis and a
 significance threshold of \(\alpha=0.05\), would you reject the null
 hypothesis? Why or why not?
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{The p-value of 0.654 is greater than our significance threshold
-of 0.05, so you should not have rejected the null hypothesis with this
-data.}
+\textbf{The p-value of 0.612 is greater than our significance threshold
+(alpha) of 0.05, so you should not have rejected the null hypothesis
+with this data.}
 
 \textbf{If the null hypothesis were true, the difference between the
 proportion of flights delayed at airports during the Trump and Biden
-administrations is 0. Assuming the null hypothesis is true, the
+administrations was 0. Assuming the null hypothesis is true, the
 probability of taking two samples of size} \(n_{\text{Trump}}=403\)
 \textbf{and} \(n_{\text{Biden}}=397\) \textbf{from this study population
 and seeing a probability difference more extreme than the one we got in
-our sample (greater than 1.2\% or less than -1.2\%) is 65\%.}
+our sample (greater than 1.4\% or less than -1.4\%) is 61.2\%.}
 
 \textbf{In other words, if there were no real difference and you
 repeated this study over and over, you would get}
-\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}>0.012\) \textbf{or}
-\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}<-0.012\) \textbf{about
-65\% of the time. To reject a null hypothesis, we need our observed data
-to be UNLIKELY under the null hypothesis, or a small p-value. When the
-observed data is unlikely under the null hypothesis, we can reject that
-theory of the world and accept the alternate hypothesis. Here, however,
-our data is consistent with the null hypothesis, so we fail to reject
-it.}
+\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}>0.014\) \textbf{or}
+\(\hat{p}_{\text{Biden}}-\hat{p}_{\text{Trump}}<-0.014\) \textbf{about
+61.2\% of the time. To reject a null hypothesis, we need our observed
+data to be UNLIKELY under the null hypothesis, or a small p-value. When
+the observed data is unlikely to occur under the null hypothesis, we can
+reject that theory of the world and accept the alternate hypothesis.
+Here, however, our data is consistent with the null hypothesis, so we
+fail to reject it.}
 
-\textbf{This study did not detect a difference between the proportion of
-flights delayed more than 15 minutes at airports during the Trump and
-Biden administrations.}
+\textbf{The conclusion of this analysis is that this study did not
+detect a difference between the proportion of flights delayed more than
+15 minutes at airports during the Trump and Biden administrations.
+However, we cannot rule out that there is a difference we could detect
+if only we had a larger sample and smaller margins of error. For this
+reason, you should not have said that you accept the null hypothesis.}
+
+\textbf{If you made your hypothesis test decision by comparing your test
+statistic to the critical value under the same alpha, you did not lose
+points. However, it is better to communicate your results with respect
+to the the probability of getting a sample like your observed data from
+the null distribution (the p-value). People with basic statistics
+knowledge are likely to understand what a p-value is (a probability)
+than what a critical value is.}
 
 \end{tcolorbox}
 
@@ -1475,14 +1567,14 @@ decimal places as the variable \texttt{mean\_trump}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mean\_trump }\OtherTok{\textless{}{-}} \FloatTok{11.27}
+\NormalTok{mean\_trump }\OtherTok{\textless{}{-}} \FloatTok{11.28}
 
 \NormalTok{mean\_trump}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1] 11.27
+[1] 11.28
 \end{verbatim}
 
 Save your point estimate of \(\bar{x}_{\text{Biden}}\) rounded to 2
@@ -1545,14 +1637,24 @@ observations from the Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 403
+[1] 397
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_trump }\SpecialCharTok{\textgreater{}=} \DecValTok{30}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{The sample statistic} \(\bar{x}_{\text{Trump}}\) \textbf{is
-based on data from 403 airports under the Trump administration, which is
-more than 30.}
+based on a random sample of 397 airports under the Trump administration,
+which is more than 30.}
 
 \end{tcolorbox}
 
@@ -1566,14 +1668,24 @@ observations from the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 397
+[1] 403
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_biden }\SpecialCharTok{\textgreater{}=} \DecValTok{30}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{The sample statistic} \(\bar{x}_{\text{Biden}}\) \textbf{is
-based on data from 397 airports under the Trump administration, which is
-more than 30.}
+based on a random sample of 403 airports under the Trump administration,
+which is more than 30.}
 
 \end{tcolorbox}
 
@@ -1663,7 +1775,7 @@ Use the formula for the standard error of a single mean to calculate
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.2336255
+[1] 0.2353844
 \end{verbatim}
 
 Use the formula for the standard error of a single proportion to
@@ -1679,7 +1791,7 @@ variable \texttt{se\_mean\_biden}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.5565911
+[1] 0.5524322
 \end{verbatim}
 
 \subsubsection{Critical Value}\label{critical-value-1}
@@ -1714,7 +1826,7 @@ parameter \(\text{df}=n-1\). Save this value as \texttt{t\_star\_trump}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] -1.965883
+[1] -1.965973
 \end{verbatim}
 
 \begin{Shaded}
@@ -1727,7 +1839,7 @@ parameter \(\text{df}=n-1\). Save this value as \texttt{t\_star\_trump}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 1.965883
+[1] 1.965973
 \end{verbatim}
 
 Use the \texttt{qt()} function to find the \(T\)-score which corresponds
@@ -1744,7 +1856,7 @@ administration. Save this value as \texttt{t\_star\_biden}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] -1.965973
+[1] -1.965883
 \end{verbatim}
 
 \begin{Shaded}
@@ -1757,20 +1869,26 @@ administration. Save this value as \texttt{t\_star\_biden}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 1.965973
+[1] 1.965883
 \end{verbatim}
 
 Compare your \(T^*\)'s to your \(Z^*\) from your proportions. Comment in
 1 sentence on why they are similar or different.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
+
+\textbf{The T distribution is wider than the Z distribution to account
+for the uncertainty of using a sample statistic (standard deviation}
+\(s\)\textbf{) versus a population parameter (standard deviation}
+\(\sigma\) \textbf{in the standard error calculation. Therefore, you
+need to go further away from 0 to capture 95\% of the data.}
 
 \textbf{The values from the Z distribution are smaller because it is a
-narrower distribution. 95\% of the data is closer to the mean of the
-distribution, so the critical values will be closer to 0. The T
-distribution is wider to account for the uncertainty of using an
-estimated standard deviation to calculate the standard error. Therefore,
-you need to be further from 0 to capture 95\% of the data.}
+narrower distribution. 95\% of the data is closer to the mean, because
+you don't need to account for the uncertainty of the population standard
+deviation} \(\sigma\) \textbf{being unknown. Therefore, critical values
+will be closer to 0 under the Z distribution than the T distribution for
+the same confidence level.}
 
 \end{tcolorbox}
 
@@ -1792,7 +1910,7 @@ confidence interval for average delay during the Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 10.81072
+[1] 10.81724
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of the 95\%
@@ -1805,14 +1923,14 @@ confidence interval for average delay during the Trump administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 11.72928
+[1] 11.74276
 \end{verbatim}
 
 Interpret this confidence interval using a complete sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{With 95\% confidence, flights were delayed 10.81-11.73 minutes
+\textbf{With 95\% confidence, flights were delayed 10.82-11.74 minutes
 on average at airports during the Trump administration.}
 
 \end{tcolorbox}
@@ -1829,7 +1947,7 @@ confidence interval for average delay during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 11.46576
+[1] 11.47398
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of the 95\%
@@ -1842,12 +1960,12 @@ confidence interval for average delay during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 13.65424
+[1] 13.64602
 \end{verbatim}
 
 Interpret this confidence interval using a complete sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{With 95\% confidence, flights were delayed 11.47-13.65 minutes
 on average at airports during the Biden administration.}
@@ -1902,7 +2020,7 @@ Please do a 2-sided hypothesis test with a significance level of
 
 \emph{State your null hypothesis below in 1 sentence.}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{Here, you needed to return to the research question motivating
 your research.}
@@ -1916,13 +2034,22 @@ between the 2 administrations?}
 \textbf{The null hypothesis is a statement of skepticism regarding your
 research question. If your research question has you investigating
 whether or not there IS a difference, then your null hypothesis should
-be that there is NOT a difference.}
+be that there IS NOT a difference.}
 
 \textbf{The null hypothesis is that the difference between the average
 delay time at airports during the Trump administration and the average
 delay time at airports during the Biden administration is 0.}
 
-\(H_0 \colon \mu_{\text{Biden}}-\mu_{\text{Trump}}=0\)
+\[
+H_0 \colon \mu_{\text{Biden}}-\mu_{\text{Trump}}=0
+\]
+
+\textbf{You could also have said that the null hypothesis is that the
+two means are equal.}
+
+\[
+H_0 \colon \mu_{\text{Biden}}=\mu_{\text{Trump}}
+\]
 
 \end{tcolorbox}
 
@@ -1930,7 +2057,7 @@ delay time at airports during the Biden administration is 0.}
 
 \emph{State your alternative hypothesis below in 1 sentence.}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
 \textbf{The alternate hypothesis is a statement regarding the scenario
 proposed by your research question. If your research question has you
@@ -1951,7 +2078,16 @@ average delay time at airports during the Trump administration and the
 average delay time at airports during the Biden administration is not
 0.}
 
-\(H_A \colon \mu_{\text{Biden}}-\mu_{\text{Trump}} \ne 0\)
+\[
+H_A \colon \mu_{\text{Biden}}-\mu_{\text{Trump}} \ne 0
+\]
+
+\textbf{You could also have said that the alternate hypothesis is that
+the two means are not equal.}
+
+\[
+H_A \colon \mu_{\text{Biden}} \ne \mu_{\text{Trump}}
+\]
 
 \end{tcolorbox}
 
@@ -1971,7 +2107,7 @@ the variable \texttt{mean\_diff}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 1.29
+[1] 1.28
 \end{verbatim}
 
 \subsubsection{Standard Error}\label{standard-error-1}
@@ -1998,7 +2134,7 @@ null hypothesis. Save the result as \texttt{se\_mean\_diff}.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.6036345
+[1] 0.6004891
 \end{verbatim}
 
 \subsubsection{Critical Score}\label{critical-score-1}
@@ -2014,8 +2150,14 @@ as \texttt{dof}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dof }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(n\_trump, n\_biden)}\SpecialCharTok{{-}}\DecValTok{1}
+
+\NormalTok{dof}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 396
+\end{verbatim}
 
 Find the \(T\)-score for the probability \(\alpha/2\) or \(1-\alpha/2\)
 using the \texttt{qt()} function and the parameter \texttt{df} set to
@@ -2066,7 +2208,7 @@ delayed during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.1032711
+[1] 0.09945484
 \end{verbatim}
 
 Use the code chunk below to calculate the upper boundary of your
@@ -2081,16 +2223,16 @@ delayed during the Biden administration.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 2.476729
+[1] 2.460545
 \end{verbatim}
 
 Interpret this confidence interval in 1 sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{With 95\% confidence, flights were delayed 0.10 to 2.48 minutes
-longer at airports during the Biden administration than during the Trump
-administration.}
+\textbf{With 95\% confidence, flights were delayed on average 0.10 to
+2.46 minutes longer at airports during the Biden administration than
+during the Trump administration.}
 
 \end{tcolorbox}
 
@@ -2118,18 +2260,25 @@ Z=
 \end{Shaded}
 
 \begin{verbatim}
-[1] 2.137055
+[1] 2.131596
 \end{verbatim}
 
 Interpret the test statistic in 1 sentence.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{In our sample, we observed that flights were delayed 1.29
-minutes longer at airports during the Biden administration than during
-the Trump administration, which is 2.14 standard errors above the null
-hypothesis that there was no difference in the average flight delay at
-airports during the 2 administrations.}
+\textbf{In your sample, your point estimate (the difference you
+observed) was that flights were delayed 1.28 minutes longer at airports
+during the Biden administration than during the Trump administration.
+This difference is 2.13 standard errors above the null hypothesis that
+there was no difference in the average flight delay at airports during
+the 2 administrations.}
+
+\textbf{You could also have stated that the test statistic was greater
+than your critical value \texttt{t\_star\_diff} (}\(\pm\) \textbf{1.97)
+for your confidence interval, using the same} \(\alpha=0.05\) \textbf{as
+your significance threshold, so you will fail to reject your null
+hypothesis.}
 
 \end{tcolorbox}
 
@@ -2148,7 +2297,7 @@ a 2-sided hypothesis test.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 0.03320565
+[1] 0.0336552
 \end{verbatim}
 
 \subsubsection{Decision}\label{decision-1}
@@ -2157,34 +2306,43 @@ Given the p-value for your observed data under the null hypothesis and a
 significance threshold of \(\alpha=0.05\), would you reject the null
 hypothesis? Why or why not?
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, colframe=quarto-callout-warning-color-frame, left=2mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, breakable, arc=.35mm, left=2mm, colframe=quarto-callout-warning-color-frame, opacityback=0, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, leftrule=.75mm]
 
-\textbf{The p-value of 0.033 is less than our significance threshold of
-0.05, so you should have rejected the null hypothesis with this data.}
+\textbf{The p-value of 0.034 is less than your significance threshold of
+0.05, so you should have rejected the null hypothesis with the data from
+your sample.}
 
 \textbf{If the null hypothesis were true, the difference between the
 mean delay time at airports during the Trump and Biden administrations
 is 0. Assuming the null hypothesis is true, the probability of taking
-two samples of size} \(n_{\text{Trump}}=403\) \textbf{and}
-\(n_{\text{Biden}}=397\) \textbf{from this study population and seeing a
+two samples of size} \(n_{\text{Trump}}=397\) \textbf{and}
+\(n_{\text{Biden}}=403\) \textbf{from this study population and seeing a
 difference in means more extreme than the one we got in our sample
-(greater than 1.29 minutes or less than -1.29 minutes) is 3.3\%.}
+(greater than 1.28 minutes or less than -1.28 minutes) is 3.4\%.}
 
 \textbf{In other words, if there were no real difference and you
 repeated this study over and over, you would get}
-\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}>1.29\) \textbf{or}
-\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}<-1.29\) \textbf{about
+\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}>1.28\) \textbf{or}
+\(\bar{x}_{\text{Biden}}-\bar{x}_{\text{Trump}}<-1.28\) \textbf{about
 3.3\% of the time. To reject a null hypothesis, we need our observed
 data to be UNLIKELY under the null hypothesis, or a small p-value. When
 the observed data is unlikely under the null hypothesis, we can reject
-that theory of the world and accept the alternate hypothesis. Here, we
-have said that it is evidence against the null hypothesis if the
-probability of our data under the null hypothesis is less than 5\%,
-therefore, we reject the null hypothesis and accept the alternate
-hypothesis.}
+that theory of the world and accept the alternate hypothesis.}
 
-\textbf{Flights were delayed longer during the Biden administration than
-during the Trump administration.}
+\textbf{Here, we have said that it is evidence against the null
+hypothesis if the probability of our data under the null hypothesis is
+less than 5\%, therefore, we reject the null hypothesis and accept the
+alternate hypothesis. The conclusion of this analysis is that flights
+were delayed longer during the Biden administration than during the
+Trump administration.}
+
+\textbf{If you made your hypothesis test decision by comparing your test
+statistic to the critical value under the same alpha, you did not lose
+points. However, it is better to communicate your results with respect
+to the the probability of getting a sample like your observed data from
+the null distribution (the p-value). People with basic statistics
+knowledge are likely to understand what a p-value is (a probability)
+than what a critical value is.}
 
 \end{tcolorbox}
 

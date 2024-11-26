@@ -11,7 +11,6 @@ format:
     footnotes-hover: true
     execute:
       echo: false
-      cache: true
       message: false
       warning: false
     preview-links: auto
@@ -19,14 +18,12 @@ format:
     footer: "DATA1220-55 Fall 2024, Class 17 | Updated: {{< meta date >}} |  [Canvas](https://canvas.jcu.edu/courses/36290) | [Campuswire](https://campuswire.com/c/G6427C531/feed)"
   beamer:
     header-includes: 
-      - \newcommand{\theHtable}{\thetable}
       - \usepackage{fontspec}
       - \usepackage{graphicx}
       - \usepackage{grffile}
       - \setkeys{Gin}{width=\textwidth,height=\textheight}
     execute:
       echo: false
-      cache: true
       message: false
       warning: false
     slide-number: true
@@ -132,7 +129,7 @@ $$
 
 ## Recap: Confidence Intervals
 
-A ***confidence interval*** is a numerical range *inside* which a statistic is expected to occur with a given probability $1-\alpha$ (alpha) in any theoretical sample from a given population
+A ***confidence interval*** is a numerical range within which a population parameter is expected to occur in a theoretical sample from a the population with a given probability $1-\alpha$ (alpha)
 
 . . .
 
@@ -414,9 +411,9 @@ Step 5: Assume the null hypothesis.
 
 . . .
 
-$H_0$: The probability of a hurricane making landfall in 2024 is 24.2% ($\hat{p}=24.2$%).
+$H_0$: The probability of a hurricane making landfall in 2024 is 24.2% ($p=24.2$%).
 
-$H_A$ The probability of a hurricane making landfall in 2024 is *not* 24.2% ($\hat{p} \ne 24.2$%).
+$H_A$ The probability of a hurricane making landfall in 2024 is *not* 24.2% ($p \ne 24.2$%).
 
 ## Example
 
