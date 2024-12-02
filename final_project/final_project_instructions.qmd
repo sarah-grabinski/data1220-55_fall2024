@@ -1,0 +1,29 @@
+---
+title: "Untitled"
+format: pdf
+editor: visual
+---
+
+# Objectives
+
+In this project, you will perform a complete statistical analysis of the relationship between either 2 binary categorical variables or a binary categorical variable and a continuous numeric variable. By completing this project, you will demonstrate that you can...
+
+-   Create a research question that is statistically appropriate
+
+-   Perform a basic statistical analysis using R
+
+-   Generate a useful visualization of your data
+
+-   Evaluate the assumptions you made during the analysis
+
+-   Communicate your findings both orally and in writing
+
+# Deliverables
+
+You will turn 3 items in to Canvas by December 12th at 9:00pm.
+
+1.  Your Quarto markdown file called `final_firstnamelastname.qmd`
+
+2.  Your rendered HTML file called `final_firstnamelastname.qmd`
+
+3.  Your 3-minute video
